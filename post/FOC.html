@@ -1,1 +1,295 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><script type="module" crossorigin src="/static/js/120aa8f8.js"></script><link rel="stylesheet" href="/static/css/a14e1a22.css"><meta name="generator" content="Hexo 6.3.0"></head><body id="body-container"><noscript><strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>FOC | Zgh&#39;s</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="可以看出，我们只需要像步进电机那样不断的重复这六部换向就可以让BLDC转动起来，甚至会产生一种错觉，是不是我们换向越快电机转的越快呢？答案是:否，这里我们一定要认识到，是当转子处于特定位置时才去触发换向操作，换向是被动换向，想要提高转速一定是要提高电流，让定子产生的磁场更强，让转子更快的达到目标点然后触发换向 如何获得转子角度？我们已经知道了要先检测角度再去换向，那么如何检测当前角度呢？，有以下三">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FOC">
+<meta property="og:url" content="http://zgh20060114.github.io/post/FOC.html">
+<meta property="og:site_name" content="Zgh&#39;s">
+<meta property="og:description" content="可以看出，我们只需要像步进电机那样不断的重复这六部换向就可以让BLDC转动起来，甚至会产生一种错觉，是不是我们换向越快电机转的越快呢？答案是:否，这里我们一定要认识到，是当转子处于特定位置时才去触发换向操作，换向是被动换向，想要提高转速一定是要提高电流，让定子产生的磁场更强，让转子更快的达到目标点然后触发换向 如何获得转子角度？我们已经知道了要先检测角度再去换向，那么如何检测当前角度呢？，有以下三">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://zgh20060114.github.io/images/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM1OTQ3MzI5,size_16,color_FFFFFF,t_70#pic_center.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/resize,m_lfit,limit_1,w_536.jpeg">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240529094507089.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240529130329149.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240529130513189.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240529144317410.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240529144120858.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240529144220989.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240530115230681.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240530115639643.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240530130008389.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240530180512850.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240530180534254.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240530181152049.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240530193807755.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240530193832651.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240531080240566.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240531102816686.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240531110753146.png">
+<meta property="article:published_time" content="2024-05-28T23:30:54.000Z">
+<meta property="article:modified_time" content="2024-05-31T13:54:45.736Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zgh20060114.github.io/images/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM1OTQ3MzI5,size_16,color_FFFFFF,t_70#pic_center.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zgh&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://Zgh20060114.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-FOC" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/FOC.html" class="article-date">
+  <time class="dt-published" datetime="2024-05-28T23:30:54.000Z" itemprop="datePublished">2024-05-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      FOC
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>可以看出，我们只需要像步进电机那样不断的重复这六部换向就可以让BLDC转动起来，甚至会产生一种错觉，是不是我们换向越快电机转的越快呢？答案是:否，这里我们一定要认识到，是当转子处于特定位置时才去触发换向操作，换向是被动换向，想要提高转速一定是要提高电流，让定子产生的磁场更强，让转子更快的达到目标点然后触发换向</p>
+<p>如何获得转子角度？<br>我们已经知道了要先检测角度再去换向，那么如何检测当前角度呢？，有以下三种方式。<br>1.通过安装编码器来计算出当前角度。<br>2.通过安装霍尔元件计算当前角度。<br>3.通过检测电流来计算当前角度</p>
+<p>编码器方式获取电机当前角度<br>编码器方式分为两种，增量式编码器和绝对式编码器。<br>增量式编码器：<br>每次启动之气都需要做一次校准，而且为了防止单片机性能问题导致脉冲丢失，还需要对编码器每圈校准一次。因此经常使用ABZ三轴编码器，AB输出正交信号，Z轴输出中断。<br>绝对式编码器：<br>只需要在出厂之前做一次校准，之后如果没有拆机便不需要校准，通讯方式一般是SPI和IIC,需要考虑通讯时间对系统的影响。<br>为什么要对编码器进行校准？<br>因为我们无法保证在安装的时候让编码器的0°（机械角度）刚好对应电机绕组的0°（电气角度）</p>
+<p><img src="/../images/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM1OTQ3MzI5,size_16,color_FFFFFF,t_70#pic_center.png" alt="img"></p>
+<p>伸开左手，使拇指与其他四指垂直且在一个平面内，让磁感线从手心流入，四指指向电流方向，大拇指指向的就是安培力方向（即导体受力方向）</p>
+<p><img src="/../images/resize,m_lfit,limit_1,w_536.jpeg" alt="img"></p>
+<p>右手平展，使大拇指与其余四指垂直，并且都跟手掌在一个平面内。把右手放入磁场中，让<a target="_blank" rel="noopener" href="https://baike.sogou.com/lemma/ShowInnerLink.htm?lemmaId=526702&ss_c=ssc.citiao.link">磁感线</a>从掌心进入（当磁感线为直线时，相当于手心面向N极），大拇指指向导线运动方向，则四指所指方向为导线中感应电流（动生电动势）的方向。</p>
+<p><img src="/../images/image-20240529094507089.png" alt="image-20240529094507089"></p>
+<p>根据想得到的电流矢量到u1,u2,u3上投影的正负，来判断在哪个扇区里，u1,u2,u3可由u_alpha,u_beta表示出</p>
+<p><img src="/../images/image-20240529130329149.png" alt="image-20240529130329149"></p>
+<p><img src="/../images/image-20240529130513189.png" alt="image-20240529130513189"></p>
+<p><img src="/../images/image-20240529144317410.png" alt="image-20240529144317410"></p>
+<p><img src="/../images/image-20240529144120858.png" alt="image-20240529144120858"></p>
+<p><img src="/../images/image-20240529144220989.png" alt="image-20240529144220989"></p>
+<p><img src="/../images/image-20240530115230681.png" alt="image-20240530115230681"></p>
+<p>从定子来计算</p>
+<p><img src="/../images/image-20240530115639643.png" alt="image-20240530115639643">可以计算出反电动势，进而计算转子的速度和位置（无感)</p>
+<p>当变压器的初级绕组通电后，线圈所产生的磁通在铁心流动，因为铁心本身也是导体（由硅钢片制成），在垂直于磁力线的平面上就会感应电势，这个电势在铁心的断面上形成闭合回路并产生电流，好象一个旋涡所以称为“涡流”。这个“涡流”使变压器的损耗增加，并且使变压器的铁心发热变压器的温升增加。由“涡流”所产生的损耗我们称为“铁损”。<br>另外要绕制变压器需要用大量的铜线，这些铜导线存在着电阻，电流流过时这电阻会消耗一定的功率，这部分损耗往往变成热量而消耗，我们称这种损耗为“铜损”。<br>铁损等于铜损时，变压器效率最高。大概就是变压器额定负荷的0.65倍左右。</p>
+<p>从绕组来计算（d,q,轴的电压方程）</p>
+<p><img src="/../images/image-20240530130008389.png" alt="image-20240530130008389"></p>
+<p>由于定子自感的属性，电流会滞后电压90度</p>
+<p><img src="/../images/image-20240530180512850.png" alt="image-20240530180512850"></p>
+<p><img src="/../images/image-20240530180534254.png" alt="image-20240530180534254"></p>
+<p>要等幅变换，所以要乘（2&#x2F;3）</p>
+<p>如果遇到乘(根号下2&#x2F;3),是等功率变换</p>
+<p><img src="/../images/image-20240530181152049.png" alt="image-20240530181152049"></p>
+<p><img src="/../images/image-20240530193807755.png" alt="image-20240530193807755"></p>
+<p><img src="/../images/image-20240530193832651.png" alt="image-20240530193832651"></p>
+<p>反帕克变换就是对帕克变换旋转矩阵求逆</p>
+<p>MOS管是电压驱动型，三极管是电流驱动型</p>
+<p><img src="/../images/image-20240531080240566.png" alt="image-20240531080240566"></p>
+<p><img src="/../images/image-20240531102816686.png" alt="image-20240531102816686"></p>
+<p>电角度&#x3D;极对数（或者<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E7%BA%A7%E6%95%B0&spm=1001.2101.3001.7020">级数</a>&#x2F;2）*机械角度</p>
+<p><img src="/../images/image-20240531110753146.png" alt="image-20240531110753146"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/FOC.html" data-id="clxbjvuxp000761cx4xv48vr8" data-title="FOC" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/raytracing.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          raytracing
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/openmv.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">openmv</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/ROS.html">ROS</a>
+          </li>
+        
+          <li>
+            <a href="/post/ODriver.html">ODriver</a>
+          </li>
+        
+          <li>
+            <a href="/post/Cplusplus.html">Cplusplus</a>
+          </li>
+        
+          <li>
+            <a href="/post/Qt.html">Qt</a>
+          </li>
+        
+          <li>
+            <a href="/post/risc-v.html">risc_v</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,1 +1,347 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><script type="module" crossorigin src="/static/js/120aa8f8.js"></script><link rel="stylesheet" href="/static/css/a14e1a22.css"><meta name="generator" content="Hexo 6.3.0"></head><body id="body-container"><noscript><strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>CUDA | Zgh&#39;s</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="PCIe传输速率比较慢     CPU启动核函数之后，由这个核函数在GPU设备里产生的所有的线程构成了一个grid(网格) 而一个grid又由多个线程块（block）组成，一个线程块里包含一组线程（thread） 进行CUDA编程时，要做的就是减少计算核心空闲的时间，让计算核心一直处于计算中 CPU，GPU在进行内存相互访问的时候，会很耗时    一维：   二维：  三维：   -arch和-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CUDA">
+<meta property="og:url" content="http://zgh20060114.github.io/post/CUDA.html">
+<meta property="og:site_name" content="Zgh&#39;s">
+<meta property="og:description" content="PCIe传输速率比较慢     CPU启动核函数之后，由这个核函数在GPU设备里产生的所有的线程构成了一个grid(网格) 而一个grid又由多个线程块（block）组成，一个线程块里包含一组线程（thread） 进行CUDA编程时，要做的就是减少计算核心空闲的时间，让计算核心一直处于计算中 CPU，GPU在进行内存相互访问的时候，会很耗时    一维：   二维：  三维：   -arch和-">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240514124728144.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240514125248067.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240514134619194.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240514163840122.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240514164819180.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240514170821304.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240514200242464.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240514200453776.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240514215215578.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240514214149999.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240514214513695.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240515094438706.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240515094525884.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240515095616319.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240515100052890.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240515100901251.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240515101949472.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240515102254655.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240515104802323.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240515104350368.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240518093831448.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240518094156107.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240518101534052.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240518102522434.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240518102902454.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240518103123516.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240518103306357.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240518143353274.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240518145238232.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240518145441046.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240518152527144.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240524144504885.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240524163028697.png">
+<meta property="article:published_time" content="2024-05-14T04:45:58.000Z">
+<meta property="article:modified_time" content="2024-05-24T08:30:33.715Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zgh20060114.github.io/images/image-20240514124728144.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zgh&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://Zgh20060114.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-CUDA" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/CUDA.html" class="article-date">
+  <time class="dt-published" datetime="2024-05-14T04:45:58.000Z" itemprop="datePublished">2024-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      CUDA
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="/../images/image-20240514124728144.png" alt="image-20240514124728144"></p>
+<p>PCIe传输速率比较慢</p>
+<p><img src="/../images/image-20240514125248067.png" alt="image-20240514125248067"></p>
+<p><img src="/../images/image-20240514134619194.png" alt="image-20240514134619194"></p>
+<p><img src="/../images/image-20240514163840122.png" alt="image-20240514163840122"></p>
+<p><img src="/../images/image-20240514164819180.png" alt="image-20240514164819180"></p>
+<p>CPU启动核函数之后，由这个核函数在GPU设备里产生的所有的线程构成了一个grid(网格)</p>
+<p>而一个grid又由多个线程块（block）组成，一个线程块里包含一组线程（thread）</p>
+<p>进行CUDA编程时，要做的就是减少计算核心空闲的时间，让计算核心一直处于计算中</p>
+<p>CPU，GPU在进行内存相互访问的时候，会很耗时</p>
+<p><img src="/../images/image-20240514170821304.png" alt="image-20240514170821304"></p>
+<p><img src="/../images/image-20240514200242464.png" alt="image-20240514200242464"></p>
+<p><img src="/../images/image-20240514200453776.png" alt="image-20240514200453776"></p>
+<p>一维：</p>
+<p><img src="/../images/image-20240514215215578.png" alt="image-20240514215215578"></p>
+<p><img src="/../images/image-20240514214149999.png" alt="image-20240514214149999"></p>
+<p>二维：</p>
+<p><img src="/../images/image-20240514214513695.png" alt="image-20240514214513695"></p>
+<p>三维：<br><img src="/../images/image-20240515094438706.png" alt="image-20240515094438706"></p>
+<p><img src="/../images/image-20240515094525884.png" alt="image-20240515094525884"></p>
+<p><img src="/../images/image-20240515095616319.png" alt="image-20240515095616319"></p>
+<p>-arch和-code 都与GPU的兼容性有关，在指定计算能力的时候，GPU的真实架构计算能力一定要大于虚拟架构计算能力的</p>
+<p><img src="/../images/image-20240515100052890.png" alt="image-20240515100052890"></p>
+<p><img src="/../images/image-20240515100901251.png" alt="image-20240515100901251"></p>
+<p><img src="/../images/image-20240515101949472.png" alt="image-20240515101949472"></p>
+<p><img src="/../images/image-20240515102254655.png" alt="image-20240515102254655"></p>
+<p><img src="/../images/image-20240515104802323.png" alt="image-20240515104802323"></p>
+<p>即时编译，增加兼容性：</p>
+<p><img src="/../images/image-20240515104350368.png" alt="image-20240515104350368"></p>
+<p>两个都是compute_XY(虚拟)</p>
+<p><img src="/../images/image-20240518093831448.png" alt="image-20240518093831448"></p>
+<p><img src="/../images/image-20240518094156107.png" alt="image-20240518094156107"></p>
+<p>在C++中，<code>exit(-1)</code> 和 <code>return -1</code> 都可以用来表示程序的异常退出或者返回一个错误码，但它们之间有一些重要的区别：</p>
+<ol>
+<li><code>exit(-1)</code> 是一个系统调用，它会立即终止整个程序的执行，并返回一个指定的退出码给操作系统。这会终止程序的执行并进行清理工作（如关闭文件、释放内存等），然后返回退出码。<code>exit</code> 函数是C标准库中的函数，定义在 <code>&lt;cstdlib&gt;</code> 头文件中。</li>
+<li><code>return -1</code> 通常出现在函数中，用于从当前函数中返回一个指定的值。当函数的返回类型是整型时，<code>return -1</code> 将会将 -1 这个值返回给调用该函数的地方。如果 <code>-1</code> 是 <code>main</code> 函数的返回值，那么它会被返回给操作系统作为程序的退出码。</li>
+</ol>
+<p>因此，<code>exit(-1)</code> 会立即终止整个程序的执行，而 <code>return -1</code> 只是从当前函数中返回一个值。</p>
+<p><img src="/../images/image-20240518101534052.png" alt="image-20240518101534052"></p>
+<p><img src="/../images/image-20240518102522434.png" alt="image-20240518102522434">双指针</p>
+<p><img src="/../images/image-20240518102902454.png" alt="image-20240518102902454"></p>
+<p><img src="/../images/image-20240518103123516.png" alt="image-20240518103123516"></p>
+<p><img src="/../images/image-20240518103306357.png" alt="image-20240518103306357"></p>
+<p><code>cudaDeviceReset()</code>函数用于重置当前设备上的所有状态信息。它会清除当前设备上的所有内存分配和设备端的运行时状态，释放所有CUDA资源，并将设备状态恢复到初始化时的状态。这个函数通常在程序结束前被调用，以确保释放所有CUDA资源并将GPU状态还原到初始状态。</p>
+<p>调用<code>cudaDeviceReset()</code>函数可以帮助确保程序结束时释放了所有CUDA资源，从而避免内存泄漏和其他问题。</p>
+<p>在CUDA中，核函数（kernel function）和设备函数（device function）是两个不同的概念。</p>
+<ol>
+<li>核函数（Kernel Function）：<ul>
+<li>核函数是在GPU上执行的并行函数，由关键字<code>__global__</code>声明。它们可以被从CPU代码调用，并在GPU上并行执行。在CUDA中，核函数通常用于执行大规模数据并行计算。</li>
+</ul>
+</li>
+<li>设备函数（Device Function）：<ul>
+<li>设备函数是在GPU上执行的函数，但它们只能被其他设备函数调用，不能从CPU代码中直接调用。设备函数通常用于封装重复使用的代码逻辑，以便在核函数中进行调用，以提高代码复用性和可读性。</li>
+</ul>
+</li>
+</ol>
+<p>虽然它们都是在GPU上执行的函数，但核函数和设备函数在调用方式、用途和作用域上有明显的区别。核函数是CUDA程序中由CPU代码调用的入口点，而设备函数是为了在核函数内部使用而设计的。</p>
+<p><img src="/../images/image-20240518143353274.png" alt="image-20240518143353274"></p>
+<p><img src="/../images/image-20240518145238232.png" alt="image-20240518145238232"></p>
+<p><img src="/../images/image-20240518145441046.png" alt="image-20240518145441046"></p>
+<p><code>__FILE__</code> 和 <code>__LINE__</code> 是C&#x2F;C++中的预定义宏，它们分别代表当前源文件的文件名和行号</p>
+<p><img src="/../images/image-20240518152527144.png" alt="image-20240518152527144"></p>
+<p><img src="/../images/image-20240524144504885.png" alt="image-20240524144504885"></p>
+<p><code>%g</code> 是 C++ 语言中的格式化输出控制符之一，用于打印浮点数。它根据浮点数的值自动选择 <code>%f</code> 或 <code>%e</code> 中较短的一个输出形式来打印。</p>
+<p>具体来说：</p>
+<ul>
+<li>如果浮点数的绝对值小于 0.0001 或者大于等于 10^6，<code>%g</code> 就会采用 <code>%e</code> 的输出形式，用科学计数法表示浮点数。</li>
+<li>否则，<code>%g</code> 会采用 <code>%f</code> 的输出形式，用普通的小数形式表示浮点数。</li>
+</ul>
+<p>在 CUDA 编程中，<code>cudaEventQuery(start)</code> 表示查询事件 <code>start</code> 的状态。具体来说，它用于检查事件是否已经被记录。如果事件已经被记录，那么 <code>cudaEventQuery</code> 将立即返回。如果事件还没有被记录，那么 <code>cudaEventQuery</code> 将等待事件被记录后才返回。</p>
+<p>在上述代码中，<code>cudaEventQuery(start)</code> 的目的可能是为了确保在记录 <code>stop</code> 事件之前，<code>start</code> 事件已经被成功记录。这样可以确保测量的时间间隔准确，避免了 <code>start</code> 事件尚未记录就立即记录 <code>stop</code> 事件的情况。</p>
+<p><img src="/../images/image-20240524163028697.png" alt="image-20240524163028697"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/CUDA.html" data-id="clxbjvuxn000361cxbiegh8zs" data-title="CUDA" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/OpenGL.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          OpenGL
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/Algo.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Algo</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/ROS.html">ROS</a>
+          </li>
+        
+          <li>
+            <a href="/post/ODriver.html">ODriver</a>
+          </li>
+        
+          <li>
+            <a href="/post/Cplusplus.html">Cplusplus</a>
+          </li>
+        
+          <li>
+            <a href="/post/Qt.html">Qt</a>
+          </li>
+        
+          <li>
+            <a href="/post/risc-v.html">risc_v</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

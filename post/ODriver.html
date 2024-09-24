@@ -1,1 +1,296 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><script type="module" crossorigin src="/static/js/120aa8f8.js"></script><link rel="stylesheet" href="/static/css/a14e1a22.css"><meta name="generator" content="Hexo 6.3.0"></head><body id="body-container"><noscript><strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>ODriver | Zgh&#39;s</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="共有PWM模块、ADC电流采集、定时器编码器配置、SVPWM模块、FOC核心、PID模块、电压限幅模块，其实有了PWM与SVPWM以及一些必要的数学变换，我们就可以开环使电机转起来了，加入电角度与电流采集作为反馈后，我们就能做到电流闭环，再加入速度PID就可以做到速度闭环，其他的模块只是这些目的的辅助手段罢了  一、编码器的分类 txt按工作原理的不同可分为增量型和绝对值型。  (1) 增量型 （">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ODriver">
+<meta property="og:url" content="http://zgh20060114.github.io/post/ODriver.html">
+<meta property="og:site_name" content="Zgh&#39;s">
+<meta property="og:description" content="共有PWM模块、ADC电流采集、定时器编码器配置、SVPWM模块、FOC核心、PID模块、电压限幅模块，其实有了PWM与SVPWM以及一些必要的数学变换，我们就可以开环使电机转起来了，加入电角度与电流采集作为反馈后，我们就能做到电流闭环，再加入速度PID就可以做到速度闭环，其他的模块只是这些目的的辅助手段罢了  一、编码器的分类 txt按工作原理的不同可分为增量型和绝对值型。  (1) 增量型 （">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240907102129162.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240909104907079.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240909105404369.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240909105448227.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240909105833521.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240910132838967.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240910132746715.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240910132952045.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/v2-49051363300bd5ea2f30d5391c784ece_720w.webp">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240915213051309.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240915213823875.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240915214652354.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240916160612586.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240916161725535.png">
+<meta property="article:published_time" content="2024-09-06T02:16:53.000Z">
+<meta property="article:modified_time" content="2024-09-19T00:40:07.886Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zgh20060114.github.io/images/image-20240907102129162.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zgh&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://Zgh20060114.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-ODriver" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/ODriver.html" class="article-date">
+  <time class="dt-published" datetime="2024-09-06T02:16:53.000Z" itemprop="datePublished">2024-09-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      ODriver
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>共有PWM模块、ADC电流采集、定时器编码器配置、SVPWM模块、FOC核心、PID模块、电压限幅模块，其实有了PWM与SVPWM以及一些必要的数学变换，我们就可以开环使电机转起来了，加入电角度与电流采集作为反馈后，我们就能做到电流闭环，再加入速度PID就可以做到速度闭环，其他的模块只是这些目的的辅助手段罢了</p>
+<p> 一、编码器的分类</p>
+<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">按工作原理的不同可分为增量型和绝对值型。</span></span>
+<span class="line"><span style="color: #babed8"></span></span>
+<span class="line"><span style="color: #babed8">(1) 增量型 （增量式可以理解为信号即位移的增加，需要参考量）</span></span>
+<span class="line"><span style="color: #babed8"></span></span>
+<span class="line"><span style="color: #babed8"> 增量式编码器的原理是将位移转换成周期性的电信号，再把这个电信号转变成计数脉冲，用脉冲的个数表示位移的大小。增量式编码器转轴旋转时，有相应的脉冲输出，其旋转方向的判别和脉冲数量的增减借助后部的判向电路和计数器来实现。其计数起点任意设定，可实现多圈无限累加和测量。还可以把每转发出一个脉冲的Z信号，作为参考机械零位。编码器轴转一圈会输出固定的脉冲，脉冲数由编码器光栅的线数决定。需要提高分辨率时，可利用 90 度相位差的 A、B两路信号对原脉冲数进行倍频，或者更换高分辨率编码器。</span></span>
+<span class="line"><span style="color: #babed8"></span></span>
+<span class="line"><span style="color: #babed8"> 简单来说，增量型编码器总共有三种相线输出，A相、B相、Z相。其中电机每转过一定的角度，A相和B相就输出一个脉冲，且A相和B相相互延迟1/4周期，电机的正反转就是根据A相和B相的延迟关系判断的。Z相为单圈脉冲，即每转一圈输出一个脉冲，可以作为参考机械零位。</span></span>
+<span class="line"><span style="color: #babed8"></span></span>
+<span class="line"><span style="color: #babed8">(2) 绝对型（直接输出数字量的传感器，不需要参考量）</span></span>
+<span class="line"><span style="color: #babed8"></span></span>
+<span class="line"><span style="color: #babed8">绝对编码器光码盘上有许多道光通道刻线，每道刻线依次以2线、4线、8线、16线编排，这样，在编码器的每一个位置，通过读取每道刻线的通、暗，获得一组从2的零次方到2的n-1次方的唯一的2进制编码（格雷码），这就称为n位绝对编码器。这样的编码器是由光电码盘进行记忆的。</span></span>
+<span class="line"><span style="color: #babed8"></span></span>
+<span class="line"><span style="color: #babed8">简单来说，就是对应一圈，电机的每个角度都有一个与该角度对应二进制的数值，且这个数值不会改变，所以称为绝对型编码器。</span></span></code></pre></div><p>二、不同编码器的优缺点及其对应应用范围</p>
+<p>   增量型：</p>
+<p>增量式编码器十分合适测速度，可无限累加丈量<br>是存在零点累计差错，抗干扰较差，接纳设备的停机需断电回忆<br>增量式编码器的一般应用测速，测转动方向，测移动角度、距离(相对)。</p>
+<p>   绝对型：</p>
+<p>发生电源故障也不丢失轴位置<br>绝对式编码器十分适合测量位置，可直接输出<br>绝对编码器一般能够以 8 到 12位输出 360 °更精确，但也更昂贵</p>
+<h2 id="0、系统配置"><a href="#0、系统配置" class="headerlink" title="0、系统配置"></a>0、系统配置</h2><h2 id="1、电机有力了！（PWM模块）"><a href="#1、电机有力了！（PWM模块）" class="headerlink" title="1、电机有力了！（PWM模块）"></a>1、电机有力了！（PWM模块）</h2><p>高级定时器主要用于产生6路互补的PWM来驱动MOS管，加入死区防止电源导通，本文未使用刹车引脚。高级定时器1通道1、2、3用于产生PWM，通道4用于触发ADC电流采样，根据扇区的位置，灵活设置PWM占空比，进而选择合理的触发点，避免在噪声点采样。引脚配置与PWM极性请根据自己的硬件合理配置，如IR2101是高电平有效，而IR2103则是低端低有效，高端高有效。</p>
+<p>定时器从0开始向上计数 当0-t1段,定时器计数器TIMx_CNT值小于CCRx值,输出低电平 t1-t2段,定时器计数器TIMx_CNT值大于CCRx值,输出高电平 当TIMx_CNT值达到ARR时,定时器溢出,重新向上计数…循环此过程 至此一个PWM周期完成</p>
+<p>TIMx_ARR寄存器确定PWM频率，<br>TIMx_CCRx寄存器确定占空比</p>
+<p><img src="/../images/image-20240907102129162.png" alt="image-20240907102129162"></p>
+<p>LED等推挽输出</p>
+<p><img src="/../images/image-20240909104907079.png" alt="image-20240909104907079"></p>
+<p><img src="/../images/image-20240909105404369.png" alt="image-20240909105404369"></p>
+<p><img src="/../images/image-20240909105448227.png" alt="image-20240909105448227"></p>
+<p><img src="/../images/image-20240909105833521.png" alt="image-20240909105833521"></p>
+<p><img src="/../images/image-20240910132838967.png" alt="image-20240910132838967"></p>
+<p><img src="/../images/image-20240910132746715.png" alt="image-20240910132746715"></p>
+<p><img src="/../images/image-20240910132952045.png" alt="image-20240910132952045"></p>
+<p><img src="/../images/v2-49051363300bd5ea2f30d5391c784ece_720w.webp" alt="img"></p>
+<p><img src="/../images/image-20240915213051309.png" alt="image-20240915213051309"></p>
+<p><img src="/../images/image-20240915213823875.png" alt="image-20240915213823875"></p>
+<p><img src="/../images/image-20240915214652354.png" alt="image-20240915214652354"></p>
+<p><img src="/../images/image-20240916160612586.png" alt="image-20240916160612586"></p>
+<p><img src="/../images/image-20240916161725535.png" alt="image-20240916161725535"></p>
+<p>使用opencv进行颜色识别时受光照影响很大怎么办?<br>1.白平衡算法</p>
+<p>2.对于图像数据受到光照度不足或者曝光引起的对比度太小的情况，在图像处理中一般是图像直方图均衡化的方法来处理。直方图均衡化是通过拉伸像素强度分布范围来增强图像对比度的一种方法。例如，更亮的图像将所有像素限制在高值。但是一个好的图像会有来自图像所有区域的像素。因此，我们需要将这个直方图扩展到两端，而这就是直方图均衡化所做的事情(用简单的话来说)。这通常会改善图像的对比度。<br><strong>全局直方图均衡化</strong>,<strong>自适应局部直方图均衡化</strong></p>
+<h6 id="自适应阈值"><a href="#自适应阈值" class="headerlink" title="自适应阈值?"></a>自适应阈值?</h6><p>- </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/ODriver.html" data-id="cm1bdrncg0000vzcx2kspdeqb" data-title="ODriver" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/ROS.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ROS
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/Cplusplus.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Cplusplus</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/ROS.html">ROS</a>
+          </li>
+        
+          <li>
+            <a href="/post/ODriver.html">ODriver</a>
+          </li>
+        
+          <li>
+            <a href="/post/Cplusplus.html">Cplusplus</a>
+          </li>
+        
+          <li>
+            <a href="/post/Qt.html">Qt</a>
+          </li>
+        
+          <li>
+            <a href="/post/risc-v.html">risc_v</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,1 +1,868 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><script type="module" crossorigin src="/static/js/120aa8f8.js"></script><link rel="stylesheet" href="/static/css/a14e1a22.css"><meta name="generator" content="Hexo 6.3.0"></head><body id="body-container"><noscript><strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Cplusplus | Zgh&#39;s</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="模版元编程与函数式  template    std::enable_if 是 C++ 标准库中的一个模板工具，通常用于实现 SFINAE（Substitution Failure Is Not An Error）技术。它位于 &lt;type_traits&gt; 头文件中，用于在模板编程中根据条件启用或禁用模板的实例化。  基本用法std::enable_if 的基本结构如下： cpptemp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cplusplus">
+<meta property="og:url" content="http://zgh20060114.github.io/post/Cplusplus.html">
+<meta property="og:site_name" content="Zgh&#39;s">
+<meta property="og:description" content="模版元编程与函数式  template    std::enable_if 是 C++ 标准库中的一个模板工具，通常用于实现 SFINAE（Substitution Failure Is Not An Error）技术。它位于 &lt;type_traits&gt; 头文件中，用于在模板编程中根据条件启用或禁用模板的实例化。  基本用法std::enable_if 的基本结构如下： cpptemp">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240808230648900.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240820160811024.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240820162244999.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240820162358151.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240820163258259.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240820163542636.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240820163702315.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240820163833807.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821074758660.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821075058309.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821080547610.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821080851591.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821081339456.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821082517892.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821082721689.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821090104734.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821090237051.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821090714458.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821091734245.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821093416355.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821094441153.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821094522021.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821094700080.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821095549768.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821145117646.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821150609535.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821154750452.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240821155047037.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822093944038.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822094955233.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822095110135.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822095353349.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822100310129.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822100649562.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822100903926.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822102642020.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822102841702.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822103024352.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822103222797.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822103620126.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822103849124.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822104300564.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822142510370.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822142730386.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822143331265.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822143825237.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822145011740.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822145901194.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822150515258.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822151844264.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822152541777.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822152759758.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822153156878.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822161836536.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240822162204007.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240825111507625.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240825111624413.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240825112136528.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240825154641671.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240825155359129.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240825155541735.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826130922114.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826131405785.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826133023527.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826133352602.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826134549406.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826135522792.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826140520404.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826140928719.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826142543763.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826143356174.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826145632245.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826145948278.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826162116558.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826162507877.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826163129510.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826163353133.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826163854896.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826164111288.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826165156571.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240826165630808.png">
+<meta property="article:published_time" content="2024-08-21T15:35:17.000Z">
+<meta property="article:modified_time" content="2024-09-20T02:54:21.628Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zgh20060114.github.io/images/image-20240808230648900.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zgh&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://Zgh20060114.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Cplusplus" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/Cplusplus.html" class="article-date">
+  <time class="dt-published" datetime="2024-08-21T15:35:17.000Z" itemprop="datePublished">2024-08-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Cplusplus
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="模版元编程与函数式"><a href="#模版元编程与函数式" class="headerlink" title="模版元编程与函数式"></a>模版元编程与函数式</h3><p><img src="/../images/image-20240808230648900.png" alt="image-20240808230648900"></p>
+<p><img src="/../images/image-20240820160811024.png" alt="image-20240820160811024"></p>
+<p>template <typename T></p>
+<p><img src="/../images/image-20240820162244999.png" alt="image-20240820162244999"></p>
+<p><img src="/../images/image-20240820162358151.png" alt="image-20240820162358151"></p>
+<p><code>std::enable_if</code> 是 C++ 标准库中的一个模板工具，通常用于实现 SFINAE（Substitution Failure Is Not An Error）技术。它位于 <code>&lt;type_traits&gt;</code> 头文件中，用于在模板编程中根据条件启用或禁用模板的实例化。</p>
+<ul>
+<li><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>std::enable_if</code> 的基本结构如下：</p>
+<div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #C792EA">template</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;</span><span style="color: #C792EA">bool</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">B</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span><span style="color: #C792EA">typename</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">T</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> void</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #C792EA">struct</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">enable_if</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #F78C6C">using</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">type</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">T</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">template</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;</span><span style="color: #C792EA">typename</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">T</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #C792EA">struct</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">enable_if</span><span style="color: #89DDFF">&lt;false,</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">T</span><span style="color: #89DDFF">&gt;</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 这个结构体是未定义的</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;;</span></span></code></pre></div></li>
+<li><h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3></li>
+<li><p><strong><code>std::enable_if</code> 主要有两个模板参数</strong>：</p>
+<ul>
+<li><code>B</code>：一个布尔值（通常是编译时常量表达式），用于决定 <code>type</code> 成员是否有效。</li>
+<li><code>T</code>：一个默认类型（默认为 <code>void</code>），当 <code>B</code> 为真时，<code>type</code> 成员将定义为 <code>T</code>。</li>
+</ul>
+</li>
+<li><p><strong>当 <code>B</code> 为真时</strong>，<code>std::enable_if</code> 的 <code>type</code> 成员被定义为 <code>T</code>。这意味着我们可以使用 <code>std::enable_if</code> 的 <code>type</code> 来在模板中进行条件判断。</p>
+</li>
+<li><p><strong>当 <code>B</code> 为假时</strong>，<code>std::enable_if</code> 的 <code>type</code> 成员没有定义。尝试使用这种情况下的 <code>type</code> 成员会导致编译错误，从而使得该模板实例化失败。这样可以用来控制模板的选择和重载。</p>
+</li>
+<li><h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>以下是一个使用 <code>std::enable_if</code> 的示例，演示如何根据类型的特性来启用或禁用函数模板：</p>
+<div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #89DDFF; font-style: italic">#include</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;</span><span style="color: #C3E88D">iostream</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">#include</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;</span><span style="color: #C3E88D">type_traits</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #676E95; font-style: italic">// 用于启用整数类型的模板函数</span></span>
+<span class="line"><span style="color: #C792EA">template</span><span style="color: #89DDFF">&lt;</span><span style="color: #C792EA">typename</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">T</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #C792EA">typename</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #FFCB6B">enable_if</span><span style="color: #89DDFF">&lt;</span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #FFCB6B">is_integral</span><span style="color: #89DDFF">&lt;</span><span style="color: #FFCB6B">T</span><span style="color: #89DDFF">&gt;::</span><span style="color: #FFCB6B">value</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span><span style="color: #C792EA">void</span><span style="color: #89DDFF">&gt;::</span><span style="color: #FFCB6B">type</span></span>
+<span class="line"><span style="color: #82AAFF">printType</span><span style="color: #89DDFF">()</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #F07178">cout </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">Integral type</span><span style="color: #BABED8">\n</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #676E95; font-style: italic">// 用于启用非整数类型的模板函数</span></span>
+<span class="line"><span style="color: #C792EA">template</span><span style="color: #89DDFF">&lt;</span><span style="color: #C792EA">typename</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">T</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #C792EA">typename</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #FFCB6B">enable_if</span><span style="color: #89DDFF">&lt;!</span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #FFCB6B">is_integral</span><span style="color: #89DDFF">&lt;</span><span style="color: #FFCB6B">T</span><span style="color: #89DDFF">&gt;::</span><span style="color: #FFCB6B">value</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span><span style="color: #C792EA">void</span><span style="color: #89DDFF">&gt;::</span><span style="color: #FFCB6B">type</span></span>
+<span class="line"><span style="color: #82AAFF">printType</span><span style="color: #89DDFF">()</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #F07178">cout </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">Non-integral type</span><span style="color: #BABED8">\n</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">int</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">main</span><span style="color: #89DDFF">()</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #BABED8">  </span><span style="color: #82AAFF">printType</span><span style="color: #89DDFF">&lt;</span><span style="color: #C792EA">int</span><span style="color: #89DDFF">&gt;();</span><span style="color: #676E95; font-style: italic">    // 输出: Integral type</span></span>
+<span class="line"><span style="color: #BABED8">  </span><span style="color: #82AAFF">printType</span><span style="color: #89DDFF">&lt;</span><span style="color: #C792EA">double</span><span style="color: #89DDFF">&gt;();</span><span style="color: #676E95; font-style: italic"> // 输出: Non-integral type</span></span>
+<span class="line"><span style="color: #BABED8">  </span><span style="color: #89DDFF; font-style: italic">return</span><span style="color: #BABED8"> </span><span style="color: #F78C6C">0</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;</span></span></code></pre></div><p>在这个示例中：</p>
+</li>
+<li><p><code>printType&lt;int&gt;()</code> 会选择第一个模板版本，因为 <code>int</code> 是整数类型。</p>
+</li>
+<li><p><code>printType&lt;double&gt;()</code> 会选择第二个模板版本，因为 <code>double</code> 不是整数类型。</p>
+</li>
+<li><h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3></li>
+<li><p><strong>编译时替换</strong>：<code>std::enable_if</code> 根据布尔表达式 <code>B</code> 的值来决定是否定义 <code>type</code> 成员。</p>
+</li>
+<li><p><strong>条件启用</strong>：在模板参数中使用 <code>std::enable_if</code> 可以有效地启用或禁用某些模板实例化。</p>
+</li>
+<li><p><strong>SFINAE</strong>：如果 <code>B</code> 为假，<code>type</code> 成员未定义，尝试实例化使用 <code>type</code> 的模板将导致编译错误，从而引发 SFINAE 机制。</p>
+<p>通过这种方式，<code>std::enable_if</code> 可以帮助实现条件模板选择，使得模板编程更加灵活和强大。</p>
+<p><img src="/../images/image-20240820163258259.png" alt="image-20240820163258259"></p>
+<p>模板的参数可以作为编译器常量，可以自动优化</p>
+<p><img src="/../images/image-20240820163542636.png" alt="image-20240820163542636"></p>
+<p><img src="/../images/image-20240820163702315.png" alt="image-20240820163702315"></p>
+<p><img src="/../images/image-20240820163833807.png" alt="image-20240820163833807"></p>
+<p>N变一次，编译器就会重新实例化一遍模版函数，编译就变慢</p>
+<p>模版函数必须定义在同一个文件里才能使用（必须是内联的或者在头文件里的），所以模板函数的定义和实现无法分离，因此除非特殊手段，模板函数的定义和实现必须放到头文件里。</p>
+<p>模板函数太多会导致头文件非常大。</p>
+<p>模板函数内联要加static</p>
+<p><img src="/../images/image-20240821074758660.png" alt="image-20240821074758660">{:height 34, :width 232}</p>
+<p><img src="/../images/image-20240821075058309.png" alt="image-20240821075058309"></p>
+<p><img src="/../images/image-20240821080547610.png" alt="image-20240821080547610"></p>
+<p><img src="/../images/image-20240821080851591.png" alt="image-20240821080851591"></p>
+<p><code>if constexpr</code> 是 C++17 中引入的一种编译时条件语句。它允许在编译时根据条件选择代码路径，从而避免在运行时进行条件判断。与传统的 <code>if</code> 语句不同，<code>if constexpr</code> 在编译时会根据条件是否为 <code>true</code> 来决定是否编译相应的代码块。</p>
+<p>举个例子：</p>
+<div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #89DDFF; font-style: italic">#include</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;</span><span style="color: #C3E88D">iostream</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">#include</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;</span><span style="color: #C3E88D">type_traits</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">template</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;</span><span style="color: #C792EA">typename</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">T</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #C792EA">void</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">print_type</span><span style="color: #89DDFF">()</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #BABED8">  </span><span style="color: #89DDFF; font-style: italic">if</span><span style="color: #BABED8"> </span><span style="color: #C792EA">constexpr</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">(</span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #FFCB6B">is_integral</span><span style="color: #89DDFF">&lt;</span><span style="color: #FFCB6B">T</span><span style="color: #89DDFF">&gt;::</span><span style="color: #BABED8">value</span><span style="color: #89DDFF">)</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #F07178">cout </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">Integral type</span><span style="color: #89DDFF">&quot;</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #F07178">endl</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF">&#125;</span><span style="color: #BABED8"> </span><span style="color: #89DDFF; font-style: italic">else</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #F07178">cout </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">Non-integral type</span><span style="color: #89DDFF">&quot;</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #F07178">endl</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF">&#125;</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">int</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">main</span><span style="color: #89DDFF">()</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #BABED8">  </span><span style="color: #82AAFF">print_type</span><span style="color: #89DDFF">&lt;</span><span style="color: #C792EA">int</span><span style="color: #89DDFF">&gt;();</span><span style="color: #676E95; font-style: italic">    // 输出 &quot;Integral type&quot;</span></span>
+<span class="line"><span style="color: #BABED8">  </span><span style="color: #82AAFF">print_type</span><span style="color: #89DDFF">&lt;</span><span style="color: #C792EA">double</span><span style="color: #89DDFF">&gt;();</span><span style="color: #676E95; font-style: italic"> // 输出 &quot;Non-integral type&quot;</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;</span></span></code></pre></div><p>在这个例子中，<code>if constexpr</code> 会在编译时检查 <code>std::is_integral&lt;T&gt;::value</code> 是否为 <code>true</code>，然后编译对应的代码块。这使得 <code>print_type</code> 函数的行为在编译时就被确定下来，从而避免了在运行时的类型检查。</p>
+<p><img src="/../images/image-20240821081339456.png" alt="image-20240821081339456"></p>
+<p><img src="/../images/image-20240821082517892.png" alt="image-20240821082517892"></p>
+<p><img src="/../images/image-20240821082721689.png" alt="image-20240821082721689"></p>
+<p><img src="/../images/image-20240821090104734.png" alt="image-20240821090104734"></p>
+<p><img src="/../images/image-20240821090237051.png" alt="image-20240821090237051"></p>
+<p><img src="/../images/image-20240821090714458.png" alt="image-20240821090714458">但是这样要把模板实例化的，每一种	情况都声明</p>
+<p>所以，尽量不要把模板分离</p>
+<p><img src="/../images/image-20240821091734245.png" alt="image-20240821091734245">延迟编译：当一个函数定义在头文件里，可能用不到，可以在前面加 template  <class T = void>这个假模板，只有被调用的时候才会被编译</p>
+<p><img src="/../images/image-20240821093416355.png" alt="image-20240821093416355"></p>
+<p>可以把函数的信息打印出来</p>
+<p><img src="/../images/image-20240821094441153.png" alt="image-20240821094441153"></p>
+<p><img src="/../images/image-20240821094522021.png" alt="image-20240821094522021"></p>
+<p><img src="/../images/image-20240821094700080.png" alt="image-20240821094700080"></p>
+<p><img src="/../images/image-20240821095549768.png" alt="image-20240821095549768"></p>
+<p>c++里的引用（int &amp;）相当于C里面的指针（int*）</p>
+<p><img src="/../images/image-20240821145117646.png" alt="image-20240821145117646">引用没有空，指针可以空</p>
+<p>auto &amp;  auto const &amp; 也可</p>
+<p><img src="/../images/image-20240821150609535.png" alt="image-20240821150609535"></p>
+<p>懒汉单例模式（Lazy Singleton）是一种设计模式，用于确保一个类只有一个实例，并提供一个全局访问点。与饿汉单例模式不同，懒汉单例模式会在需要实例时才进行初始化，因此被称为“懒汉”模式。</p>
+</li>
+<li><h3 id="懒汉单例模式的特点"><a href="#懒汉单例模式的特点" class="headerlink" title="懒汉单例模式的特点"></a>懒汉单例模式的特点</h3><ol>
+<li><strong>延迟初始化</strong>：单例对象只有在第一次被使用时才会创建。</li>
+<li><strong>线程安全问题</strong>：在多线程环境下，需要处理线程安全问题，以确保只有一个实例被创建。</li>
+</ol>
+</li>
+<li><h3 id="懒汉单例模式的实现方式"><a href="#懒汉单例模式的实现方式" class="headerlink" title="懒汉单例模式的实现方式"></a>懒汉单例模式的实现方式</h3><p>下面是一个基本的懒汉单例模式的实现示例（不考虑线程安全）：</p>
+<div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #C792EA">class</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #C792EA">public</span><span style="color: #89DDFF">:</span></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 获取单例实例的静态方法</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">static</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #C792EA">*</span><span style="color: #F07178"> </span><span style="color: #82AAFF">getInstance</span><span style="color: #89DDFF">()</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #89DDFF; font-style: italic">if</span><span style="color: #F07178"> </span><span style="color: #89DDFF">(</span><span style="color: #F07178">instance </span><span style="color: #89DDFF">==</span><span style="color: #F07178"> </span><span style="color: #89DDFF">nullptr)</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">          instance </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #89DDFF">new</span><span style="color: #F07178"> </span><span style="color: #82AAFF">Singleton</span><span style="color: #89DDFF">();</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #89DDFF">&#125;</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #89DDFF; font-style: italic">return</span><span style="color: #F07178"> instance</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF">&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 禁止拷贝构造函数和赋值操作符</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #82AAFF">Singleton</span><span style="color: #89DDFF">(</span><span style="color: #C792EA">const</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #C792EA">&amp;</span><span style="color: #89DDFF">)</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">delete</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #FFCB6B">Singleton</span><span style="color: #C792EA">&amp;</span><span style="color: #F07178"> </span><span style="color: #F78C6C">operator</span><span style="color: #FFCB6B">=</span><span style="color: #89DDFF">(</span><span style="color: #C792EA">const</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #C792EA">&amp;</span><span style="color: #89DDFF">)</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">delete</span><span style="color: #89DDFF">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">private</span><span style="color: #89DDFF">:</span></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 私有构造函数</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #82AAFF">Singleton</span><span style="color: #89DDFF">()</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 静态成员变量，用于存储唯一的实例</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">static</span><span style="color: #F07178"> Singleton</span><span style="color: #89DDFF">*</span><span style="color: #F07178"> instance</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #676E95; font-style: italic">// 静态成员变量的初始化</span></span>
+<span class="line"><span style="color: #BABED8">Singleton</span><span style="color: #89DDFF">*</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">instance </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">nullptr;</span></span></code></pre></div></li>
+<li><h3 id="线程安全的实现"><a href="#线程安全的实现" class="headerlink" title="线程安全的实现"></a>线程安全的实现</h3><p>在多线程环境下，上述实现可能会导致线程安全问题，因此需要对其进行改进。可以使用互斥锁（<code>mutex</code>）来确保线程安全：</p>
+<div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #89DDFF; font-style: italic">#include</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;</span><span style="color: #C3E88D">mutex</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">class</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #C792EA">public</span><span style="color: #89DDFF">:</span></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 获取单例实例的静态方法</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">static</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #C792EA">*</span><span style="color: #F07178"> </span><span style="color: #82AAFF">getInstance</span><span style="color: #89DDFF">()</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #89DDFF; font-style: italic">if</span><span style="color: #F07178"> </span><span style="color: #89DDFF">(</span><span style="color: #F07178">instance </span><span style="color: #89DDFF">==</span><span style="color: #F07178"> </span><span style="color: #89DDFF">nullptr)</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">          </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #F07178">lock_guard</span><span style="color: #89DDFF">&lt;</span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #F07178">mutex</span><span style="color: #89DDFF">&gt;</span><span style="color: #F07178"> </span><span style="color: #82AAFF">lock</span><span style="color: #89DDFF">(</span><span style="color: #F07178">mutex</span><span style="color: #89DDFF">);</span></span>
+<span class="line"><span style="color: #F07178">          </span><span style="color: #89DDFF; font-style: italic">if</span><span style="color: #F07178"> </span><span style="color: #89DDFF">(</span><span style="color: #F07178">instance </span><span style="color: #89DDFF">==</span><span style="color: #F07178"> </span><span style="color: #89DDFF">nullptr)</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">              instance </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #89DDFF">new</span><span style="color: #F07178"> </span><span style="color: #82AAFF">Singleton</span><span style="color: #89DDFF">();</span></span>
+<span class="line"><span style="color: #F07178">          </span><span style="color: #89DDFF">&#125;</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #89DDFF">&#125;</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #89DDFF; font-style: italic">return</span><span style="color: #F07178"> instance</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF">&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 禁止拷贝构造函数和赋值操作符</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #82AAFF">Singleton</span><span style="color: #89DDFF">(</span><span style="color: #C792EA">const</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #C792EA">&amp;</span><span style="color: #89DDFF">)</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">delete</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #FFCB6B">Singleton</span><span style="color: #C792EA">&amp;</span><span style="color: #F07178"> </span><span style="color: #F78C6C">operator</span><span style="color: #FFCB6B">=</span><span style="color: #89DDFF">(</span><span style="color: #C792EA">const</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #C792EA">&amp;</span><span style="color: #89DDFF">)</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">delete</span><span style="color: #89DDFF">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">private</span><span style="color: #89DDFF">:</span></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 私有构造函数</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #82AAFF">Singleton</span><span style="color: #89DDFF">()</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 静态成员变量，用于存储唯一的实例</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">static</span><span style="color: #F07178"> Singleton</span><span style="color: #89DDFF">*</span><span style="color: #F07178"> instance</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 互斥锁，用于保证线程安全</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">static</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #F07178">mutex mutex</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #676E95; font-style: italic">// 静态成员变量的初始化</span></span>
+<span class="line"><span style="color: #BABED8">Singleton</span><span style="color: #89DDFF">*</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">instance </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">nullptr;</span></span>
+<span class="line"><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">mutex </span><span style="color: #FFCB6B">Singleton</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">mutex</span><span style="color: #89DDFF">;</span></span></code></pre></div></li>
+<li><h3 id="C-11-及以后的标准"><a href="#C-11-及以后的标准" class="headerlink" title="C++11 及以后的标准"></a>C++11 及以后的标准</h3><p>在C++11及以后的标准中，可以使用<code>std::call_once</code>来确保实例的唯一性，并提高线程安全性：</p>
+<div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #89DDFF; font-style: italic">#include</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;</span><span style="color: #C3E88D">mutex</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">class</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #C792EA">public</span><span style="color: #89DDFF">:</span></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 获取单例实例的静态方法</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">static</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #C792EA">*</span><span style="color: #F07178"> </span><span style="color: #82AAFF">getInstance</span><span style="color: #89DDFF">()</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #82AAFF">call_once</span><span style="color: #89DDFF">(</span><span style="color: #F07178">flag</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> </span><span style="color: #89DDFF">[]()</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">          </span><span style="color: #BABED8">instance</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">reset</span><span style="color: #89DDFF">(new</span><span style="color: #F07178"> </span><span style="color: #82AAFF">Singleton</span><span style="color: #89DDFF">());</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #89DDFF">&#125;);</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #89DDFF; font-style: italic">return</span><span style="color: #F07178"> </span><span style="color: #BABED8">instance</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">get</span><span style="color: #89DDFF">();</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF">&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 禁止拷贝构造函数和赋值操作符</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #82AAFF">Singleton</span><span style="color: #89DDFF">(</span><span style="color: #C792EA">const</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #C792EA">&amp;</span><span style="color: #89DDFF">)</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">delete</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #FFCB6B">Singleton</span><span style="color: #C792EA">&amp;</span><span style="color: #F07178"> </span><span style="color: #F78C6C">operator</span><span style="color: #FFCB6B">=</span><span style="color: #89DDFF">(</span><span style="color: #C792EA">const</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #C792EA">&amp;</span><span style="color: #89DDFF">)</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">delete</span><span style="color: #89DDFF">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">private</span><span style="color: #89DDFF">:</span></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 私有构造函数</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #82AAFF">Singleton</span><span style="color: #89DDFF">()</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 静态成员变量，用于存储唯一的实例</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">static</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #F07178">unique_ptr</span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">Singleton</span><span style="color: #89DDFF">&gt;</span><span style="color: #F07178"> instance</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #676E95; font-style: italic">  // 静态变量，用于确保单例实例只创建一次</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">static</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #F07178">once_flag flag</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #676E95; font-style: italic">// 静态成员变量的初始化</span></span>
+<span class="line"><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">unique_ptr</span><span style="color: #89DDFF">&lt;</span><span style="color: #BABED8">Singleton</span><span style="color: #89DDFF">&gt;</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">Singleton</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">instance</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">once_flag </span><span style="color: #FFCB6B">Singleton</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">flag</span><span style="color: #89DDFF">;</span></span></code></pre></div><p>在这个实现中，<code>std::call_once</code> 和 <code>std::once_flag</code> 确保了即使在多线程环境中，单例对象也只会被创建一次。<code>std::unique_ptr</code> 自动管理内存，避免了手动释放内存的麻烦。</p>
+<p>使用互斥锁（mutex）来确保线程安全时为什么只有锁：std::lock_guard<a href="std::mutex">std::mutex</a> lock(mutex); 没有解锁?</p>
+<p>在使用 <code>std::lock_guard&lt;std::mutex&gt;</code> 时，解锁是由 <code>std::lock_guard</code> 自动处理的，而不需要显式地调用解锁操作。这是因为 <code>std::lock_guard</code> 是一个RAII（Resource Acquisition Is Initialization）风格的类，它的设计目的是简化互斥锁的管理并自动释放资源。</p>
+</li>
+<li><h3 id="RAII-和-std-lock-guard"><a href="#RAII-和-std-lock-guard" class="headerlink" title="RAII 和 std::lock_guard"></a>RAII 和 <code>std::lock_guard</code></h3><p>RAII 是一种编程习惯，确保资源（如内存、文件句柄、互斥锁等）的生命周期由对象的生命周期来管理。<code>std::lock_guard</code> 利用 RAII 原则来管理互斥锁的锁定和解锁：</p>
+<ol>
+<li><strong>构造函数</strong>：当 <code>std::lock_guard</code> 对象被创建时，它会在构造函数中自动锁定传递给它的 <code>std::mutex</code> 对象。</li>
+<li><strong>析构函数</strong>：当 <code>std::lock_guard</code> 对象被销毁（即其作用域结束时），它的析构函数会自动释放（解锁）互斥锁。</li>
+</ol>
+<p>这种设计使得你不需要显式地编写解锁代码，降低了因为遗漏解锁操作而导致的潜在错误。</p>
+</li>
+<li><h3 id="解释-1"><a href="#解释-1" class="headerlink" title="解释"></a>解释</h3></li>
+<li><p><code>std::lock_guard&lt;std::mutex&gt; lock(mutex);</code></p>
+<p>：</p>
+<ul>
+<li>当执行到这行代码时，<code>lock</code> 对象会在构造函数中自动锁定 <code>mutex</code>。</li>
+<li>当 <code>lock</code> 对象超出作用域（例如，<code>getInstance</code> 方法的执行结束时），<code>lock</code> 的析构函数会被调用，从而自动解锁 <code>mutex</code>。</li>
+</ul>
+</li>
+<li><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3></li>
+<li><p><strong>自动解锁</strong>：减少了因为忘记解锁导致的死锁问题。</p>
+</li>
+<li><p><strong>简化代码</strong>：不需要显式地管理锁的释放，使代码更加简洁和易于维护。</p>
+</li>
+<li><p><strong>异常安全</strong>：即使在 <code>getInstance</code> 方法中发生异常，<code>std::lock_guard</code> 也会确保互斥锁在 <code>lock</code> 对象被销毁时正确解锁，从而避免死锁。</p>
+<p>通过 <code>std::lock_guard</code> 或其他类似的 RAII 风格的工具，C++ 提供了一种简洁而安全的方式来管理互斥锁，帮助程序员编写更健壮的多线程代码。</p>
+<p><img src="/../images/image-20240821154750452.png" alt="image-20240821154750452"></p>
+<p><img src="/../images/image-20240821155047037.png" alt="image-20240821155047037"></p>
+</li>
+</ul>
+<p><img src="/../images/image-20240822093944038.png" alt="image-20240822093944038"></p>
+<p>decltype(auto)和auto的区别</p>
+<p><code>decltype(auto)</code> 和 <code>auto</code> 都用于类型推导，但它们有不同的行为：</p>
+<ol>
+<li><p><strong><code>auto</code></strong>:</p>
+<ul>
+<li>用于自动推导变量的类型。<code>auto</code> 根据表达式的值推导类型，不会保留表达式的引用性（即 <code>auto</code> 不会推导出引用类型，除非显式指定）。</li>
+<li>例如，<code>auto x = 5;</code> 中，<code>x</code> 的类型是 <code>int</code>。</li>
+</ul>
+</li>
+<li><p><strong><code>decltype(auto)</code></strong>:</p>
+<ul>
+<li>结合 <code>decltype</code> 和 <code>auto</code> 的特性。它推导出表达式的类型，包括引用（<code>decltype</code> 会保留表达式的原始类型）。</li>
+<li>例如，<code>decltype(auto) y = (5);</code> 中，<code>y</code> 的类型是 <code>int&amp;</code>，因为 <code>(5)</code> 是一个左值引用。</li>
+</ul>
+</li>
+</ol>
+<p><strong>总结</strong>:</p>
+<ul>
+<li>使用 <code>auto</code> 时，结果类型是值类型。</li>
+<li>使用 <code>decltype(auto)</code> 时，结果类型保持原表达式的类型，包括引用。</li>
+</ul>
+<p><img src="/../images/image-20240822094955233.png" alt="image-20240822094955233"></p>
+<p><img src="/../images/image-20240822095110135.png" alt="image-20240822095110135"></p>
+<p><img src="/../images/image-20240822095353349.png" alt="image-20240822095353349">T1{}创建一个T1的对象</p>
+<h3 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h3><p><img src="/../images/image-20240822100310129.png" alt="image-20240822100310129"></p>
+<p>函数作为参数传入另一个函数，实际传的是这个函数的起始地址</p>
+<p><img src="/../images/image-20240822100649562.png" alt="image-20240822100649562"></p>
+<p>确实相当于函数指针</p>
+<p><img src="/../images/image-20240822100903926.png" alt="image-20240822100903926"></p>
+<p><img src="/../images/image-20240822102642020.png" alt="image-20240822102642020"></p>
+<p><img src="/../images/image-20240822102841702.png" alt="image-20240822102841702"></p>
+<p><img src="/../images/image-20240822103024352.png" alt="image-20240822103024352"></p>
+<p><img src="/../images/image-20240822103222797.png" alt="image-20240822103222797"></p>
+<p><img src="/../images/image-20240822103620126.png" alt="image-20240822103620126"></p>
+<p><img src="/../images/image-20240822103849124.png" alt="image-20240822103849124"></p>
+<p><img src="/../images/image-20240822104300564.png" alt="image-20240822104300564"></p>
+<p><img src="/../images/image-20240822142510370.png" alt="image-20240822142510370"></p>
+<p><img src="/../images/image-20240822142730386.png" alt="image-20240822142730386"></p>
+<p>###避免使用模板参数</p>
+<p><img src="/../images/image-20240822143331265.png" alt="image-20240822143331265"></p>
+<p>类型擦除技术：std::function容器</p>
+<p><img src="/../images/image-20240822143825237.png" alt="image-20240822143825237"></p>
+<p><img src="/../images/image-20240822145011740.png" alt="image-20240822145011740">但是没办法做部分特例化</p>
+<p><img src="/../images/image-20240822145901194.png" alt="image-20240822145901194"></p>
+<p><strong>立即调用 Lambda</strong>：在 lambda 表达式的定义后面加上 <code>()</code>，立即调用这个匿名函数。 lambda 表达式的返回值可以用于初始化变量或进行其他操作。</p>
+<p><img src="/../images/image-20240822150515258.png" alt="image-20240822150515258"></p>
+<p>可以利用return自带的break效果既实现break又赋值的效果</p>
+<p><img src="/../images/image-20240822151844264.png" alt="image-20240822151844264"></p>
+<p><img src="/../images/image-20240822152541777.png" alt="image-20240822152541777"></p>
+<p><img src="/../images/image-20240822152759758.png" alt="image-20240822152759758"></p>
+<p><img src="/../images/image-20240822153156878.png" alt="image-20240822153156878"></p>
+<p><img src="/../images/image-20240822161836536.png" alt="image-20240822161836536"></p>
+<p><img src="/../images/image-20240822162204007.png" alt="image-20240822162204007"></p>
+<p>左值持久，右值短暂，左值有持久的状态，而右值要么是字面常量，要么是在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC&spm=1001.2101.3001.7020">表达式求值</a>过程中创建的临时对象(将要被销毁的对象)。</p>
+<p>右值引用的好处是减少右值作为参数传递时的复制开销</p>
+<p>使用std::move可以获得绑定到一个左值的右值引用</p>
+<div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #C792EA">int</span><span style="color: #BABED8"> intValue </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #F78C6C">10</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #C792EA">int</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&amp;&amp;</span><span style="color: #BABED8">intValue3 </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #82AAFF">move</span><span style="color: #89DDFF">(</span><span style="color: #BABED8">intValue</span><span style="color: #89DDFF">);</span></span></code></pre></div><p><code>decltype(auto)</code> 是 C++11 引入的一种类型推断工具，它结合了 <code>decltype</code> 和 <code>auto</code> 的特性，用于在声明变量时推断其类型。与 <code>auto</code> 不同，<code>decltype(auto)</code> 更精确地推断变量的类型，包括引用性。</p>
+<ul>
+<li><p><strong>用法</strong>：<code>decltype(auto)</code> 在声明变量时，会推断出表达式的确切类型，包括是否是引用类型。</p>
+<div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #C792EA">int</span><span style="color: #BABED8"> x </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #F78C6C">10</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #C792EA">int</span><span style="color: #89DDFF">&amp;</span><span style="color: #BABED8"> ref </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> x</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #C792EA">decltype</span><span style="color: #89DDFF">(</span><span style="color: #C792EA">auto</span><span style="color: #89DDFF">)</span><span style="color: #BABED8"> y </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> ref</span><span style="color: #89DDFF">;</span><span style="color: #676E95; font-style: italic"> // y 是 int&amp;，与 ref 类型相同</span></span></code></pre></div></li>
+<li><p><strong>区别</strong>：<code>auto</code> 只推断值类型，而 <code>decltype(auto)</code> 会保持原有的引用类型或常量性。</p>
+<div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #C792EA">auto</span><span style="color: #BABED8"> a </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> x</span><span style="color: #89DDFF">;</span><span style="color: #676E95; font-style: italic">          // a 是 int</span></span>
+<span class="line"><span style="color: #C792EA">decltype</span><span style="color: #89DDFF">(</span><span style="color: #C792EA">auto</span><span style="color: #89DDFF">)</span><span style="color: #BABED8"> b </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> x</span><span style="color: #89DDFF">;</span><span style="color: #676E95; font-style: italic"> // b 是 int，b 不是引用</span></span>
+<span class="line"><span style="color: #C792EA">decltype</span><span style="color: #89DDFF">(</span><span style="color: #C792EA">auto</span><span style="color: #89DDFF">)</span><span style="color: #BABED8"> c </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> ref</span><span style="color: #89DDFF">;</span><span style="color: #676E95; font-style: italic"> // c 是 int&amp;，与 ref 类型相同</span></span></code></pre></div></li>
+</ul>
+<p><strong>总结</strong>：<code>decltype(auto)</code> 在需要精确类型推断，包括引用时非常有用。</p>
+<p>但是tuple容器的万能推导由于历史原因，不是decltype(auto),而是auto &amp;&amp;</p>
+<p><img src="/../images/image-20240825111507625.png" alt="image-20240825111507625"></p>
+<p><img src="/../images/image-20240825111624413.png" alt="image-20240825111624413"></p>
+<p>结构化绑定的基本语法如下：</p>
+<p>auto [var1, var2, var3] &#x3D; expression;</p>
+<p><img src="/../images/image-20240825112136528.png" alt="image-20240825112136528"></p>
+<p><img src="/../images/image-20240825154641671.png" alt="image-20240825154641671"></p>
+<p><img src="/../images/image-20240825155359129.png" alt="image-20240825155359129"></p>
+<p><img src="/../images/image-20240825155541735.png" alt="image-20240825155541735"></p>
+<p><img src="/../images/image-20240826130922114.png" alt="image-20240826130922114">optional就像一个更安全的指针</p>
+<p>在 C++ 中，<code>union</code> 是一种数据结构，它允许在同一内存位置存储不同的数据类型。<code>union</code> 的所有成员共享同一块内存区域，这意味着在任何给定时刻，<code>union</code> 只能存储一个成员的数据。使用 <code>union</code> 可以节省内存，特别是在需要存储多种不同类型但从不同时存储这些类型时。</p>
+<h3 id="union-的基本语法"><a href="#union-的基本语法" class="headerlink" title="union 的基本语法"></a><code>union</code> 的基本语法</h3><div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #C792EA">union</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">UnionName</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">    type1 member1</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #F07178">    type2 member2</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #F07178">    type3 member3</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #676E95; font-style: italic">    // more members</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;;</span></span></code></pre></div><h3 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h3><ol>
+<li><p><strong>内存共享</strong>：</p>
+<ul>
+<li><code>union</code> 中的所有成员共享同一块内存。因此，<code>union</code> 的大小由其最大成员的大小决定。</li>
+</ul>
+</li>
+<li><p><strong>只能存储一个成员</strong>：</p>
+<ul>
+<li>虽然 <code>union</code> 可以定义多个成员，但在任何时刻只能存储一个成员的数据。写入一个成员会覆盖掉之前写入的成员的数据。</li>
+</ul>
+</li>
+<li><p><strong>节省内存</strong>：</p>
+<ul>
+<li>因为所有成员共用一块内存，所以 <code>union</code> 可以节省内存，尤其是在只需要存储其中一个成员的数据时。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3><div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #89DDFF; font-style: italic">#include</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;</span><span style="color: #C3E88D">iostream</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">union</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">Data</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #C792EA">int</span><span style="color: #F07178"> intValue</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #C792EA">float</span><span style="color: #F07178"> floatValue</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #C792EA">char</span><span style="color: #F07178"> charValue</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">int</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">main</span><span style="color: #89DDFF">()</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&#123;</span></span>
+<span class="line"><span style="color: #BABED8">    Data data</span><span style="color: #89DDFF">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #BABED8">    data</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">intValue </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #F78C6C">5</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">cout </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">intValue: </span><span style="color: #89DDFF">&quot;</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #BABED8"> data</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">intValue </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">endl</span><span style="color: #89DDFF">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #BABED8">    data</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">floatValue </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #F78C6C">3.14</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">cout </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">floatValue: </span><span style="color: #89DDFF">&quot;</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #BABED8"> data</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">floatValue </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">endl</span><span style="color: #89DDFF">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #BABED8">    data</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">charValue </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">A</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">cout </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">charValue: </span><span style="color: #89DDFF">&quot;</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #BABED8"> data</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">charValue </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">endl</span><span style="color: #89DDFF">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #676E95; font-style: italic">    // 访问数据会输出不确定的结果，因为各个成员共享同一内存</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">cout </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">intValue (after modifying to charValue): </span><span style="color: #89DDFF">&quot;</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #BABED8"> data</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">intValue </span><span style="color: #89DDFF">&lt;&lt;</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">std</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">endl</span><span style="color: #89DDFF">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF; font-style: italic">return</span><span style="color: #BABED8"> </span><span style="color: #F78C6C">0</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #89DDFF">&#125;</span></span></code></pre></div><p>在上面的示例中，<code>union</code> <code>Data</code> 可以存储 <code>int</code>, <code>float</code>, 和 <code>char</code> 三种数据类型，但它们共享同一块内存。当写入 <code>floatValue</code> 后，之前存储的 <code>intValue</code> 的数据会被覆盖，读取 <code>intValue</code> 会得到不可预测的结果。</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><p><strong>类型安全</strong>：</p>
+<ul>
+<li>使用 <code>union</code> 时要注意类型安全。读取当前未写入的成员数据可能会导致未定义的行为。</li>
+</ul>
+</li>
+<li><p><strong>构造和析构</strong>：</p>
+<ul>
+<li><code>union</code> 允许只有一个成员的构造和析构。C++11 之后，<code>union</code> 可以包含具有非平凡构造函数、析构函数或拷贝&#x2F;移动操作符的成员，但这些操作必须在使用 <code>union</code> 的情况下正确处理。</li>
+</ul>
+</li>
+<li><p><strong><code>std::variant</code> 替代</strong>：</p>
+<ul>
+<li>C++17 引入了 <code>std::variant</code>，这是一个更安全的替代 <code>union</code>，提供了类型安全的联合体和更丰富的功能。</li>
+</ul>
+</li>
+</ul>
+<p>总的来说，<code>union</code> 是一个低级数据结构，用于内存优化和处理不同类型的数据，但在实际编程中需谨慎使用。</p>
+<p><img src="/../images/image-20240826131405785.png" alt="image-20240826131405785"></p>
+<p><img src="/../images/image-20240826133023527.png" alt="image-20240826133023527"></p>
+<p><img src="/../images/image-20240826133352602.png" alt="image-20240826133352602"></p>
+<p><img src="/../images/image-20240826134549406.png" alt="image-20240826134549406"></p>
+<p><img src="/../images/image-20240826135522792.png" alt="image-20240826135522792"></p>
+<ul>
+<li>使用 <code>auto</code> 作为参数类型实际上利用了 C++ 的模板机制，因为 <code>auto</code> 类型推断相当于模板类型参数的自动推导。虽然 lambda 本身不是一个模板，但它的参数使用 <code>auto</code> 实际上是利用了模板的类型推断机制。</li>
+<li><code>[&amp;] (auto const &amp;t)&#123;&#125;</code> 使用了模板特性中的类型推断机制，通过 <code>auto</code> 使得 lambda 表达式能够处理多种不同类型的参数。这个功能在 C++11 及其后续版本中成为了更灵活、强大的工具，使得代码更加简洁和通用。</li>
+</ul>
+<p><img src="/../images/image-20240826140520404.png" alt="image-20240826140520404"></p>
+<p><img src="/../images/image-20240826140928719.png" alt="image-20240826140928719"></p>
+<h1 id="从汇编角度看编译器优化"><a href="#从汇编角度看编译器优化" class="headerlink" title="从汇编角度看编译器优化"></a>从汇编角度看编译器优化</h1><p>编译器是从源代码生成汇编语言</p>
+<p><img src="/../images/image-20240826142543763.png" alt="image-20240826142543763"></p>
+<p>RIP是当前执行的代码的地址</p>
+<p>MMX，XMM，YMM都是用于储存浮点数的寄存器</p>
+<p>把局部变量放入寄存器，读写就更快了</p>
+<p>rsp代表堆栈：      -4（%rsp）其中-代表是堆栈上的某一个地址</p>
+<p><img src="/../images/image-20240826143356174.png" alt="image-20240826143356174"></p>
+<p><img src="/../images/image-20240826145632245.png" alt="image-20240826145632245"></p>
+<p><img src="/../images/image-20240826145948278.png" alt="image-20240826145948278"></p>
+<p>eax与rax的低32位是共用的</p>
+<p>ax与eax的低16位是通用的</p>
+<p><img src="/../images/image-20240826162116558.png" alt="image-20240826162116558"></p>
+<p><img src="/../images/image-20240826162507877.png" alt="image-20240826162507877">%eax ：返回值</p>
+<p><img src="/../images/image-20240826163129510.png" alt="image-20240826163129510"></p>
+<p><img src="/../images/image-20240826163353133.png" alt="image-20240826163353133"></p>
+<p><img src="/../images/image-20240826163854896.png" alt="image-20240826163854896"></p>
+<p>l代表32位，q代表64位</p>
+<p><img src="/../images/image-20240826164111288.png" alt="image-20240826164111288"></p>
+<p><img src="/../images/image-20240826165156571.png" alt="image-20240826165156571"></p>
+<p><img src="/../images/image-20240826165630808.png" alt="image-20240826165630808"></p>
+<p>在 C++ 中，<code>ThreadPool threadPool &#123;&#125;;</code> 和 <code>ThreadPool threadPool ;</code> 是两种不同的初始化方式，它们对 <code>ThreadPool</code> 对象的初始化有所不同。</p>
+<h3 id="1-ThreadPool-threadPool"><a href="#1-ThreadPool-threadPool" class="headerlink" title="1. ThreadPool threadPool {};"></a>1. <code>ThreadPool threadPool &#123;&#125;;</code></h3><p>这是 <strong>直接初始化（Direct Initialization）</strong> 的一种方式，使用了 <strong>统一初始化语法</strong>（Uniform Initialization Syntax）。具体来说，这种写法会调用 <code>ThreadPool</code> 的默认构造函数，并且初始化所有成员变量为默认值：</p>
+<ul>
+<li><strong>如果 <code>ThreadPool</code> 有默认构造函数</strong>，它将被调用来创建对象。</li>
+<li><strong>如果 <code>ThreadPool</code> 的构造函数</strong>没有显式初始化某些成员变量，它们会被自动初始化为其类型的默认值。对于基本数据类型（如 <code>int</code>），这意味着它们会被初始化为 <code>0</code>。对于指针类型，它们会被初始化为 <code>nullptr</code>。</li>
+</ul>
+<h3 id="2-ThreadPool-threadPool"><a href="#2-ThreadPool-threadPool" class="headerlink" title="2. ThreadPool threadPool ;"></a>2. <code>ThreadPool threadPool ;</code></h3><p>这是 <strong>默认初始化（Default Initialization）</strong> 的一种方式。在这种情况下，<code>ThreadPool</code> 对象的初始化行为依赖于以下几种情况：</p>
+<ul>
+<li><strong>如果 <code>ThreadPool</code> 有默认构造函数</strong>，它将被调用来创建对象。</li>
+<li><strong>如果 <code>ThreadPool</code> 的构造函数没有显式初始化某些成员变量</strong>，那么这些成员变量的初始化方式依赖于它们的类型和是否有默认构造函数。基本数据类型（如 <code>int</code>）不会被初始化到任何特定值（它们会是未定义的），指针类型也不会自动初始化（它们的值是不确定的）。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>**<code>ThreadPool threadPool &#123;&#125;;</code>**：使用统一初始化语法，所有成员变量被初始化为其类型的默认值，较为安全。</li>
+<li><strong><code>ThreadPool threadPool ;</code><strong>：默认初始化，成员变量的初始值依赖于其类型和构造函数，</strong>可能会导致未定义行为（对于基本数据类型）</strong>。</li>
+</ul>
+<p>在实践中，推荐使用 <code>ThreadPool threadPool &#123;&#125;;</code> 以确保对象的成员变量被正确地初始化，避免潜在的未定义行为。</p>
+<p>在对象构造时，<code>std::lock_guard</code> 会自动锁定传入的互斥锁，而在对象析构时，它会自动释放锁</p>
+<p><strong><code>std::lock_guard&lt;std::mutex&gt; guard(lock);</code></strong></p>
+<p>当执行 <code>std::lock_guard&lt;std::mutex&gt; guard(lock);</code> 时：</p>
+<ul>
+<li><strong>锁定</strong>: <code>guard</code> 对象在创建时会自动调用 <code>lock()</code> 方法来锁定传入的互斥锁（<code>lock</code>）。</li>
+<li><strong>作用域结束</strong>: 当 <code>guard</code> 对象的作用域结束（例如，离开当前的代码块或函数）时，它的析构函数会自动调用 <code>unlock()</code> 方法来解锁互斥锁</li>
+</ul>
+<p>要理解 <code>subset</code> 中的这行数据，我们可以将其拆解成几部分来分析：</p>
+<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">[[ 0.          1.          2.          3.          4.          5.</span></span>
+<span class="line"><span style="color: #babed8">   6.          7.          8.         -1.         -1.          9.</span></span>
+<span class="line"><span style="color: #babed8">  -1.         -1.         10.         11.         12.         -1.</span></span>
+<span class="line"><span style="color: #babed8">  21.50975911 13.        ]]</span></span></code></pre></div><h3 id="1-关键点索引"><a href="#1-关键点索引" class="headerlink" title="1. 关键点索引"></a>1. 关键点索引</h3><ul>
+<li>前 18 个值 <code>[0, 1, 2, 3, 4, 5, 6, 7, 8, -1, -1, 9, -1, -1, 10, 11, 12, -1]</code> 代表了关键点的索引。<ul>
+<li>正整数表示该位置有一个有效的关键点索引。</li>
+<li><code>-1</code> 表示该位置没有对应的关键点。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-总评分"><a href="#2-总评分" class="headerlink" title="2. 总评分"></a>2. 总评分</h3><ul>
+<li><code>21.50975911</code> 是这个组合的总评分。这个评分是所有有效关键点的评分之和或某种加权评分的结果。</li>
+</ul>
+<h3 id="3-关键点数量"><a href="#3-关键点数量" class="headerlink" title="3. 关键点数量"></a>3. 关键点数量</h3><ul>
+<li><code>13</code> 是这个组合中的有效关键点数量。这里 <code>13</code> 表示在该组合中共有 13 个有效的关键点索引。</li>
+</ul>
+<h3 id="结合信息"><a href="#结合信息" class="headerlink" title="结合信息"></a>结合信息</h3><p>这个 <code>subset</code> 行数据表示一个关键点组合，其中包含 13 个有效的关键点，所有这些关键点的索引被列出。组合的总评分为 <code>21.50975911</code>。通过这些信息，你可以了解该组合的结构以及它在某种评分机制下的表现。</p>
+<h4 id="详细解读："><a href="#详细解读：" class="headerlink" title="详细解读："></a>详细解读：</h4><ul>
+<li>有效关键点索引为 <code>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]</code>，总共 13 个。</li>
+<li>索引为 <code>-1</code> 的位置表示这些位置没有有效的关键点。</li>
+<li>总评分 <code>21.50975911</code> 可能是根据这些有效关键点的某些特性（如评分、置信度等）计算出来的。</li>
+</ul>
+<p>这样的 <code>subset</code> 数据通常用于在处理关键点检测任务中，选择或评估最佳的关键点组合。</p>
+<p>这个是candidate： [[2.19000000e+02 1.18000000e+02 9.45192695e-01 0.00000000e+00] [1.96000000e+02 2.63000000e+02 9.28416848e-01 1.00000000e+00] [8.70000000e+01 2.89000000e+02 8.54923248e-01 2.00000000e+00] [6.60000000e+01 4.49000000e+02 8.24636817e-01 3.00000000e+00] [1.20000000e+02 5.07000000e+02 7.98071980e-01 4.00000000e+00] [3.07000000e+02 2.38000000e+02 8.55016530e-01 5.00000000e+00] [3.64000000e+02 3.76000000e+02 7.69826353e-01 6.00000000e+00] [2.81000000e+02 4.45000000e+02 8.87847126e-01 7.00000000e+00] [1.68000000e+02 5.42000000e+02 4.70188409e-01 8.00000000e+00] [2.98000000e+02 5.27000000e+02 4.78751719e-01 9.00000000e+00] [1.94000000e+02 1.03000000e+02 9.33498561e-01 1.00000000e+01] [2.30000000e+02 1.02000000e+02 9.27351594e-01 1.10000000e+01] [1.35000000e+02 1.22000000e+02 8.83832693e-01 1.20000000e+01]] 这个是subset: [[ 0.          1.          2.          3.          4.          5.   6.          7.          8.         -1.         -1.          9.  -1.         -1.         10.         11.         12.         -1.  21.50975911 13.        ]]</p>
+<p>“Stack underflow”和“stack overflow”都是与栈（stack）数据结构相关的错误，但它们的含义和发生的情况不同：</p>
+<h3 id="Stack-Overflow（栈溢出）"><a href="#Stack-Overflow（栈溢出）" class="headerlink" title="Stack Overflow（栈溢出）"></a>Stack Overflow（栈溢出）</h3><ul>
+<li><strong>定义</strong>：栈溢出发生在栈的大小超过其最大容量时。通常是由于过深的递归调用或在栈上分配了过多的局部变量导致的。</li>
+<li><strong>后果</strong>：栈溢出通常会导致程序崩溃或异常终止，因为系统无法继续在栈上分配内存。</li>
+</ul>
+<h3 id="Stack-Underflow（栈下溢出）"><a href="#Stack-Underflow（栈下溢出）" class="headerlink" title="Stack Underflow（栈下溢出）"></a>Stack Underflow（栈下溢出）</h3><ul>
+<li><strong>定义</strong>：栈下溢出发生在试图从空栈中弹出元素时。例如，尝试执行“pop”操作但栈为空。</li>
+<li><strong>后果</strong>：栈下溢出可能导致访问未定义的内存，程序可能会抛出异常或返回错误。</li>
+</ul>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>溢出（overflow）</strong>：栈容量超出限制。</li>
+<li><strong>下溢（underflow）</strong>：试图从空栈中移除元素。</li>
+</ul>
+<p><code>NULL</code> 是一个预处理宏，通常被定义为 <code>0</code> 或 <code>((void*)0)</code>。它在类型上是一个整数，因此可能导致类型不安全的情况。</p>
+<ul>
+<li><p><code>nullptr</code> 是 C++11 引入的一个关键字，表示空指针。它是一个特定的类型 <code>std::nullptr_t</code>，能更好地支持类型安全。</p>
+</li>
+<li><p><strong>OpenGL 上下文</strong>：OpenGL 上下文是一个包含了所有 OpenGL 状态的信息的环境。每个窗口通常会有一个自己的上下文。</p>
+</li>
+</ul>
+<p>gcc -E main.cpp | tail -n 15 是什么意思</p>
+<p><code>gcc -E main.cpp | tail -n 15</code> 是一个命令行指令，具体含义如下：</p>
+<ul>
+<li><code>gcc</code>：GNU 编译器集合，用于编译 C 和 C++ 程序。</li>
+<li><code>-E</code>：该选项告诉 <code>gcc</code> 只进行预处理，即处理源代码中的宏和包含文件，但不进行编译。</li>
+<li><code>main.cpp</code>：要处理的源文件。</li>
+<li><code>|</code>：管道符，用于将前一个命令的输出传递给后一个命令。</li>
+<li><code>tail -n 15</code>：该命令输出前一个命令的最后 15 行。</li>
+</ul>
+<p>因此，整个命令的作用是预处理 <code>main.cpp</code> 文件，并显示预处理后的结果的最后 15 行。这通常用于调试宏和包含的头文件。</p>
+<p>constexpr</p>
+<p>编译时常量</p>
+<p><em>在编译时计算</em></p>
+<p>结合 <code>if constexpr</code> 根据条件选择性编译代码</p>
+<p><code>__attribute__((inline))</code> 是 GCC 和 Clang 编译器中的一个扩展，用于建议编译器将某个函数内联。内联函数的目的是减少函数调用的开销，通过将函数代码直接插入到调用处来提高性能。</p>
+<ol>
+<li><strong>性能优化</strong>：可以减少函数调用的开销，尤其是在小型函数中。</li>
+<li><strong>不强制</strong>：即使使用了 <code>inline</code> 属性，编译器仍然可以选择不内联，具体取决于优化策略和函数的复杂性。</li>
+<li><strong>适用场景</strong>：通常用于小的、频繁调用的函数。</li>
+</ol>
+<p>把std::string opengl_errno_name(int err)改成static const char *opengl_errno_name(int err)的好处</p>
+<p>将 <code>std::string opengl_errno_name(int err)</code> 改为 <code>static const char *opengl_errno_name(int err)</code> 的好处包括：</p>
+<ol>
+<li><strong>性能提升</strong>：使用 <code>const char*</code> 可以减少内存分配和拷贝操作，提高性能，尤其在频繁调用的情况下。</li>
+<li><strong>内存管理</strong>：<code>const char*</code> 不需要动态分配内存，避免了内存泄漏的风险，使用起来更加安全。</li>
+<li><strong>简单性</strong>：直接返回字符串字面量或静态数组，使代码更简洁，减少不必要的复杂性。</li>
+<li><strong>更好地适应 C 风格 API</strong>：在与 C 语言库交互时，使用 <code>const char*</code> 更加兼容。</li>
+</ol>
+<p><code>#include &lt;GL/gl.h&gt;</code> 和 <code>#include &lt;GL/glu.h&gt;</code> 是 OpenGL 的头文件，它们用于图形编程。具体来说：</p>
+<ol>
+<li>**<code>&lt;GL/gl.h&gt;</code>**：<ul>
+<li>包含了 OpenGL 的核心函数和常量，提供了绘制图形所需的基本接口，比如渲染点、线、三角形等几何图形，以及设置视图、光照、纹理等功能。</li>
+</ul>
+</li>
+<li>**<code>&lt;GL/glu.h&gt;</code>**：<ul>
+<li>提供了一些辅助功能和工具，简化了 OpenGL 的使用。例如，它包含了用于生成和操作网格、处理矩阵变换、创建透视和正交投影等的函数。</li>
+</ul>
+</li>
+</ol>
+<p><code>#include &lt;GLFW/glfw3.h&gt;</code> 是用于包含 GLFW 库的头文件，GLFW 是一个开源的跨平台库，主要用于创建窗口、处理用户输入以及管理 OpenGL 上下文。具体功能包括：</p>
+<ol>
+<li><strong>创建和管理窗口</strong>：可以创建多种类型的窗口，并设置其属性。</li>
+<li><strong>处理输入</strong>：支持键盘、鼠标和游戏手柄输入，方便处理用户交互。</li>
+<li><strong>上下文管理</strong>：简化 OpenGL 上下文的创建和管理，使得在窗口中进行图形渲染更为高效。、</li>
+</ol>
+<p><code>#include &lt;glm/glm.hpp&gt;</code> 和 <code>#include &lt;glm/ext.hpp&gt;</code> 是用于包含 GLM（OpenGL Mathematics）库的头文件。具体功能如下：</p>
+<ol>
+<li>**<code>&lt;glm/glm.hpp&gt;</code>**：<ul>
+<li>提供基础数学类型和操作，例如向量、矩阵、四元数等，支持高效的数学运算，适用于图形编程和物理计算。</li>
+</ul>
+</li>
+<li>**<code>&lt;glm/ext.hpp&gt;</code>**：<ul>
+<li>包含一些扩展功能，比如矩阵变换、投影、视图等常用数学函数，方便进行更复杂的数学运算。</li>
+</ul>
+</li>
+</ol>
+<p>GLM 常用于 OpenGL 应用程序中，以简化数学计算和数据管理。</p>
+<p>❥ 基本<br>jk &#x2F; kj &#x2F; <Esc> 回到普通模式<br>q &#x2F; :wq &#x2F; ZZ 保存并退出<br>Q 记录宏<br>gl &#x2F; $ 移动到行末尾<br>gh &#x2F; ^ 移动到行开头（不包括空格）<br>3gl &#x2F; $2l 移动到行末尾倒数第 3 个字符<br>3gh &#x2F; ^2h 移动到行开头倒数第 3 个字符<br>❥ 跳转<br>gd 跳转到定义<br>gD 跳转到声明<br>gy 跳转到变量类型的定义<br>gY 跳转到虚函数实现<br>go 头文件和源文件来回跳转<br>gr 寻找符号引用<br>gz 罗列所有相关信息（定义、引用等）<br>gf 打开光标下的文件名<br>gF 打开光标下的文件名并跳到右侧指定的行号<br>gx 打开光标下的网页链接<br><C-o> 跳转回来<br>❥ 重构<br>gcc 注释&#x2F;取消注释当前选中的代码&#x2F;行<br>gn 重命名变量<br>gw 尝试自动修复问题<br>g&#x3D; 自动格式化当前代码<br>❥ 预览<br>K 悬浮窗查看文档<br>gsf 预览函数定义<br>gsc 预览类定义<br>gsd 预览语法错误<br>❥ 开关<br>gso 打开大纲<br>gsg 打开 Git 面板<br>gsp 打开项目文件树<br>gss 查看所有静态语法错误<br>gsl 查看所有编译器报错<br>gsi 开关 Inlay Hint<br><F8> 或 <C-t> 打开&#x2F;关闭终端<br>❥ 标签页<br><F4> 一键保存所有打开的文件<br><F3> 切换到下一个标签页<br><F2> 切换到上一个标签页<br><F1> 将当前标签页固定在最前<br><S-F3> 将当前标签页右移一位<br><S-F2> 将当前标签页左移一位<br><S-F1> 关闭当前标签页<br><C-S-F3> 关闭右侧所有标签页<br><C-S-F2>关闭左侧所有标签页<br><C-S-F1> 关闭除当前标签页外所有<br>g<Space> 选择跳转到一个标签页<br>❥ 文本查找<br>,, 当前文件中模糊查找<br>,k 当前项目中正则表达式查找<br>,l 当前项目中的所有文件<br>,b 当前 Vim 已打开文件<br>,o 最近打开过的历史文件<br>,i 当前所有加入 Git 仓库的文件<br>,p 当前 Git 有未提交修改的文件<br>,c 所有 Git 提交历史<br>,v 所有 Git 分支<br>❥ 选择<br>vac 选中当前类<br>vic 选中当前类体内<br>vaf 选中当前函数<br>vif 选中当前函数体<br>vab 选中当前块<br>vib 选中当前块中内容<br>vai 选中当前函数调用语句<br>vii 选中当前函数调用语句的参数列表<br>vap 选中当前参数（包括逗号）<br>vip 选中当前参数（不包括逗号）<br>vin 选中当前数字<br>vat 选中当前注释块</p>
+<ul>
+<li>扩大选择</li>
+</ul>
+<ul>
+<li>缩小选择<br>举一反三：dat 删除当前注释块，cip 修改当前参数<br>❥ 移动<br>]c 下一个类开头<br>[c 上一个类开头<br>]C 下一个类结尾<br>[C 上一个类结尾<br>]f 下一个函数开头<br>[f 上一个函数开头<br>]F 下一个函数结尾<br>[F 上一个函数结尾<br>…以此类推，所有英文字母同上“选择”所述…<br><Space> 全屏任意移动<br>❥ 换位<br>mh 左移参数<br>ml 右移参数<br>mj 下移当前语句<br>mk 上移当前语句<br>maf 下移当前函数<br>mif 上移当前函数<br>mac 下移当前类<br>mic 上移当前类<br>❥ 括号<br>可视模式中：<br>s) 给当前选中内容包上 () 括号<br>s} 给当前选中内容包上 {} 括号<br>s] 给当前选中内容包上 [] 括号<br>s&gt; 给当前选中内容包上 &lt;&gt; 尖括号<br>s’ 给当前选中内容包上 ‘’ 单引号<br>s” 给当前选中内容包上 “” 双引号<br>stspan 给当前选中内容包上<span>标签<br>sta href&#x3D;”b.html” 给当前选中内容包上<a href="b.html">标签<br>普通（NORMAL）模式中：<br>ysi<range><brace> 添加括号<br>cs<oldbrace><newbrace> 改变括号<br>ds<brace> 删除括号<br>❥ CMake<br>cmc 或 :CMakeGenerate 配置当前项目<br>cmb 或 :CMakeBuild 构建当前项目<br>cmr 或 :CMakeRun 运行当前项目<br>cms 或 :CMakeStopRunner 杀死当前终端中的正在运行的程序<br>❥ 文件树<br>y 拷贝<br>x 剪切<br>d 删除<br>p 粘贴<br>a 创建</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/Cplusplus.html" data-id="cm040oe8600005rcxhs4q231b" data-title="Cplusplus" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/ODriver.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ODriver
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/Qt.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Qt</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/ROS.html">ROS</a>
+          </li>
+        
+          <li>
+            <a href="/post/ODriver.html">ODriver</a>
+          </li>
+        
+          <li>
+            <a href="/post/Cplusplus.html">Cplusplus</a>
+          </li>
+        
+          <li>
+            <a href="/post/Qt.html">Qt</a>
+          </li>
+        
+          <li>
+            <a href="/post/risc-v.html">risc_v</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

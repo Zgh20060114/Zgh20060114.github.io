@@ -1,1 +1,335 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><script type="module" crossorigin src="/static/js/120aa8f8.js"></script><link rel="stylesheet" href="/static/css/a14e1a22.css"><meta name="generator" content="Hexo 6.3.0"></head><body id="body-container"><noscript><strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Zgh&#39;s</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Zgh的个人站">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zgh&#39;s">
+<meta property="og:url" content="http://zgh20060114.github.io/page/3/index.html">
+<meta property="og:site_name" content="Zgh&#39;s">
+<meta property="og:description" content="Zgh的个人站">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zgh&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://Zgh20060114.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Pytorch" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/Pytorch.html" class="article-date">
+  <time class="dt-published" datetime="2023-12-15T14:50:19.000Z" itemprop="datePublished">2023-12-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/post/Pytorch.html">Pytorch</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>在 Python 中，lambda 是用来创建匿名函数的关键字。所谓匿名函数，即没有显式定义函数名的函数，通常用于需要临时定义简单函数的场景。</p>
+<p>lambda 函数的语法如下：</p>
+<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">lambda arguments: expression</span></span></code></pre></div><p>其中：</p>
+<ul>
+<li><code>arguments</code> 是函数的参数，可以有多个参数，用逗号隔开。</li>
+<li><code>expression</code> 是函数的返回值计算表达式。</li>
+</ul>
+<p>lambda 函数通常用于需要一个函数，但是又不想正式定义一个函数的场景，比如作为其他函数的参数传递进去，或者在一些函数式编程的场景中使用。</p>
+<p>params &#x3D; [W_xh, W_hh, b_h, W_hq, b_q]<br>for param in params:<br>        param.requires_grad_(True)</p>
+<p>目的是告诉 PyTorch 在模型训练过程中需要计算这些参数的梯度，并且在反向传播时对其进行更新。</p>
+<p><code>Xt*Wxh + Ht−1*Whh=cat(Xt,Ht−1)*cat(Wxh,Whh)</code></p>
+<p><code>torch.matmul(X, W_xh) + torch.matmul(H, W_hh)</code></p>
+<p><code>torch.matmul(torch.cat((X, H), 1), torch.cat((W_xh, W_hh), 0))</code></p>
+<p>当一个类实现了 <code>__call__</code> 方法时，它的实例对象可以像函数一样进行调用。这意味着你可以使用实例对象作为函数来调用，就好像调用一个函数一样。</p>
+<p>例如，假设有一个类 <code>MyClass</code>，并且实现了 <code>__call__</code> 方法：</p>
+<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">python</span></span>
+<span class="line"><span style="color: #babed8">class MyClass:</span></span>
+<span class="line"><span style="color: #babed8">    def __call__(self, x):</span></span>
+<span class="line"><span style="color: #babed8">        print(&quot;Calling MyClass with argument:&quot;, x)</span></span></code></pre></div><p>现在，你可以创建一个 <code>MyClass</code> 的实例，并将其作为函数进行调用：</p>
+<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">python</span></span>
+<span class="line"><span style="color: #babed8">obj = MyClass()</span></span>
+<span class="line"><span style="color: #babed8">obj(10)</span></span></code></pre></div><p>输出结果将是：</p>
+<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8"></span></span>
+<span class="line"><span style="color: #babed8">Calling MyClass with argument: 10</span></span></code></pre></div><p>所以<br><code>class RNNModelScratch: #@save</code><br><code>&quot;&quot;&quot;从零开始实现的循环神经网络模型&quot;&quot;&quot;</code><br><code>def __init__(self, vocab_size, num_hiddens, device,</code><br><code>get_params, init_state, forward_fn):</code><br><code>self.vocab_size, self.num_hiddens = vocab_size, num_hiddens</code><br><code>self.params = get_params(vocab_size, num_hiddens, device)</code><br><code>self.init_state, self.forward_fn = init_state, forward_fn</code><br><code>def __call__(self, X, state):</code><br><code>X = F.one_hot(X.T, self.vocab_size).type(torch.float32)</code><br><code>return self.forward_fn(X, state, self.params)</code></p>
+<p>可以这样调用：</p>
+<p><code>net = RNNModelScratch(len(vocab), num_hiddens, d2l.try_gpu(), get_params,</code><br><code>init_rnn_state, rnn)</code></p>
+<p><code>Y, new_state = net(X.to(d2l.try_gpu()), state)</code></p>
+<p><code>**kwargs</code> 是 Python 中的一种特殊语法，用于接收任意数量的关键字参数（keyword arguments）。在函数或方法的定义中，<code>**kwargs</code> 会将传递给函数的未命名关键字参数收集到一个字典中，其中字典的键是参数名，值是参数值。</p>
+<p>在这段代码中，<code>**kwargs</code> 被用作 <code>NWKernelRegression</code> 类的初始化方法 <code>__init__</code> 的参数。通过使用 <code>**kwargs</code>，可以接收任意数量的关键字参数，并将它们存储为类的属性。这样做可以使代码更加灵活，允许用户在创建 <code>NWKernelRegression</code> 实例时传递额外的参数。</p>
+<p>例如，如果你创建了一个 <code>NWKernelRegression</code> 实例时传递了额外的参数，比如 <code>model = NWKernelRegression(param1=10, param2=&#39;abc&#39;)</code>，那么这些额外的参数会被收集到 <code>kwargs</code> 字典中，字典的键是参数名，值是参数值。你可以根据需要在 <code>__init__</code> 方法中使用这些参数。</p>
+<p>总而言之，<code>**kwargs</code> 允许在函数或方法定义中接收任意数量的关键字参数，并将它们保存为字典以供后续使用。</p>
+<p>在 PyTorch 中，<code>self.fc1=nn.Linear(16*5*5,120)</code> 定义了一个全连接层（或称为线性层）。具体来说：</p>
+<ul>
+<li><code>16*5*5</code> 是输入特征的数量，即展平后的张量长度。</li>
+<li><code>120</code> 是全连接层输出的特征数量。</li>
+</ul>
+<p>这个全连接层会将形状为 400400 的输入（展平后的张量）转换为形状为 120120 的输出。这个层的作用是通过一个权重矩阵和偏置向量对输入进行线性变换，以得到最终的输出。</p>
+<p>是如何展平的?</p>
+<p>展平（Flatten）是将多维张量转换为一维向量的过程。以一个形状为 (16 \times 5 \times 5) 的张量为例，这个过程如下：</p>
+<ol>
+<li><p><strong>输入张量</strong>：假设有一个张量，其形状为 (16 \times 5 \times 5)，其中 (16) 是通道数，(5) 和 (5) 是每个通道的高和宽。</p>
+</li>
+<li><p><strong>展平过程</strong>：</p>
+<ul>
+<li>按照通道、行和列的顺序，将所有元素排列成一个一维向量。</li>
+<li>例如，假设张量的元素是 ( \text{A}_{i,j,k} )，展平后你将得到一个长度为 (16 \times 5 \times 5 &#x3D; 400) 的一维向量。</li>
+</ul>
+</li>
+<li><p><strong>展平后的结果</strong>：</p>
+<ul>
+<li>这个一维向量的长度为 (400)，即将原张量的所有数据连续地排列在一起。</li>
+</ul>
+</li>
+</ol>
+<p>在实际代码中，比如在 PyTorch 中，展平通常通过 <code>nn.Flatten()</code> 或者在前向传播方法中使用 <code>torch.flatten()</code> 来完成。</p>
+<p>轴心时代</p>
+<p>在优化算法中，<code>momentum</code> 是一个技术，用于加速收敛并减少震荡。具体来说：</p>
+<ul>
+<li><strong><code>momentum</code></strong>: 是一个动量因子，它在更新参数时考虑了之前梯度的影响。它通过引入过去梯度的加权平均来调整当前的梯度更新。</li>
+<li><strong>作用</strong>: 它帮助优化过程在高曲率方向上加速，在低曲率方向上减缓，从而使优化过程更稳定，减少了震荡和加速收敛。</li>
+</ul>
+<p>在 <code>optim.SGD</code> 中，<code>momentum=0.9</code> 表示将前一步梯度的 90% 加入到当前梯度更新中。</p>
+<p>ubuntu20.04可以装ROS 2 humble</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/Pytorch.html" data-id="clxbjvuxq000d61cx2owx79hb" data-title="Pytorch" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/hello-world.html" class="article-date">
+  <time class="dt-published" datetime="2023-12-15T14:27:11.801Z" itemprop="datePublished">2023-12-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/post/hello-world.html">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="language-bash"><button title="Copy code" class="copy"></button><span class="lang">bash</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #FFCB6B">$</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">hexo</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">new</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">My New Post</span><span style="color: #89DDFF">&quot;</span></span></code></pre></div><p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="language-bash"><button title="Copy code" class="copy"></button><span class="lang">bash</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #FFCB6B">$</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">hexo</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">server</span></span></code></pre></div><p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="language-bash"><button title="Copy code" class="copy"></button><span class="lang">bash</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #FFCB6B">$</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">hexo</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">generate</span></span></code></pre></div><p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="language-bash"><button title="Copy code" class="copy"></button><span class="lang">bash</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #FFCB6B">$</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">hexo</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">deploy</span></span></code></pre></div><p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/hello-world.html" data-id="clxbjvuxr000g61cx3hlk42el" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/ROS.html">ROS</a>
+          </li>
+        
+          <li>
+            <a href="/post/ODriver.html">ODriver</a>
+          </li>
+        
+          <li>
+            <a href="/post/Cplusplus.html">Cplusplus</a>
+          </li>
+        
+          <li>
+            <a href="/post/Qt.html">Qt</a>
+          </li>
+        
+          <li>
+            <a href="/post/risc-v.html">risc_v</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

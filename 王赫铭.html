@@ -1,1 +1,329 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><script type="module" crossorigin src="/static/js/120aa8f8.js"></script><link rel="stylesheet" href="/static/css/a14e1a22.css"><meta name="generator" content="Hexo 6.3.0"></head><body id="body-container"><noscript><strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Zgh&#39;s</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="基础： verilogmodule LED_Shift_Register (     input clk,       &#x2F;&#x2F; 时钟输入     input rst,       &#x2F;&#x2F; 复位信号     input [7:0] sw,  &#x2F;&#x2F; 拨码开关输入     output reg [15:0] leds &#x2F;&#x2F; LED输出 );  reg [3:0] counter; &#x2F;&#x2F; 计数器  alway">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zgh&#39;s">
+<meta property="og:url" content="http://zgh20060114.github.io/%E7%8E%8B%E8%B5%AB%E9%93%AD.html">
+<meta property="og:site_name" content="Zgh&#39;s">
+<meta property="og:description" content="基础： verilogmodule LED_Shift_Register (     input clk,       &#x2F;&#x2F; 时钟输入     input rst,       &#x2F;&#x2F; 复位信号     input [7:0] sw,  &#x2F;&#x2F; 拨码开关输入     output reg [15:0] leds &#x2F;&#x2F; LED输出 );  reg [3:0] counter; &#x2F;&#x2F; 计数器  alway">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-24T05:49:53.765Z">
+<meta property="article:modified_time" content="2024-06-06T00:30:55.091Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zgh&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://Zgh20060114.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/%E7%8E%8B%E8%B5%AB%E9%93%AD.html" class="article-date">
+  <time class="dt-published" datetime="2024-09-24T05:49:53.765Z" itemprop="datePublished">2024-09-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>基础：</p>
+<div class="language-verilog"><button title="Copy code" class="copy"></button><span class="lang">verilog</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #C792EA">module</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">LED_Shift_Register</span><span style="color: #F07178"> (</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">input</span><span style="color: #F07178"> clk,       </span><span style="color: #676E95; font-style: italic">// 时钟输入</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">input</span><span style="color: #F07178"> rst,       </span><span style="color: #676E95; font-style: italic">// 复位信号</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">input</span><span style="color: #F07178"> [</span><span style="color: #F78C6C">7</span><span style="color: #89DDFF">:</span><span style="color: #F78C6C">0</span><span style="color: #F07178">] sw,  </span><span style="color: #676E95; font-style: italic">// 拨码开关输入</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">output</span><span style="color: #F07178"> </span><span style="color: #F78C6C">reg</span><span style="color: #F07178"> [</span><span style="color: #F78C6C">15</span><span style="color: #89DDFF">:</span><span style="color: #F78C6C">0</span><span style="color: #F07178">] leds </span><span style="color: #676E95; font-style: italic">// LED输出</span></span>
+<span class="line"><span style="color: #F07178">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F78C6C">reg</span><span style="color: #F07178"> [</span><span style="color: #F78C6C">3</span><span style="color: #89DDFF">:</span><span style="color: #F78C6C">0</span><span style="color: #F07178">] counter; </span><span style="color: #676E95; font-style: italic">// 计数器</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F78C6C">always</span><span style="color: #F07178"> @(</span><span style="color: #F78C6C">posedge</span><span style="color: #F07178"> clk </span><span style="color: #F78C6C">or</span><span style="color: #F07178"> </span><span style="color: #F78C6C">posedge</span><span style="color: #F07178"> rst) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (rst) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">        counter </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">4&#39;b0000</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 复位计数器</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">        </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (sw[</span><span style="color: #F78C6C">7</span><span style="color: #F07178">]) </span><span style="color: #F78C6C">begin</span><span style="color: #F07178"> </span><span style="color: #676E95; font-style: italic">// 如果启停开关为1</span></span>
+<span class="line"><span style="color: #F07178">            </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (counter </span><span style="color: #89DDFF">==</span><span style="color: #F07178"> </span><span style="color: #F78C6C">4&#39;b1111</span><span style="color: #F07178">) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">                counter </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">4&#39;b0000</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 当计数器到达最大值时，重置计数器</span></span>
+<span class="line"><span style="color: #F07178">            </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">                counter </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> counter </span><span style="color: #89DDFF">+</span><span style="color: #F07178"> </span><span style="color: #F78C6C">1</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 否则递增计数器</span></span>
+<span class="line"><span style="color: #F07178">            </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F07178">        </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F78C6C">end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F78C6C">always</span><span style="color: #F07178"> @(</span><span style="color: #F78C6C">posedge</span><span style="color: #F07178"> clk) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (sw[</span><span style="color: #F78C6C">7</span><span style="color: #F07178">]) </span><span style="color: #F78C6C">begin</span><span style="color: #F07178"> </span><span style="color: #676E95; font-style: italic">// 如果启停开关为1</span></span>
+<span class="line"><span style="color: #F07178">        </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (sw[</span><span style="color: #F78C6C">0</span><span style="color: #F07178">]) </span><span style="color: #F78C6C">begin</span><span style="color: #F07178"> </span><span style="color: #676E95; font-style: italic">// 如果SW0为1，从左向右</span></span>
+<span class="line"><span style="color: #F07178">            leds </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> &#123;counter, </span><span style="color: #F78C6C">12&#39;b0</span><span style="color: #F07178">&#125;; </span><span style="color: #676E95; font-style: italic">// 将计数器值作为LED输出</span></span>
+<span class="line"><span style="color: #F07178">        </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span><span style="color: #F07178"> </span><span style="color: #676E95; font-style: italic">// 如果SW0为0，从右向左</span></span>
+<span class="line"><span style="color: #F07178">            leds </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> &#123;</span><span style="color: #F78C6C">12&#39;b0</span><span style="color: #F07178">, counter&#125;; </span><span style="color: #676E95; font-style: italic">// 将计数器值作为LED输出</span></span>
+<span class="line"><span style="color: #F07178">        </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">        leds </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">16&#39;b0</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 否则关闭LED</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F78C6C">end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">endmodule</span></span></code></pre></div><p>自动换向：</p>
+<div class="language-verilog"><button title="Copy code" class="copy"></button><span class="lang">verilog</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #C792EA">module</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">LED_Shift_Register_AutoDirection</span><span style="color: #F07178"> (</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">input</span><span style="color: #F07178"> clk,       </span><span style="color: #676E95; font-style: italic">// 时钟输入</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">input</span><span style="color: #F07178"> rst,       </span><span style="color: #676E95; font-style: italic">// 复位信号</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">output</span><span style="color: #F07178"> </span><span style="color: #F78C6C">reg</span><span style="color: #F07178"> [</span><span style="color: #F78C6C">15</span><span style="color: #89DDFF">:</span><span style="color: #F78C6C">0</span><span style="color: #F07178">] leds </span><span style="color: #676E95; font-style: italic">// LED输出</span></span>
+<span class="line"><span style="color: #F07178">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F78C6C">reg</span><span style="color: #F07178"> [</span><span style="color: #F78C6C">3</span><span style="color: #89DDFF">:</span><span style="color: #F78C6C">0</span><span style="color: #F07178">] counter; </span><span style="color: #676E95; font-style: italic">// 计数器</span></span>
+<span class="line"><span style="color: #F78C6C">reg</span><span style="color: #F07178"> direction; </span><span style="color: #676E95; font-style: italic">// 方向信号，0表示向左，1表示向右</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F78C6C">always</span><span style="color: #F07178"> @(</span><span style="color: #F78C6C">posedge</span><span style="color: #F07178"> clk </span><span style="color: #F78C6C">or</span><span style="color: #F07178"> </span><span style="color: #F78C6C">posedge</span><span style="color: #F07178"> rst) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (rst) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">        counter </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">4&#39;b0000</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 复位计数器</span></span>
+<span class="line"><span style="color: #F07178">        direction </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">1&#39;b0</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 初始方向为向左</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">        </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (counter </span><span style="color: #89DDFF">==</span><span style="color: #F07178"> </span><span style="color: #F78C6C">4&#39;b1111</span><span style="color: #F07178">) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">            counter </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">4&#39;b0000</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 当计数器到达最大值时，重置计数器</span></span>
+<span class="line"><span style="color: #F07178">            direction </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #89DDFF">~</span><span style="color: #F07178">direction; </span><span style="color: #676E95; font-style: italic">// 切换方向</span></span>
+<span class="line"><span style="color: #F07178">        </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">            counter </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> counter </span><span style="color: #89DDFF">+</span><span style="color: #F07178"> </span><span style="color: #F78C6C">1</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 递增计数器</span></span>
+<span class="line"><span style="color: #F07178">        </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F78C6C">end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F78C6C">always</span><span style="color: #F07178"> @(</span><span style="color: #F78C6C">posedge</span><span style="color: #F07178"> clk) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (direction) </span><span style="color: #F78C6C">begin</span><span style="color: #F07178"> </span><span style="color: #676E95; font-style: italic">// 如果方向为1，从右向左</span></span>
+<span class="line"><span style="color: #F07178">        leds </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> &#123;</span><span style="color: #F78C6C">12&#39;b0</span><span style="color: #F07178">, counter&#125;; </span><span style="color: #676E95; font-style: italic">// 将计数器值作为LED输出</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span><span style="color: #F07178"> </span><span style="color: #676E95; font-style: italic">// 如果方向为0，从左向右</span></span>
+<span class="line"><span style="color: #F07178">        leds </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> &#123;counter, </span><span style="color: #F78C6C">12&#39;b0</span><span style="color: #F07178">&#125;; </span><span style="color: #676E95; font-style: italic">// 将计数器值作为LED输出</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F78C6C">end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">endmodule</span></span></code></pre></div><p>进阶：</p>
+<div class="language-verilog"><button title="Copy code" class="copy"></button><span class="lang">verilog</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #C792EA">module</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">LED_Shift_Register_AutoDirection_SpeedControl</span><span style="color: #F07178"> (</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">input</span><span style="color: #F07178"> clk,       </span><span style="color: #676E95; font-style: italic">// 时钟输入</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">input</span><span style="color: #F07178"> rst,       </span><span style="color: #676E95; font-style: italic">// 复位信号</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">input</span><span style="color: #F07178"> sw0,       </span><span style="color: #676E95; font-style: italic">// 开关0，用于调节速度</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">output</span><span style="color: #F07178"> </span><span style="color: #F78C6C">reg</span><span style="color: #F07178"> [</span><span style="color: #F78C6C">15</span><span style="color: #89DDFF">:</span><span style="color: #F78C6C">0</span><span style="color: #F07178">] leds </span><span style="color: #676E95; font-style: italic">// LED输出</span></span>
+<span class="line"><span style="color: #F07178">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F78C6C">reg</span><span style="color: #F07178"> [</span><span style="color: #F78C6C">3</span><span style="color: #89DDFF">:</span><span style="color: #F78C6C">0</span><span style="color: #F07178">] counter; </span><span style="color: #676E95; font-style: italic">// 计数器</span></span>
+<span class="line"><span style="color: #F78C6C">reg</span><span style="color: #F07178"> direction; </span><span style="color: #676E95; font-style: italic">// 方向信号，0表示向左，1表示向右</span></span>
+<span class="line"><span style="color: #F78C6C">reg</span><span style="color: #F07178"> [</span><span style="color: #F78C6C">3</span><span style="color: #89DDFF">:</span><span style="color: #F78C6C">0</span><span style="color: #F07178">] speed; </span><span style="color: #676E95; font-style: italic">// 速度调节器</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F78C6C">always</span><span style="color: #F07178"> @(</span><span style="color: #F78C6C">posedge</span><span style="color: #F07178"> clk </span><span style="color: #F78C6C">or</span><span style="color: #F07178"> </span><span style="color: #F78C6C">posedge</span><span style="color: #F07178"> rst) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (rst) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">        counter </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">4&#39;b0000</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 复位计数器</span></span>
+<span class="line"><span style="color: #F07178">        direction </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">1&#39;b0</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 初始方向为向左</span></span>
+<span class="line"><span style="color: #F07178">        speed </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">4&#39;b0000</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 初始速度为最慢</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">        </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (counter </span><span style="color: #89DDFF">==</span><span style="color: #F07178"> speed) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">            counter </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">4&#39;b0000</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 当计数器计数达到速度值时，重置计数器</span></span>
+<span class="line"><span style="color: #F07178">            </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (sw0) </span><span style="color: #F78C6C">begin</span><span style="color: #F07178"> </span><span style="color: #676E95; font-style: italic">// 如果SW0为1，增加速度</span></span>
+<span class="line"><span style="color: #F07178">                </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (speed </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178"> </span><span style="color: #F78C6C">4&#39;b1111</span><span style="color: #F07178">) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">                    speed </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> speed </span><span style="color: #89DDFF">+</span><span style="color: #F07178"> </span><span style="color: #F78C6C">1</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 递增速度</span></span>
+<span class="line"><span style="color: #F07178">                </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F07178">            </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span><span style="color: #F07178"> </span><span style="color: #676E95; font-style: italic">// 如果SW0为0，减小速度</span></span>
+<span class="line"><span style="color: #F07178">                </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (speed </span><span style="color: #89DDFF">&gt;</span><span style="color: #F07178"> </span><span style="color: #F78C6C">4&#39;b0000</span><span style="color: #F07178">) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">                    speed </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> speed </span><span style="color: #89DDFF">-</span><span style="color: #F07178"> </span><span style="color: #F78C6C">1</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 递减速度</span></span>
+<span class="line"><span style="color: #F07178">                </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F07178">            </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F07178">            </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (direction) </span><span style="color: #F78C6C">begin</span><span style="color: #F07178"> </span><span style="color: #676E95; font-style: italic">// 如果方向为1，从右向左</span></span>
+<span class="line"><span style="color: #F07178">                </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (leds </span><span style="color: #89DDFF">!=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">16&#39;b0000000000000001</span><span style="color: #F07178">) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">                    leds </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> &#123;leds[</span><span style="color: #F78C6C">13</span><span style="color: #89DDFF">:</span><span style="color: #F78C6C">0</span><span style="color: #F07178">], </span><span style="color: #F78C6C">2&#39;b00</span><span style="color: #F07178">&#125; </span><span style="color: #676E95; font-style: italic">// 向右移动</span></span>
+<span class="line"><span style="color: #F07178">                </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">                    direction </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #89DDFF">~</span><span style="color: #F07178">direction; </span><span style="color: #676E95; font-style: italic">// 切换方向</span></span>
+<span class="line"><span style="color: #F07178">                </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F07178">            </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span><span style="color: #F07178"> </span><span style="color: #676E95; font-style: italic">// 如果方向为0，从左向右</span></span>
+<span class="line"><span style="color: #F07178">                </span><span style="color: #F78C6C">if</span><span style="color: #F07178"> (leds </span><span style="color: #89DDFF">!=</span><span style="color: #F07178"> </span><span style="color: #F78C6C">16&#39;b1000000000000000</span><span style="color: #F07178">) </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">                    leds </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> &#123;</span><span style="color: #F78C6C">2&#39;b00</span><span style="color: #F07178">, leds[</span><span style="color: #F78C6C">15</span><span style="color: #89DDFF">:</span><span style="color: #F78C6C">2</span><span style="color: #F07178">]&#125;; </span><span style="color: #676E95; font-style: italic">// 向左移动</span></span>
+<span class="line"><span style="color: #F07178">                </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">                    direction </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> </span><span style="color: #89DDFF">~</span><span style="color: #F07178">direction; </span><span style="color: #676E95; font-style: italic">// 切换方向</span></span>
+<span class="line"><span style="color: #F07178">                </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F07178">            </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F07178">        </span><span style="color: #F78C6C">end</span><span style="color: #F07178"> </span><span style="color: #F78C6C">else</span><span style="color: #F07178"> </span><span style="color: #F78C6C">begin</span></span>
+<span class="line"><span style="color: #F07178">            counter </span><span style="color: #89DDFF">&lt;=</span><span style="color: #F07178"> counter </span><span style="color: #89DDFF">+</span><span style="color: #F07178"> </span><span style="color: #F78C6C">1</span><span style="color: #F07178">; </span><span style="color: #676E95; font-style: italic">// 递增计数器</span></span>
+<span class="line"><span style="color: #F07178">        </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #F78C6C">end</span></span>
+<span class="line"><span style="color: #F78C6C">end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">endmodule</span></span></code></pre></div><p>使用Vulkan对Xe显卡加速后能够达到50-60fps的速度，</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/%E7%8E%8B%E8%B5%AB%E9%93%AD.html" data-id="cm1g0pm7e0000jjcxawfycozt" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/ROS.html">ROS</a>
+          </li>
+        
+          <li>
+            <a href="/post/ODriver.html">ODriver</a>
+          </li>
+        
+          <li>
+            <a href="/post/Cplusplus.html">Cplusplus</a>
+          </li>
+        
+          <li>
+            <a href="/post/Qt.html">Qt</a>
+          </li>
+        
+          <li>
+            <a href="/post/risc-v.html">risc_v</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

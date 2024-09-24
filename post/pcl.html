@@ -1,1 +1,281 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><script type="module" crossorigin src="/static/js/120aa8f8.js"></script><link rel="stylesheet" href="/static/css/a14e1a22.css"><meta name="generator" content="Hexo 6.3.0"></head><body id="body-container"><noscript><strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>pcl | Zgh&#39;s</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="&#96;&#96;c make -DCMAKE_BUILD_TYPE&#x3D;None &#96;      -DCMAKE_INSTALL_PREFIX&#x3D;&#x2F;home&#x2F;zgh&#x2F;pcl_1.9.1_compile \      -DBUILD_GPU&#x3D;ON \      -DBUILD_apps&#x3D;ON \      -DBUILD_examples&#x3D;ON -DCUDA_TOOLKIT_ROOT_DIR&#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pcl">
+<meta property="og:url" content="http://zgh20060114.github.io/post/pcl.html">
+<meta property="og:site_name" content="Zgh&#39;s">
+<meta property="og:description" content="&#96;&#96;c make -DCMAKE_BUILD_TYPE&#x3D;None &#96;      -DCMAKE_INSTALL_PREFIX&#x3D;&#x2F;home&#x2F;zgh&#x2F;pcl_1.9.1_compile \      -DBUILD_GPU&#x3D;ON \      -DBUILD_apps&#x3D;ON \      -DBUILD_examples&#x3D;ON -DCUDA_TOOLKIT_ROOT_DIR&#x3D;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-01-31T02:04:42.000Z">
+<meta property="article:modified_time" content="2024-02-21T08:28:33.216Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zgh&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://Zgh20060114.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-pcl" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/pcl.html" class="article-date">
+  <time class="dt-published" datetime="2024-01-31T02:04:42.000Z" itemprop="datePublished">2024-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      pcl
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>&#96;&#96;c make -DCMAKE_BUILD_TYPE&#x3D;None `<br>      <code>-DCMAKE_INSTALL_PREFIX=/home/zgh/pcl_1.9.1_compile \</code><br>      <code>-DBUILD_GPU=ON \</code><br>      <code>-DBUILD_apps=ON \</code><br>      <code>-DBUILD_examples=ON</code></p>
+<p><code>-DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-12.2 \</code></p>
+<p><code>-DCUDA_ARCH_BIN=8.6 \</code></p>
+<p><code>-DCUDA_ARCH_PTX=8.6 ..</code></p>
+<div class="language-cmake"><button title="Copy code" class="copy"></button><span class="lang">cmake</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #89DDFF">  if</span><span style="color: #BABED8">(</span><span style="color: #89DDFF">NOT</span><span style="color: #BABED8"> $&#123;CUDA_VERSION_STRING&#125; </span><span style="color: #89DDFF">VERSION_LESS</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">&quot;10.0&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">    set</span><span style="color: #BABED8">(__cuda_arch_bin </span><span style="color: #C3E88D">&quot;3.0 3.5 5.0 5.2 5.3 6.0 6.1 7.0 7.2 7.5&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">  elseif</span><span style="color: #BABED8">(</span><span style="color: #89DDFF">NOT</span><span style="color: #BABED8"> $&#123;CUDA_VERSION_STRING&#125; </span><span style="color: #89DDFF">VERSION_LESS</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">&quot;9.1&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">    set</span><span style="color: #BABED8">(__cuda_arch_bin </span><span style="color: #C3E88D">&quot;3.0 3.5 5.0 5.2 5.3 6.0 6.1 7.0 7.2&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">  elseif</span><span style="color: #BABED8">(</span><span style="color: #89DDFF">NOT</span><span style="color: #BABED8"> $&#123;CUDA_VERSION_STRING&#125; </span><span style="color: #89DDFF">VERSION_LESS</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">&quot;9.0&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">    set</span><span style="color: #BABED8">(__cuda_arch_bin </span><span style="color: #C3E88D">&quot;3.0 3.5 5.0 5.2 5.3 6.0 6.1 7.0&quot;</span><span style="color: #BABED8">)  </span></span>
+<span class="line"><span style="color: #89DDFF">  elseif</span><span style="color: #BABED8">(</span><span style="color: #89DDFF">NOT</span><span style="color: #BABED8"> $&#123;CUDA_VERSION_STRING&#125; </span><span style="color: #89DDFF">VERSION_LESS</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">&quot;8.0&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">    set</span><span style="color: #BABED8">(__cuda_arch_bin </span><span style="color: #C3E88D">&quot;2.0 2.1(2.0) 3.0 3.5 5.0 5.2 5.3 6.0 6.1&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">  elseif</span><span style="color: #BABED8">(</span><span style="color: #89DDFF">NOT</span><span style="color: #BABED8"> $&#123;CUDA_VERSION_STRING&#125; </span><span style="color: #89DDFF">VERSION_LESS</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">&quot;6.5&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">    set</span><span style="color: #BABED8">(__cuda_arch_bin </span><span style="color: #C3E88D">&quot;2.0 2.1(2.0) 3.0 3.5 5.0 5.2&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">  elseif</span><span style="color: #BABED8">(</span><span style="color: #89DDFF">NOT</span><span style="color: #BABED8"> $&#123;CUDA_VERSION_STRING&#125; </span><span style="color: #89DDFF">VERSION_LESS</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">&quot;6.0&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">    set</span><span style="color: #BABED8">(__cuda_arch_bin </span><span style="color: #C3E88D">&quot;2.0 2.1(2.0) 3.0 3.5 5.0&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">  elseif</span><span style="color: #BABED8">(</span><span style="color: #89DDFF">NOT</span><span style="color: #BABED8"> $&#123;CUDA_VERSION_STRING&#125; </span><span style="color: #89DDFF">VERSION_LESS</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">&quot;5.0&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">    set</span><span style="color: #BABED8">(__cuda_arch_bin </span><span style="color: #C3E88D">&quot;2.0 2.1(2.0) 3.0 3.5&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">  elseif</span><span style="color: #BABED8">($&#123;CUDA_VERSION_STRING&#125; </span><span style="color: #89DDFF">VERSION_GREATER</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">&quot;4.1&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">    set</span><span style="color: #BABED8">(__cuda_arch_bin </span><span style="color: #C3E88D">&quot;2.0 2.1(2.0) 3.0&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">  else</span><span style="color: #BABED8">()</span></span>
+<span class="line"><span style="color: #89DDFF">    set</span><span style="color: #BABED8">(__cuda_arch_bin </span><span style="color: #C3E88D">&quot;2.0 2.1(2.0)&quot;</span><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #89DDFF">  endif</span><span style="color: #BABED8">()</span></span></code></pre></div><p>NXHAY2OW76-eyJsaWNlbnNlSWQiOiJOWEhBWTJPVzc2IiwibGljZW5zZWVOYW1lIjoiSHVuYW4gSW5zdGl0dXRlIG9mIFNjaWVuY2UgYW5kIFRlY2hub2xvZ3kiLCJsaWNlbnNlZVR5cGUiOiJDTEFTU1JPT00iLCJhc3NpZ25lZU5hbWUiOiJ0bXUgaXRtYW5hZ2VyIiwiYXNzaWduZWVFbWFpbCI6InRtdWl0bWFuYWdlckBvdXRsb29rLmNvbSIsImxpY2Vuc2VSZXN0cmljdGlvbiI6IkZvciBlZHVjYXRpb25hbCB1c2Ugb25seSIsImNoZWNrQ29uY3VycmVudFVzZSI6ZmFsc2UsInByb2R1Y3RzIjpbeyJjb2RlIjoiR08iLCJwYWlkVXBUbyI6IjIwMjQtMDItMDkiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJTMCIsInBhaWRVcFRvIjoiMjAyNC0wMi0wOSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiRE0iLCJwYWlkVXBUbyI6IjIwMjQtMDItMDkiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IkNMIiwicGFpZFVwVG8iOiIyMDI0LTAyLTA5IiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJBQyIsInBhaWRVcFRvIjoiMjAyNC0wMi0wOSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUlNVIiwicGFpZFVwVG8iOiIyMDI0LTAyLTA5IiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJSU0MiLCJwYWlkVXBUbyI6IjIwMjQtMDItMDkiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUEMiLCJwYWlkVXBUbyI6IjIwMjQtMDItMDkiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IkRTIiwicGFpZFVwVG8iOiIyMDI0LTAyLTA5IiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJSRCIsInBhaWRVcFRvIjoiMjAyNC0wMi0wOSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUkMiLCJwYWlkVXBUbyI6IjIwMjQtMDItMDkiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJTRiIsInBhaWRVcFRvIjoiMjAyNC0wMi0wOSIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJSTSIsInBhaWRVcFRvIjoiMjAyNC0wMi0wOSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiSUkiLCJwYWlkVXBUbyI6IjIwMjQtMDItMDkiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IkRQTiIsInBhaWRVcFRvIjoiMjAyNC0wMi0wOSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiREIiLCJwYWlkVXBUbyI6IjIwMjQtMDItMDkiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IkRDIiwicGFpZFVwVG8iOiIyMDI0LTAyLTA5IiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJQUyIsInBhaWRVcFRvIjoiMjAyNC0wMi0wOSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUlNWIiwicGFpZFVwVG8iOiIyMDI0LTAyLTA5IiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IldTIiwicGFpZFVwVG8iOiIyMDI0LTAyLTA5IiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJQU0kiLCJwYWlkVXBUbyI6IjIwMjQtMDItMDkiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUENXTVAiLCJwYWlkVXBUbyI6IjIwMjQtMDItMDkiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUlMiLCJwYWlkVXBUbyI6IjIwMjQtMDItMDkiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiRFAiLCJwYWlkVXBUbyI6IjIwMjQtMDItMDkiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUERCIiwicGFpZFVwVG8iOiIyMDI0LTAyLTA5IiwiZXh0ZW5kZWQiOnRydWV9XSwibWV0YWRhdGEiOiIwMTIwMjMxMTA5TFBBQTAwOTAwNyIsImhhc2giOiI0MjU0OTY3OS8xMzU2NTA1OTotNDU5NTIyNTciLCJncmFjZVBlcmlvZERheXMiOjcsImF1dG9Qcm9sb25nYXRlZCI6ZmFsc2UsImlzQXV0b1Byb2xvbmdhdGVkIjpmYWxzZSwidHJpYWwiOmZhbHNlLCJhaUFsbG93ZWQiOnRydWV9-t3Mcnh+cc&#x2F;DF5z54xXxQ1wh2DTHULDDp0xl9P1s3jRugff7MKaHhYu8MFuKB8smfDaUysLfs94WjunQJeCc4L&#x2F;gMi024G9o&#x2F;O2yBx4&#x2F;Ho9yU7SeYOvnuMqPwwpczR&#x2F;U2JcIZAhH9YPdOo5E7CEtPEW5cq774wN7MrXnHK+LPN6uE4asZ&#x2F;Qk3g3TyqpD3R7ubTmtkAx8JF6iWrezyLNngezgq3NkSE+3LZFuOLep6EKsOJeuaPCKD1uSFJZK7yzUkcLq+H&#x2F;AZDOPZ+Gk9ZTl+P8TlRw3DIA1WDMORmycx5Q4mG+y2cNJoj9r0gfZPiw8OcmcQI8icyF2yTLnWOopRUg&#x3D;&#x3D;-MIIETDCCAjSgAwIBAgIBDzANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBMB4XDTIyMTAxMDE2MDU0NFoXDTI0MTAxMTE2MDU0NFowHzEdMBsGA1UEAwwUcHJvZDJ5LWZyb20tMjAyMjEwMTAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC&#x2F;W3uCpU5M2y48rUR&#x2F;3fFR6y4xj1nOm3rIuGp2brELVGzdgK2BezjnDXpAxVDw5657hBkAUMoyByiDs2MgmVi9IcqdAwpk988&#x2F;Daaajq9xuU1of59jH9eQ9c3BmsEtdA4boN3VpenYKATwmpKYkJKVc07ZKoXL6kSyZuF7Jq7HoQZcclChbF75QJPGbri3cw9vDk&#x2F;e46kuzfwpGftvl6+vKibpInO6Dv0ocwImDbOutyZC7E+BwpEm1TJZW4XovMBegHhWC04cJvpH1u98xoR94ichw0jKhdppywARe43rGU96163RckIuFmFDQKZV9SMUrwpQFu4Z2D5yTNqnlLRfAgMBAAGjgZkwgZYwCQYDVR0TBAIwADAdBgNVHQ4EFgQU5FZqQ4gnVc+inIeZF+o3ID+VhcEwSAYDVR0jBEEwP4AUo562SGdCEjZBvW3gubSgUouX8bOhHKQaMBgxFjAUBgNVBAMMDUpldFByb2ZpbGUgQ0GCCQDSbLGDsoN54TATBgNVHSUEDDAKBggrBgEFBQcDATALBgNVHQ8EBAMCBaAwDQYJKoZIhvcNAQELBQADggIBANLG1anEKid4W87vQkqWaQTkRtFKJ2GFtBeMhvLhIyM6Cg3FdQnMZr0qr9mlV0w289pf&#x2F;+M14J7S7SgsfwxMJvFbw9gZlwHvhBl24N349GuthshGO9P9eKmNPgyTJzTtw6FedXrrHV99nC7spaY84e+DqfHGYOzMJDrg8xHDYLLHk5Q2z5TlrztXMbtLhjPKrc2+ZajFFshgE5eowfkutSYxeX8uA5czFNT1ZxmDwX1KIelbqhh6XkMQFJui8v8Eo396&#x2F;sN3RAQSfvBd7Syhch2vlaMP4FAB11AlMKO2x&#x2F;1hoKiHBU3oU3OKRTfoUTfy1uH3T+t03k1Qkr0dqgHLxiv6QU5WrarR9tx&#x2F;dapqbsSmrYapmJ7S5+ghc4FTWxXJB1cjJRh3X+gwJIHjOVW+5ZVqXTG2s2Jwi2daDt6XYeigxgL2SlQpeL5kvXNCcuSJurJVcRZFYUkzVv85XfDauqGxYqaehPcK2TzmcXOUWPfxQxLJd2TrqSiO+mseqqkNTb3ZDiYS&#x2F;ZqdQoGYIUwJqXo+EDgqlmuWUhkWwCkyo4rtTZeAj+nP00v3n8JmXtO30Fip+lxpfsVR3tO1hk4Vi2kmVjXyRkW2G7D7WAVt+91ahFoSeRWlKyb4KcvGvwUaa43fWLem2hyI4di2pZdr3fcYJ3xvL5ejL3m14bKsfoOv</p>
+<p><code>pcl::PointCloud</code> 和 <code>pcl::PCLPointCloud2</code> 是 PCL 中两种不同的点云数据结构，它们之间的主要区别在于数据的组织形式和灵活性：</p>
+<ol>
+<li><code>pcl::PointCloud</code>：<ul>
+<li><code>pcl::PointCloud</code> 是 PCL 中用于表示点云的模板类。</li>
+<li>它是一种比较高级的数据结构，已经预定义了点云中每个点的字段（如坐标、法向量等）以及数据类型（如PointXYZ、Normal等）。</li>
+<li>使用 <code>pcl::PointCloud</code> 可以更方便地访问和处理点云数据，因为它提供了成员函数来操作点云中的点，如添加、删除、修改等操作。</li>
+</ul>
+</li>
+<li><code>pcl::PCLPointCloud2</code>：<ul>
+<li><code>pcl::PCLPointCloud2</code> 是 PCL 中用于表示点云的更底层、更通用的数据结构。</li>
+<li>它是一种更灵活的数据结构，可以容纳任意类型和数量的字段，适合表示各种形式的点云数据。</li>
+<li>使用 <code>pcl::PCLPointCloud2</code> 需要通过字段的偏移量和数据类型来手动解析和访问点云数据，相对复杂一些。</li>
+</ul>
+</li>
+</ol>
+<p>总的来说，<code>pcl::PointCloud</code> 更适合处理已知结构和类型的点云数据，而 <code>pcl::PCLPointCloud2</code> 则更适合处理未知结构或需要更大灵活性的点云数据。在实际应用中，根据具体需求选择合适的数据结构进行点云数据的处理和操作。</p>
+<p><code>std::cerr</code> 通常用于输出程序运行时的错误信息、警告信息等</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/pcl.html" data-id="clxbjvuxr000i61cx5be7h30f" data-title="pcl" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/%E7%94%B5%E8%B7%AFLearning.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          电路Learning
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/Embedded.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Embedded</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/ROS.html">ROS</a>
+          </li>
+        
+          <li>
+            <a href="/post/ODriver.html">ODriver</a>
+          </li>
+        
+          <li>
+            <a href="/post/Cplusplus.html">Cplusplus</a>
+          </li>
+        
+          <li>
+            <a href="/post/Qt.html">Qt</a>
+          </li>
+        
+          <li>
+            <a href="/post/risc-v.html">risc_v</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

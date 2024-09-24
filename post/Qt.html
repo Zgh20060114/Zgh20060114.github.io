@@ -1,1 +1,296 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><script type="module" crossorigin src="/static/js/120aa8f8.js"></script><link rel="stylesheet" href="/static/css/a14e1a22.css"><meta name="generator" content="Hexo 6.3.0"></head><body id="body-container"><noscript><strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Qt | Zgh&#39;s</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="QWidget 和 QMainWindow 是 Qt 框架中的两个重要类，它们都用于创建图形用户界面（GUI），但有一些关键的区别： QWidget 基础类: QWidget 是 Qt 中所有用户界面对象的基类。它提供了一个基础的窗口部件，其他窗口部件（如按钮、文本框）都是从 QWidget 继承而来的。 功能: QWidget 本身是一个通用的窗口部件，没有特别的窗口管理功能。它可以作为窗口的基">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt">
+<meta property="og:url" content="http://zgh20060114.github.io/post/Qt.html">
+<meta property="og:site_name" content="Zgh&#39;s">
+<meta property="og:description" content="QWidget 和 QMainWindow 是 Qt 框架中的两个重要类，它们都用于创建图形用户界面（GUI），但有一些关键的区别： QWidget 基础类: QWidget 是 Qt 中所有用户界面对象的基类。它提供了一个基础的窗口部件，其他窗口部件（如按钮、文本框）都是从 QWidget 继承而来的。 功能: QWidget 本身是一个通用的窗口部件，没有特别的窗口管理功能。它可以作为窗口的基">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240823104744847.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20240823104804653.png">
+<meta property="article:published_time" content="2024-08-21T15:30:34.000Z">
+<meta property="article:modified_time" content="2024-08-23T02:52:15.495Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zgh20060114.github.io/images/image-20240823104744847.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zgh&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://Zgh20060114.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Qt" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/Qt.html" class="article-date">
+  <time class="dt-published" datetime="2024-08-21T15:30:34.000Z" itemprop="datePublished">2024-08-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Qt
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><code>QWidget</code> 和 <code>QMainWindow</code> 是 Qt 框架中的两个重要类，它们都用于创建图形用户界面（GUI），但有一些关键的区别：</p>
+<h3 id="QWidget"><a href="#QWidget" class="headerlink" title="QWidget"></a><code>QWidget</code></h3><ul>
+<li><strong>基础类</strong>: <code>QWidget</code> 是 Qt 中所有用户界面对象的基类。它提供了一个基础的窗口部件，其他窗口部件（如按钮、文本框）都是从 <code>QWidget</code> 继承而来的。</li>
+<li><strong>功能</strong>: <code>QWidget</code> 本身是一个通用的窗口部件，没有特别的窗口管理功能。它可以作为窗口的基础组件，也可以作为其他复杂组件的容器。</li>
+<li><strong>布局管理</strong>: <code>QWidget</code> 提供了布局管理功能，可以使用布局管理器来控制其子部件的位置和大小。</li>
+<li><strong>使用场景</strong>: 你可以将 <code>QWidget</code> 用作对话框、工具条、或是任何其他需要的窗口部件。如果你只需要一个简单的窗口，<code>QWidget</code> 是一个合适的选择。</li>
+</ul>
+<h3 id="QMainWindow"><a href="#QMainWindow" class="headerlink" title="QMainWindow"></a><code>QMainWindow</code></h3><ul>
+<li><strong>派生类</strong>: <code>QMainWindow</code> 是 <code>QWidget</code> 的子类，提供了更丰富的窗口功能和特性。</li>
+<li><strong>功能</strong>: <code>QMainWindow</code> 是设计用于主窗口的类，它提供了菜单栏、工具栏、状态栏和中央窗口区域的支持。这使得它特别适合用于主应用窗口的设计。</li>
+<li><strong>布局管理</strong>: <code>QMainWindow</code> 提供了特定的布局区域，如菜单栏、工具栏、状态栏和中央部件区域。你可以使用这些功能来创建更复杂的应用程序界面。</li>
+<li><strong>使用场景</strong>: 当你需要一个具有菜单栏、工具栏和状态栏的主窗口时，<code>QMainWindow</code> 是一个理想的选择。它适合用于具有复杂界面的桌面应用程序。</li>
+</ul>
+<h3 id="主要区别总结"><a href="#主要区别总结" class="headerlink" title="主要区别总结"></a>主要区别总结</h3><ol>
+<li><strong>功能扩展</strong>:<ul>
+<li><code>QWidget</code>: 基础窗口部件，功能较少，适合用于创建简单的窗口或部件。</li>
+<li><code>QMainWindow</code>: 提供额外的功能，如菜单栏、工具栏和状态栏，适合用于主应用窗口。</li>
+</ul>
+</li>
+<li><strong>使用场景</strong>:<ul>
+<li><code>QWidget</code>: 适合用作对话框、工具条、或简单的窗口部件。</li>
+<li><code>QMainWindow</code>: 适合用于需要复杂用户界面的主窗口。</li>
+</ul>
+</li>
+<li><strong>布局支持</strong>:<ul>
+<li><code>QWidget</code>: 你需要手动设置布局。</li>
+<li><code>QMainWindow</code>: 提供了内置的菜单栏、工具栏、状态栏和中央部件区域，可以直接使用这些功能来设计主窗口界面。</li>
+</ul>
+</li>
+</ol>
+<p>connect(menu, &amp;QMenu::triggered, this, &amp;Widget::onMenuTriggered); 为什么QMenu* menu;时不报错 当QMenu  menu;时报错:No matching member function for call to ‘connect’</p>
+<p>在 Qt 中，<code>connect</code> 函数的作用是将一个信号与一个槽函数连接起来。它依赖于信号发射的对象和槽函数的对象都是有效的，并且能够正确识别和匹配。</p>
+<h3 id="使用-QMenu-menu"><a href="#使用-QMenu-menu" class="headerlink" title="使用 QMenu* menu"></a>使用 <code>QMenu* menu</code></h3><div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #BABED8">QMenu</span><span style="color: #89DDFF">*</span><span style="color: #BABED8"> menu </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">new</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">QMenu</span><span style="color: #89DDFF">();</span></span>
+<span class="line"><span style="color: #82AAFF">connect</span><span style="color: #89DDFF">(</span><span style="color: #BABED8">menu</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&amp;</span><span style="color: #FFCB6B">QMenu</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">triggered</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">this,</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&amp;</span><span style="color: #FFCB6B">Widget</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">onMenuTriggered</span><span style="color: #89DDFF">);</span></span></code></pre></div><ul>
+<li>这里，<code>menu</code> 是一个指向 <code>QMenu</code> 对象的指针。</li>
+<li><code>connect</code> 函数可以使用 <code>menu</code> 指针来连接信号和槽，因为 <code>QMenu</code> 对象在堆上分配，并且其生命周期由指针管理。</li>
+<li><code>QMenu</code> 的实例通过指针能够正确地传递给 <code>connect</code>，并且 <code>QMenu</code> 的成员函数和信号可以被正确识别。</li>
+</ul>
+<h3 id="使用-QMenu-menu-1"><a href="#使用-QMenu-menu-1" class="headerlink" title="使用 QMenu menu"></a>使用 <code>QMenu menu</code></h3><div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #BABED8">QMenu menu</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #82AAFF">connect</span><span style="color: #89DDFF">(</span><span style="color: #BABED8">menu</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&amp;</span><span style="color: #FFCB6B">QMenu</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">triggered</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">this,</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&amp;</span><span style="color: #FFCB6B">Widget</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">onMenuTriggered</span><span style="color: #89DDFF">);</span></span></code></pre></div><ul>
+<li>这里，<code>menu</code> 是一个栈上的 <code>QMenu</code> 对象。</li>
+<li>栈上的对象在 <code>connect</code> 时会导致问题，因为 <code>connect</code> 期望信号发射对象在其生命周期内有效。栈上的对象会在超出作用域时被销毁。</li>
+<li>在这个情况下，<code>menu</code> 可能在连接信号和槽时已经过早销毁，导致 <code>connect</code> 函数找不到有效的信号源。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><code>QMenu* menu</code>：指针允许动态管理对象的生命周期，<code>connect</code> 可以正常工作。</li>
+<li><code>QMenu menu</code>：栈上的对象在超出作用域时可能被销毁，导致 <code>connect</code> 函数不能正确地处理信号和槽。</li>
+</ul>
+<p>因此，使用指针确保 <code>QMenu</code> 对象在 <code>connect</code> 调用期间有效。</p>
+<p><img src="/../images/image-20240823104744847.png" alt="image-20240823104744847"></p>
+<p><img src="/../images/image-20240823104804653.png" alt="image-20240823104804653"></p>
+<p>定义对象的指针，让widght来管理对象的生命周期，要是直接定义对象，可能不知道什么时候对象就被销毁了，有些用到这些对象的函数就可能报错，因为在栈上找不到他了</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/Qt.html" data-id="cm040gf6300012ucx6mgg6k5d" data-title="Qt" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/Cplusplus.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Cplusplus
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/risc-v.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">risc_v</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/ROS.html">ROS</a>
+          </li>
+        
+          <li>
+            <a href="/post/ODriver.html">ODriver</a>
+          </li>
+        
+          <li>
+            <a href="/post/Cplusplus.html">Cplusplus</a>
+          </li>
+        
+          <li>
+            <a href="/post/Qt.html">Qt</a>
+          </li>
+        
+          <li>
+            <a href="/post/risc-v.html">risc_v</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

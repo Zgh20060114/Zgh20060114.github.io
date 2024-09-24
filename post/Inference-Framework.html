@@ -1,1 +1,258 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><script type="module" crossorigin src="/static/js/120aa8f8.js"></script><link rel="stylesheet" href="/static/css/a14e1a22.css"><meta name="generator" content="Hexo 6.3.0"></head><body id="body-container"><noscript><strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Inference_Framework | Zgh&#39;s</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="PNNXPNNX项目 PyTorch Neural Network eXchange（PNNX）是PyTorch模型互操作性的开放标准。PNNX为PyTorch提供了一种开源的模型格式，它定义了与Pytorch相匹配的数据流图和运算图，我们的框架在PNNX之上封装了一层更加易用和简单的计算图格式。pytorch训练好一个模型之后，然后模型需要转换到pnnx格式，然后pnnx格式我们再去读取，形成计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Inference_Framework">
+<meta property="og:url" content="http://zgh20060114.github.io/post/Inference-Framework.html">
+<meta property="og:site_name" content="Zgh&#39;s">
+<meta property="og:description" content="PNNXPNNX项目 PyTorch Neural Network eXchange（PNNX）是PyTorch模型互操作性的开放标准。PNNX为PyTorch提供了一种开源的模型格式，它定义了与Pytorch相匹配的数据流图和运算图，我们的框架在PNNX之上封装了一层更加易用和简单的计算图格式。pytorch训练好一个模型之后，然后模型需要转换到pnnx格式，然后pnnx格式我们再去读取，形成计">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-04-13T09:01:40.000Z">
+<meta property="article:modified_time" content="2024-05-08T11:26:27.537Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zgh&#39;s</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://Zgh20060114.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Inference-Framework" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/Inference-Framework.html" class="article-date">
+  <time class="dt-published" datetime="2024-04-13T09:01:40.000Z" itemprop="datePublished">2024-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Inference_Framework
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>PNNX<br>PNNX项目 PyTorch Neural Network eXchange（PNNX）是PyTorch模型互操作性的开放标准。PNNX为PyTorch提供了一种开源的模型格式，它定义了与Pytorch相匹配的数据流图和运算图，我们的框架在PNNX之上封装了一层更加易用和简单的计算图格式。pytorch训练好一个模型之后，然后模型需要转换到pnnx格式，然后pnnx格式我们再去读取，形成计算图.</p>
+<p>pytorch到我们计算图？</p>
+<p>PNNX帮我做了很多的图优化、算子融合的工作，所以底层的用它PNNX的话，我们可以吸收图优化的结果，后面推理更快.</p>
+<p>但是不直接在项目中用PNNX，因为别人的工作和自己推理框架开发思路总是有不同的。所以在这上面封装，又快速又好用方便，符合自己的使用习惯。</p>
+<p>我们只是去读取PNNX产物，然后构建自己一种易用的计算图结构。</p>
+<p>产物：resnet18.pnnx.param PNNX graph definition 结构定义</p>
+<p>resnet18.pnnx.bin PNNX model weight 权重</p>
+<p>PNNX的格式定义:</p>
+<p>PNNX由操作数operand(运算数)和operator(运算符号)，PNNX::Graph用来管理和操作这两者。</p>
+<p>操作数(operand)，也可以通过操作数来方向访问到这个数字的产生者和使用者Customer</p>
+<p>Operand有以下几个部分组成:</p>
+<p>Producer: 类型是operator, 表示产生了这个操作数的运算符(operator). 也就是说这个操作数(operand)是Producer的输出. Producer这个操作符号产生了当前的Operand<br>Customer:类型是operator, 表示需要这个操作数下一个操作的的运算符(operator)，也就是说这个操作数(operand)作为Customer的输入存在.</p>
+<p>Name: 类型是std::string, 表示这个操作数的名称.Values<br>Shape: 类型是std::vector<int> , 用来表示操作数的大小,</p>
+<p><code>this</code>：指针，指向当前对象的地址。在类的成员函数中，<code>this</code>关键字指向当前对象。</p>
+<p><code>-&gt;</code>：成员访问运算符，用来访问类的成员变量或成员函数。</p>
+<p>在 C++11 中，使用 <code>new</code> 创建动态分配的对象并不安全，因为需要手动管理资源的释放，容易出现内存泄漏或者忘记释放资源导致的内存泄漏。为了更加安全和方便地管理动态分配的对象，C++11 引入了智能指针，其中 <code>std::unique_ptr</code> 是一种独占所有权的智能指针，它负责在对象不再需要时释放所占用的内存。</p>
+<p>图（graph） 节点（vertex）  边（edge）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/Inference-Framework.html" data-id="clxbjvuxp000961cxbv4a8nqq" data-title="Inference_Framework" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/Android-Kotlin.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Android_Kotlin
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/%E7%94%B5%E8%B7%AFLearning.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">电路Learning</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/ROS.html">ROS</a>
+          </li>
+        
+          <li>
+            <a href="/post/ODriver.html">ODriver</a>
+          </li>
+        
+          <li>
+            <a href="/post/Cplusplus.html">Cplusplus</a>
+          </li>
+        
+          <li>
+            <a href="/post/Qt.html">Qt</a>
+          </li>
+        
+          <li>
+            <a href="/post/risc-v.html">risc_v</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
