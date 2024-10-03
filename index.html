@@ -208,7 +208,18 @@ EndSection
 <p>然后又换lightdm试一试，发现还是只能显示一个，甚至只能显示外接屏幕，拔去外接屏幕，笔记本屏幕也不会亮。</p>
 <p>最后又换回了dgm3</p>
 <p>##总结：</p>
-<h1 id="只有bios独立显卡-etc-X11-xorg-conf使用独立显卡-dgm3才能正常使用。"><a href="#只有bios独立显卡-etc-X11-xorg-conf使用独立显卡-dgm3才能正常使用。" class="headerlink" title="#只有bios独立显卡 +  &#x2F; etc&#x2F;X11&#x2F;xorg.conf使用独立显卡 +dgm3才能正常使用。"></a>#只有bios独立显卡 +  &#x2F; etc&#x2F;X11&#x2F;xorg.conf使用独立显卡 +dgm3才能正常使用。</h1>
+<h1 id="只有bios独立显卡-etc-X11-xorg-conf使用独立显卡-dgm3才能正常使用。"><a href="#只有bios独立显卡-etc-X11-xorg-conf使用独立显卡-dgm3才能正常使用。" class="headerlink" title="#只有bios独立显卡 +  &#x2F; etc&#x2F;X11&#x2F;xorg.conf使用独立显卡 +dgm3才能正常使用。"></a>#只有bios独立显卡 +  &#x2F; etc&#x2F;X11&#x2F;xorg.conf使用独立显卡 +dgm3才能正常使用。</h1><p>2024-10-3-14:44</p>
+<p>这样确实可以用，但是独显功耗太大，而且不知道为什么webots非常卡，看来还是不对</p>
+<p>bios混显模式+删除xorg.conf</p>
+<p>先修改xorg.conf，把GPU，Intel标清，然后用Intel显示，进入桌面，看到nvidia-settings能选择这三种模式了（这是还不是很对，左面只有一个PRIME Profiles）</p>
+<p>重启</p>
+<p>在tty里把xorg.conf文件rm掉，</p>
+<p>直接reboot</p>
+<p>就一切正常了，看一下:</p>
+<p><img src="/../images/image-20241003145229468.png" alt="image-20241003145229468"></p>
+<p><img src="/../images/image-20241003144809104.png" alt="image-20241003144809104"></p>
+<p>nvidia-smi也正常了</p>
+
       
     </div>
     <footer class="article-footer">

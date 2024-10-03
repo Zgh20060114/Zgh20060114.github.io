@@ -13,10 +13,13 @@
 <meta property="og:site_name" content="Zgh&#39;s">
 <meta property="og:description" content="写于2024-10-3-00:46 记录一次把ubnutu20.04de nvidia 驱动搞坏又修复，加上对ubuntu显卡驱动和独显&#x2F;混显，lightdm&#x2F;gdm3桌面管理器的理解。 由于webots仿真卡死崩溃，就找到一篇博客说： glxinfo | grep OpenGL  确实opengl输出的是intel集显，使用 sudo prime-select nvidia">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241003145229468.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241003144809104.png">
 <meta property="article:published_time" content="2024-10-02T16:44:34.000Z">
-<meta property="article:modified_time" content="2024-10-02T17:11:46.532Z">
+<meta property="article:modified_time" content="2024-10-03T06:55:08.013Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zgh20060114.github.io/images/image-20241003145229468.png">
   
     <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
   
@@ -208,7 +211,18 @@ EndSection
 <p>然后又换lightdm试一试，发现还是只能显示一个，甚至只能显示外接屏幕，拔去外接屏幕，笔记本屏幕也不会亮。</p>
 <p>最后又换回了dgm3</p>
 <p>##总结：</p>
-<h1 id="只有bios独立显卡-etc-X11-xorg-conf使用独立显卡-dgm3才能正常使用。"><a href="#只有bios独立显卡-etc-X11-xorg-conf使用独立显卡-dgm3才能正常使用。" class="headerlink" title="#只有bios独立显卡 +  &#x2F; etc&#x2F;X11&#x2F;xorg.conf使用独立显卡 +dgm3才能正常使用。"></a>#只有bios独立显卡 +  &#x2F; etc&#x2F;X11&#x2F;xorg.conf使用独立显卡 +dgm3才能正常使用。</h1>
+<h1 id="只有bios独立显卡-etc-X11-xorg-conf使用独立显卡-dgm3才能正常使用。"><a href="#只有bios独立显卡-etc-X11-xorg-conf使用独立显卡-dgm3才能正常使用。" class="headerlink" title="#只有bios独立显卡 +  &#x2F; etc&#x2F;X11&#x2F;xorg.conf使用独立显卡 +dgm3才能正常使用。"></a>#只有bios独立显卡 +  &#x2F; etc&#x2F;X11&#x2F;xorg.conf使用独立显卡 +dgm3才能正常使用。</h1><p>2024-10-3-14:44</p>
+<p>这样确实可以用，但是独显功耗太大，而且不知道为什么webots非常卡，看来还是不对</p>
+<p>bios混显模式+删除xorg.conf</p>
+<p>先修改xorg.conf，把GPU，Intel标清，然后用Intel显示，进入桌面，看到nvidia-settings能选择这三种模式了（这是还不是很对，左面只有一个PRIME Profiles）</p>
+<p>重启</p>
+<p>在tty里把xorg.conf文件rm掉，</p>
+<p>直接reboot</p>
+<p>就一切正常了，看一下:</p>
+<p><img src="/../images/image-20241003145229468.png" alt="image-20241003145229468"></p>
+<p><img src="/../images/image-20241003144809104.png" alt="image-20241003144809104"></p>
+<p>nvidia-smi也正常了</p>
+
       
     </div>
     <footer class="article-footer">
