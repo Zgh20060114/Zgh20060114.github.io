@@ -71,6 +71,302 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-OpenGL" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/OpenGL.html" class="article-date">
+  <time class="dt-published" datetime="2024-05-17T08:51:10.000Z" itemprop="datePublished">2024-05-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/post/OpenGL.html">OpenGL</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="/../images/image-20240517165248939.png" alt="image-20240517165248939"></p>
+<p><img src="/../images/image-20240517165400128.png" alt="image-20240517165400128"></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jiujiubashiyi/p/16429717.html">https://www.cnblogs.com/jiujiubashiyi/p/16429717.html</a></p>
+<p>GLFW,GLAD,opengl是什么，有什么联系</p>
+<p>GLFW、GLAD和OpenGL是计算机图形学中常用的三个库，它们之间存在着紧密的联系：</p>
+<ol>
+<li><strong>OpenGL</strong>：是一个跨语言、跨平台的编程接口，用于渲染2D、3D向量图形。它是由硅谷图形公司（Silicon Graphics,  SGI）在1992年开发的。OpenGL是图形硬件制造商的标准，也是创作高质量计算机图形的基本工具。OpenGL提供了一个非常灵活的编程接口，让开发者能够利用它来渲染图形。</li>
+<li><strong>GLFW</strong>：是一个跨平台的OpenGL应用程序接口（API）的多线程窗口和输入管理器。简单来说，GLFW用来创建窗口、处理输入事件（如键盘、鼠标点击等），并管理OpenGL上下文。它使得开发者可以比较容易地创建一个OpenGL环境，因为它简化了OpenGL程序中许多繁琐的设置步骤。</li>
+<li><strong>GLAD</strong>：是一个自动生成OpenGL函数指针的库。在OpenGL中，许多操作需要通过指针来调用函数，而在不同的操作系统和硬件平台上，这些函数指针的位置可能会有所不同。GLAD就是用来处理这些函数指针的，它会根据当前的平台和OpenGL的版本自动生成对应的函数指针。这为开发者减少了处理这些底层细节的麻烦。</li>
+</ol>
+<p><strong>它们之间的联系</strong>：</p>
+<ul>
+<li>使用OpenGL之前，需要创建一个OpenGL环境，这个环境包括一个窗口以及一个上下文，这是通过GLFW来完成的。</li>
+<li>GLAD用来确保所有的OpenGL函数调用都能够正确地指向相应的函数，这样开发者就不需要手动查找和设置这些函数指针了。</li>
+<li>通常，一个OpenGL程序的设置流程是这样的：首先初始化GLFW，然后使用GLFW创建一个窗口和OpenGL上下文，接着使用GLAD自动加载OpenGL函数，最后就可以开始使用OpenGL进行绘图了。</li>
+</ul>
+<p>综上，GLFW和GLAD都是帮助开发者更简单、更有效地使用OpenGL的辅助工具。通过它们，开发者可以专注于图形内容的创作，而不必担心底层的细节问题。</p>
+<p>glfwMakeContextCurrent(window);是什么意思</p>
+<p><code>glfwMakeContextCurrent(window);</code> 是一行来自 GLFW（OpenGL Framework）库的代码。GLFW 是一个跨平台的库，用于窗口和输入处理，它使得创建 OpenGL 应用程序变得更加容易。</p>
+<p>这句代码的作用是将 OpenGL 渲染上下文关联到由 <code>window</code> 参数指定的窗口。在 OpenGL 中，渲染上下文是用来进行图形绘制的环境，它定义了一系列可以用来配置和控制渲染行为的设置。</p>
+<p>在创建窗口之后，必须调用 <code>glfwMakeContextCurrent</code> 函数来指定哪个窗口的上下文将被当前的线程使用。只有当前上下文中的 OpenGL 调用才会对指定的窗口产生影响。如果没有激活任何上下文，任何 OpenGL 调用都会导致错误。</p>
+<p>简单来说，当你想要在特定的窗口上绘制图形时，你需要确保该窗口的 OpenGL 上下文被设置为当前上下文。这就是 <code>glfwMakeContextCurrent(window);</code> 这行代码的目的。</p>
+<p>gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) 是什么意思</p>
+<p><code>gladLoadGLLoader</code> 是一个函数，通常在 C 或 C++ 程序中使用，用于初始化 OpenGL 函数指针。OpenGL 是一个用于渲染2D和3D矢量图形的跨语言、跨平台的应用程序编程接口（API）。<code>gladLoadGLLoader</code> 函数是 GLAD 库的一部分，GLAD 是一个小型且易于使用的库，它负责在每次调用 OpenGL 函数之前，动态地加载和绑定正确的 OpenGL 函数指针。</p>
+<p><code>glfwGetProcAddress</code> 是另一个函数，属于 GLFW 库（一个用于创建窗口、输入处理等的前端库，常与OpenGL一起使用）。<code>glfwGetProcAddress</code> 的作用是获取指向特定OpenGL函数的指针，该函数在OpenGL核心或者扩展中定义。</p>
+<pre><code>gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)
+</code></pre>
+<p>这表示在初始化GLAD库时，它将使用GLFW库提供的函数指针来加载OpenGL函数。这允许应用程序使用OpenGL函数，而不需要关心底层的具体实现细节。</p>
+<p>这种机制的好处是，应用程序只需要链接到一个库（比如GLFW），而GLFW会负责查找和加载正确的OpenGL函数。这样做可以简化应用程序的编写和维护工作，同时也确保了应用程序可以轻松地与不同平台的OpenGL版本兼容。</p>
+<p><strong>双缓冲(Double Buffer)</strong></p>
+<p>应用程序使用单缓冲绘图时可能会存在图像闪烁的问题。 这是因为生成的图像不是一下子被绘制出来的，而是按照从左到右，由上而下逐像素地绘制而成的。最终图像不是在瞬间显示给用户，而是通过一步一步生成的，这会导致渲染的结果很不真实。为了规避这些问题，我们应用双缓冲渲染窗口应用程序。<strong>前</strong>缓冲保存着最终输出的图像，它会在屏幕上显示；而所有的的渲染指令都会在<strong>后</strong>缓冲上绘制。当所有的渲染指令执行完毕后，我们<strong>交换</strong>(Swap)前缓冲和后缓冲，这样图像就立即呈显出来，之前提到的不真实感就消除了。</p>
+<ul>
+<li>顶点数组对象：Vertex Array Object，VAO</li>
+<li>顶点缓冲对象：Vertex Buffer Object，VBO</li>
+<li>元素缓冲对象：Element Buffer Object，EBO 或 索引缓冲对象 Index Buffer Object，IBO</li>
+</ul>
+<p>在OpenGL中，任何事物都在3D空间中，而屏幕和窗口却是2D像素数组，这导致OpenGL的大部分工作都是关于把3D坐标转变为适应你屏幕的2D像素.3D坐标转为2D坐标的处理过程是由OpenGL的<strong>图形渲染管线</strong>（Graphics Pipeline，大多译为管线，实际上指的是一堆原始图形数据途经一个输送管道，期间经过各种变化处理最终出现在屏幕的过程）管理的。图形渲染管线可以被划分为两个主要部分：第一部分把你的3D坐标转换为2D坐标，第二部分是把2D坐标转变为实际的有颜色的像素。(图形渲染管线接受一组3D坐标，然后把它们转变为你屏幕上的有色2D像素输出)</p>
+<p>图形渲染管线可以被划分为几个阶段，每个阶段将会把前一个阶段的输出作为输入。所有这些阶段都是高度专门化的（它们都有一个特定的函数），并且很容易并行执行。正是由于它们具有并行执行的特性，当今大多数显卡都有成千上万的小处理核心，它们在GPU上为每一个（渲染管线）阶段运行各自的小程序，从而在图形渲染管线中快速处理你的数据。这些小程序叫做<strong>着色器</strong>(Shader)。</p>
+<p><strong>OpenGL着色器</strong>是用OpenGL着色器语言(OpenGL Shading Language, <strong>GLSL</strong>)写成的</p>
+<p><img src="/../images/pipeline.png" alt="img"></p>
+<p>为了让OpenGL知道我们的<strong>坐标和颜色值</strong>构成的到底是什么，OpenGL需要你去指定这些数据所表示的<strong>渲染类型</strong>。我们是希望把这些数据渲染成一系列的点？一系列的三角形？还是仅仅是一个长长的线？做出的这些提示叫做**图元(Primitive)**，任何一个绘制指令的调用都将把图元传递给OpenGL。这是其中的几个：GL_POINTS、GL_TRIANGLES、GL_LINE_STRIP。</p>
+<p><strong>图形渲染管线的第一个部分</strong>—-<strong>顶点着色器</strong></p>
+<p>把3D坐标转为另一种3D坐标</p>
+<p><strong>几何着色器</strong></p>
+<p>一组顶点作为输入，这些顶点形成图元，并且能够通过发出新的顶点来形成新的(或其他)图元来生成其他形状</p>
+<p><strong>图元装配</strong></p>
+<p>将顶点着色器（或几何着色器）输出的所有顶点作为输入（如果是GL_POINTS，那么就是一个顶点），并将所有的点装配成指定图元的形状</p>
+<p><strong>光栅化阶段</strong></p>
+<p>把图元映射为最终屏幕上相应的像素，生成供片段着色器(Fragment Shader)使用的**片段(Fragment)**。在片段着色器运行之前会执行裁切(Clipping)。裁切会丢弃超出你的视图以外的所有像素，用来提升执行效率。</p>
+<p>OpenGL中的一个<strong>片段</strong>是OpenGL渲染一个像素所需的所有数据</p>
+<p><strong>片段着色器</strong></p>
+<p>片段着色器的主要目的是计算一个像素的最终颜色</p>
+<p><strong>Alpha测试和混合(Blending)阶段</strong></p>
+<p>这个阶段检测片段的对应的深度（和模板(Stencil)）值（后面会讲），用它们来判断这个像素是其它物体的前面还是后面，决定是否应该丢弃。这个阶段也会检查alpha值（alpha值定义了一个物体的透明度）并对物体进行混合(Blend)。所以，即使在片段着色器中计算出来了一个像素输出的颜色，在渲染多个三角形的时候最后的像素颜色也可能完全不同</p>
+<p><code>GL_ARRAY_BUFFER</code>目标用于表示顶点属性数据的缓冲区对象</p>
+<p>在OpenGL中，VAO（Vertex Array Object）和VBO（Vertex Buffer Object）是用于管理顶点数据的重要概念，并且它们之间存在一定的关系。</p>
+<ol>
+<li>VAO（Vertex Array Object）：<ul>
+<li>VAO是OpenGL中用于存储顶点属性状态的对象。它包含了多个指向VBO的指针，用于指定顶点属性数据的格式、排列方式等。</li>
+<li>VAO可以看作是对VBO的管理器，它记录了OpenGL如何解释顶点数据，包括顶点的位置、颜色、法线等信息。通过绑定VAO，可以轻松地切换顶点属性的设置，从而简化渲染流程。</li>
+</ul>
+</li>
+<li>VBO（Vertex Buffer Object）：<ul>
+<li>VBO是用于存储顶点数据的缓冲区对象。它可以存储顶点的位置、颜色、纹理坐标等信息。</li>
+<li>通过将顶点数据存储在VBO中，可以有效地管理和传输大量的顶点数据，而不必反复传输到GPU。</li>
+</ul>
+</li>
+</ol>
+<p>关系：</p>
+<ul>
+<li>VBO存储了实际的顶点数据，例如顶点的位置、颜色、纹理坐标等。</li>
+<li>VAO描述了顶点数据的格式和布局，它指明了如何从VBO中读取顶点数据以供渲染使用。</li>
+<li>通常情况下，我们先创建和绑定VAO，然后配置相应的VBO，并将VBO与VAO关联。这样，在渲染时只需绑定相应的VAO即可，OpenGL就会根据VAO中的配置自动获取正确的顶点数据进行渲染。</li>
+</ul>
+<p>总结来说，VAO用于管理顶点属性状态，而VBO用于存储实际的顶点数据。它们共同协作，使得在OpenGL中管理和使用顶点数据变得更加灵活和高效。</p>
+<p>我们可以绘制两个三角形来组成一个矩形（OpenGL主要处理三角形）</p>
+<p>着色器(Shader)是运行在GPU上的小程序。这些小程序为图形渲染管线的某个特定部分而运行。从基本意义上来说，着色器只是一种把输入转化为输出的程序。着色器也是一种非常独立的程序，因为它们之间不能相互通信；它们之间唯一的沟通只有通过输入和输出。</p>
+<p>Uniform是另一种从我们的应用程序在 CPU 上传递数据到 GPU 上的着色器的方式，但uniform和顶点属性有些不同。首先，uniform是全局的(Global)。全局意味着uniform变量必须在每个着色器程序对象中都是独一无二的，而且它可以被着色器程序的任意着色器在任意阶段访问。第二，无论你把uniform值设置成什么，uniform会一直保存它们的数据，直到它们被重置或更新。</p>
+<p>在OpenGL中，VBO（Vertex Buffer Object）和VAO（Vertex Array Object）都是用于管理顶点数据的对象。它们之间的联系和区别如下：</p>
+<p>联系：</p>
+<ul>
+<li>VBO和VAO都是用于管理顶点属性数据的对象。</li>
+<li>它们都可以通过OpenGL API进行创建、绑定、更新和删除等操作。</li>
+<li>VAO可以保存多个VBO的绑定状态，使得我们在绘制时只需绑定VAO即可同时启用多个顶点属性数组。</li>
+</ul>
+<p>区别：</p>
+<ul>
+<li>VBO是用于存储和管理顶点数据的缓冲对象，包括顶点位置、法线、颜色、纹理坐标等属性数据。它能够提高渲染效率，因为可以将这些数据上传到显卡内存中，而不需要每次绘制时都从系统内存中获取。</li>
+<li>VAO是用于管理VBO的绑定状态的对象，它记录了VBO的绑定状态以及每个属性在VBO中的偏移量、类型等信息。VAO可以看作是一组VBO的绑定描述符，它规定了如何从VBO中获取顶点属性数据。</li>
+</ul>
+<p>总体来说，VBO和VAO在OpenGL中都扮演着非常重要的角色，它们都可以提高渲染效率，使得开发者可以更加方便地管理和操作顶点属性数据。其中，VBO主要用于存储和管理顶点数据，而VAO则是用于在绘制时快速激活和绑定多个顶点属性数组。</p>
+<p>把两个角度都发送</p>
+<p>试一下发后两个数据，看看是不是数据的问题</p>
+<p>试试发5个</p>
+<p><img src="/../images/image-20240603155209855.png" alt="image-20240603155209855">2024.6.3.15.52Matlab报错，遂改，无用！！！！</p>
+<p>艺术家和程序员更喜欢使用纹理(Texture)。纹理是一个2D图片（甚至也有1D和3D的纹理），它可以用来添加物体的细节.这样就可以让物体非常精细而不用指定额外的顶点</p>
+<p>为了能够把纹理映射(Map)到三角形上，我们需要指定三角形的每个顶点各自对应纹理的哪个部分。这样每个顶点就会关联着一个纹理坐标(Texture Coordinate)，用来标明该从纹理图像的哪个部分采样（译注：采集片段颜色）。之后在图形的其它片段上进行片段插值(Fragment Interpolation)。</p>
+<p>使用 Xlib 来获取窗口大小需要一些底层的操作，但可以通过以下步骤来实现：</p>
+<p>首先，你需要安装 <code>python-xlib</code> 库。你可以使用以下命令在 Ubuntu 上安装：</p>
+<pre><code class="bash">sudo apt-get install python-xlib
+</code></pre>
+<p>然后，你可以使用下面的代码来获取当前活动窗口的大小：</p>
+<pre><code class="python">from Xlib import display
+
+def get_screen_size():
+    disp = display.Display()
+    screen = disp.screen()
+    root_win = screen.root
+    windowID = root_win.get_full_property(disp.intern_atom(&#39;_NET_ACTIVE_WINDOW&#39;), 0).value[0]
+    window = disp.create_resource_object(&#39;window&#39;, windowID)
+    geometry = window.get_geometry()
+    return geometry.width, geometry.height
+
+width, height = get_screen_size()
+print(&quot;Window size: &#123;&#125; x &#123;&#125;&quot;.format(width, height))
+</code></pre>
+<p>这段代码中，我们首先创建了一个 <code>Display</code> 对象，然后获取了当前活动窗口的 ID。接着，我们使用这个窗口 ID 创建了一个 <code>window</code> 对象，并通过这个对象的 <code>get_geometry</code> 方法获取了窗口的宽度和高度。</p>
+<p>请注意，使用 Xlib 需要对 X 窗口系统有一定的了解，因为它是一个底层的库，直接和 X 服务器进行交互。希望这个示例能够帮助你开始使用 Xlib 来获取窗口大小。</p>
+<ul>
+<li><code>layout(location=0)</code>: 这是一个着色器布局限定符（layout qualifier），用于指定顶点属性在输入阶段的位置。在这里，<code>location=0</code> 表示顶点属性的位置索引为 0。这个位置索引将与顶点数组对象（VAO）中的对应属性绑定，以确保正确地将顶点数据传递给顶点着色器。</li>
+<li><code>in</code>: 这是一个输入变量修饰符，用于指示这个变量是从外部传递给顶点着色器的。</li>
+<li><code>vec3</code>: 这是指定变量类型的关键字，表示这个变量是一个三维向量。</li>
+<li><code>in_position</code>: 这是变量的名称，用于在顶点着色器中引用这个输入变量。在这里，<code>in_position</code> 可能表示顶点的位置信息。</li>
+</ul>
+<p>在OpenGL中，<code>gl_Position</code>是一个内置的变量，用于表示顶点着色器（Vertex Shader）输出的顶点位置。它是一个四维向量（<code>vec4</code>），表示顶点的齐次坐标（Homogeneous Coordinates），通常用于表示三维空间中的点。齐次坐标是四维的，其中前三个分量表示点的位置，而第四个分量通常被用于表示点的类型或者进行透视除法（Perspective Division）。在顶点着色器中，对 <code>gl_Position</code> 的设置将影响后续的图元装配（Primitive Assembly）和光栅化（Rasterization）阶段，最终确定绘制的像素位置。因此，正确设置 <code>gl_Position</code> 是绘制正确图形的关键。</p>
+<p>[[ 0.5  0.5  0.   0.   1.   0. ]<br> [-0.5  0.5  0.   1.   0.   0. ]<br> [-0.5 -0.5  0.   0.   0.   1. ]<br> [ 0.5  0.5  0.   0.   1.   0. ]<br> [-0.5 -0.5  0.   0.   0.   1. ]<br> [ 0.5 -0.5  0.   1.   0.   0. ]]</p>
+<pre><code>layout(location=0) in vec3 in_position;
+layout(location=1) in vec3 in_color;
+</code></pre>
+<pre><code>self.vbo_format = &#39;3f 3f&#39;
+self.attrs = (&#39;in_position&#39;, &#39;in_color&#39;)
+</code></pre>
+<pre><code>vertex_data = np.hstack([vertices_array, colors_array])
+</code></pre>
+<h2 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h2><p><img src="/../images/image-20240608192337289.png" alt="image-20240608192337289"></p>
+<h2 id="位移"><a href="#位移" class="headerlink" title="位移"></a>位移</h2><p><img src="/../images/image-20240608192358635.png" alt="image-20240608192358635"></p>
+<p>大多数旋转函数需要用弧度制的角，但幸运的是角度制的角也可以很容易地转化为弧度制的：</p>
+<ul>
+<li>弧度转角度：<code>角度 = 弧度 * (180.0f / PI)</code></li>
+<li>角度转弧度：<code>弧度 = 角度 * (PI / 180.0f)</code></li>
+</ul>
+<p><img src="/../images/image-20240608192525938.png" alt="image-20240608192525938"></p>
+<p>我这一辈子，抠抠搜搜的花了很多钱，精精明明的上了很多当。骂骂咧咧的干了很多活，小心翼翼的闯了很多祸。精打细算的欠了一屁股帐。认认真真的范了很多错。掏心掏肺的结了很多仇。不明不白的吃了很多亏。窝窝囊囊的活了几十年。</p>
+<ol>
+<li><code>glm::mat4 trans;</code>：首先声明了一个4x4的矩阵trans，用于表示变换矩阵。</li>
+<li><code>trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));</code>：这一行代码对trans进行了旋转变换。使用了glm库中的rotate函数，将trans矩阵绕Z轴旋转90度（使用radians函数将角度转换为弧度），并将结果赋值给trans本身。</li>
+<li><code>trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));</code>：接着对trans进行了缩放变换。使用了glm库中的scale函数，将trans矩阵沿着X、Y、Z三个轴分别缩放0.5倍，并将结果再次赋值给trans本身。</li>
+</ol>
+<ul>
+<li>局部空间(Local Space，或者称为物体空间(Object Space))</li>
+<li>世界空间(World Space)</li>
+<li>观察空间(View Space，或者称为视觉空间(Eye Space))</li>
+<li>裁剪空间(Clip Space)</li>
+<li>屏幕空间(Screen Space)</li>
+</ul>
+<p>为了将坐标从一个坐标系变换到另一个坐标系，我们需要用到几个变换矩阵，最重要的几个分别是模型(Model)、观察(View)、投影(Projection)三个矩阵。我们的顶点坐标起始于局部空间(Local Space)，在这里它称为局部坐标(Local Coordinate)，它在之后会变为世界坐标(World Coordinate)，观察坐标(View Coordinate)，裁剪坐标(Clip Coordinate)，并最后以屏幕</p>
+<p>坐标(Screen Coordinate)的形式结束。下面的这张图展示了整个流程以及各个变换过程做了什么：</p>
+<p><img src="/../images/coordinate_systems.png" alt="coordinate_systems"></p>
+<ol>
+<li>局部坐标是对象相对于局部原点的坐标，也是物体起始的坐标。</li>
+<li>下一步是将局部坐标变换为世界空间坐标，世界空间坐标是处于一个更大的空间范围的。这些坐标相对于世界的全局原点，它们会和其它物体一起相对于世界的原点进行摆放。</li>
+<li>接下来我们将世界坐标变换为观察空间坐标，使得每个坐标都是从摄像机或者说观察者的角度进行观察的。</li>
+<li>坐标到达观察空间之后，我们需要将其投影到裁剪坐标。裁剪坐标会被处理至-1.0到1.0的范围内，并判断哪些顶点将会出现在屏幕上。</li>
+<li>最后，我们将裁剪坐标变换为屏幕坐标，我们将使用一个叫做视口变换(Viewport Transform)的过程。视口变换将位于-1.0到1.0范围的坐标变换到由glViewport函数所定义的坐标范围内。最后变换出来的坐标将会送到光栅器，将其转化为片段。</li>
+</ol>
+<p>你可能已经大致了解了每个坐标空间的作用。我们之所以将顶点变换到各个不同的空间的原因是有些操作在特定的坐标系统中才有意义且更方便。例如，当需要对物体进行修改的时候，在局部空间中来操作会更说得通；如果要对一个物体做出一个相对于其它物体位置的操作时，在世界坐标系中来做这个才更说得通，等等。如果我们愿意，我们也可以定义一个直接从局部空间变换到裁剪空间的变换矩阵，但那样会失去很多灵活性。</p>
+<h2 id="局部空间——–模型矩阵——–世界空间———观察矩阵———-观察空间-摄像机空间-———–投影矩阵————–裁剪空间————–视口变换————-屏幕空间"><a href="#局部空间——–模型矩阵——–世界空间———观察矩阵———-观察空间-摄像机空间-———–投影矩阵————–裁剪空间————–视口变换————-屏幕空间" class="headerlink" title="局部空间——–模型矩阵——–世界空间———观察矩阵———-观察空间(摄像机空间)———–投影矩阵————–裁剪空间————–视口变换————-屏幕空间"></a>局部空间——–模型矩阵——–世界空间———观察矩阵———-观察空间(摄像机空间)———–投影矩阵————–裁剪空间————–视口变换————-屏幕空间</h2><p><img src="/../images/image-20240609164419389.png" alt="image-20240609164419389"></p>
+<p><img src="/../images/image-20240609164929887.png" alt="image-20240609164929887"></p>
+<p><img src="/../images/image-20240609165058873.png" alt="image-20240609165058873"></p>
+<p><img src="/../images/image-20240609211854570.png" alt="image-20240609211854570"></p>
+<p><img src="/../images/image-20240609212927721.png" alt="image-20240609212927721"></p>
+<p><img src="/../images/image-20240609213514370.png" alt="image-20240609213514370"></p>
+<p>glm::LookAt函数需要一个位置、目标和上向量。它会创建一个观察矩阵。</p>
+<p>为了改变摄像机方向</p>
+<p><img src="/../images/image-20240609221012736.png" alt="image-20240609221012736"></p>
+<p><code>self.m_projection=glm.perspective(V_FOV,ASPECT_RATIO,NEARPLANE,FARPLANE)</code></p>
+<p>使用 GLM 库中的 <code>glm::perspective()</code> 函数创建了一个投影矩阵（projection matrix）.会根据给定的参数创建一个透视投影矩阵，并返回这个矩阵。这个投影矩阵描述了从摄像机位置观察场景时的投影效果，将三维场景转换为二维屏幕空间</p>
+<p><img src="/../images/image-20240610000155256.png" alt="image-20240610000155256"></p>
+<p>对连续时间正弦信号考虑下面表示式：<br>x ( t ) &#x3D; s i n ( 2 π f 0 t + φ )<br>可以按抽样频率 fs&#x3D;1&#x2F;Ts对 x(t)抽样来获得离散时间信号<br>x [ n ] &#x3D; x ( t )|t &#x3D;nTs       &#x3D;  x ( t ) |t&#x3D;n &#x2F; fs &#x3D; s i n ( 2 πf0 &#x2F;fsn + φ ),<br>f0 &#x3D;500Hz， fs 取 100Hz， 绘出 x[n]及其 DTFT</p>
+<p><img src="/../images/image-20240611133720092.png" alt="image-20240611133720092"></p>
+<p><img src="/../images/image-20240611133805550.png" alt="image-20240611133805550"></p>
+<p><img src="/../images/image-20240611133838091.png" alt="image-20240611133838091"></p>
+<p><img src="/../images/image-20240611140046801.png" alt="image-20240611140046801"></p>
+<p>以 5000HZ 和 1000HZ 分别对其采样得到 x1(n)， x2(n)；画出它们的 DTFT 并比较</p>
+<p><img src="/../images/image-20240611140651535.png" alt="image-20240611140651535"></p>
+<p><img src="/../images/image-20240611141635271.png" alt="image-20240611141635271"></p>
+<p>我们可以从第一个方程中直接得到 A 和 φ 的关系：</p>
+<p><img src="/../images/image-20240611141659727.png" alt="image-20240611141659727"></p>
+<p>φ ！&#x3D;π&#x2F;2+kπ</p>
+<p>x(t)&#x3D;2cos(π&#x2F;3 *t)</p>
+<p><img src="/../images/image-20240611143342649.png" alt="image-20240611143342649"></p>
+<p><img src="/../images/image-20240611143614094.png" alt="image-20240611143614094"></p>
+<p><img src="/../images/image-20240611144943071.png" alt="image-20240611144943071"></p>
+<p><img src="/../images/image-20240611145404898.png" alt="image-20240611145404898"></p>
+<p>现实中无法实现理想低通滤波器。然而，可以按下面的方法计算由理想低通滤波器产生的<br>波形：理想低通运算相当于信号频谱与频域的矩形函数相乘，这对应于信号与通过傅里叶逆变<br>换得到的时域 sinc 函数的卷积。当其应用于点样本时，卷积和为 sinc 函数内插：</p>
+<p>xa(t)&#x3D;sum_{n&#x3D;-无穷}^{正无穷} [xa(nt) sin(π(t-nTs)&#x2F;Ts)&#x2F;(π(t-nTs)&#x2F;Ts)]</p>
+<p>(3.18)<br>其中，样本 xa(nt)取自 t&#x3D; nTs处。<br>a. 假设只有有限数量的信号样本是非零值，且只需在有限时间区间上进行信号重建，写出<br>基于(3.18)式的 sinc 内插表示式。</p>
+<p><code>syms t n Ts xa;</code></p>
+<p><code>xa_t = symsum(xa * sin(pi*(t-n*Ts)/Ts)/(pi*(t-n*Ts)/Ts), n, -inf, inf);</code></p>
+<p><img src="/../images/image-20240611153315884.png" alt="image-20240611153315884"></p>
+<p>C：<br><img src="/../images/image-20240611155005492.png" alt="image-20240611155005492"></p>
+<p>根据奈奎斯特采样定理，要求 fs≥2fbfs≥2fb 以避免混叠现象。因此，fb&lt;fs2fb&lt;2fs 是满足采样定理的条件。</p>
+<p><img src="/../images/image-20240613162635475.png" alt="image-20240613162635475"></p>
+<p>45HZ，基本周期 T是 1&#x2F;45</p>
+<p><img src="/../images/image-20240613160828062.png" alt="image-20240613160828062"></p>
+<h3 id="结果分析与总结"><a href="#结果分析与总结" class="headerlink" title="结果分析与总结"></a>结果分析与总结</h3><ol>
+<li><strong>分析长度 ( 0.5T_p &#x3D; 0.1 ) 秒</strong>:<ul>
+<li>频谱图中的频率分辨率较低，频率成分不清晰，可能会导致频率混淆。</li>
+<li>由于分析长度小于一个周期，频谱分析结果可能包含较多的谐波失真和旁瓣效应。</li>
+</ul>
+</li>
+<li><strong>分析长度 ( 1.5T_p &#x3D; 0.3 ) 秒</strong>:<ul>
+<li>频谱图中的频率分辨率有所提高，主要频率成分变得更加明显。</li>
+<li>由于分析长度超过一个周期，频谱分析结果更加准确，频率成分容易识别。</li>
+</ul>
+</li>
+<li><strong>分析长度 ( 2T_p &#x3D; 0.4 ) 秒</strong>:<ul>
+<li>频谱图中的频率分辨率进一步提高，主要频率成分非常清晰。</li>
+<li>更长的分析长度提供了更好的频率分辨率，但同时也增加了计算时间和资源需求。</li>
+</ul>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>选择合适的分析长度</strong>：分析长度可以通过基本周期 ( T_p ) 的整数倍来选择。一般来说，分析长度至少应等于或大于一个周期 ( T_p )，这样可以确保频谱分析结果的准确性。</li>
+<li><strong>平衡分辨率和计算复杂度</strong>：较长的分析长度提供更好的频率分辨率，但也会增加计算时间和资源。在实际应用中，需要在频率分辨率和计算复杂度之间取得平衡。</li>
+<li><strong>避免过短的分析长度</strong>：过短的分析长度（例如小于一个周期）可能导致频谱结果混乱，难以准确识别主要频率成分</li>
+</ul>
+<p><img src="/../images/image-20240613161203147.png" alt="image-20240613161203147"></p>
+<p>你可以看到，白色的阳光实际上是所有可见颜色的集合，物体吸收了其中的大部分颜色。它仅反射了代表物体颜色的部分，被反射颜色的组合就是我们所感知到的颜色（此例中为珊瑚红）。</p>
+<p>这些颜色反射的定律被直接地运用在图形领域。当我们在OpenGL中创建一个光源时，我们希望给光源一个颜色。在上一段中我们有一个白色的太阳，所以我们也将光源设置为白色。当我们把光源的颜色与物体的颜色值相乘，所得到的就是这个物体所反射的颜色（也就是我们所感知到的颜色）。让我们再次审视我们的玩具（这一次它还是珊瑚红），看看如何在图形学中计算出它的反射颜色。我们将这两个颜色向量作分量相乘，结果就是最终的颜色向量了：</p>
+<pre><code class="c++">glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
+glm::vec3 toyColor(1.0f, 0.5f, 0.31f);
+glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
+</code></pre>
+<p>我们可以看到玩具的颜色<strong>吸收</strong>了白色光源中很大一部分的颜色，但它根据自身的颜色值对红、绿、蓝三个分量都做出了一定的反射。这也表现了现实中颜色的工作原理。由此，我们可以定义物体的颜色为&#x3D;&#x3D;<strong>物体从一个光源反射各个颜色分量的大小</strong>。&#x3D;&#x3D;</p>
+<p>**现实世界的光照是极其复杂的，而且会受到诸多因素的影响，这是我们有限的计算能力所无法模拟的。因此OpenGL的光照使用的是简化的模型，对现实的情况进行近似，这样处理起来会更容易一些，而且看起来也差不多一样。这些光照模型都是基于我们对光的物理特性的理解。其中一个模型被称为冯氏光照模型(Phong Lighting Model)。冯氏光照模型的主要结构由3个分量组成：环境(Ambient)、漫反射(Diffuse)和镜面(Specular)光照。下面这张图展示了这些光照分量看起来的样子：</p>
+<p><img src="/../images/basic_lighting_phong.png" alt="img"></p>
+<ul>
+<li>环境光照(Ambient Lighting)：即使在黑暗的情况下，世界上通常也仍然有一些光亮（月亮、远处的光），所以物体几乎永远不会是完全黑暗的。为了模拟这个，我们会使用一个环境光照常量，它永远会给物体一些颜色。</li>
+<li>漫反射光照(Diffuse Lighting)：模拟光源对物体的方向性影响(Directional Impact)。它是冯氏光照模型中视觉上最显著的分量。物体的某一部分越是正对着光源，它就会越亮。</li>
+<li>镜面光照(Specular Lighting)：模拟有光泽物体上面出现的亮点。镜面光照的颜色相比于物体的颜色会更倾向于光的颜色。</li>
+</ul>
+<p>在漫反射光照部分，光照表现并没有问题，这是因为我们没有对物体进行任何缩放操作，所以我们并不真的需要使用一个法线矩阵，而是仅以模型矩阵乘以法线就可以。但是如果你会进行不等比缩放，使用法线矩阵去乘以法向量就是必须的了。</p>
+<p><img src="/../images/image-20240618134143162.png" alt="image-20240618134143162"></p>
+<p><img src="/../images/image-20240618134913056.png" alt="image-20240618134913056"></p>
+<p><img src="/../images/image-20240618135228887.png" alt="image-20240618135228887"></p>
+<p><img src="/../images/image-20240618135413787.png" alt="image-20240618135413787"></p>
+<p>已知周期信号 <em>x</em>(<em>t</em>) &#x3D; 0.75 + 3.4 cos 2πft + 2.7 cos 4<em>π</em> <em>ft</em> +1.5sin 3.5<em>π</em> <em>ft</em> + 2.5sin 7<em>π</em> <em>ft</em>  ，其<br>中 25&#x2F;16Hz,若截断时间长度分别为信号周期的 0.9 和 1.1 倍，试分别绘制这八种窗函数<br>提取的 x(t)的频谱。</p>
+<p><img src="/../images/image-20240618141855717.png" alt="image-20240618141855717"></p>
+<p>根据下列指标采用窗函数法设计低通数字滤波器， 通带截止频率wp&#x3D; 0.2π ，阻带截止频率</p>
+<p>ws &#x3D; 0.3π，通带最大衰减 0.25dB，阻带最小衰减 50dB。</p>
+<p>（1） 分别利用汉明窗、布莱克曼窗和凯泽窗设计该滤波器，且滤波器具有线性相位。绘出脉冲响应 h(n)及滤波器的频率响应；</p>
+<p>（2） 增加 N，观察过渡带和最大肩峰值的变化。</p>
+<p>利用汉明窗设计数字微分器</p>
+<p>Hd(e^jw)&#x3D;</p>
+<p>jw,0&lt;w&lt;π;</p>
+<p>-jw,-π&lt;w&lt;0.</p>
+<p>要求 <em>N</em> &#x3D; 21，且滤波器具有线性相位。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/OpenGL.html" data-id="clxbjvuxq000c61cx46uggxj5" data-title="OpenGL" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-CUDA" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/post/CUDA.html" class="article-date">
@@ -2031,237 +2327,6 @@
 
 
   
-    <article id="post-yolov5" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/post/yolov5.html" class="article-date">
-  <time class="dt-published" datetime="2023-12-16T12:04:59.000Z" itemprop="datePublished">2023-12-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/post/yolov5.html">yolov5</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="/../images/image-20231216210026711.png" alt="image-20231216210026711"></p>
-<p><img src="/../images/image-20231216210245075.png" alt="image-20231216210245075"></p>
-<h4 id="IOU-—-交并比"><a href="#IOU-—-交并比" class="headerlink" title="IOU —-交并比"></a>IOU —-交并比</h4><p><img src="/../images/image-20231216210441830.png" alt="image-20231216210441830"></p>
-<p>Lou为1意味着预测边界框和地面真实边界框完全重叠。<br>您可以为LOU设置阈值，以确定对象检测是否有效。<br>假设您将LOU设置为0.5，在这种情况下。<br>·如果LOU≥为0.5，则将目标检测归类为真阳性(TP)。<br>如果LOU&lt;0.5，则为错误检测，并将其归类为假阳性(FP)。<br>当图像中存在地面真实且模型未能检测到目标时，分类。<br>作为假阴性(FN)。<br>真负片(TN)：TN是我们没有预测到物体的图像的每一部分。<br>度量对于目标检测没有用处，因此我们忽略TN。</p>
-<p><img src="/../images/image-20231216210636311.png" alt="image-20231216210636311"></p>
-<h4 id="AP-MAP"><a href="#AP-MAP" class="headerlink" title="AP,MAP"></a>AP,MAP</h4><p><img src="/../images/image-20231216210923498.png" alt="image-20231216210923498"></p>
-<p><img src="/../images/image-20231216211711468.png" alt="image-20231216211711468"></p>
-<p><img src="/../images/image-20231216211921852.png" alt="image-20231216211921852"></p>
-<p><img src="/../images/image-20231216204704657.png" alt="image-20231216204704657">   </p>
-<p><img src="/../images/image-20231216204353728.png" alt="image-20231216204353728"> </p>
-<h4 id="网络架构和组件"><a href="#网络架构和组件" class="headerlink" title="网络架构和组件"></a>网络架构和组件</h4><p>单阶段检测器：</p>
-<p><img src="/../images/image-20231216205751067.png" alt="image-20231216205751067"></p>
-<p>yolov5：（没有划出专门的颈部Neck）</p>
-<p><img src="/../images/image-20231216212300844.png" alt="image-20231216212300844"></p>
-<p>git clone <a target="_blank" rel="noopener" href="https://github.moeyy.xyz/https://github.com/ultralytics/yolov5.git">https://github.moeyy.xyz/https://github.com/ultralytics/yolov5.git</a></p>
-<p><img src="/../images/image-20231217123703969.png" alt="image-20231217123703969"></p>
-<ol>
-<li><code>nc: 80</code>：这个参数表示模型分类数量（number of classes），默认为 80，对应着 COCO 数据集。</li>
-<li><code>depth_multiple: 0.33</code>：这个参数表示模型深度相对于基础版本的倍数。在 YOLOv5 中，有 S、M、L 和 X 四个版本，其中 S 为基础版本，即 <code>depth_multiple: 1.0</code>，而 M、L 和 X 版本为在此基础上分别加深了一定的层数。而 <code>depth_multiple: 0.33</code> 表示在 S 版本的基础上，深度缩小了 3 倍，即变成了 <code>depth_multiple: 0.33</code> × 3 &#x3D; 0.99。</li>
-<li><code>width_multiple: 0.50</code>：这个参数表示模型通道宽度相对于基础版本的倍数。与 <code>depth_multiple</code> 类似，S 版本的 <code>width_multiple</code> 是 1.0，而 M、L 和 X 版本则在此基础上分别扩大了一定的倍数。</li>
-<li><code>anchors</code>：这是一个锚点数组，用于定义不同尺度下的 anchor boxes。YOLOv5 中使用了三个不同的尺度，每个尺度使用三个不同的 anchor boxes。这些锚点大小是相对于输入图像的，因此不同尺度下的大小会有所差别。</li>
-<li><code>backbone</code>：这一部分定义了模型的骨干网络（backbone），包括卷积层、批归一化层和激活函数等。YOLOv5 使用了 CSPDarknet53 这个网络作为基础骨干网络，并在此基础上进行改进。具体而言，YOLOv5 增加了空间注意力机制和SPP模块，以增强特征表达能力。</li>
-<li><code>head</code>：这一部分定义了模型的检测头（detection head），包括检测网络和分类网络。YOLOv5 中的检测网络采用了YOLOv3中的FPN结构，并在此基础上加入了PANet模块和SAM模块，以提高检测性能。</li>
-</ol>
-<p>序列数据的不同采样方法（随机采样和顺序分区）会导致隐状态初始化的差异，原因如下：</p>
-<ol>
-<li>随机采样： 在随机采样中，我们从序列数据中随机选择一个序列作为训练样本。这意味着每次训练时，我们都使用不同的序列作为输入。由于每个序列可能具有不同的上下文和语义信息，模型在每次训练时都需要重新适应不同的序列特征。因此，随机采样会导致隐状态的初始化与之前的训练批次存在一定差异。</li>
-<li>顺序分区： 在顺序分区中，我们按顺序依次读取序列数据进行训练。这意味着模型在每个训练批次中都会接收到相邻的序列数据。由于相邻的序列通常具有相似的上下文和语义信息，模型可以利用之前批次的隐藏状态来帮助理解当前批次的序列。因此，顺序分区会导致隐状态的初始化与之前的训练批次存在一定的相关性。</li>
-</ol>
-<p>不同的隐状态初始化差异可能会对模型的训练和预测产生影响。随机采样可以增加数据的多样性，帮助模型更好地适应不同的序列特征。然而，随机采样可能也会引入一些噪声，导致训练过程更加不稳定。顺序分区可以利用相邻序列之间的相关性，帮助模型更好地捕捉到序列的上下文信息。然而，顺序分区可能会限制模型对不同序列特征的适应能力。</p>
-<p>困惑度（perplexity）是自然语言处理中常用的一个评价指标，主要用于衡量语言模型的预测性能。困惑度越低，表示模型的预测能力越好。</p>
-<p>在自然语言处理中，我们通常使用语言模型来计算文本序列的概率。给定一个文本序列 $W&#x3D;w_1,w_2,…,w_n$，其概率可以表示为：</p>
-<p>$$<br>P(W)&#x3D;P(w_1)\times P(w_2|w_1) \times … \times P(w_n|w_1,w_2,…,w_{n-1})<br>$$</p>
-<p>其中，$P(w_i|w_1,w_2,…,w_{i-1})$ 表示在已知前面 $i-1$ 个词的情况下，第 $i$ 个词的概率。语言模型的目标就是学习这种条件概率分布。在模型训练过程中，我们通常会使用最大似然估计法来估计模型参数。</p>
-<p>困惑度是一个数值指标，表示用当前语言模型对一个测试集进行预测时所得到的困惑程度。具体而言，如果测试集包含 $N$ 个词，我们可以计算出每个词的概率 $P(w_i)$，然后将这些概率求倒数并取对数，即：</p>
-<p>$$<br>\log \frac{1}{P(w_1)}+\log \frac{1}{P(w_2|w_1)}+…+\log \frac{1}{P(w_N|w_1,w_2,…,w_{N-1})}<br>$$</p>
-<p>然后，我们可以将上述结果除以测试集中的词数 $N$，得到平均困惑度。具体而言，平均困惑度的计算公式如下：</p>
-<p>$$<br>\text{Perplexity}&#x3D;exp\left(-\frac{1}{N}\sum_{i&#x3D;1}^{N}\log P(w_i)\right)<br>$$</p>
-<p>例如，如果我们有一个包含100个句子的测试集，其中总共包含1000个词，我们可以使用语言模型来预测每个词的概率，并计算出平均困惑度。假设我们的模型预测准确率较高，平均每个词的概率为0.9，则平均困惑度为：</p>
-<p>$$<br>exp\left(-\frac{1}{1000}\sum_{i&#x3D;1}^{1000}\log 0.9\right) \approx 2.15<br>$$</p>
-<p>这表示我们的模型对测试集中的文本序列进行预测时，每个词的平均困惑度为2.15。如果我们使用一个更好的语言模型，其困惑度可能会更低。</p>
-<p>用困惑度来评价模型确保了不同长度的序列具有可比性</p>
-<h4 id="路径聚合网络模块"><a href="#路径聚合网络模块" class="headerlink" title="路径聚合网络模块"></a>路径聚合网络模块</h4><p><img src="/../images/image-20231219133825543.png" alt="image-20231219133825543"></p>
-<h4 id="Focus处理模块"><a href="#Focus处理模块" class="headerlink" title="Focus处理模块"></a>Focus处理模块</h4><p><img src="/../images/image-20231219133907407.png" alt="image-20231219133907407"></p>
-<h4 id="空间金字塔池化模块"><a href="#空间金字塔池化模块" class="headerlink" title="空间金字塔池化模块"></a>空间金字塔池化模块</h4><p><img src="/../images/image-20231219134700073.png" alt="image-20231219134700073"></p>
-<h4 id="跨阶段局部网络模块"><a href="#跨阶段局部网络模块" class="headerlink" title="跨阶段局部网络模块"></a>跨阶段局部网络模块</h4><p><img src="/../images/image-20231219134949252.png" alt="image-20231219134949252"></p>
-<p><img src="/../images/image-20231219135635494.png" alt="image-20231219135635494"></p>
-<p>​	</p>
-<h1 id="IoU、GIoU、DIoU、CIoU损失函数"><a href="#IoU、GIoU、DIoU、CIoU损失函数" class="headerlink" title="     IoU、GIoU、DIoU、CIoU损失函数         "></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wujianming-110117/p/13019343.html">     IoU、GIoU、DIoU、CIoU损失函数         </a></h1><p>IoU、GIoU、DIoU、CIoU损失函数</p>
-<h1 id="目标检测任务的损失函数由Classificition-Loss和Bounding-Box-Regeression-Loss两部分构成。目标检测任务中近几年来Bounding-Box-Regression-Loss-Function的演进过程，其演进路线是"><a href="#目标检测任务的损失函数由Classificition-Loss和Bounding-Box-Regeression-Loss两部分构成。目标检测任务中近几年来Bounding-Box-Regression-Loss-Function的演进过程，其演进路线是" class="headerlink" title="目标检测任务的损失函数由Classificition Loss和Bounding Box Regeression Loss两部分构成。目标检测任务中近几年来Bounding Box Regression Loss Function的演进过程，其演进路线是"></a>目标检测任务的损失函数由Classificition Loss和Bounding Box Regeression Loss两部分构成。目标检测任务中近几年来Bounding Box Regression Loss Function的演进过程，其演进路线是</h1><h1 id=""><a href="#" class="headerlink" title=""></a><img src="/../images/1251718-20200531153858189-1225302034.png" alt="img"></h1><h1 id="一、IOU-Intersection-over-Union"><a href="#一、IOU-Intersection-over-Union" class="headerlink" title="一、IOU(Intersection over Union)"></a><strong>一、IOU(Intersection over Union)</strong></h1><p><strong>1.</strong> <strong>特性(优点)</strong></p>
-<p>IoU就是我们所说的<strong>交并比</strong>，是目标检测中最常用的指标，在anchor-based的方法。作用不仅用来确定正样本和负样本，还可以用来评价输出框（predict box）和ground-truth的距离。</p>
-<p> <img src="/../images/1251718-20200531153951865-814017809.png" alt="img"></p>
-<p> \1. 可以说<strong>它可以反映预测检测框与真实检测框的检测效果。</strong></p>
-<p> \2. 还有一个很好的特性就是<strong>尺度不变性</strong>，也就是对尺度不敏感（scale invariant）， 在regression任务中，判断predict box和gt的距离最直接的指标就是IoU。**(**<strong>满足非负性；同一性；对称性；三角不等性)</strong></p>
-<p><img src="/../images/1251718-20200531154027996-533351609.png" alt="img"></p>
-<p> <strong>2.</strong> <strong>作为损失函数会出现的问题(缺点)</strong></p>
-<p>\1. 如果两个框没有相交，根据定义，IoU&#x3D;0，不能反映两者的距离大小（重合度）。同时因为loss&#x3D;0，没有梯度回传，无法进行学习训练。</p>
-<p> \2. IoU无法精确的反映两者的重合度大小。如下图所示，三种情况IoU都相等，但看得出来他们的重合度是不一样的，左边的图回归的效果最好，右边的最差。</p>
-<p> <img src="/../images/1251718-20200531154239104-440943615.png" alt="img"></p>
-<p> <strong>二、GIOU(Generalized Intersection over Union)</strong></p>
-<p><strong>1****、来源</strong></p>
-<p>在CVPR2019中，论文</p>
-<p>《Generalized Intersection over Union: A Metric and A Loss for Bounding Box Regression》<br> https:arxiv.org&#x2F;abs&#x2F;1902.09630</p>
-<p>提出了GIoU的思想。由于IoU是<strong>比值</strong>的概念，对目标物体的scale是不敏感的。然而检测任务中的BBox的回归损失(MSE loss, l1-smooth loss等）优化和IoU优化不是完全等价的，而且 Ln 范数对物体的scale也比较敏感，IoU无法直接优化没有重叠的部分。</p>
-<p> <img src="/../images/1251718-20200531154308726-1360939519.png" alt="img"></p>
-<p> 这篇论文提出可以直接把IoU设为回归的loss。</p>
-<p> <img src="/../images/1251718-20200531154354415-2037289028.png" alt="img"></p>
-<p> 上面公式的意思是：先计算两个框的最小闭包区域面积_ _(通俗理解：<strong>同时包含了预测框和真实框</strong>的最小框的面积)，再计算出IoU，再计算闭包区域中不属于两个框的区域占闭包区域的比重，最后用IoU减去这个比重得到GIoU。</p>
-<p> 附：<a target="_blank" rel="noopener" href="https://github.com/generalized-iou/g-darknet">https://github.com/generalized-iou/g-darknet</a></p>
-<p><strong>2****、 特性</strong>[1]</p>
-<p>与IoU相似，GIoU也是一种距离度量，作为损失函数的话， ,满足损失函数的基本要求</p>
-<p>GIoU对scale不敏感</p>
-<p>GIoU是IoU的下界，在两个框无线重合的情况下，IoU&#x3D;GIoU</p>
-<p>IoU取值[0,1]，但GIoU有对称区间，取值范围[-1,1]。在两者重合的时候取最大值1，在两者无交集且无限远的时候取最小值-1，因此GIoU是一个非常好的距离度量指标。</p>
-<p>与IoU只关注重叠区域不同，<strong>GIoU****不仅关注重叠区域，还关注其他的非重合区域</strong>，能更好的反映两者的重合度。</p>
-<p> <img src="/../images/1251718-20200531154522456-385805448.png" alt="img"></p>
-<p> <img src="/../images/1251718-20200531154732786-1909345970.png" alt="img"></p>
-<p> <strong>三、DIoU(Distance-IoU)[2]</strong></p>
-<p>**1,**<strong>来源</strong></p>
-<p>DIoU要比GIou更加符合目标框回归的机制，<strong>将目标与anchor之间的距离，重叠率以及尺度都考虑进去</strong>，使得目标框回归变得更加稳定，不会像IoU和GIoU一样出现训练过程中发散等问题。论文中</p>
-<p>Distance-IoU<br> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.08287.pdf">https://arxiv.org/pdf/1911.08287.pdf</a></p>
-<p>基于IoU和GIoU存在的问题，作者提出了两个问题：<br> \1. 直接最小化anchor框与目标框之间的归一化距离是否可行，以达到更快的收敛速度？<br> \2. 如何使回归在与目标框有重叠甚至包含时更准确、更快？</p>
-<p> <img src="/../images/1251718-20200531154844425-632049559.png" alt="img"></p>
-<p> 其中，<img src="/../images/1251718-20200531154815739-471463487.png" alt="img">分别代表了预测框和真实框的中心点，<img src="/../images/1251718-20200531154909041-22064640.png" alt="img">且代表的是计算两个中心点间的欧式距离。c代表的是能够同时包含预测框和真实框的<strong>最小闭包区域</strong>的对角线距离。</p>
-<p> <img src="/../images/1251718-20200531154956953-836811449.png" alt="img"></p>
-<p> <img src="/../images/1251718-20200531155026159-588849996.png" alt="img"></p>
-<p> DIoU中对anchor框和目标框之间的归一化距离进行了建模</p>
-<p>附：</p>
-<p>YOLOV3 DIoU GitHub项目地址<br> https&#x2F;&#x2F;github.com&#x2F;Zzh-tju&#x2F;DIoU-darknet</p>
-<p><strong>2****、优点</strong></p>
-<p>与GIoU loss类似，DIoU loss（ ）在与目标框不重叠时，仍然可以为边界框提供移动方向。</p>
-<p>DIoU loss可以直接最小化两个目标框的距离，因此比GIoU loss收敛快得多。</p>
-<p>对于包含两个框在水平方向和垂直方向上这种情况，DIoU损失可以使回归非常快，而GIoU损失几乎退化为IoU损失。</p>
-<p>DIoU还可以替换普通的IoU评价策略，应用于NMS中，使得NMS得到的结果更加合理和有效。</p>
-<p>实现代码：[3]</p>
-<p> <img src="/../images/1251718-20200531155128579-1060794147.png" alt="img"></p>
-<p> <img src="/../images/1251718-20200531155210632-956163178.png" alt="img"></p>
-<p> <strong>四、CIoU(Complete-IoU)</strong></p>
-<p>论文考虑到bbox回归三要素中的长宽比还没被考虑到计算中，因此，进一步在DIoU的基础上提出了CIoU。其惩罚项如下面公式：</p>
-<p> <img src="/../images/1251718-20200531155238128-675856095.png" alt="img"></p>
-<p> 实现代码：[5] </p>
-<p> <img src="/../images/1251718-20200531155304911-1990080212.png" alt="img"></p>
-<p> <img src="/../images/1251718-20200531155316931-2121130060.png" alt="img"></p>
-<p> <img src="/../images/1251718-20200531155335490-1670997408.png" alt="img"></p>
-<p><img src="/../images/image-20231219142055992.png" alt="image-20231219142055992"></p>
-<p><img src="/../images/image-20231219142702047.png" alt="image-20231219142702047"></p>
-<h4 id="L-IoU-1-IoU-L-GIoU-1-GIoU"><a href="#L-IoU-1-IoU-L-GIoU-1-GIoU" class="headerlink" title="L(IoU)&#x3D;1-IoU,L(GIoU)&#x3D;1-GIoU"></a>L(IoU)&#x3D;1-IoU,L(GIoU)&#x3D;1-GIoU</h4><p><img src="/../images/image-20231219143118491.png" alt="image-20231219143118491"></p>
-<p><img src="/../images/image-20231219143242889.png" alt="image-20231219143242889"></p>
-<h4 id="penalty-item-惩罚项"><a href="#penalty-item-惩罚项" class="headerlink" title="penalty item 惩罚项"></a>penalty item 惩罚项</h4><p><img src="/../images/image-20231219143834054.png" alt="image-20231219143834054"></p>
-<p><img src="/../images/image-20231219143908214.png" alt="image-20231219143908214"></p>
-<p><img src="/../images/image-20231219144615647.png" alt="image-20231219144615647"></p>
-<p><img src="/../images/image-20231219144820908.png" alt="image-20231219144820908"></p>
-<h4 id="用1替换"><a href="#用1替换" class="headerlink" title="用1替换"></a>用1替换</h4><p><img src="/../images/image-20231220151820969.png" alt="image-20231220151820969"><img src="/../images/image-20231220151851064.png" alt="image-20231220151851064"></p>
-<p><img src="/../images/image-20231220151924519.png" alt="image-20231220151924519"></p>
-<p><img src="/../images/image-20231220152401000.png" alt="image-20231220152401000"></p>
-<p><strong>YOLO训练技巧</strong></p>
-<p><strong>1.</strong></p>
-<p><img src="/../images/image-20231221102150112.png" alt="image-20231221102150112"></p>
-<p><em>2.</em></p>
-<p><img src="/../images/image-20231221102343926.png" alt="image-20231221102343926">余弦退火学习率调整的原理是根据余弦函数的形状动态地调整学习率。它通过将学习率从一个较大的初始值逐渐减小到一个较小的最小值来控制训练过程中的学习率变化。</p>
-<p>具体实现步骤如下：</p>
-<ol>
-<li>设置一个最大学习率和最小学习率的范围。</li>
-<li>定义一个周期数（通常是训练的总迭代次数）。</li>
-<li>对于每个训练迭代，计算当前周期数与总周期数之间的比例。</li>
-<li>使用余弦函数来动态计算学习率，公式如下：</li>
-</ol>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">lr = lr_min + 0.5 * (lr_max - lr_min) * (1 + cos(epoch / T_total * pi))</span></span></code></pre></div><p>其中，lr表示当前学习率，epoch表示当前周期数，T_total表示总周期数，lr_max表示最大学习率，lr_min表示最小学习率。</p>
-<ol start="5">
-<li>将计算得到的学习率应用于优化器中进行权重更新。</li>
-</ol>
-<p>使用余弦退火学习率调整可以在训练初期使用较大的学习率来快速收敛，然后逐渐减小学习率以细化模型的优化过程。这种方法在训练中期能够跳出局部最优解并找到更好的全局最优解，有助于提高模型的泛化性能和训练效果。</p>
-<h4 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h4><p><img src="/../images/image-20231221103518038.png" alt="image-20231221103518038"></p>
-<h4 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h4><p><img src="/../images/image-20231221103556292.png" alt="image-20231221103556292"></p>
-<h4 id="5-遗传算法"><a href="#5-遗传算法" class="headerlink" title="5.遗传算法"></a>5.遗传算法</h4><p><img src="/../images/image-20231221103654283.png" alt="image-20231221103654283"></p>
-<h4 id="6-AMP"><a href="#6-AMP" class="headerlink" title="6.AMP"></a>6.AMP</h4><p><img src="/../images/image-20231221103725894.png" alt="image-20231221103725894"></p>
-<h4 id="7"><a href="#7" class="headerlink" title="7."></a><img src="/../images/image-20231221103836498.png" alt="image-20231221103836498">7.</h4><p><img src="/../images/image-20231221104450473.png" alt="image-20231221104450473"></p>
-<h4 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h4><p><img src="/../images/image-20231222110059278.png" alt="image-20231222110059278"></p>
-<p><img src="/../images/image-20231222110124317.png" alt="image-20231222110124317"></p>
-<p><img src="/../images/image-20231222110150825.png" alt="image-20231222110150825"></p>
-<p><img src="/../images/image-20231222110400513.png" alt="image-20231222110400513"></p>
-<p><img src="/../images/image-20231222111314420.png" alt="image-20231222111314420"></p>
-<h4 id="优点：激活区域可以更多样"><a href="#优点：激活区域可以更多样" class="headerlink" title="优点：激活区域可以更多样"></a><img src="/../images/image-20231222111341197.png" alt="image-20231222111341197">优点：激活区域可以更多样</h4><p><img src="/../images/image-20231222111510179.png" alt="image-20231222111510179"></p>
-<h4 id="因此，引入了各种方法来压缩神经网络，以使大型模型可以在边缘设备上部署。模型压缩方法可以分为3类：剪枝、量化和知识蒸馏。在剪枝中，移除模型中不重要的冗余参数，以获得稀疏-紧凑的模型结构。量化涉及使用低精度数据类型表示模型的激活和权重。最后，知识蒸馏是指利用大型准确模型作为教师来训练一个小型模型，使用教师模型提供的软标签来进行训练。"><a href="#因此，引入了各种方法来压缩神经网络，以使大型模型可以在边缘设备上部署。模型压缩方法可以分为3类：剪枝、量化和知识蒸馏。在剪枝中，移除模型中不重要的冗余参数，以获得稀疏-紧凑的模型结构。量化涉及使用低精度数据类型表示模型的激活和权重。最后，知识蒸馏是指利用大型准确模型作为教师来训练一个小型模型，使用教师模型提供的软标签来进行训练。" class="headerlink" title="因此，引入了各种方法来压缩神经网络，以使大型模型可以在边缘设备上部署。模型压缩方法可以分为3类：剪枝、量化和知识蒸馏。在剪枝中，移除模型中不重要的冗余参数，以获得稀疏&#x2F;紧凑的模型结构。量化涉及使用低精度数据类型表示模型的激活和权重。最后，知识蒸馏是指利用大型准确模型作为教师来训练一个小型模型，使用教师模型提供的软标签来进行训练。"></a>因此，引入了各种方法来压缩神经网络，以使大型模型可以在边缘设备上部署。模型压缩方法可以分为3类：剪枝、量化和知识蒸馏。在剪枝中，移除模型中不重要的冗余参数，以获得稀疏&#x2F;紧凑的模型结构。量化涉及使用低精度数据类型表示模型的激活和权重。最后，知识蒸馏是指利用大型准确模型作为教师来训练一个小型模型，使用教师模型提供的软标签来进行训练。</h4><p>cmake_minimum_required(VERSION 3.10) project(yolov5) add_definitions(-std&#x3D;c++11) add_definitions(-DAPI_EXPORTS) option(CUDA_USE_STATIC_CUDA_RUNTIME OFF) set(CMAKE_CXX_STANDARD 11) set(CMAKE_BUILD_TYPE Debug) # TODO(Call for PR): make cmake compatible with Windows set(CMAKE_CUDA_COMPILER &#x2F;usr&#x2F;local&#x2F;cuda-12.2&#x2F;bin&#x2F;nvcc) enable_language(CUDA) # include and link dirs of cuda and tensorrt, you need adapt them if yours are different # cuda include_directories(&#x2F;usr&#x2F;local&#x2F;cuda-12.2&#x2F;include) link_directories(&#x2F;usr&#x2F;local&#x2F;cuda-12.2&#x2F;lib64) # tensorrt # TODO(Call for PR): make TRT path configurable from command line include_directories(&#x2F;home&#x2F;nvidia&#x2F;TensorRT-8.2.5.1&#x2F;include&#x2F;) link_directories(&#x2F;home&#x2F;nvidia&#x2F;TensorRT-8.2.5.1&#x2F;lib&#x2F;) include_directories(${PROJECT_SOURCE_DIR}&#x2F;src&#x2F;) include_directories(${PROJECT_SOURCE_DIR}&#x2F;plugin&#x2F;) file(GLOB_RECURSE SRCS ${PROJECT_SOURCE_DIR}&#x2F;src&#x2F;<em>.cpp ${PROJECT_SOURCE_DIR}&#x2F;src&#x2F;</em>.cu) file(GLOB_RECURSE PLUGIN_SRCS ${PROJECT_SOURCE_DIR}&#x2F;plugin&#x2F;*.cu) add_library(myplugins SHARED ${PLUGIN_SRCS}) target_link_libraries(myplugins nvinfer cudart) find_package(OpenCV) include_directories(${OpenCV_INCLUDE_DIRS}) add_executable(yolov5_det yolov5_det.cpp ${SRCS}) target_link_libraries(yolov5_det nvinfer) target_link_libraries(yolov5_det cudart) target_link_libraries(yolov5_det myplugins) target_link_libraries(yolov5_det ${OpenCV_LIBS}) add_executable(yolov5_cls yolov5_cls.cpp ${SRCS}) target_link_libraries(yolov5_cls nvinfer) target_link_libraries(yolov5_cls cudart) target_link_libraries(yolov5_cls myplugins) target_link_libraries(yolov5_cls ${OpenCV_LIBS}) add_executable(yolov5_seg yolov5_seg.cpp ${SRCS}) target_link_libraries(yolov5_seg nvinfer) target_link_libraries(yolov5_seg cudart) target_link_libraries(yolov5_seg myplugins) target_link_libraries(yolov5_seg ${OpenCV_LIBS}) 这是cmakeLists.txt文件 cmake .. 报错： zgh@zgh-Legion-Y7000P-IAH7:~&#x2F;tensorrtx&#x2F;yolov5&#x2F;build$ cmake .. CMake Error at &#x2F;usr&#x2F;local&#x2F;share&#x2F;cmake-3.27&#x2F;Modules&#x2F;CMakeDetermineCUDACompiler.cmake:277 (message):  CMAKE_CUDA_ARCHITECTURES must be non-empty if set. Call Stack (most recent call first):  CMakeLists.txt:13 (enable_language)  – Configuring incomplete, errors occurred!</p>
-<p>2024&#x2F;1&#x2F;20 11:33:33</p>
-<p>该错误提示是由于没有指定 <code>CMAKE_CUDA_ARCHITECTURES</code> 变量，需要在 <code>CMakeLists.txt</code> 中添加以下语句：</p>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8"></span></span>
-<span class="line"><span style="color: #babed8">set(CMAKE_CUDA_ARCHITECTURES &quot;60;61;70;75&quot;)</span></span></code></pre></div><p>其中，<code>CMAKE_CUDA_ARCHITECTURES</code> 指定了支持的 CUDA 架构版本号，这里的值可以根据你的 GPU 型号进行调整。</p>
-<p>在添加上述语句后，再次运行 <code>cmake ..</code> 命令即可。</p>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">cmake_minimum_required(VERSION 3.5)</span></span>
-<span class="line"><span style="color: #babed8">project(Ball_Det)</span></span>
-<span class="line"><span style="color: #babed8">set(CMAKE_CXX_STANDARD 11)</span></span>
-<span class="line"><span style="color: #babed8">set(Cudart_LIBS &quot;/usr/local/cuda-12.2/targets/x86_64-linux/lib/libcudart.so&quot;)</span></span>
-<span class="line"><span style="color: #babed8">set(CMAKE_CUDA_COMPILER /usr/local/cuda-12.2/bin/nvcc)</span></span>
-<span class="line"><span style="color: #babed8">set(CMAKE_CUDA_ARCHITECTURES &quot;80&quot;)</span></span>
-<span class="line"><span style="color: #babed8">include_directories(/usr/local/cuda-12.2/include)</span></span>
-<span class="line"><span style="color: #babed8">link_directories(/usr/local/cuda-12.2/lib64)</span></span>
-<span class="line"><span style="color: #babed8">enable_language(CUDA)</span></span>
-<span class="line"><span style="color: #babed8">find_package(CUDA REQUIRED)</span></span>
-<span class="line"><span style="color: #babed8">find_package(k4a REQUIRED)</span></span>
-<span class="line"><span style="color: #babed8">find_package(OpenCV REQUIRED)</span></span>
-<span class="line"><span style="color: #babed8">include_directories(</span></span>
-<span class="line"><span style="color: #babed8">       Yolo</span></span>
-<span class="line"><span style="color: #babed8">        $&#123;OpenCV_INCLUDE_DIRS&#125;</span></span>
-<span class="line"><span style="color: #babed8">       /usr/local/cuda12.2/include</span></span>
-<span class="line"><span style="color: #babed8">       $&#123;CMAKE_CURRENT_LIST_DIR&#125;</span></span>
-<span class="line"><span style="color: #babed8">)</span></span>
-<span class="line"><span style="color: #babed8">add_library(</span></span>
-<span class="line"><span style="color: #babed8">       Yolo</span></span>
-<span class="line"><span style="color: #babed8">       Yolo/yolov5.cpp</span></span>
-<span class="line"><span style="color: #babed8">)</span></span>
-<span class="line"><span style="color: #babed8"></span></span>
-<span class="line"><span style="color: #babed8">cuda_add_library(myplugins SHARED ./Yolo/yololayer.cu)</span></span>
-<span class="line"><span style="color: #babed8"></span></span>
-<span class="line"><span style="color: #babed8"></span></span>
-<span class="line"><span style="color: #babed8">add_executable(Ball_Det</span></span>
-<span class="line"><span style="color: #babed8">       Mask_Detection.cpp</span></span>
-<span class="line"><span style="color: #babed8">       Yolo/yolov5.cpp</span></span>
-<span class="line"><span style="color: #babed8">       main.cpp</span></span>
-<span class="line"><span style="color: #babed8">       Ball_Detection.cpp</span></span>
-<span class="line"><span style="color: #babed8">       Yolo/calibrator.cpp</span></span>
-<span class="line"><span style="color: #babed8">)</span></span>
-<span class="line"><span style="color: #babed8">target_link_libraries(</span></span>
-<span class="line"><span style="color: #babed8">       Ball_Det</span></span>
-<span class="line"><span style="color: #babed8">       nvinfer</span></span>
-<span class="line"><span style="color: #babed8">       cudart</span></span>
-<span class="line"><span style="color: #babed8">       myplugins</span></span>
-<span class="line"><span style="color: #babed8">       /usr/local/cuda12.2/lib64</span></span>
-<span class="line"><span style="color: #babed8">       $&#123;Cudart_LIBS&#125;</span></span>
-<span class="line"><span style="color: #babed8">       $&#123;OpenCV_LIBS&#125;</span></span>
-<span class="line"><span style="color: #babed8">       libk4a.so</span></span>
-<span class="line"><span style="color: #babed8">        )</span></span></code></pre></div>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zgh20060114.github.io/post/yolov5.html" data-id="clxbjvuxs000k61cxc1cqaa16" data-title="yolov5" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -2312,6 +2377,10 @@
       <ul>
         
           <li>
+            <a href="/post/Webots.html">Webots</a>
+          </li>
+        
+          <li>
             <a href="/post/ubuntu-nvidia.html">ubuntu-nvidia</a>
           </li>
         
@@ -2325,10 +2394,6 @@
         
           <li>
             <a href="/post/Cplusplus.html">Cplusplus</a>
-          </li>
-        
-          <li>
-            <a href="/post/Qt.html">Qt</a>
           </li>
         
       </ul>
