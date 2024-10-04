@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://zgh20060114.github.io/images/image-20241003145229468.png">
 <meta property="og:image" content="http://zgh20060114.github.io/images/image-20241003144809104.png">
 <meta property="article:published_time" content="2024-10-02T16:44:34.000Z">
-<meta property="article:modified_time" content="2024-10-03T06:55:08.013Z">
+<meta property="article:modified_time" content="2024-10-04T02:34:52.723Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://zgh20060114.github.io/images/image-20241003145229468.png">
@@ -222,6 +222,14 @@ EndSection
 <p><img src="/../images/image-20241003145229468.png" alt="image-20241003145229468"></p>
 <p><img src="/../images/image-20241003144809104.png" alt="image-20241003144809104"></p>
 <p>nvidia-smi也正常了</p>
+<p>2024-10-4-10:29</p>
+<pre><code>zgh@zgh-Legion-Y7000P-IAH7:~$ __NV_PRIME_RENDER_OFFLOAD=1 vkcube
+zgh@zgh-Legion-Y7000P-IAH7:~$ __NV_PRIME_RENDER_OFFLOAD=1 zed
+</code></pre>
+<p>这个是nvidia gpu的详细官方文档primerenderoffload</p>
+<p>对于on-demand模式无法正常切换的，可以通过命令手动切换，上面的zed就是例子，zed需要用nvidia gpu的vulkan，</p>
+<p>这里面有vulkan.opengl等等</p>
+<p>###这个文档真的很有用</p>
 
       
     </div>

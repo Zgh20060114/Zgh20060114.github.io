@@ -93,7 +93,13 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <p>WARNING: To drag this element, first rotate the view so that the horizontal plane is clearly visible.</p>
+<p>旋转到水平面上再shift+左键<img src="/../images/image-20241003163738576.png" alt="image-20241003163738576"></p>
+<p>右键平移</p>
+<p>保存：Ctrl shift s</p>
+<p>向导:<br>1.新建项目目录向导（新建场景）</p>
+<p>2.新建机器人控制器向导（新建控制器）</p>
+
       
     </div>
     <footer class="article-footer">
@@ -257,6 +263,14 @@ EndSection
 <p><img src="/../images/image-20241003145229468.png" alt="image-20241003145229468"></p>
 <p><img src="/../images/image-20241003144809104.png" alt="image-20241003144809104"></p>
 <p>nvidia-smi也正常了</p>
+<p>2024-10-4-10:29</p>
+<pre><code>zgh@zgh-Legion-Y7000P-IAH7:~$ __NV_PRIME_RENDER_OFFLOAD=1 vkcube
+zgh@zgh-Legion-Y7000P-IAH7:~$ __NV_PRIME_RENDER_OFFLOAD=1 zed
+</code></pre>
+<p>这个是nvidia gpu的详细官方文档primerenderoffload</p>
+<p>对于on-demand模式无法正常切换的，可以通过命令手动切换，上面的zed就是例子，zed需要用nvidia gpu的vulkan，</p>
+<p>这里面有vulkan.opengl等等</p>
+<p>###这个文档真的很有用</p>
 
       
     </div>
