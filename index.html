@@ -99,6 +99,9 @@
 <p>保存：Ctrl shift s</p>
 <p>向导:<br>1.新建项目目录向导（新建场景）</p>
 <p>2.新建机器人控制器向导（新建控制器）</p>
+<p><img src="/../images/image-20241004122441260.png" alt="image-20241004122441260"></p>
+<p>只有机器人节点才能导出urdf文件</p>
+<p>转换完后的文件放到protos目录下<br><img src="/../images/image-20241004122612323.png" alt="image-20241004122612323"></p>
 
       
     </div>
@@ -581,6 +584,27 @@ return K_temp.transpose();
 </ul>
 </li>
 </ul>
+<p>###ubuntu上ros与anaconda冲突的最好解决办法：</p>
+<pre><code>catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
+</code></pre>
+<p>下次再安装ros时，在anaconda环境里安装，要不然python混乱太搞了</p>
+<p>现在有更好的方法：</p>
+<pre><code class="bash">export PATH=&quot;/usr/bin:$PATH&quot;
+</code></pre>
+<pre><code class="bash">zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ which python
+/usr/local/anaconda3/bin/python
+zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ which python3
+/usr/local/anaconda3/bin/python3
+zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ sudo vim ~/.bashrc
+zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ source ~/.bashrc
+zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ which python3
+/usr/bin/python3
+zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ which python
+/usr/bin/python
+zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ python -V
+Python 3.8.10
+</code></pre>
+<p>完美解決</p>
 
       
     </div>
@@ -1266,7 +1290,148 @@ int main() &#123;
 <ul>
 <li>缩小选择<br>举一反三：dat 删除当前注释块，cip 修改当前参数<br>❥ 移动<br>]c 下一个类开头<br>[c 上一个类开头<br>]C 下一个类结尾<br>[C 上一个类结尾<br>]f 下一个函数开头<br>[f 上一个函数开头<br>]F 下一个函数结尾<br>[F 上一个函数结尾<br>…以此类推，所有英文字母同上“选择”所述…<br><Space> 全屏任意移动<br>❥ 换位<br>mh 左移参数<br>ml 右移参数<br>mj 下移当前语句<br>mk 上移当前语句<br>maf 下移当前函数<br>mif 上移当前函数<br>mac 下移当前类<br>mic 上移当前类<br>❥ 括号<br>可视模式中：<br>s) 给当前选中内容包上 () 括号<br>s} 给当前选中内容包上 {} 括号<br>s] 给当前选中内容包上 [] 括号<br>s&gt; 给当前选中内容包上 &lt;&gt; 尖括号<br>s’ 给当前选中内容包上 ‘’ 单引号<br>s” 给当前选中内容包上 “” 双引号<br>stspan 给当前选中内容包上<span>标签<br>sta href&#x3D;”b.html” 给当前选中内容包上<a href="b.html">标签<br>普通（NORMAL）模式中：<br>ysi<range><brace> 添加括号<br>cs<oldbrace><newbrace> 改变括号<br>ds<brace> 删除括号<br>❥ CMake<br>cmc 或 :CMakeGenerate 配置当前项目<br>cmb 或 :CMakeBuild 构建当前项目<br>cmr 或 :CMakeRun 运行当前项目<br>cms 或 :CMakeStopRunner 杀死当前终端中的正在运行的程序<br>❥ 文件树<br>y 拷贝<br>x 剪切<br>d 删除<br>p 粘贴<br>a 创建</li>
 </ul>
+<p>ALT+shift+左右箭头   跳转</p>
+<pre><code class="yaml">pendulum:
+    joint_state_controller:
+        publish_rate: 100
+        type: joint_state_controller/JointStateController
+    x_controller:
+        joint: base_to_plat
+        type: effort_controllers/JointEffortController
+</code></pre>
+<p>其中joint_state_controller和x_controller是什么意思 这个文件的作用是什么</p>
+<h3 id="1-joint-state-controller"><a href="#1-joint-state-controller" class="headerlink" title="1. joint_state_controller"></a>1. <strong>joint_state_controller</strong></h3><ul>
+<li><strong>用途</strong>：这个控制器用于发布机器人的关节状态（例如位置、速度和加速度）到 ROS 主题。它通常是机器人系统中的基础控制器，负责获取各个关节的状态信息并将其传递给其他组件。</li>
+<li><strong>类型</strong>：<code>joint_state_controller/JointStateController</code> 是一个标准的控制器类型，用于处理关节状态的更新。</li>
+<li><code>joint_state_controller</code> 是用于发布所有关节状态信息的控制器。它会收集机器人的所有关节（如位置、速度和加速度）的状态，并将这些信息发布到 ROS 主题上，通常是 <code>/joint_states</code> 主题。</li>
+<li><strong>publish_rate</strong>：表示发布关节状态的频率，这里设置为 100 Hz。</li>
+</ul>
+<h3 id="2-x-controller"><a href="#2-x-controller" class="headerlink" title="2. x_controller"></a>2. <strong>x_controller</strong></h3><ul>
+<li><strong>用途</strong>：这个控制器用于控制名为 <code>base_to_plat</code> 的关节的努力（力或扭矩）。通常用于执行某种运动控制任务，比如驱动一个关节以实现预期的动态行为。</li>
+<li><strong>类型</strong>：<code>effort_controllers/JointEffortController</code> 是一个控制器类型，专注于控制关节施加的力或扭矩。</li>
+</ul>
+<h3 id="文件的作用"><a href="#文件的作用" class="headerlink" title="文件的作用"></a>文件的作用</h3><p>这个文件主要是用于配置 ROS 控制器管理器，定义机器人各个关节的控制方式及其参数。通过这个配置，您可以在启动时自动加载和初始化这些控制器，使得机器人能够实时进行关节状态的监测和控制。</p>
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong><code>joint_state_controller</code></strong> 负责关节状态的信息发布。</li>
+<li><strong><code>x_controller</code></strong> 则用于具体关节的力量控制。</li>
+<li>整个 YAML 文件用于配置和管理这些控制器，使机器人能够有效地执行控制任务。</li>
+</ul>
 <p><img src="/../images/image-20240928131042017.png" alt="image-20240928131042017"></p>
+<p>###0.时间 time</p>
+<p><img src="/../images/image-20241005183555504.png" alt="image-20241005183555504"></p>
+<p>###1.线程  thread</p>
+<p><img src="/../images/image-20241005183759412.png" alt="image-20241005183759412"></p>
+<p>join汇合加入，把子线程加到主线程里，这样主线程只有在子线程结束后才会退出</p>
+<p><img src="/../images/image-20241005185354229.png" alt="image-20241005185354229"></p>
+<p>当想要对线程进行封装时，会发现线程会随着封装函数执行过去而被销毁（因为thread的析构函数）：</p>
+<p><img src="/../images/image-20241005190729501.png" alt="image-20241005190729501"></p>
+<p>使用detach（）,还是不行（因为没用join，主线程不会等子线程）：</p>
+<p><img src="/../images/image-20241005190842874.png" alt="image-20241005190842874"></p>
+<p>全局变量，生命周期会大于封装函数，join，等待子线程：<br><img src="/../images/image-20241005191516568.png" alt="image-20241005191516568"></p>
+<p>利用析构函数简化：<br><img src="/../images/image-20241005191923023.png" alt="image-20241005191923023"></p>
+<p>再简化，标准函数帮你把析构函数写了：</p>
+<p><img src="/../images/image-20241005183933864.png" alt="image-20241005183933864"></p>
+<h3 id="2-异步async"><a href="#2-异步async" class="headerlink" title="2.异步async"></a>2.异步async</h3><p>异步相当于thread的帮手函数,专注于任务本身而不是底层的线程管理,不用那么底层了，使用简单了，但是能力也就下降了。</p>
+<p>std::async相当于在后台开一个线程偷偷执行</p>
+<p><code>std::async</code> 和 <code>std::thread</code> 都是 C++11 引入的用于处理并发和多线程编程的工具，但它们在设计目的、使用方式和抽象级别上存在一些关键的关系与区别。以下是它们之间的详细比较：</p>
+<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><ul>
+<li><strong>都属于 C++ 标准库</strong>：两者都是 C++11 提供的并发支持的一部分，旨在简化多线程编程。</li>
+<li><strong>功能互补</strong>：尽管各自的设计有不同侧重点，但它们可以一起使用。例如，可以在 <code>std::async</code> 中使用 <code>std::thread</code>，或者在创建线程时使用 <code>std::async</code> 来管理结果。</li>
+</ul>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th><code>std::thread</code></th>
+<th><code>std::async</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>抽象级别</strong></td>
+<td>更低级别的线程管理</td>
+<td>更高层次的异步任务管理</td>
+</tr>
+<tr>
+<td><strong>线程控制</strong></td>
+<td>开发者需要手动管理线程的生命周期（启动、加入、分离）</td>
+<td>自动管理线程的生命周期，返回 <code>std::future</code></td>
+</tr>
+<tr>
+<td><strong>执行策略</strong></td>
+<td>一般立即启动新线程</td>
+<td>可选择立即执行或延迟执行（<code>std::launch::async</code> 或 <code>std::launch::deferred</code>）</td>
+</tr>
+<tr>
+<td><strong>结果处理</strong></td>
+<td>返回值需要通过共享数据或其他同步机制来获取</td>
+<td>通过 <code>std::future</code> 对象直接获取结果</td>
+</tr>
+<tr>
+<td><strong>异常处理</strong></td>
+<td>异常不会传播到主线程，需要手动管理</td>
+<td>异常会被捕获并在调用 <code>future.get()</code> 时重新抛出</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>需要细致控制线程行为的场景，如实时系统、服务器等</td>
+<td>简单的异步任务、并行计算、提高程序响应性</td>
+</tr>
+</tbody></table>
+<h3 id="使用示例-1"><a href="#使用示例-1" class="headerlink" title="使用示例"></a>使用示例</h3><h4 id="使用-std-thread-的示例："><a href="#使用-std-thread-的示例：" class="headerlink" title="使用 std::thread 的示例："></a>使用 <code>std::thread</code> 的示例：</h4><pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;thread&gt;
+
+void task() &#123;
+    std::cout &lt;&lt; &quot;Task is running in a separate thread.\n&quot;;
+&#125;
+
+int main() &#123;
+    std::thread t(task);
+    t.join();  // 等待线程完成
+    return 0;
+&#125;
+</code></pre>
+<h4 id="使用-std-async-的示例："><a href="#使用-std-async-的示例：" class="headerlink" title="使用 std::async 的示例："></a>使用 <code>std::async</code> 的示例：</h4><pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;future&gt;
+
+int task() &#123;
+    return 42;  // 返回结果
+&#125;
+
+int main() &#123;
+    std::future&lt;int&gt; result = std::async(task);
+    std::cout &lt;&lt; &quot;Result from async task: &quot; &lt;&lt; result.get() &lt;&lt; &#39;\n&#39;;  // 获取结果
+    return 0;
+&#125;
+</code></pre>
+<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>**选择使用 <code>std::thread</code>**：当你需要更细粒度的线程控制，或者需要实现复杂的线程交互时。</li>
+<li>**选择使用 <code>std::async</code>**：当你希望简化异步任务的管理，并专注于任务本身而不是底层的线程管理时。</li>
+</ul>
+<p>根据具体的需求和场景，开发者可以灵活选择这两者中的一种或结合使用。</p>
+<p><img src="/../images/image-20241005185145651.png" alt="image-20241005185145651"></p>
+<p><img src="/../images/image-20241005182028304.png" alt="image-20241005182028304"></p>
+<p>不要同时锁两个</p>
+<p><img src="/../images/image-20241005182958030.png" alt="image-20241005182958030"></p>
+<p>保证线程里上锁的顺序一样</p>
+<p><img src="/../images/image-20241005183050653.png" alt="image-20241005183050653"></p>
+<p>使用标准库里的std::lock</p>
+<p><img src="/../images/image-20241005183311794.png" alt="image-20241005183311794"></p>
+<p>ubuntu20.04蓝牙耳机连上了，但是声音还是输出在内置扬声器上，使用 <code>pactl load-module module-bluetooth-discover</code> 时遇到“模块初始化失败”的错误.</p>
+<ol>
+<li><p><strong>检查 Bluetooth 服务</strong>：<br>确保 Bluetooth 服务正在运行。可以使用以下命令启动服务：</p>
+<pre><code class="bash">sudo systemctl start bluetooth
+</code></pre>
+</li>
+<li><p><strong>安装必要的包</strong>：<br>确保已安装 PulseAudio 和 Bluetooth 支持。运行以下命令安装相关组件：</p>
+<pre><code class="bash">sudo apt install pulseaudio pulseaudio-module-bluetooth pavucontrol
+</code></pre>
+</li>
+<li><p><strong>重启 PulseAudio</strong>：<br>有时重启 PulseAudio 可以解决问题。可以使用以下命令：</p>
+<pre><code class="bash">pulseaudio -k
+pulseaudio --start
+</code></pre>
+</li>
+</ol>
 
       
     </div>

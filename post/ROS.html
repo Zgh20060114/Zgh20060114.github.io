@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://zgh20060114.github.io/images/image-20240925123003125.png">
 <meta property="og:image" content="http://zgh20060114.github.io/images/image-20240927144924380.png">
 <meta property="article:published_time" content="2024-09-20T23:57:14.000Z">
-<meta property="article:modified_time" content="2024-09-27T09:56:22.440Z">
+<meta property="article:modified_time" content="2024-10-05T06:42:06.387Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://zgh20060114.github.io/images/image-20240921180747237.png">
@@ -376,6 +376,27 @@ return K_temp.transpose();
 </ul>
 </li>
 </ul>
+<p>###ubuntu上ros与anaconda冲突的最好解决办法：</p>
+<pre><code>catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
+</code></pre>
+<p>下次再安装ros时，在anaconda环境里安装，要不然python混乱太搞了</p>
+<p>现在有更好的方法：</p>
+<pre><code class="bash">export PATH=&quot;/usr/bin:$PATH&quot;
+</code></pre>
+<pre><code class="bash">zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ which python
+/usr/local/anaconda3/bin/python
+zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ which python3
+/usr/local/anaconda3/bin/python3
+zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ sudo vim ~/.bashrc
+zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ source ~/.bashrc
+zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ which python3
+/usr/bin/python3
+zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ which python
+/usr/bin/python
+zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ python -V
+Python 3.8.10
+</code></pre>
+<p>完美解決</p>
 
       
     </div>
