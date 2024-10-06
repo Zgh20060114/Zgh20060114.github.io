@@ -1332,7 +1332,6 @@ int main() &#123;
 <p>再简化，标准函数帮你把析构函数写了：</p>
 <p><img src="/../images/image-20241005183933864.png" alt="image-20241005183933864"></p>
 <h3 id="2-异步async"><a href="#2-异步async" class="headerlink" title="2.异步async"></a>2.异步async</h3><p>异步相当于thread的帮手函数,专注于任务本身而不是底层的线程管理,不用那么底层了，使用简单了，但是能力也就下降了。</p>
-<p>std::async相当于在后台开一个线程偷偷执行</p>
 <p><code>std::async</code> 和 <code>std::thread</code> 都是 C++11 引入的用于处理并发和多线程编程的工具，但它们在设计目的、使用方式和抽象级别上存在一些关键的关系与区别。以下是它们之间的详细比较：</p>
 <h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><ul>
 <li><strong>都属于 C++ 标准库</strong>：两者都是 C++11 提供的并发支持的一部分，旨在简化多线程编程。</li>
@@ -1409,6 +1408,20 @@ int main() &#123;
 </ul>
 <p>根据具体的需求和场景，开发者可以灵活选择这两者中的一种或结合使用。</p>
 <p><img src="/../images/image-20241005185145651.png" alt="image-20241005185145651"></p>
+<p><img src="/../images/image-20241005202136786.png" alt="image-20241005202136786"></p>
+<p><img src="/../images/image-20241005202235380.png" alt="image-20241005202235380"></p>
+<p>std::async相当于在后台开一个线程偷偷执行,如果不想用线程的话，可以用假线程：</p>
+<p><img src="/../images/image-20241005203007249.png" alt="image-20241005203007249"></p>
+<p>std::async的底层实现：（应该用不到吧）</p>
+<p><img src="/../images/image-20241005204852974.png" alt="image-20241005204852974"></p>
+<h3 id="3-互斥量"><a href="#3-互斥量" class="headerlink" title="3.互斥量"></a>3.互斥量</h3><p><img src="/../images/image-20241005211544279.png" alt="image-20241005211544279"></p>
+<p>std::lock_guard grd(mtx); <em>&#x2F;&#x2F; 创建 lock_guard 对象 grd，锁定 mtx</em></p>
+<p>这个有个弊端：不能提前unlock，可以用std::unique_lock:</p>
+<p><img src="/../images/image-20241005213525208.png" alt="image-20241005213525208"></p>
+<p>如果你即想使用unique_lock的自动解锁，又想手动lock：</p>
+<p><img src="/../images/image-20241006100018130.png" alt="image-20241006100018130"></p>
+<p>这个是已经上锁了，又想使用自动解锁：<br><img src="/../images/image-20241006100334056.png" alt="image-20241006100334056"></p>
+<h3 id="4-死锁"><a href="#4-死锁" class="headerlink" title="4.死锁"></a>4.死锁</h3><p>问题一：</p>
 <p><img src="/../images/image-20241005182028304.png" alt="image-20241005182028304"></p>
 <p>不要同时锁两个</p>
 <p><img src="/../images/image-20241005182958030.png" alt="image-20241005182958030"></p>
@@ -1416,6 +1429,12 @@ int main() &#123;
 <p><img src="/../images/image-20241005183050653.png" alt="image-20241005183050653"></p>
 <p>使用标准库里的std::lock</p>
 <p><img src="/../images/image-20241005183311794.png" alt="image-20241005183311794"></p>
+<p>同样，为了避免忘记解锁，有了一个RALL版本的std::lock<br><img src="/../images/image-20241006100806745.png" alt="image-20241006100806745"></p>
+<p>问题二：</p>
+<p><img src="/../images/image-20241006101009888.png" alt="image-20241006101009888"></p>
+<p>std::recursive_mutex</p>
+<p><img src="/../images/image-20241006101432670.png" alt="image-20241006101432670"></p>
+<h3 id="5-数据结构"><a href="#5-数据结构" class="headerlink" title="5.数据结构"></a>5.数据结构</h3><p><img src="/../images/image-20241006101750387.png" alt="image-20241006101750387"></p>
 <p>ubuntu20.04蓝牙耳机连上了，但是声音还是输出在内置扬声器上，使用 <code>pactl load-module module-bluetooth-discover</code> 时遇到“模块初始化失败”的错误.</p>
 <ol>
 <li><p><strong>检查 Bluetooth 服务</strong>：<br>确保 Bluetooth 服务正在运行。可以使用以下命令启动服务：</p>
