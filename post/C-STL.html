@@ -4,16 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>Tag: robot_kinematics | Zgh&#39;s</title>
+  <title>C++STL | Zgh&#39;s</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Zgh的个人站">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zgh&#39;s">
-<meta property="og:url" content="http://zgh20060114.github.io/tags/robot-kinematics/index.html">
+  <meta name="description" content="STL 即标准模板库（Standard Template Library），是 C++ 标准库的一部分，里面包含了一些模板化的通用的数据结构和算法。由于其模板化的特点，它能够兼容自定义的数据类型，避免大量的造轮子工作。NOI 和 ICPC 赛事都支持 STL 库的使用，因此合理利用 STL 可以避免编写无用算法，并且充分利用编译器对模板库优化提高效率。 Boost 是除了标准库外，另一个久副盛名的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++STL">
+<meta property="og:url" content="http://zgh20060114.github.io/post/C-STL.html">
 <meta property="og:site_name" content="Zgh&#39;s">
-<meta property="og:description" content="Zgh的个人站">
+<meta property="og:description" content="STL 即标准模板库（Standard Template Library），是 C++ 标准库的一部分，里面包含了一些模板化的通用的数据结构和算法。由于其模板化的特点，它能够兼容自定义的数据类型，避免大量的造轮子工作。NOI 和 ICPC 赛事都支持 STL 库的使用，因此合理利用 STL 可以避免编写无用算法，并且充分利用编译器对模板库优化提高效率。 Boost 是除了标准库外，另一个久副盛名的">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-11T13:13:31.000Z">
+<meta property="article:modified_time" content="2024-10-12T05:09:58.208Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="C++STL">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
@@ -69,39 +72,75 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2024" class="archive-year">2024</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/post/kinematics.html" class="archive-article-date">
-  <time class="dt-published" datetime="2024-10-07T14:26:21.000Z" itemprop="datePublished">Oct 7</time>
+        <section id="main"><article id="post-C-STL" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/C-STL.html" class="article-date">
+  <time class="dt-published" datetime="2024-10-11T13:13:31.000Z" itemprop="datePublished">2024-10-11</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/post/kinematics.html">kinematics</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      C++STL
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>STL 即<strong>标准模板库</strong>（Standard Template Library），是 C++ 标准库的一部分，里面包含了一些模板化的通用的数据结构和算法。由于其模板化的特点，它能够兼容自定义的数据类型，避免大量的造轮子工作。NOI 和 ICPC 赛事都支持 STL 库的使用，因此合理利用 STL 可以避免编写无用算法，并且充分利用编译器对模板库优化提高效率。</p>
+<p><a target="_blank" rel="noopener" href="https://www.boost.org/">Boost</a> 是除了标准库外，另一个久副盛名的开源 C++ 工具库，其代码具有可移植、高质量、高性能、高可靠性等特点。Boost 中的模块数量非常之大，功能全面，并且拥有完备的跨平台支持，因此被看作 C++ 的准标准库。C++ 标准中的不少特性也都来自于 Boost，如智能指针、元编程、日期和时间等。尽管在 OI 中无法使用 Boost，但是 Boost 中有不少轮子可以用来验证算法或者对拍，如 Boost.Geometry 有 R 树的实现，Boost.Graph 有图的相关算法，Boost.Intrusive 则提供了一套与 STL 容器用法相似的侵入式容器。</p>
+<h2 id="STL-容器"><a href="#STL-容器" class="headerlink" title="STL 容器"></a>STL 容器</h2><h3 id="分类："><a href="#分类：" class="headerlink" title="分类："></a>分类：</h3><h4 id="1-序列式-容器"><a href="#1-序列式-容器" class="headerlink" title="1. &#x3D;&#x3D;序列式&#x3D;&#x3D;容器"></a>1. &#x3D;&#x3D;序列式&#x3D;&#x3D;容器</h4><ul>
+<li>vector(向量)后端可高效增加元素的顺序表.</li>
+<li>array(数组)，定长的顺序表。</li>
+<li>deque（双端队列）双端可高效增加元素的顺序表。</li>
+<li>list（列表）可以沿双向遍历的链表。</li>
+<li>forward_list（单向列表）只能沿一个方向遍历的链表。</li>
+</ul>
+<h4 id="2，-关联式-容器"><a href="#2，-关联式-容器" class="headerlink" title="2，&#x3D;&#x3D;关联式&#x3D;&#x3D;容器"></a>2，&#x3D;&#x3D;关联式&#x3D;&#x3D;容器</h4><ul>
+<li>set（集合）</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/C-STL.html" data-id="cm25s217y00000ncxdg95b2ai" data-title="C++STL" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/Realsense.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Realsense
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/kinematics.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">kinematics</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 
 </section>
