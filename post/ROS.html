@@ -23,8 +23,13 @@
 <meta property="og:image" content="http://zgh20060114.github.io/images/image-20240925091223929.png">
 <meta property="og:image" content="http://zgh20060114.github.io/images/image-20240925123003125.png">
 <meta property="og:image" content="http://zgh20060114.github.io/images/image-20240927144924380.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241017230010555.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241017230248766.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241017230611243.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241017230728048.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241017231440886.png">
 <meta property="article:published_time" content="2024-09-20T23:57:14.000Z">
-<meta property="article:modified_time" content="2024-10-05T06:42:06.387Z">
+<meta property="article:modified_time" content="2024-10-17T15:19:32.031Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://zgh20060114.github.io/images/image-20240921180747237.png">
@@ -397,6 +402,93 @@ zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ python -V
 Python 3.8.10
 </code></pre>
 <p>完美解決</p>
+<p>[ERROR] [1728964010.917743989]: [registerPublisher] Failed to contact master at [localhost:11311].  Retrying…</p>
+<p>只是roscore没开</p>
+<p>在 MoveIt! 的 <code>moveit_setup_assistant</code> 中，配置规划组时的 <strong>Base Link</strong> 和 <strong>Tip Link</strong> 是指机器人模型中关节链的起始和结束部分。具体来说：</p>
+<h3 id="Base-Link"><a href="#Base-Link" class="headerlink" title="Base Link"></a>Base Link</h3><ul>
+<li><strong>定义</strong>: Base Link 是指关节链的起始位置，通常是机器人的“基础”或“根”部分。这通常是固定的、与机器人底座相连的链接。</li>
+<li><strong>作用</strong>: 它作为整个机器人运动的参考点，所有的运动都是相对于这个基准链接进行的。在机器人操作时，Base Link 通常是地面上的固定部分，负责提供稳定性。</li>
+</ul>
+<h3 id="Tip-Link"><a href="#Tip-Link" class="headerlink" title="Tip Link"></a>Tip Link</h3><ul>
+<li><strong>定义</strong>: Tip Link 是指关节链的结束位置，它是规划组的最后一个链接。通常，这个链接表示执行器的末端，如机械手爪、工具或传感器等。</li>
+<li><strong>作用</strong>: Tip Link 是你希望 MoveIt! 进行运动规划的目标位置。通过指定 Tip Link，MoveIt! 可以计算从 Base Link 到 Tip Link 的运动轨迹。</li>
+</ul>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p>以一个机械臂为例：</p>
+<ul>
+<li><strong>Base Link</strong>: 机械臂的底座部分，可能是与地面固定的框架。</li>
+<li><strong>Tip Link</strong>: 如果机械臂的末端是一个夹具，那么这个夹具的位置就是 Tip Link。</li>
+</ul>
+<p>在 MoveIt! 的设置中，您提到的参数具有特定的含义和功能。以下是每个参数的解释：</p>
+<h3 id="1-Group-Name-arm"><a href="#1-Group-Name-arm" class="headerlink" title="1. Group Name: arm"></a>1. Group Name: <strong>arm</strong></h3><ul>
+<li><strong>定义</strong>: 这是规划组指定的名称。在这个例子中，<code>arm</code> 表示该规划组控制的是机器人的手臂。</li>
+<li><strong>作用</strong>: 通过命名规划组，可以在后续的运动规划和控制中方便地引用这一组链接和关节。</li>
+</ul>
+<h3 id="2-Kinematic-Solver-kdl-kinematics-plugin-KDLKinematicsPlugin"><a href="#2-Kinematic-Solver-kdl-kinematics-plugin-KDLKinematicsPlugin" class="headerlink" title="2. Kinematic Solver: kdl_kinematics_plugin&#x2F;KDLKinematicsPlugin"></a>2. Kinematic Solver: <strong>kdl_kinematics_plugin&#x2F;KDLKinematicsPlugin</strong></h3><ul>
+<li><strong>定义</strong>: 这是所使用的运动学求解器。<code>KDLKinematicsPlugin</code> 是基于 Kinematics and Dynamics Library (KDL) 的运动学求解插件。</li>
+<li><strong>作用</strong>: 它负责计算机器人的正向运动学和逆向运动学。正向运动学用于从关节角度计算末端执行器的位置，而逆向运动学则用于根据目标位置计算所需的关节角度。</li>
+</ul>
+<h3 id="3-Kin-Search-Resolution-0-005"><a href="#3-Kin-Search-Resolution-0-005" class="headerlink" title="3. Kin. Search Resolution: 0.005"></a>3. Kin. Search Resolution: <strong>0.005</strong></h3><ul>
+<li><strong>定义</strong>: 这个参数表示在进行运动规划时的搜索分辨率，单位是米（m）。</li>
+<li><strong>作用</strong>: 它定义了在搜索空间中步进的大小。较小的值会导致更精细的搜索，这可能增加计算时间，但能提供更高精度的路径。</li>
+</ul>
+<h3 id="4-Kin-Search-Timeout-sec-0-05"><a href="#4-Kin-Search-Timeout-sec-0-05" class="headerlink" title="4. Kin. Search Timeout (sec): 0.05"></a>4. Kin. Search Timeout (sec): <strong>0.05</strong></h3><ul>
+<li><strong>定义</strong>: 这是运动规划过程中允许的最大搜索时间，单位是秒。</li>
+<li><strong>作用</strong>: 如果在 0.05 秒内未找到有效的运动规划，求解器将停止搜索。这可以帮助避免长时间的计算延迟，尤其是在实时应用中，但也可能导致未找到可行的解决方案。</li>
+</ul>
+<p>在配置机械臂的末端执行器（End Effector）时，需要填写一些参数</p>
+<ol>
+<li><strong>End Effector Name（末端执行器名称）</strong>：<ul>
+<li>这是给末端执行器（例如夹爪、工具等）起的名称。</li>
+</ul>
+</li>
+<li><strong>End Effector Group（末端执行器组）</strong>：<ul>
+<li>这是将末端执行器归类到特定组中的选项。此组通常用于定义哪些关节或链接与该末端执行器相关。在您的例子中，组名是 <code>gripper</code>。</li>
+</ul>
+</li>
+<li><strong>Parent Link（父链接）</strong>：<ul>
+<li>这是末端执行器连接到的父链接。通常，这是机械臂的一部分，负责控制末端执行器的位置和姿态。在例子中，父链接为 <code>grasping_frame</code>，这可能是机械臂的一个特定链接，用于抓取物体。</li>
+</ul>
+</li>
+<li><strong>Parent Group（父组， 可选项）</strong>：<ul>
+<li>这是一个可选字段，如果希望将末端执行器与某个特定的组关联，可以在这里填写。若不需要特别设置，此项可以留空</li>
+</ul>
+</li>
+</ol>
+<p>roslaunch moveit_setup_assistant setup_assistant.launch</p>
+<p>要在source .&#x2F;devel&#x2F;setup.bash的终端使用</p>
+<p>学长您好，我看您的【ROS-Moveit!】机械臂控制探索学机械臂联合仿真，但是您开源的代码为啥在运行：<br>roslaunch pigot_moveit_config moveit_planning_execution.launch<br>后，rviz显示出错呀，</p>
+<h2 id="woc-noetic版本的压根就不用改，新建其他功能包，直接用demo-gazebo-launch，要不然你猜为什么moveit的配置助手会生成关于gazebo的文件，为什么生成gazebo的urdf，就是让你用的，怪不得显示不了xacro模型"><a href="#woc-noetic版本的压根就不用改，新建其他功能包，直接用demo-gazebo-launch，要不然你猜为什么moveit的配置助手会生成关于gazebo的文件，为什么生成gazebo的urdf，就是让你用的，怪不得显示不了xacro模型" class="headerlink" title="woc,noetic版本的压根就不用改，新建其他功能包，直接用demo_gazebo.launch，要不然你猜为什么moveit的配置助手会生成关于gazebo的文件，为什么生成gazebo的urdf，就是让你用的，怪不得显示不了xacro模型"></a>woc,noetic版本的压根就不用改，新建其他功能包，直接用demo_gazebo.launch，要不然你猜为什么moveit的配置助手会生成关于gazebo的文件，为什么生成gazebo的urdf，就是让你用的，怪不得显示不了xacro模型</h2><p><img src="/../images/image-20241017230010555.png" alt="image-20241017230010555"></p>
+<p><img src="/../images/image-20241017230248766.png" alt="image-20241017230248766"></p>
+<p> <img src="/../images/image-20241017230611243.png" alt="image-20241017230611243"></p>
+<img src="../images/image-20241017230728048.png" alt="image-20241017230728048" style="zoom:50%;" />
+
+
+
+<p><img src="/../images/image-20241017231440886.png" alt="image-20241017231440886">1. <code>&lt;visual&gt;</code></p>
+<p>定义机器人的可视化外观，主要包括几何形状和材质。</p>
+<ul>
+<li><p><strong><code>&lt;geometry&gt;</code></strong>: 指定连接的几何形状。在这个示例中，使用了一个网格文件（STL格式）来定义 <code>link_1</code> 的形状。该文件的路径是：</p>
+<pre><code>Copy Codepackage://lebai_lm3_support/meshesc/lm3/visual/link1.stl
+</code></pre>
+</li>
+<li><p><strong><code>&lt;material&gt;</code></strong>: 定义连接的材质和颜色。在此示例中，材质名为 <code>white</code>，并且设置了RGBA颜色值（红、绿、蓝、透明度）为 <code>(0.86, 0.85, 0.81, 1.0)</code>。这意味着连接的颜色为一种淡灰色，完全不透明。</p>
+</li>
+</ul>
+<h3 id="2-1"><a href="#2-1" class="headerlink" title="2. &lt;collision&gt;"></a>2. <code>&lt;collision&gt;</code></h3><p>这一部分描述连接的碰撞模型，它与可视化模型通常是不同的。碰撞模型用于物理仿真，确保机器人在模拟环境中与其他物体进行碰撞检测。</p>
+<ul>
+<li><p><code>&lt;geometry&gt;</code></p>
+<p>: 这里也使用了一个网格文件，但它的路径是：</p>
+<pre><code>Copy Codepackage://lebai_lm3_support/meshes/lm3/collision/link1.stl
+</code></pre>
+<p>通常，碰撞模型会比可视化模型简单，以提高仿真性能。</p>
+</li>
+</ul>
+<h3 id="3-2"><a href="#3-2" class="headerlink" title="3. &lt;inertial&gt;"></a>3. <code>&lt;inertial&gt;</code></h3><p>这一部分定义了连接的惯性属性，包括质量和转动惯量。惯性属性在机器人运动学和动力学计算中至关重要。</p>
+<ul>
+<li><strong><code>&lt;origin&gt;</code></strong>: 定义了惯性参考点的位置和方向。<code>rpy</code> 指的是绕X、Y、Z轴的滚转（roll）、俯仰（pitch）、偏航（yaw）角度，这里均为 <code>0.0</code>，表示没有旋转。<code>xyz</code> 指的是惯性参考点相对于链接坐标系的位置，这里是 <code>(0.0, -0.011, -0.015)</code>。</li>
+<li><strong><code>&lt;mass&gt;</code></strong>: 定义连接的质量，这里为 <code>2.147 kg</code>。</li>
+<li><strong><code>&lt;inertia&gt;</code></strong>: 定义连接的转动惯量矩阵。<code>ixx</code>、<code>iyy</code> 和 <code>izz</code> 分别表示绕X、Y、Z轴的转动惯量，而 <code>ixy</code>、<code>ixz</code> 和 <code>iyz</code> 是关于这些轴的耦合项</li>
+</ul>
 
       
     </div>

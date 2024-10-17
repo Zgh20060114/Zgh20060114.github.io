@@ -93,7 +93,10 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="pyrealsense-core-module"><a href="#pyrealsense-core-module" class="headerlink" title="pyrealsense.core     module"></a>pyrealsense.core     module</h2><p>pyrealsense.core.Device(service, device_id&#x3D;0, streams&#x3D;None, depth_control_preset&#x3D;None, ivcam_preset&#x3D;None)</p>
+<p>class  pyrealsense.core.DeviceBase(dev, device_id, name, serial, version, streams)</p>
+<p>class  pyrealsense.core.Service</p>
+<h2 id="pyrealsense-stream-module"><a href="#pyrealsense-stream-module" class="headerlink" title="pyrealsense.stream     module"></a>pyrealsense.stream     module</h2>
       
     </div>
     <footer class="article-footer">
@@ -133,7 +136,8 @@
       
         <p>STL 即<strong>标准模板库</strong>（Standard Template Library），是 C++ 标准库的一部分，里面包含了一些模板化的通用的数据结构和算法。由于其模板化的特点，它能够兼容自定义的数据类型，避免大量的造轮子工作。NOI 和 ICPC 赛事都支持 STL 库的使用，因此合理利用 STL 可以避免编写无用算法，并且充分利用编译器对模板库优化提高效率。</p>
 <p><a target="_blank" rel="noopener" href="https://www.boost.org/">Boost</a> 是除了标准库外，另一个久副盛名的开源 C++ 工具库，其代码具有可移植、高质量、高性能、高可靠性等特点。Boost 中的模块数量非常之大，功能全面，并且拥有完备的跨平台支持，因此被看作 C++ 的准标准库。C++ 标准中的不少特性也都来自于 Boost，如智能指针、元编程、日期和时间等。尽管在 OI 中无法使用 Boost，但是 Boost 中有不少轮子可以用来验证算法或者对拍，如 Boost.Geometry 有 R 树的实现，Boost.Graph 有图的相关算法，Boost.Intrusive 则提供了一套与 STL 容器用法相似的侵入式容器。</p>
-<h2 id="STL-容器"><a href="#STL-容器" class="headerlink" title="STL 容器"></a>STL 容器</h2><h3 id="分类："><a href="#分类：" class="headerlink" title="分类："></a>分类：</h3><h4 id="1-序列式-容器"><a href="#1-序列式-容器" class="headerlink" title="1. &#x3D;&#x3D;序列式&#x3D;&#x3D;容器"></a>1. &#x3D;&#x3D;序列式&#x3D;&#x3D;容器</h4><ul>
+<h2 id="STL-容器"><a href="#STL-容器" class="headerlink" title="STL 容器"></a>STL 容器</h2><p><img src="/../images/container1.png" alt="img"></p>
+<h3 id="分类："><a href="#分类：" class="headerlink" title="分类："></a>分类：</h3><h4 id="1-序列式-容器"><a href="#1-序列式-容器" class="headerlink" title="1. &#x3D;&#x3D;序列式&#x3D;&#x3D;容器"></a>1. &#x3D;&#x3D;序列式&#x3D;&#x3D;容器</h4><ul>
 <li>vector(向量)后端可高效增加元素的顺序表.</li>
 <li>array(数组)，定长的顺序表。</li>
 <li>deque（双端队列）双端可高效增加元素的顺序表。</li>
@@ -141,8 +145,50 @@
 <li>forward_list（单向列表）只能沿一个方向遍历的链表。</li>
 </ul>
 <h4 id="2，-关联式-容器"><a href="#2，-关联式-容器" class="headerlink" title="2，&#x3D;&#x3D;关联式&#x3D;&#x3D;容器"></a>2，&#x3D;&#x3D;关联式&#x3D;&#x3D;容器</h4><ul>
-<li>set（集合）</li>
+<li>set（集合）有序储存互异元素的容器<ul>
+<li>不允许重复元素。存储唯一的元素，且自动按升序排序。</li>
+<li>元素的插入、删除和查找操作的时间复杂度为O(log n)。</li>
 </ul>
+</li>
+<li>multiset(多重集合)允许存储重复的元素，且也会自动按升序排序<ul>
+<li>允许重复元素。</li>
+<li>与<code>set</code>类似，插入、删除和查找操作的时间复杂度同样为O(log n)。</li>
+</ul>
+</li>
+<li>map（映射）由{建，值}对组成的集合（也是集合）<ul>
+<li><strong>唯一性</strong>：每个键只能出现一次；如果插入一个已存在的键，则会更新其对应的值。</li>
+<li><strong>有序性</strong>：<code>map</code>中的元素会根据键自动排序，默认情况下是升序排列。</li>
+<li><strong>时间复杂度</strong>：插入、删除和查找操作的平均时间复杂度为O(log n)。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3，无序-并联式-容器"><a href="#3，无序-并联式-容器" class="headerlink" title="3，无序(并联式)容器"></a>3，无序(并联式)容器</h4><ul>
+<li><strong>无序（多重）集合</strong>(<code>unordered_set</code>&#x2F;<code>unordered_multiset</code>)<strong>C++11</strong>，与 <code>set</code>&#x2F;<code>multiset</code> 的区别在于元素无序，只关心「元素是否存在」，使用哈希实现。<ul>
+<li><strong>唯一性</strong>：<code>unordered_set</code> 中的每个元素都是唯一的，不能重复。</li>
+<li><strong>无序性</strong>：元素的排列是基于哈希值的，不按照任何特定顺序存储。</li>
+<li><strong>性能</strong>：插入、查找和删除操作的平均时间复杂度为 O(1)，但在最坏情况下可能会退化为 O(n)</li>
+</ul>
+</li>
+<li><strong>无序（多重）映射</strong>(<code>unordered_map</code>&#x2F;<code>unordered_multimap</code>)<strong>C++11</strong>，与 <code>map</code>&#x2F;<code>multimap</code> 的区别在于键 (key) 无序，只关心 “键与值的对应关系”，使用哈希实现。</li>
+</ul>
+<h4 id="容器适配器"><a href="#容器适配器" class="headerlink" title="容器适配器"></a>容器适配器</h4><p>容器适配器其实并不是容器。它们不具有容器的某些特点（如：有迭代器、有 <code>clear()</code> 函数……）。</p>
+<p>​	「适配器是使一种事物的行为类似于另外一种事物行为的一种机制」，适配器对容		器进行包装，使其表现出另外一种行为。</p>
+<ul>
+<li><strong>栈</strong>(<code>stack</code>) 后进先出 (LIFO) 的容器，默认是对双端队列（<code>deque</code>）的包装。</li>
+<li><strong>队列</strong>(<code>queue</code>) 先进先出 (FIFO) 的容器，默认是对双端队列（<code>deque</code>）的包装。</li>
+<li><strong>优先队列</strong>(<code>priority_queue</code>) 元素的次序是由作用于所存储的值对上的某种谓词决定的的一种队列，默认是对向量（<code>vector</code>）的包装。</li>
+</ul>
+<h4 id="容器声明"><a href="#容器声明" class="headerlink" title="容器声明"></a>容器声明</h4><p>都是 <code>containerName&lt;typeName,...&gt; name</code> 的形式，但模板参数（<code>&lt;&gt;</code> 内的参数）的个数、形式会根据具体容器而变。</p>
+<p>本质原因：STL 就是「标准模板库」，所以容器都是模板类。</p>
+<h4 id="容器共有函数"><a href="#容器共有函数" class="headerlink" title="容器共有函数"></a>容器共有函数</h4><p>&#x3D; ：赋值运算符，赋值构造函数</p>
+<p>begain() :返回指向开头元素的迭代器</p>
+<p>end（）：返回指向末尾的下一个元素的迭代器。<code>end()</code> 不指向某个元素.end() 迭代器指向的是一个“哨兵”位置，表示容器的结束。可以用来判断迭代是否完成。</p>
+<p>size():返回容器内的元素个数</p>
+<p><code>max_size()</code>：返回容器 理论上 能存储的最大元素个数。依容器类型和所存储变量的类型而变。</p>
+<p><code>empty()</code>：返回容器是否为空。</p>
+<p><code>swap()</code>：交换两个容器。</p>
+<p><code>clear()</code>：清空容器。</p>
+<p><code>==</code>&#x2F;<code>!=</code>&#x2F;<code>&lt;</code>&#x2F;<code>&gt;</code>&#x2F;<code>&lt;=</code>&#x2F;<code>&gt;=</code>：按 <strong>字典序</strong> 比较两个容器的大小.无序容器不支持 <code>&lt;</code>&#x2F;<code>&gt;</code>&#x2F;<code>&lt;=</code>&#x2F;<code>&gt;=</code>。</p>
 
       
     </div>
@@ -737,6 +783,93 @@ zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ python -V
 Python 3.8.10
 </code></pre>
 <p>完美解決</p>
+<p>[ERROR] [1728964010.917743989]: [registerPublisher] Failed to contact master at [localhost:11311].  Retrying…</p>
+<p>只是roscore没开</p>
+<p>在 MoveIt! 的 <code>moveit_setup_assistant</code> 中，配置规划组时的 <strong>Base Link</strong> 和 <strong>Tip Link</strong> 是指机器人模型中关节链的起始和结束部分。具体来说：</p>
+<h3 id="Base-Link"><a href="#Base-Link" class="headerlink" title="Base Link"></a>Base Link</h3><ul>
+<li><strong>定义</strong>: Base Link 是指关节链的起始位置，通常是机器人的“基础”或“根”部分。这通常是固定的、与机器人底座相连的链接。</li>
+<li><strong>作用</strong>: 它作为整个机器人运动的参考点，所有的运动都是相对于这个基准链接进行的。在机器人操作时，Base Link 通常是地面上的固定部分，负责提供稳定性。</li>
+</ul>
+<h3 id="Tip-Link"><a href="#Tip-Link" class="headerlink" title="Tip Link"></a>Tip Link</h3><ul>
+<li><strong>定义</strong>: Tip Link 是指关节链的结束位置，它是规划组的最后一个链接。通常，这个链接表示执行器的末端，如机械手爪、工具或传感器等。</li>
+<li><strong>作用</strong>: Tip Link 是你希望 MoveIt! 进行运动规划的目标位置。通过指定 Tip Link，MoveIt! 可以计算从 Base Link 到 Tip Link 的运动轨迹。</li>
+</ul>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p>以一个机械臂为例：</p>
+<ul>
+<li><strong>Base Link</strong>: 机械臂的底座部分，可能是与地面固定的框架。</li>
+<li><strong>Tip Link</strong>: 如果机械臂的末端是一个夹具，那么这个夹具的位置就是 Tip Link。</li>
+</ul>
+<p>在 MoveIt! 的设置中，您提到的参数具有特定的含义和功能。以下是每个参数的解释：</p>
+<h3 id="1-Group-Name-arm"><a href="#1-Group-Name-arm" class="headerlink" title="1. Group Name: arm"></a>1. Group Name: <strong>arm</strong></h3><ul>
+<li><strong>定义</strong>: 这是规划组指定的名称。在这个例子中，<code>arm</code> 表示该规划组控制的是机器人的手臂。</li>
+<li><strong>作用</strong>: 通过命名规划组，可以在后续的运动规划和控制中方便地引用这一组链接和关节。</li>
+</ul>
+<h3 id="2-Kinematic-Solver-kdl-kinematics-plugin-KDLKinematicsPlugin"><a href="#2-Kinematic-Solver-kdl-kinematics-plugin-KDLKinematicsPlugin" class="headerlink" title="2. Kinematic Solver: kdl_kinematics_plugin&#x2F;KDLKinematicsPlugin"></a>2. Kinematic Solver: <strong>kdl_kinematics_plugin&#x2F;KDLKinematicsPlugin</strong></h3><ul>
+<li><strong>定义</strong>: 这是所使用的运动学求解器。<code>KDLKinematicsPlugin</code> 是基于 Kinematics and Dynamics Library (KDL) 的运动学求解插件。</li>
+<li><strong>作用</strong>: 它负责计算机器人的正向运动学和逆向运动学。正向运动学用于从关节角度计算末端执行器的位置，而逆向运动学则用于根据目标位置计算所需的关节角度。</li>
+</ul>
+<h3 id="3-Kin-Search-Resolution-0-005"><a href="#3-Kin-Search-Resolution-0-005" class="headerlink" title="3. Kin. Search Resolution: 0.005"></a>3. Kin. Search Resolution: <strong>0.005</strong></h3><ul>
+<li><strong>定义</strong>: 这个参数表示在进行运动规划时的搜索分辨率，单位是米（m）。</li>
+<li><strong>作用</strong>: 它定义了在搜索空间中步进的大小。较小的值会导致更精细的搜索，这可能增加计算时间，但能提供更高精度的路径。</li>
+</ul>
+<h3 id="4-Kin-Search-Timeout-sec-0-05"><a href="#4-Kin-Search-Timeout-sec-0-05" class="headerlink" title="4. Kin. Search Timeout (sec): 0.05"></a>4. Kin. Search Timeout (sec): <strong>0.05</strong></h3><ul>
+<li><strong>定义</strong>: 这是运动规划过程中允许的最大搜索时间，单位是秒。</li>
+<li><strong>作用</strong>: 如果在 0.05 秒内未找到有效的运动规划，求解器将停止搜索。这可以帮助避免长时间的计算延迟，尤其是在实时应用中，但也可能导致未找到可行的解决方案。</li>
+</ul>
+<p>在配置机械臂的末端执行器（End Effector）时，需要填写一些参数</p>
+<ol>
+<li><strong>End Effector Name（末端执行器名称）</strong>：<ul>
+<li>这是给末端执行器（例如夹爪、工具等）起的名称。</li>
+</ul>
+</li>
+<li><strong>End Effector Group（末端执行器组）</strong>：<ul>
+<li>这是将末端执行器归类到特定组中的选项。此组通常用于定义哪些关节或链接与该末端执行器相关。在您的例子中，组名是 <code>gripper</code>。</li>
+</ul>
+</li>
+<li><strong>Parent Link（父链接）</strong>：<ul>
+<li>这是末端执行器连接到的父链接。通常，这是机械臂的一部分，负责控制末端执行器的位置和姿态。在例子中，父链接为 <code>grasping_frame</code>，这可能是机械臂的一个特定链接，用于抓取物体。</li>
+</ul>
+</li>
+<li><strong>Parent Group（父组， 可选项）</strong>：<ul>
+<li>这是一个可选字段，如果希望将末端执行器与某个特定的组关联，可以在这里填写。若不需要特别设置，此项可以留空</li>
+</ul>
+</li>
+</ol>
+<p>roslaunch moveit_setup_assistant setup_assistant.launch</p>
+<p>要在source .&#x2F;devel&#x2F;setup.bash的终端使用</p>
+<p>学长您好，我看您的【ROS-Moveit!】机械臂控制探索学机械臂联合仿真，但是您开源的代码为啥在运行：<br>roslaunch pigot_moveit_config moveit_planning_execution.launch<br>后，rviz显示出错呀，</p>
+<h2 id="woc-noetic版本的压根就不用改，新建其他功能包，直接用demo-gazebo-launch，要不然你猜为什么moveit的配置助手会生成关于gazebo的文件，为什么生成gazebo的urdf，就是让你用的，怪不得显示不了xacro模型"><a href="#woc-noetic版本的压根就不用改，新建其他功能包，直接用demo-gazebo-launch，要不然你猜为什么moveit的配置助手会生成关于gazebo的文件，为什么生成gazebo的urdf，就是让你用的，怪不得显示不了xacro模型" class="headerlink" title="woc,noetic版本的压根就不用改，新建其他功能包，直接用demo_gazebo.launch，要不然你猜为什么moveit的配置助手会生成关于gazebo的文件，为什么生成gazebo的urdf，就是让你用的，怪不得显示不了xacro模型"></a>woc,noetic版本的压根就不用改，新建其他功能包，直接用demo_gazebo.launch，要不然你猜为什么moveit的配置助手会生成关于gazebo的文件，为什么生成gazebo的urdf，就是让你用的，怪不得显示不了xacro模型</h2><p><img src="/../images/image-20241017230010555.png" alt="image-20241017230010555"></p>
+<p><img src="/../images/image-20241017230248766.png" alt="image-20241017230248766"></p>
+<p> <img src="/../images/image-20241017230611243.png" alt="image-20241017230611243"></p>
+<img src="../images/image-20241017230728048.png" alt="image-20241017230728048" style="zoom:50%;" />
+
+
+
+<p><img src="/../images/image-20241017231440886.png" alt="image-20241017231440886">1. <code>&lt;visual&gt;</code></p>
+<p>定义机器人的可视化外观，主要包括几何形状和材质。</p>
+<ul>
+<li><p><strong><code>&lt;geometry&gt;</code></strong>: 指定连接的几何形状。在这个示例中，使用了一个网格文件（STL格式）来定义 <code>link_1</code> 的形状。该文件的路径是：</p>
+<pre><code>Copy Codepackage://lebai_lm3_support/meshesc/lm3/visual/link1.stl
+</code></pre>
+</li>
+<li><p><strong><code>&lt;material&gt;</code></strong>: 定义连接的材质和颜色。在此示例中，材质名为 <code>white</code>，并且设置了RGBA颜色值（红、绿、蓝、透明度）为 <code>(0.86, 0.85, 0.81, 1.0)</code>。这意味着连接的颜色为一种淡灰色，完全不透明。</p>
+</li>
+</ul>
+<h3 id="2-1"><a href="#2-1" class="headerlink" title="2. &lt;collision&gt;"></a>2. <code>&lt;collision&gt;</code></h3><p>这一部分描述连接的碰撞模型，它与可视化模型通常是不同的。碰撞模型用于物理仿真，确保机器人在模拟环境中与其他物体进行碰撞检测。</p>
+<ul>
+<li><p><code>&lt;geometry&gt;</code></p>
+<p>: 这里也使用了一个网格文件，但它的路径是：</p>
+<pre><code>Copy Codepackage://lebai_lm3_support/meshes/lm3/collision/link1.stl
+</code></pre>
+<p>通常，碰撞模型会比可视化模型简单，以提高仿真性能。</p>
+</li>
+</ul>
+<h3 id="3-2"><a href="#3-2" class="headerlink" title="3. &lt;inertial&gt;"></a>3. <code>&lt;inertial&gt;</code></h3><p>这一部分定义了连接的惯性属性，包括质量和转动惯量。惯性属性在机器人运动学和动力学计算中至关重要。</p>
+<ul>
+<li><strong><code>&lt;origin&gt;</code></strong>: 定义了惯性参考点的位置和方向。<code>rpy</code> 指的是绕X、Y、Z轴的滚转（roll）、俯仰（pitch）、偏航（yaw）角度，这里均为 <code>0.0</code>，表示没有旋转。<code>xyz</code> 指的是惯性参考点相对于链接坐标系的位置，这里是 <code>(0.0, -0.011, -0.015)</code>。</li>
+<li><strong><code>&lt;mass&gt;</code></strong>: 定义连接的质量，这里为 <code>2.147 kg</code>。</li>
+<li><strong><code>&lt;inertia&gt;</code></strong>: 定义连接的转动惯量矩阵。<code>ixx</code>、<code>iyy</code> 和 <code>izz</code> 分别表示绕X、Y、Z轴的转动惯量，而 <code>ixy</code>、<code>ixz</code> 和 <code>iyz</code> 是关于这些轴的耦合项</li>
+</ul>
 
       
     </div>
@@ -1787,7 +1920,9 @@ void MyClass&lt;T&gt;::display() &#123;
 <p><img src="/../images/image-20241011162546845.png" alt="image-20241011162546845"></p>
 <p><img src="/../images/image-20241011164325073.png" alt="image-20241011164325073"></p>
 <p><img src="/../images/image-20241011164827207.png" alt="image-20241011164827207"></p>
-
+<p>这些STL容器前加上concurrent就变成了多线程安全版</p>
+<p>现在这些concurrent_vector一个常见的用法：用于并行筛选数据：</p>
+<h3 id="7-并行筛选"><a href="#7-并行筛选" class="headerlink" title="7.并行筛选"></a>7.并行筛选</h3>
       
     </div>
     <footer class="article-footer">
