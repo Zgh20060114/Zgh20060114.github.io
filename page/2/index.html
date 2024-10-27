@@ -71,6 +71,66 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-risc-v" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/risc-v.html" class="article-date">
+  <time class="dt-published" datetime="2024-06-18T04:31:10.000Z" itemprop="datePublished">2024-06-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/post/risc-v.html">risc_v</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="/../images/image-20240618123232143.png" alt="image-20240618123232143"></p>
+<p>在RISC-V架构中，IF_ID和ID_EX是两个流水线寄存器，用于在指令执行过程中传递数据。</p>
+<ol>
+<li>IF_ID（Instruction Fetch to Instruction Decode）：IF_ID流水线寄存器用于在指令提取阶段（Instruction Fetch）和指令解码阶段（Instruction Decode）之间传递数据。它保存了从指令缓存中提取的指令，并将其传递给下一个阶段进行解码。</li>
+<li>ID_EX（Instruction Decode to Execute）：ID_EX流水线寄存器用于在指令解码阶段（Instruction Decode）和指令执行阶段（Execute）之间传递数据。它保存了从IF_ID寄存器中解码得到的指令信息，包括操作码、寄存器地址等，并将这些信息传递给下一个阶段进行执行。</li>
+</ol>
+<p>通过使用这些流水线寄存器，RISC-V架构可以实现指令流水线的并行执行，提高指令的执行效率。</p>
+<ol>
+<li><strong>IF (Instruction Fetch) 取指</strong>：<ul>
+<li>这一阶段的主要任务是从内存中的指令缓存或主存中取回当前要执行的指令。</li>
+<li>在这个阶段，程序计数器（PC，Program Counter）会指向当前要取的指令地址。</li>
+<li>CPU将该地址发给指令缓存，读取该地址处的指令，并将其存储到流水线寄存器（如IF&#x2F;ID寄存器）中，以便在下一阶段使用。</li>
+</ul>
+</li>
+<li><strong>ID (Instruction Decode) 译码</strong>：<ul>
+<li>这一阶段的主要任务是对取回的指令进行解码，即解析指令的操作码和操作数。</li>
+<li>具体来说，CPU会读取并识别指令的操作码（Opcode），确定这条指令的类型和需要执行的操作。</li>
+<li>同时，CPU还会确定指令所涉及的源操作数和目标寄存器。如果需要从寄存器文件中读取操作数，这一阶段也会执行这些操作。</li>
+<li>解码后的信息会存储在流水线寄存器（如ID&#x2F;EX寄存器）中，以便在后续的执行阶段使用。</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/risc-v.html" data-id="cm03k1yqc0001gycx8zxxb5cx" data-title="risc_v" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-raytracing" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/post/raytracing.html" class="article-date">
@@ -2125,66 +2185,6 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
 
 
   
-    <article id="post-电路Learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/post/%E7%94%B5%E8%B7%AFLearning.html" class="article-date">
-  <time class="dt-published" datetime="2024-04-13T02:08:03.000Z" itemprop="datePublished">2024-04-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/post/%E7%94%B5%E8%B7%AFLearning.html">电路Learning</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="/../images/Screenshot_20240413_081729_com.able.wisdomtree_ed.jpg" alt="Screenshot_20240413_081729_com.able.wisdomtree_ed"></p>
-<p><img src="/../images/IMG_20240413_100936-17129742375431.jpg" alt="IMG_20240413_100936"></p>
-<p><img src="/../images/IMG_20240413_100941.jpg" alt="IMG_20240413_100941"></p>
-<p>一阶电路三要素法：<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/367671862">https://zhuanlan.zhihu.com/p/367671862</a></p>
-<p>续流二极管的作用：当输入电压由变+VCC为0V时，三极管由饱和变为截止，这样继电器电感线圈中的电流突然失去了流通通路，若无续流二极管D将在线圈两端产生较大的反向电动势，极性为下正上负，电压值可达一百多伏，这个电压加上电源电压作用在三极管的集电极上足以损坏三极管。故续流二极管D的作用是将这个反向电动势通过图中箭头所指方向放电，使三极管集电极对地的电压最高不超过+VCC +0.7V。</p>
-<p><img src="/../images/image-20240415081034319.png" alt="image-20240415081034319"></p>
-<h1 id="桥式全波整流电路"><a href="#桥式全波整流电路" class="headerlink" title="桥式全波整流电路"></a>桥式全波整流电路</h1><p><img src="/../images/v2-53ff055afc53560a36d90954265d9cdd_720w.webp" alt="img"></p>
-<p><img src="/../images/v2-ecfac816feb4eb7f7d63addbd5af0312_720w.webp" alt="img"></p>
-<p><img src="/../images/v2-1fb0684d0ccd97010d40625037937ce6_r.jpg" alt="img"></p>
-<p><img src="/../images/image-20240527141313565.png" alt="image-20240527141313565"></p>
-<p><img src="/../images/image-20240527141401386.png" alt="image-20240527141401386"></p>
-<p>衰减电阻网络需要搭配上电容来进行补偿是什么意思</p>
-<p>在电子电路中，衰减电阻网络通常是指由电阻组成的网络，用于降低信号的电压或电流。而提到衰减电阻网络需要搭配电容来进行补偿，这通常是指在某些电路设计中，为了改善电路的性能，需要在不改变电路基本功能的前提下，通过添加电容元件来修正或改善电路的某些特性。<br>补偿电容的作用可能包括：</p>
-<ol>
-<li>改善频率响应：在某些电路中，电阻网络可能会引入一定的相位偏移，导致电路在高频工作时性能变差。添加电容可以补偿这种相位偏移，从而改善电路的带宽和频率响应。</li>
-<li>减少噪声：电容可以起到滤波的作用，减少电路中的噪声成分，使输出信号更干净。</li>
-<li>改善稳定性：在某些电路中，电容可以用来改善系统的稳定性，例如在反馈电路中，适当的电容值可以帮助电路更快地稳定在工作点。</li>
-<li>消除振荡：如果电路中存在不需要的振荡，适当的电容值可以用来消除这些振荡。</li>
-<li>定时作用：在某些振荡电路中，电容与电阻配合使用，可以决定振荡频率。<br>补偿电容的值和位置需要根据具体的电路设计和所需的性能来确定。通常，电路设计者会根据电路的频率特性、相位特性以及所需的带宽等因素来选择合适的电容类型和值。</li>
-</ol>
-<p>为什么添加电容可以补偿这种相位偏移</p>
-<p>在电路中，电阻和电容都会引入相位偏移。电阻器的相位偏移通常与频率成正比，而电容器则与频率成反比.为了补偿这种相位偏移，电路设计者会在电路中添加电容器，以便在高频应用中提供额外的相位移动，从而抵消电阻引起的相位偏移。通过这种方式，电路可以在整个频率范围内保持稳定的相位响应，从而提高电路的整体性能。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zgh20060114.github.io/post/%E7%94%B5%E8%B7%AFLearning.html" data-id="clxbjvuxt000o61cx0c6p3qb1" data-title="电路Learning" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -2235,6 +2235,10 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
       <ul>
         
           <li>
+            <a href="/post/motion-planning.html">motion_planning</a>
+          </li>
+        
+          <li>
             <a href="/post/Realsense.html">Realsense</a>
           </li>
         
@@ -2248,10 +2252,6 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
         
           <li>
             <a href="/post/Webots.html">Webots</a>
-          </li>
-        
-          <li>
-            <a href="/post/ubuntu-nvidia.html">ubuntu-nvidia</a>
           </li>
         
       </ul>

@@ -71,6 +71,44 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-motion-planning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/motion-planning.html" class="article-date">
+  <time class="dt-published" datetime="2024-10-27T11:56:49.000Z" itemprop="datePublished">2024-10-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/post/motion-planning.html">motion_planning</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/motion-planning.html" data-id="cm2rjbwlo0000kycxa1c9h8rg" data-title="motion_planning" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Realsense" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/post/Realsense.html" class="article-date">
@@ -280,6 +318,17 @@
 <p><img src="/../images/image-20241004122441260.png" alt="image-20241004122441260"></p>
 <p>只有机器人节点才能导出urdf文件</p>
 <p>转换完后的文件放到protos目录下<br><img src="/../images/image-20241004122612323.png" alt="image-20241004122612323"></p>
+<p>在 Webots 中，<code>Solid</code> 节点用于定义具有物理属性的物体，主要用于仿真中的动态交互。它包含了物理模拟所需的各种参数，如质量、摩擦力和弹性等。</p>
+<p>在 Webots 中，<code>Shape</code> 节点用于定义物体的外观和几何形状。</p>
+<p><code>Solid</code> 节点通常与 <code>Shape</code> 节点结合使用，以创建既有外观又具物理特性的对象</p>
+<ol>
+<li>**形状 (Geometry)**：指的是物体的几何结构和形式，比如它是一个立方体、球体、圆柱体等。形状决定了物体在空间中的占用区域，以及与其他物体的交互和碰撞。</li>
+<li>**外观 (Appearance)**：指的是物体的视觉特征，如颜色、材质、纹理等。外观影响的是物体的视觉效果，而不是其物理结构。</li>
+</ol>
+<p><img src="/../images/image-20241026190357404.png" alt="image-20241026190357404"></p>
+<p><img src="/../images/image-20241026210538601.png" alt="image-20241026210538601"></p>
+<p><img src="/../images/image-20241026212402481.png" alt="image-20241026212402481"></p>
+<p><img src="/../images/image-20241027094729155.png" alt="image-20241027094729155"></p>
 
       
     </div>
@@ -870,6 +919,11 @@ Python 3.8.10
 <li><strong><code>&lt;mass&gt;</code></strong>: 定义连接的质量，这里为 <code>2.147 kg</code>。</li>
 <li><strong><code>&lt;inertia&gt;</code></strong>: 定义连接的转动惯量矩阵。<code>ixx</code>、<code>iyy</code> 和 <code>izz</code> 分别表示绕X、Y、Z轴的转动惯量，而 <code>ixy</code>、<code>ixz</code> 和 <code>iyz</code> 是关于这些轴的耦合项</li>
 </ul>
+<p><img src="/../images/image-20241025155947665.png" alt="image-20241025155947665"></p>
+<p><img src="/../images/image-20241025162239093.png" alt="image-20241025162239093"></p>
+<p><img src="/../images/image-20241025162708189.png" alt="image-20241025162708189"></p>
+<p><img src="/../images/image-20241026083208134.png" alt="image-20241026083208134"></p>
+<p><img src="/../images/image-20241027155220611.png" alt="image-20241027155220611"></p>
 
       
     </div>
@@ -1921,8 +1975,26 @@ void MyClass&lt;T&gt;::display() &#123;
 <p><img src="/../images/image-20241011164325073.png" alt="image-20241011164325073"></p>
 <p><img src="/../images/image-20241011164827207.png" alt="image-20241011164827207"></p>
 <p>这些STL容器前加上concurrent就变成了多线程安全版</p>
-<p>现在这些concurrent_vector一个常见的用法：用于并行筛选数据：</p>
-<h3 id="7-并行筛选"><a href="#7-并行筛选" class="headerlink" title="7.并行筛选"></a>7.并行筛选</h3>
+<p>vector&#x2F;concurrent_vector有一个常见的用法：用于并行筛选数据：</p>
+<h3 id="7-并行筛选"><a href="#7-并行筛选" class="headerlink" title="7.并行筛选"></a>7.并行筛选</h3><p><img src="/../images/image-20241021101434094.png" alt="image-20241021101434094"></p>
+<p><img src="/../images/image-20241021101859492.png" alt="image-20241021101859492"></p>
+<p><img src="/../images/image-20241021102554406.png" alt="image-20241021102554406"></p>
+<p> <img src="/../images/image-20241021103037177.png" alt="image-20241021103037177"></p>
+<p>但需要连续数据时，还是需要std::vetor</p>
+<p><img src="/../images/image-20241021103348500.png" alt="image-20241021103348500"></p>
+<p><img src="/../images/image-20241021104040889.png" alt="image-20241021104040889"></p>
+<p><img src="/../images/image-20241021105118738.png" alt="image-20241021105118738"></p>
+<h5 id="8-分治与排序"><a href="#8-分治与排序" class="headerlink" title="8.分治与排序"></a>8.分治与排序</h5><p><img src="/../images/image-20241021111447378.png" alt="image-20241021111447378"></p>
+<p>反而变慢了：</p>
+<p><img src="/../images/image-20241021111303257.png" alt="image-20241021111303257"></p>
+<p><img src="/../images/image-20241021111344357.png" alt="image-20241021111344357"></p>
+<p>分治</p>
+<p><img src="/../images/image-20241021111634419.png" alt="image-20241021111634419"></p>
+<p><img src="/../images/image-20241021111951889.png" alt="image-20241021111951889"></p>
+<p><img src="/../images/image-20241021112626978.png" alt="image-20241021112626978"></p>
+<h5 id="9-流水线并行"><a href="#9-流水线并行" class="headerlink" title="9.流水线并行"></a>9.流水线并行</h5><h3 id="CUDA开启的GPU编程"><a href="#CUDA开启的GPU编程" class="headerlink" title="CUDA开启的GPU编程"></a>CUDA开启的GPU编程</h3><p><img src="/../images/image-20241021114316913.png" alt="image-20241021114316913"></p>
+<p><img src="/../images/image-20241021114756000.png" alt="image-20241021114756000"></p>
+
       
     </div>
     <footer class="article-footer">
@@ -2028,66 +2100,6 @@ void MyClass&lt;T&gt;::display() &#123;
 
 
   
-    <article id="post-risc-v" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/post/risc-v.html" class="article-date">
-  <time class="dt-published" datetime="2024-06-18T04:31:10.000Z" itemprop="datePublished">2024-06-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/post/risc-v.html">risc_v</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="/../images/image-20240618123232143.png" alt="image-20240618123232143"></p>
-<p>在RISC-V架构中，IF_ID和ID_EX是两个流水线寄存器，用于在指令执行过程中传递数据。</p>
-<ol>
-<li>IF_ID（Instruction Fetch to Instruction Decode）：IF_ID流水线寄存器用于在指令提取阶段（Instruction Fetch）和指令解码阶段（Instruction Decode）之间传递数据。它保存了从指令缓存中提取的指令，并将其传递给下一个阶段进行解码。</li>
-<li>ID_EX（Instruction Decode to Execute）：ID_EX流水线寄存器用于在指令解码阶段（Instruction Decode）和指令执行阶段（Execute）之间传递数据。它保存了从IF_ID寄存器中解码得到的指令信息，包括操作码、寄存器地址等，并将这些信息传递给下一个阶段进行执行。</li>
-</ol>
-<p>通过使用这些流水线寄存器，RISC-V架构可以实现指令流水线的并行执行，提高指令的执行效率。</p>
-<ol>
-<li><strong>IF (Instruction Fetch) 取指</strong>：<ul>
-<li>这一阶段的主要任务是从内存中的指令缓存或主存中取回当前要执行的指令。</li>
-<li>在这个阶段，程序计数器（PC，Program Counter）会指向当前要取的指令地址。</li>
-<li>CPU将该地址发给指令缓存，读取该地址处的指令，并将其存储到流水线寄存器（如IF&#x2F;ID寄存器）中，以便在下一阶段使用。</li>
-</ul>
-</li>
-<li><strong>ID (Instruction Decode) 译码</strong>：<ul>
-<li>这一阶段的主要任务是对取回的指令进行解码，即解析指令的操作码和操作数。</li>
-<li>具体来说，CPU会读取并识别指令的操作码（Opcode），确定这条指令的类型和需要执行的操作。</li>
-<li>同时，CPU还会确定指令所涉及的源操作数和目标寄存器。如果需要从寄存器文件中读取操作数，这一阶段也会执行这些操作。</li>
-<li>解码后的信息会存储在流水线寄存器（如ID&#x2F;EX寄存器）中，以便在后续的执行阶段使用。</li>
-</ul>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zgh20060114.github.io/post/risc-v.html" data-id="cm03k1yqc0001gycx8zxxb5cx" data-title="risc_v" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -2138,6 +2150,10 @@ void MyClass&lt;T&gt;::display() &#123;
       <ul>
         
           <li>
+            <a href="/post/motion-planning.html">motion_planning</a>
+          </li>
+        
+          <li>
             <a href="/post/Realsense.html">Realsense</a>
           </li>
         
@@ -2151,10 +2167,6 @@ void MyClass&lt;T&gt;::display() &#123;
         
           <li>
             <a href="/post/Webots.html">Webots</a>
-          </li>
-        
-          <li>
-            <a href="/post/ubuntu-nvidia.html">ubuntu-nvidia</a>
           </li>
         
       </ul>
