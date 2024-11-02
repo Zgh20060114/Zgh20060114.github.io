@@ -71,6 +71,96 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Qt" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/Qt.html" class="article-date">
+  <time class="dt-published" datetime="2024-08-21T15:30:34.000Z" itemprop="datePublished">2024-08-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/post/Qt.html">Qt</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><code>QWidget</code> 和 <code>QMainWindow</code> 是 Qt 框架中的两个重要类，它们都用于创建图形用户界面（GUI），但有一些关键的区别：</p>
+<h3 id="QWidget"><a href="#QWidget" class="headerlink" title="QWidget"></a><code>QWidget</code></h3><ul>
+<li><strong>基础类</strong>: <code>QWidget</code> 是 Qt 中所有用户界面对象的基类。它提供了一个基础的窗口部件，其他窗口部件（如按钮、文本框）都是从 <code>QWidget</code> 继承而来的。</li>
+<li><strong>功能</strong>: <code>QWidget</code> 本身是一个通用的窗口部件，没有特别的窗口管理功能。它可以作为窗口的基础组件，也可以作为其他复杂组件的容器。</li>
+<li><strong>布局管理</strong>: <code>QWidget</code> 提供了布局管理功能，可以使用布局管理器来控制其子部件的位置和大小。</li>
+<li><strong>使用场景</strong>: 你可以将 <code>QWidget</code> 用作对话框、工具条、或是任何其他需要的窗口部件。如果你只需要一个简单的窗口，<code>QWidget</code> 是一个合适的选择。</li>
+</ul>
+<h3 id="QMainWindow"><a href="#QMainWindow" class="headerlink" title="QMainWindow"></a><code>QMainWindow</code></h3><ul>
+<li><strong>派生类</strong>: <code>QMainWindow</code> 是 <code>QWidget</code> 的子类，提供了更丰富的窗口功能和特性。</li>
+<li><strong>功能</strong>: <code>QMainWindow</code> 是设计用于主窗口的类，它提供了菜单栏、工具栏、状态栏和中央窗口区域的支持。这使得它特别适合用于主应用窗口的设计。</li>
+<li><strong>布局管理</strong>: <code>QMainWindow</code> 提供了特定的布局区域，如菜单栏、工具栏、状态栏和中央部件区域。你可以使用这些功能来创建更复杂的应用程序界面。</li>
+<li><strong>使用场景</strong>: 当你需要一个具有菜单栏、工具栏和状态栏的主窗口时，<code>QMainWindow</code> 是一个理想的选择。它适合用于具有复杂界面的桌面应用程序。</li>
+</ul>
+<h3 id="主要区别总结"><a href="#主要区别总结" class="headerlink" title="主要区别总结"></a>主要区别总结</h3><ol>
+<li><strong>功能扩展</strong>:<ul>
+<li><code>QWidget</code>: 基础窗口部件，功能较少，适合用于创建简单的窗口或部件。</li>
+<li><code>QMainWindow</code>: 提供额外的功能，如菜单栏、工具栏和状态栏，适合用于主应用窗口。</li>
+</ul>
+</li>
+<li><strong>使用场景</strong>:<ul>
+<li><code>QWidget</code>: 适合用作对话框、工具条、或简单的窗口部件。</li>
+<li><code>QMainWindow</code>: 适合用于需要复杂用户界面的主窗口。</li>
+</ul>
+</li>
+<li><strong>布局支持</strong>:<ul>
+<li><code>QWidget</code>: 你需要手动设置布局。</li>
+<li><code>QMainWindow</code>: 提供了内置的菜单栏、工具栏、状态栏和中央部件区域，可以直接使用这些功能来设计主窗口界面。</li>
+</ul>
+</li>
+</ol>
+<p>connect(menu, &amp;QMenu::triggered, this, &amp;Widget::onMenuTriggered); 为什么QMenu* menu;时不报错 当QMenu  menu;时报错:No matching member function for call to ‘connect’</p>
+<p>在 Qt 中，<code>connect</code> 函数的作用是将一个信号与一个槽函数连接起来。它依赖于信号发射的对象和槽函数的对象都是有效的，并且能够正确识别和匹配。</p>
+<h3 id="使用-QMenu-menu"><a href="#使用-QMenu-menu" class="headerlink" title="使用 QMenu* menu"></a>使用 <code>QMenu* menu</code></h3><div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #BABED8">QMenu</span><span style="color: #89DDFF">*</span><span style="color: #BABED8"> menu </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">new</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">QMenu</span><span style="color: #89DDFF">();</span></span>
+<span class="line"><span style="color: #82AAFF">connect</span><span style="color: #89DDFF">(</span><span style="color: #BABED8">menu</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&amp;</span><span style="color: #FFCB6B">QMenu</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">triggered</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">this,</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&amp;</span><span style="color: #FFCB6B">Widget</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">onMenuTriggered</span><span style="color: #89DDFF">);</span></span></code></pre></div><ul>
+<li>这里，<code>menu</code> 是一个指向 <code>QMenu</code> 对象的指针。</li>
+<li><code>connect</code> 函数可以使用 <code>menu</code> 指针来连接信号和槽，因为 <code>QMenu</code> 对象在堆上分配，并且其生命周期由指针管理。</li>
+<li><code>QMenu</code> 的实例通过指针能够正确地传递给 <code>connect</code>，并且 <code>QMenu</code> 的成员函数和信号可以被正确识别。</li>
+</ul>
+<h3 id="使用-QMenu-menu-1"><a href="#使用-QMenu-menu-1" class="headerlink" title="使用 QMenu menu"></a>使用 <code>QMenu menu</code></h3><div class="language-cpp"><button title="Copy code" class="copy"></button><span class="lang">cpp</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #BABED8">QMenu menu</span><span style="color: #89DDFF">;</span></span>
+<span class="line"><span style="color: #82AAFF">connect</span><span style="color: #89DDFF">(</span><span style="color: #BABED8">menu</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&amp;</span><span style="color: #FFCB6B">QMenu</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">triggered</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">this,</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&amp;</span><span style="color: #FFCB6B">Widget</span><span style="color: #89DDFF">::</span><span style="color: #BABED8">onMenuTriggered</span><span style="color: #89DDFF">);</span></span></code></pre></div><ul>
+<li>这里，<code>menu</code> 是一个栈上的 <code>QMenu</code> 对象。</li>
+<li>栈上的对象在 <code>connect</code> 时会导致问题，因为 <code>connect</code> 期望信号发射对象在其生命周期内有效。栈上的对象会在超出作用域时被销毁。</li>
+<li>在这个情况下，<code>menu</code> 可能在连接信号和槽时已经过早销毁，导致 <code>connect</code> 函数找不到有效的信号源。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><code>QMenu* menu</code>：指针允许动态管理对象的生命周期，<code>connect</code> 可以正常工作。</li>
+<li><code>QMenu menu</code>：栈上的对象在超出作用域时可能被销毁，导致 <code>connect</code> 函数不能正确地处理信号和槽。</li>
+</ul>
+<p>因此，使用指针确保 <code>QMenu</code> 对象在 <code>connect</code> 调用期间有效。</p>
+<p><img src="/../images/image-20240823104744847.png" alt="image-20240823104744847"></p>
+<p><img src="/../images/image-20240823104804653.png" alt="image-20240823104804653"></p>
+<p>定义对象的指针，让widght来管理对象的生命周期，要是直接定义对象，可能不知道什么时候对象就被销毁了，有些用到这些对象的函数就可能报错，因为在栈上找不到他了</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/Qt.html" data-id="cm040gf6300012ucx6mgg6k5d" data-title="Qt" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-risc-v" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/post/risc-v.html" class="article-date">
@@ -2130,61 +2220,6 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
 
 
   
-    <article id="post-Inference-Framework" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/post/Inference-Framework.html" class="article-date">
-  <time class="dt-published" datetime="2024-04-13T09:01:40.000Z" itemprop="datePublished">2024-04-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/post/Inference-Framework.html">Inference_Framework</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>PNNX<br>PNNX项目 PyTorch Neural Network eXchange（PNNX）是PyTorch模型互操作性的开放标准。PNNX为PyTorch提供了一种开源的模型格式，它定义了与Pytorch相匹配的数据流图和运算图，我们的框架在PNNX之上封装了一层更加易用和简单的计算图格式。pytorch训练好一个模型之后，然后模型需要转换到pnnx格式，然后pnnx格式我们再去读取，形成计算图.</p>
-<p>pytorch到我们计算图？</p>
-<p>PNNX帮我做了很多的图优化、算子融合的工作，所以底层的用它PNNX的话，我们可以吸收图优化的结果，后面推理更快.</p>
-<p>但是不直接在项目中用PNNX，因为别人的工作和自己推理框架开发思路总是有不同的。所以在这上面封装，又快速又好用方便，符合自己的使用习惯。</p>
-<p>我们只是去读取PNNX产物，然后构建自己一种易用的计算图结构。</p>
-<p>产物：resnet18.pnnx.param PNNX graph definition 结构定义</p>
-<p>resnet18.pnnx.bin PNNX model weight 权重</p>
-<p>PNNX的格式定义:</p>
-<p>PNNX由操作数operand(运算数)和operator(运算符号)，PNNX::Graph用来管理和操作这两者。</p>
-<p>操作数(operand)，也可以通过操作数来方向访问到这个数字的产生者和使用者Customer</p>
-<p>Operand有以下几个部分组成:</p>
-<p>Producer: 类型是operator, 表示产生了这个操作数的运算符(operator). 也就是说这个操作数(operand)是Producer的输出. Producer这个操作符号产生了当前的Operand<br>Customer:类型是operator, 表示需要这个操作数下一个操作的的运算符(operator)，也就是说这个操作数(operand)作为Customer的输入存在.</p>
-<p>Name: 类型是std::string, 表示这个操作数的名称.Values<br>Shape: 类型是std::vector<int> , 用来表示操作数的大小,</p>
-<p><code>this</code>：指针，指向当前对象的地址。在类的成员函数中，<code>this</code>关键字指向当前对象。</p>
-<p><code>-&gt;</code>：成员访问运算符，用来访问类的成员变量或成员函数。</p>
-<p>在 C++11 中，使用 <code>new</code> 创建动态分配的对象并不安全，因为需要手动管理资源的释放，容易出现内存泄漏或者忘记释放资源导致的内存泄漏。为了更加安全和方便地管理动态分配的对象，C++11 引入了智能指针，其中 <code>std::unique_ptr</code> 是一种独占所有权的智能指针，它负责在对象不再需要时释放所占用的内存。</p>
-<p>图（graph） 节点（vertex）  边（edge）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zgh20060114.github.io/post/Inference-Framework.html" data-id="clxbjvuxp000961cxbv4a8nqq" data-title="Inference_Framework" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -2203,7 +2238,7 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
     </div>
   </div>
 
@@ -2213,7 +2248,7 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/PNC/" style="font-size: 10px;">PNC</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
     </div>
   </div>
 
@@ -2222,7 +2257,7 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
     </div>
   </div>
 
@@ -2233,6 +2268,10 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/post/%E5%9B%BE%E5%BD%A2%E5%AD%A6.html">图形学</a>
+          </li>
         
           <li>
             <a href="/post/motion-planning.html">motion_planning</a>
@@ -2248,10 +2287,6 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
         
           <li>
             <a href="/post/kinematics.html">kinematics</a>
-          </li>
-        
-          <li>
-            <a href="/post/Webots.html">Webots</a>
           </li>
         
       </ul>

@@ -6,17 +6,145 @@
   
   <title>motion_planning | Zgh&#39;s</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Zgh的个人站">
+  <meta name="description" content="地图处理：  Octree Map存储效率高，占用内存小，适合三维空间 缺点：构建和查询比较复杂，需要递归操作  对于平面，可以使用四叉树地图 拓扑地图  不能生成具体的路径 欧式距离场地图  每一个像素点的值是到目标点的距离 高精地图+激光雷达：        基于结构化地图（已经使用数据结构&#x2F;储存方式存储好了环境信息）的搜索：  基于采样的路径搜索算法（不太适用于移动机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="motion_planning">
 <meta property="og:url" content="http://zgh20060114.github.io/post/motion-planning.html">
 <meta property="og:site_name" content="Zgh&#39;s">
-<meta property="og:description" content="Zgh的个人站">
+<meta property="og:description" content="地图处理：  Octree Map存储效率高，占用内存小，适合三维空间 缺点：构建和查询比较复杂，需要递归操作  对于平面，可以使用四叉树地图 拓扑地图  不能生成具体的路径 欧式距离场地图  每一个像素点的值是到目标点的距离 高精地图+激光雷达：        基于结构化地图（已经使用数据结构&#x2F;储存方式存储好了环境信息）的搜索：  基于采样的路径搜索算法（不太适用于移动机">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241027200509747.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241027200356742.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241027200333906.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241027200800232.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241027205352801.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028081500141.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028082324091.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241027205539229.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241027210518464.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241027210407252.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241027210719429.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241027211413340.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241027211825655.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241027212906123.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028075246319.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028075418437.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028080419520.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028080601730.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028083144863.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028083334678.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028084401881.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028085903682.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028090435029.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028090508977.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028090709696.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028090740717.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028091720342.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028093035763.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028204215612.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028204322405.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028204556756.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028205030612.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028205207024.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028205744700.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028210026292.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028210759396.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028211121913.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028212530583.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028213223056.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028213700790.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241028213931204.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029075416595.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029145851838.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029160810942.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029165736780.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029212450000.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029212535602.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029213145988.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029213403921.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029215149569.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029220508538.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029220721469.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030000750748.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029234519659.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241029234454890.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030000139507.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030000250579.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030001223316.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030081738023.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030090946938.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030091816758.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030092325008.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030092925681.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030102440054.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030102733661.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030103012358.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030111828675.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030113042835.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030124811683.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030130705029.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030135745527.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030140245818.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030141730446.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241030142134552.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031163648792.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031164340672.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031164749998.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031170710478.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031171111390.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031171824387.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031173115830.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031173311282.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031173953976.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031185043102.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031190211093.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031190753360.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031191654657.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031192442070.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031192808923.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031193006723.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031195516780.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031195747013.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031201328125.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031201528244.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241031202702436.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101083306228.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101090545162.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101102148537.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101103945972.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101104611414.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101110059183.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101110624721.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101143628088.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101144958061.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101145411730.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101164120062.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101164142361.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101164200699.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101164645369.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101175725933.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101180415555.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101182125726.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101183829578.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101190731449.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101191646808.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101193625811.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101193934386.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101203600662.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101203800248.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101205003460.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101210227207.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101211444648.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101211549670.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101223410617.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101224154321.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241101225936142.png">
 <meta property="article:published_time" content="2024-10-27T11:56:49.000Z">
-<meta property="article:modified_time" content="2024-10-27T11:56:49.476Z">
+<meta property="article:modified_time" content="2024-11-01T14:59:46.833Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="PNC">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zgh20060114.github.io/images/image-20241027200509747.png">
   
     <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
   
@@ -93,7 +221,274 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <p><img src="/../images/image-20241027200509747.png" alt="image-20241027200509747"></p>
+<p><img src="/../images/image-20241027200356742.png" alt="image-20241027200356742"></p>
+<p><img src="/../images/image-20241027200333906.png" alt="image-20241027200333906"></p>
+<p><img src="/../images/image-20241027200800232.png" alt="image-20241027200800232"></p>
+<p><img src="/../images/image-20241027205352801.png" alt="image-20241027205352801"></p>
+<p><img src="/../images/image-20241028081500141.png" alt="image-20241028081500141"></p>
+<p><img src="/../images/image-20241028082324091.png" alt="image-20241028082324091"></p>
+<p>地图处理：</p>
+<p><img src="/../images/image-20241027205539229.png" alt="image-20241027205539229"></p>
+<p>Octree Map存储效率高，占用内存小，适合三维空间</p>
+<p>缺点：构建和查询比较复杂，需要递归操作</p>
+<p><img src="/../images/image-20241027210518464.png" alt="image-20241027210518464"></p>
+<p>对于平面，可以使用四叉树地图</p>
+<p>拓扑地图</p>
+<p><img src="/../images/image-20241027210407252.png" alt="image-20241027210407252"></p>
+<p>不能生成具体的路径</p>
+<p>欧式距离场地图</p>
+<p><img src="/../images/image-20241027210719429.png" alt="image-20241027210719429"></p>
+<p>每一个像素点的值是到目标点的距离</p>
+<p>高精地图+激光雷达：</p>
+<p><img src="/../images/image-20241027211413340.png" alt="image-20241027211413340"></p>
+<p><img src="/../images/image-20241027211825655.png" alt="image-20241027211825655"></p>
+<p><img src="/../images/image-20241027212906123.png" alt="image-20241027212906123"></p>
+<p><img src="/../images/image-20241028075246319.png" alt="image-20241028075246319"></p>
+<p><img src="/../images/image-20241028075418437.png" alt="image-20241028075418437"></p>
+<p><img src="/../images/image-20241028080419520.png" alt="image-20241028080419520"></p>
+<p><img src="/../images/image-20241028080601730.png" alt="image-20241028080601730"></p>
+<p>基于结构化地图（已经使用数据结构&#x2F;储存方式存储好了环境信息）的搜索：</p>
+<p><img src="/../images/image-20241028083144863.png" alt="image-20241028083144863"></p>
+<p>基于采样的路径搜索算法（不太适用于移动机器人）</p>
+<p>没有地图的算法：概率路图</p>
+<p><img src="/../images/image-20241028083334678.png" alt="image-20241028083334678"></p>
+<p><img src="/../images/image-20241028084401881.png" alt="image-20241028084401881"></p>
+<p>没有地图，先构造地图：<br><img src="/../images/image-20241028085903682.png" alt="image-20241028085903682"></p>
+<p>建完图后路径规划：</p>
+<p><img src="/../images/image-20241028090435029.png" alt="image-20241028090435029"></p>
+<p><img src="/../images/image-20241028090508977.png" alt="image-20241028090508977"></p>
+<p><img src="/../images/image-20241028090709696.png" alt="image-20241028090709696"><img src="/../images/image-20241028090740717.png" alt="image-20241028090740717"></p>
+<p><img src="/../images/image-20241028091720342.png" alt="image-20241028091720342"></p>
+<p><img src="/../images/image-20241028093035763.png" alt="image-20241028093035763"></p>
+<p>PRM的升级：RRT（快速搜索随机数）</p>
+<p>（一边构建地图，一边搜索路径）</p>
+<p><img src="/../images/image-20241028204215612.png" alt="image-20241028204215612"></p>
+<p><img src="/../images/image-20241028204322405.png" alt="image-20241028204322405"></p>
+<p><img src="/../images/image-20241028204556756.png" alt="image-20241028204556756"></p>
+<p><img src="/../images/image-20241028205030612.png" alt="image-20241028205030612"></p>
+<p><img src="/../images/image-20241028205207024.png" alt="image-20241028205207024"></p>
+<p><img src="/../images/image-20241028205744700.png" alt="image-20241028205744700"></p>
+<p><img src="/../images/image-20241028210026292.png" alt="image-20241028210026292"></p>
+<p><img src="/../images/image-20241028210759396.png" alt="image-20241028210759396"></p>
+<p><img src="/../images/image-20241028211121913.png" alt="image-20241028211121913"></p>
+<p>基于图搜索的路径搜索算法</p>
+<p>1.朴素的搜索思想——BFS，DFS</p>
+<p><img src="/../images/image-20241028212530583.png" alt="image-20241028212530583"></p>
+<p>栅格地图可以很容易的转换成graph，欧式距离场可以很容易的转换成栅格地图，拓扑地图本身就是graph</p>
+<p><img src="/../images/image-20241028213223056.png" alt="image-20241028213223056"></p>
+<p>图搜索的核心问题：</p>
+<p><img src="/../images/image-20241028213700790.png" alt="image-20241028213700790"></p>
+<p><img src="/../images/image-20241028213931204.png" alt="image-20241028213931204"></p>
+<p><img src="/../images/image-20241029075416595.png" alt="image-20241029075416595"></p>
+<p><img src="/../images/image-20241029145851838.png" alt="image-20241029145851838"></p>
+<p><code>std::reverse</code> 是 C++ 标准库中的一个算法，用于反转给定范围内的元素顺序。它定义在 <code>&lt;algorithm&gt;</code> 头文件中。</p>
+<p><code>std::reverse</code> 接受两个迭代器作为参数，表示要反转的范围。其基本语法如下：</p>
+<pre><code class="cpp">#include &lt;algorithm&gt; // 需要包含这个头文件
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+
+int main() &#123;
+    std::vector&lt;int&gt; vec = &#123;1, 2, 3, 4, 5&#125;;
+
+    // 反转 vec 中的元素
+    std::reverse(vec.begin(), vec.end());
+
+    // 输出反转后的结果
+    for (int v : vec) &#123;
+        std::cout &lt;&lt; v &lt;&lt; &quot; &quot;; // 输出: 5 4 3 2 1
+    &#125;
+
+    return 0;
+&#125;
+</code></pre>
+<p>2.（DFS，BFS）搜索算法的进化————Dijkstra,A*</p>
+<p><img src="/../images/image-20241029160810942.png" alt="image-20241029160810942"></p>
+<p>Dijkstra(使用八联通图，可以走斜线)</p>
+<p><img src="/../images/image-20241029165736780.png" alt="image-20241029165736780"></p>
+<p>为什么: 如果distance._current大于distance[current]: 继续下一次循环</p>
+<ol>
+<li><ul>
+<li><p>优先队列会按照节点的最小距离进行排序。可能在多个阶段，一个节点被加入队列，但这些加入可能是基于旧的距离值。</p>
+</li>
+<li><p>当我们从队列中弹出一个节点时，这个节点的距离可能并不是它的最短距离（因为它可能已经被更短的路径更新过）。</p>
+</li>
+<li><p>如果当前弹出的节点的距离大于我们在 <code>distance</code> 数组中记录的最短距离，这意味着我们已经找到了一条更短的路径到达这个节点，因此可以跳过对这个节点的处理。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>A*（优化搜索速度）</p>
+<p>A*的核心思想：不但考虑七点到当前节点的代价值，还要考虑当前节点到目标点的代价值</p>
+<p><img src="/../images/image-20241029212450000.png" alt="image-20241029212450000"><img src="/../images/image-20241029212535602.png" alt="image-20241029212535602"></p>
+<p>这里的估算函数叫启发式函数</p>
+<p>常用的启发式函数</p>
+<p><img src="/../images/image-20241029213145988.png" alt="image-20241029213145988"></p>
+<p>注意：曼哈顿距离&gt;真实距离（有可能无法保证路径最优）,但就因为它比较大，所以有时候它的效果最好</p>
+<p><img src="/../images/image-20241029213403921.png" alt="image-20241029213403921"></p>
+<p><img src="/../images/image-20241029215149569.png" alt="image-20241029215149569"></p>
+<p>A*算法的最优性保证：</p>
+<p>只有满足条件，A*所得的路径才是最短路径</p>
+<p><img src="/../images/image-20241029220508538.png" alt="image-20241029220508538"></p>
+<p><img src="/../images/image-20241029220721469.png" alt="image-20241029220721469"></p>
+<p><img src="/../images/image-20241030000750748.png" alt="image-20241030000750748"></p>
+<p><img src="/../images/image-20241029234519659.png" alt="image-20241029234519659"></p>
+<p>启发函数的选择：</p>
+<p><img src="/../images/image-20241029234454890.png" alt="image-20241029234454890"></p>
+<p>A*的平衡性问题：</p>
+<p>虽然A* 算法的结果和理想结果的路径都是最短的，但是理想结果的转折更少，更适合使用，而且A* 算法搜索的节点还是有点多</p>
+<p><img src="/../images/image-20241030000139507.png" alt="image-20241030000139507"></p>
+<p>怎么解决呢？</p>
+<p>从Dijkstra到A *增加了一个指标，效果大大提升，那再加一个指标</p>
+<p><img src="/../images/image-20241030000250579.png" alt="image-20241030000250579"></p>
+<p>在实际工程上，DFS会用递归方法实现</p>
+<p><img src="/../images/image-20241030001223316.png" alt="image-20241030001223316"></p>
+<h4 id="一种有趣的搜索思路：JPS"><a href="#一种有趣的搜索思路：JPS" class="headerlink" title="一种有趣的搜索思路：JPS"></a>一种有趣的搜索思路：JPS</h4><p><img src="/../images/image-20241030081738023.png" alt="image-20241030081738023"></p>
+<p>JPS是一种跳跃式搜索算法：关注障碍物边缘的关键性节点（最短路径是起点+障碍物边缘节点+终点）</p>
+<p>解决A *算法的平衡性问题</p>
+<p>强迫邻居是必须要探索的点（强迫邻居有可能就是绕过障碍物的关键节点）</p>
+<p>跳点和强迫邻居都需要继续拓展，所以都要加到openlist里面</p>
+<p>这就是向前看规则：</p>
+<p><img src="/../images/image-20241030090946938.png" alt="image-20241030090946938"></p>
+<p>跳跃规则： </p>
+<p>起点的八个邻居都需要加入到openlist里，都需要拓展</p>
+<p><img src="/../images/image-20241030091816758.png" alt="image-20241030091816758"></p>
+<p>八邻域探索方向可分为正向和对角线方向</p>
+<p><img src="/../images/image-20241030092325008.png" alt="image-20241030092325008"></p>
+<p>A*会八个方向一圈一圈的探索，JPS是只沿一个方向探索：</p>
+<p><img src="/../images/image-20241030092925681.png" alt="image-20241030092925681"></p>
+<p><img src="/../images/image-20241030102440054.png" alt="image-20241030102440054"></p>
+<p><img src="/../images/image-20241030102733661.png" alt="image-20241030102733661"></p>
+<p><img src="/../images/image-20241030103012358.png" alt="image-20241030103012358"></p>
+<p><img src="/../images/image-20241030111828675.png" alt="image-20241030111828675"></p>
+<p>对比：</p>
+<p><img src="/../images/image-20241030113042835.png" alt="image-20241030113042835"></p>
+<p>蓝色是被拓展过并添加到openlist里的，绿色是没有拓展过但是添加到openlist里的，右图里灰色是访问过的点</p>
+<p>A*的openlist里的节点更多</p>
+<p><img src="/../images/image-20241030124811683.png" alt="image-20241030124811683"></p>
+<h4 id="从容应对动态障碍物–D-（动态A星算法）"><a href="#从容应对动态障碍物–D-（动态A星算法）" class="headerlink" title="从容应对动态障碍物–D*（动态A星算法）"></a>从容应对动态障碍物–D*（动态A星算法）</h4><p>D* 又称Dynamic A* </p>
+<p>初始生成一条最优路径，在跟踪过程中，根据障碍物的变化，实时调整受影响的局部局部路径</p>
+<p>算法流程：</p>
+<p><img src="/../images/image-20241030130705029.png" alt="image-20241030130705029"></p>
+<p>1.方向构建：</p>
+<p><img src="/../images/image-20241030135745527.png" alt="image-20241030135745527"></p>
+<p>h(X)：用来存储路径代价，指从X到达终点G的路径（{X,……G}，简记为{X}）代价，不一定是全局最优，第一次搜索到起点时时，所有点的h会被更新，计算方式同Dijkstra算法，是用相邻两点的代价+上一个点的代价累加得到</p>
+<p>k(X)：用来记录自X节点被加入到OPEN_LIST中后的最小h(X)值（具体计算方式由Insert函数决定）,也是优先队列OPEN_LIST的排序依据，k将会保持到最小，它表示了本点在全图环境中到G点的最小代价(k(x)没有受到障碍物增加的影响)</p>
+<p>3，代价修改：</p>
+<p><img src="/../images/image-20241030140245818.png" alt="image-20241030140245818"></p>
+<p>4，状态处理</p>
+<p><img src="/../images/image-20241030141730446.png" alt="image-20241030141730446"></p>
+<p><img src="/../images/image-20241030142134552.png" alt="image-20241030142134552"></p>
+<p><strong><img src="/../images/image-20241031163648792.png" alt="image-20241031163648792"></strong> </p>
+<p>考虑动力学和运动学的路径搜索</p>
+<p><img src="/../images/image-20241031164340672.png" alt="image-20241031164340672"></p>
+<p>优化了节点的扩展方式，节点不一定是栅格的中心(弧形路径)</p>
+<p><img src="/../images/image-20241031164749998.png" alt="image-20241031164749998"></p>
+<p>优化了启发式函数</p>
+<p><img src="/../images/image-20241031170710478.png" alt="image-20241031170710478"></p>
+<p><img src="/../images/image-20241031171111390.png" alt="image-20241031171111390"></p>
+<p>搜索到的路径还要进行轨迹优化</p>
+<p><img src="/../images/image-20241031171824387.png" alt="image-20241031171824387"></p>
+<p>轨迹优化——Min-Jerk(jerk是加加速度)</p>
+<p><img src="/../images/image-20241031173115830.png" alt="image-20241031173115830"></p>
+<ol>
+<li></li>
+</ol>
+<p><img src="/../images/image-20241031173311282.png" alt="image-20241031173311282"></p>
+<p><img src="/../images/image-20241031173953976.png" alt="image-20241031173953976"></p>
+<p>贝塞尔曲线把对连续曲线的规划，转变为对控制点的规划</p>
+<p>贝塞尔曲线还有一个巨大的优点：导数还是贝塞尔曲线，仍然有控制点</p>
+<p>缺点：贝塞尔曲线的形状完全依赖于控制点的数量和位置</p>
+<p>移动一个控制点可能会对曲线的整体形状产生意想不到的影响，这使得局部控制变得困难</p>
+<p>B样条曲线解决这两个问题</p>
+<p><img src="/../images/image-20241031185043102.png" alt="image-20241031185043102"></p>
+<p>2.<img src="/../images/image-20241031190211093.png" alt="image-20241031190211093"></p>
+<ol start="3">
+<li></li>
+</ol>
+<p><img src="/../images/image-20241031190753360.png" alt="image-20241031190753360"></p>
+<ol start="4">
+<li></li>
+</ol>
+<p><img src="/../images/image-20241031191654657.png" alt="image-20241031191654657">Min-Jerk是舒适性，Min-Snap是节省燃料</p>
+<h3 id="lattice-planner"><a href="#lattice-planner" class="headerlink" title="lattice planner"></a>lattice planner</h3><p><img src="/../images/image-20241031192442070.png" alt="image-20241031192442070"></p>
+<ol>
+<li></li>
+</ol>
+<p><img src="/../images/image-20241031192808923.png" alt="image-20241031192808923"></p>
+<p><img src="/../images/image-20241031193006723.png" alt="image-20241031193006723"></p>
+<ol start="2">
+<li></li>
+</ol>
+<p><img src="/../images/image-20241031195516780.png" alt="image-20241031195516780"></p>
+<h3 id="轨迹跟踪"><a href="#轨迹跟踪" class="headerlink" title="轨迹跟踪"></a>轨迹跟踪</h3><p><img src="/../images/image-20241031195747013.png" alt="image-20241031195747013"></p>
+<p><img src="/../images/image-20241031201328125.png" alt="image-20241031201328125"></p>
+<p><img src="/../images/image-20241031201528244.png" alt="image-20241031201528244"></p>
+<p><img src="/../images/image-20241031202702436.png" alt="image-20241031202702436"></p>
+<p>Navigation2组成模块</p>
+<p><img src="/../images/image-20241101083306228.png" alt="image-20241101083306228"></p>
+<p>运行流程：</p>
+<p><img src="/../images/image-20241101090545162.png" alt="image-20241101090545162"></p>
+<p>功能包：</p>
+<p><img src="/../images/image-20241101102148537.png" alt="image-20241101102148537"></p>
+<h3 id="Nav2中的地图"><a href="#Nav2中的地图" class="headerlink" title="Nav2中的地图"></a>Nav2中的地图</h3><p>代价地图</p>
+<p><img src="/../images/image-20241101103945972.png" alt="image-20241101103945972"></p>
+<p><img src="/../images/image-20241101104611414.png" alt="image-20241101104611414"></p>
+<p>分层代价地图：(直更新有变化的区域)</p>
+<p>论文里的分层：</p>
+<p><img src="/../images/image-20241101110059183.png" alt="image-20241101110059183"></p>
+<p>Nav2分层：</p>
+<p><img src="/../images/image-20241101110624721.png" alt="image-20241101110624721"></p>
+<p>（速度过滤器：限速区）</p>
+<p>重启蓝牙服务：</p>
+<pre><code class="bash">sudo systemctl restart bluetooth
+</code></pre>
+<p>代价地图局部更新的过程：</p>
+<p><img src="/../images/image-20241101143628088.png" alt="image-20241101143628088"></p>
+<p>更新边界，更新值</p>
+<p>Nav2的核心特点是使用插件机制，插件机制的实现过程是每个层去继承一个基类</p>
+<p><img src="/../images/image-20241101144958061.png" alt="image-20241101144958061"></p>
+<p><img src="/../images/image-20241101145411730.png" alt="image-20241101145411730"> </p>
+<p>膨胀层具体实现：</p>
+<p><img src="/../images/image-20241101164120062.png" alt="image-20241101164120062"></p>
+<p><img src="/../images/image-20241101164142361.png" alt="image-20241101164142361"></p>
+<p><img src="/../images/image-20241101164200699.png" alt="image-20241101164200699"></p>
+<p>限速区具体实现：</p>
+<p><img src="/../images/image-20241101164645369.png" alt="image-20241101164645369"></p>
+<h3 id="配置参数"><a href="#配置参数" class="headerlink" title="配置参数"></a>配置参数</h3><p>机器人坐标系：</p>
+<p><img src="/../images/image-20241101175725933.png" alt="image-20241101175725933"></p>
+<p>(TF树里只能有一个parent)</p>
+<p>代价地图有两张：</p>
+<p>全局路径搜索（静态），局部轨迹优化（动态）</p>
+<p><img src="/../images/image-20241101180415555.png" alt="image-20241101180415555"></p>
+<p>全局代价地图参数：</p>
+<p><img src="/../images/image-20241101182125726.png" alt="image-20241101182125726"></p>
+<p>局部代价地图参数：</p>
+<p><img src="/../images/image-20241101183829578.png" alt="image-20241101183829578"></p>
+<p><code>footprint</code> 是机器人在环境中占据的空间的几何形状。这个形状通常用一组坐标点来表示，形成一个多边形。</p>
+<p><code>resolution=0.05</code> 表示地图的分辨率。指每个栅格（grid cell）的大小，以米为单位</p>
+<h2 id="全局路径规划服务器"><a href="#全局路径规划服务器" class="headerlink" title="全局路径规划服务器"></a>全局路径规划服务器</h2><p>Planner_Server的功能</p>
+<p><img src="/../images/image-20241101190731449.png" alt="image-20241101190731449"></p>
+<p>1.对行为树接口：</p>
+<p><img src="/../images/image-20241101191646808.png" alt="image-20241101191646808"></p>
+<p>(navigation2里面使用了大量的action通信机制)</p>
+<p><img src="/../images/image-20241101193625811.png" alt="image-20241101193625811"></p>
+<p>2，开启全局代价地图</p>
+<p><img src="/../images/image-20241101193934386.png" alt="image-20241101193934386"></p>
+<p>3.加载规划算法</p>
+<p><img src="/../images/image-20241101203600662.png" alt="image-20241101203600662"></p>
+<p>插件机制：</p>
+<p><img src="/../images/image-20241101203800248.png" alt="image-20241101203800248"></p>
+<p><img src="/../images/image-20241101205003460.png" alt="image-20241101205003460"></p>
+<p>planning_server的源码实现：</p>
+<p><img src="/../images/image-20241101210227207.png" alt="image-20241101210227207"></p>
+<p><img src="/../images/image-20241101211444648.png" alt="image-20241101211444648"></p>
+<p><img src="/../images/image-20241101211549670.png" alt="image-20241101211549670"></p>
+<p><img src="/../images/image-20241101223410617.png" alt="image-20241101223410617"></p>
+<h4 id="planner-server参数配置"><a href="#planner-server参数配置" class="headerlink" title="planner_server参数配置"></a>planner_server参数配置</h4><p><img src="/../images/image-20241101224154321.png" alt="image-20241101224154321"></p>
+<p> <img src="/../images/image-20241101225936142.png" alt="image-20241101225936142"></p>
+<p>参数配置 </p>
+
       
     </div>
     <footer class="article-footer">
@@ -101,11 +496,22 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
+  
+    <a href="/post/%E5%9B%BE%E5%BD%A2%E5%AD%A6.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          图形学
+        
+      </div>
+    </a>
   
   
     <a href="/post/Realsense.html" id="article-nav-older" class="article-nav-link-wrap">
@@ -130,7 +536,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
     </div>
   </div>
 
@@ -140,7 +546,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/PNC/" style="font-size: 10px;">PNC</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
     </div>
   </div>
 
@@ -149,7 +555,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
     </div>
   </div>
 
@@ -160,6 +566,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/post/%E5%9B%BE%E5%BD%A2%E5%AD%A6.html">图形学</a>
+          </li>
         
           <li>
             <a href="/post/motion-planning.html">motion_planning</a>
@@ -175,10 +585,6 @@
         
           <li>
             <a href="/post/kinematics.html">kinematics</a>
-          </li>
-        
-          <li>
-            <a href="/post/Webots.html">Webots</a>
           </li>
         
       </ul>
