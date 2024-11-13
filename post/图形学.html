@@ -6,17 +6,37 @@
   
   <title>图形学 | Zgh&#39;s</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Zgh的个人站">
+  <meta name="description" content="光线与球体的相交测试：  可以通过判断这个一元二次方程的delta判别式判断光线是否击中了球体 结构体：默认的成员访问权限是 public。 类：默认的成员访问权限是 private。 视口裁剪（Viewport Clipping）视口裁剪是指在渲染过程中，图形系统根据当前的视口（viewport）大小和位置，裁剪出只在视口内的部分。这通常发生在将三维场景转换为二维图像时。  视口定义：视口">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图形学">
 <meta property="og:url" content="http://zgh20060114.github.io/post/%E5%9B%BE%E5%BD%A2%E5%AD%A6.html">
 <meta property="og:site_name" content="Zgh&#39;s">
-<meta property="og:description" content="Zgh的个人站">
+<meta property="og:description" content="光线与球体的相交测试：  可以通过判断这个一元二次方程的delta判别式判断光线是否击中了球体 结构体：默认的成员访问权限是 public。 类：默认的成员访问权限是 private。 视口裁剪（Viewport Clipping）视口裁剪是指在渲染过程中，图形系统根据当前的视口（viewport）大小和位置，裁剪出只在视口内的部分。这通常发生在将三维场景转换为二维图像时。  视口定义：视口">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241102163615219.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241102170537184.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241102170633713.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241102170834824.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241103175728042.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241103181614993.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241105220133619.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241105220823204.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241109162036809.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241109213953208.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241110094231486.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241110095142061.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241110095414276.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241110095522416.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241110144226840.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241112092245780.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241112092430966.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241112200209893.png">
 <meta property="article:published_time" content="2024-11-02T08:34:15.000Z">
-<meta property="article:modified_time" content="2024-11-02T08:34:15.626Z">
+<meta property="article:modified_time" content="2024-11-12T12:02:35.398Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="计算机图形学">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zgh20060114.github.io/images/image-20241102163615219.png">
   
     <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
   
@@ -93,7 +113,162 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <p><img src="/../images/image-20241102163615219.png" alt="image-20241102163615219"></p>
+<p><img src="/../images/image-20241102170537184.png" alt="image-20241102170537184"></p>
+<p><img src="/../images/image-20241102170633713.png" alt="image-20241102170633713"></p>
+<p>光线与球体的相交测试：</p>
+<p><img src="/../images/image-20241102170834824.png" alt="image-20241102170834824"></p>
+<p>可以通过判断这个一元二次方程的delta判别式判断光线是否击中了球体</p>
+<p><strong>结构体</strong>：默认的成员访问权限是 <code>public</code>。</p>
+<p><strong>类</strong>：默认的成员访问权限是 <code>private</code>。</p>
+<h3 id="视口裁剪（Viewport-Clipping）"><a href="#视口裁剪（Viewport-Clipping）" class="headerlink" title="视口裁剪（Viewport Clipping）"></a>视口裁剪（Viewport Clipping）</h3><p>视口裁剪是指在渲染过程中，图形系统根据当前的视口（viewport）大小和位置，裁剪出只在视口内的部分。这通常发生在将三维场景转换为二维图像时。</p>
+<ul>
+<li><strong>视口定义</strong>：视口是指在窗口或屏幕上的一个矩形区域，图形渲染的结果只显示在这个区域内。</li>
+<li><strong>用途</strong>：视口裁剪确保只绘制视口范围内的图形，避免无效的计算和渲染，提高效率。</li>
+</ul>
+<h3 id="透视裁剪（Perspective-Clipping）"><a href="#透视裁剪（Perspective-Clipping）" class="headerlink" title="透视裁剪（Perspective Clipping）"></a>透视裁剪（Perspective Clipping）</h3><p>透视裁剪是指在透视投影过程中，决定哪些对象在视锥体内并且可见，从而只渲染可见部分。透视投影会产生一个视锥体，位于观察者与场景之间。</p>
+<ul>
+<li><strong>视锥体</strong>：在透视投影中，视锥体是一个从观察点（摄像机位置）向外扩展的锥形区域。只有位于这个区域内的对象才会被渲染。</li>
+<li><strong>裁剪</strong>：透视裁剪会去除视锥体外的对象，避免不必要的计算和渲染，并处理对象的深度关系。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>视口裁剪</strong>：关注的是最终图像在屏幕上的显示区域，只显示视口内的内容。</li>
+<li><strong>透视裁剪</strong>：关注的是三维场景中哪些对象在视锥体内，以决定哪些对象是可见的。</li>
+</ul>
+<p>屏幕空间和 NDC（Normalized Device Coordinates）空间之间的关系:</p>
+<h3 id="坐标变换流程"><a href="#坐标变换流程" class="headerlink" title="坐标变换流程"></a>坐标变换流程</h3><p>在图形渲染过程中，顶点坐标经历多个变换，从世界空间到最终的屏幕空间，这个过程大致包括：</p>
+<ol>
+<li><strong>模型变换</strong>：将顶点从局部模型坐标转换到世界坐标。</li>
+<li><strong>视图变换</strong>：将世界坐标转换到相机坐标（视图空间）。</li>
+<li><strong>投影变换</strong>：将相机坐标转换到裁剪空间。</li>
+<li><strong>裁剪</strong>：将不在视野范围内的顶点剔除。</li>
+<li><strong>透视除法</strong>：将裁剪空间的坐标转换到 NDC 空间。这个步骤涉及将每个坐标的 x、y 和 z 分别除以 w（齐次坐标），使得坐标范围归一化到 [-1, 1]。</li>
+</ol>
+<h3 id="NDC-到屏幕空间的转换"><a href="#NDC-到屏幕空间的转换" class="headerlink" title="NDC 到屏幕空间的转换"></a>NDC 到屏幕空间的转换</h3><p>一旦顶点处于 NDC 空间，它们需要被转换到屏幕空间：</p>
+<ol>
+<li><strong>视口变换</strong>：将 NDC 坐标映射到实际的屏幕像素坐标。视口变换使用屏幕的分辨率来进行坐标的线性变换。具体步骤是：<ul>
+<li>将 NDC 的 x 和 y 坐标从 [-1, 1] 范围映射到屏幕像素的范围。例如，对于一个宽度为 W，高度为 H 的屏幕：<ul>
+<li><code>screenX = (ndcX + 1) * 0.5 * (W - 1)</code></li>
+<li><code>screenY = (1 - (ndcY + 1) * 0.5) * (H - 1)</code>（Y 轴可能需要翻转，具体取决于坐标系统的定义）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><strong>NDC 空间</strong> 是一个归一化的坐标系统，主要用于在渲染管线中的处理，使得顶点坐标能够统一处理，不论目标显示设备的分辨率如何。</li>
+<li><strong>屏幕空间</strong> 是实际显示的坐标系统，与屏幕的物理尺寸和分辨率相关。</li>
+<li><strong>转换</strong>：通过视口变换，NDC 空间的坐标被转换为屏幕空间的像素坐标，从而最终呈现在用户的屏幕上。</li>
+</ul>
+<p>NDC 空间可以看作是从三维世界到二维屏幕的中间步骤，而屏幕空间则是最终的输出结果。</p>
+<p><img src="/../images/image-20241103175728042.png" alt="image-20241103175728042"></p>
+<p><img src="/../images/image-20241103181614993.png" alt="image-20241103181614993"></p>
+<h3 id="虚函数（Virtual-Function）"><a href="#虚函数（Virtual-Function）" class="headerlink" title="虚函数（Virtual Function）"></a>虚函数（Virtual Function）</h3><ol>
+<li><strong>定义</strong>：虚函数是在基类中声明为<code>virtual</code>的成员函数，可以在派生类中重写（override）。</li>
+<li><strong>实现</strong>：虚函数可以有具体的实现。基类中的虚函数可以提供默认的实现，派生类可以选择重写它。</li>
+<li><strong>对象创建</strong>：可以创建基类的对象，也可以创建派生类的对象。</li>
+</ol>
+<h3 id="纯虚函数（Pure-Virtual-Function）"><a href="#纯虚函数（Pure-Virtual-Function）" class="headerlink" title="纯虚函数（Pure Virtual Function）"></a>纯虚函数（Pure Virtual Function）</h3><ol>
+<li><strong>定义</strong>：纯虚函数是在基类中声明为<code>virtual</code>并且等于0的函数。语法是<code>virtual void functionName() = 0;</code>。</li>
+<li><strong>实现</strong>：纯虚函数没有实现，基类通常不可以实例化。</li>
+<li><strong>对象创建</strong>：不能直接创建类的对象（即抽象类），只能创建派生类的对象。</li>
+<li><strong>用途</strong>：用于定义接口，强制派生类实现特定的函数</li>
+</ol>
+<p>输入流操作符 (<code>&gt;&gt;</code>) 在处理流时，会自动跳过空格和其他空白字符（如换行符和制表符），直到遇到下一个有意义的值为止。因此，空格在这一过程中并不会被显式处理。</p>
+<h3 id="line-compare-0-2-v-的含义："><a href="#line-compare-0-2-v-的含义：" class="headerlink" title="line.compare(0, 2, &quot;v &quot;) 的含义："></a><code>line.compare(0, 2, &quot;v &quot;)</code> 的含义：</h3><ol>
+<li>**<code>0</code>**：表示从 <code>line</code> 字符串的第一个字符开始进行比较。</li>
+<li>**<code>2</code>**：表示比较的长度为 2，也就是说，只比较 <code>line</code> 字符串的前两个字符。</li>
+<li>**<code>&quot;v &quot;</code>**：表示要将 <code>line</code> 字符串的前两个字符与字符串 <code>&quot;v &quot;</code> 进行比较。</li>
+<li>如果 <code>line</code> 的前两个字符与 <code>&quot;v &quot;</code> 完全匹配，<code>compare</code> 方法返回 0。</li>
+<li>如果不匹配，返回一个非 0 的值（具体的值取决于比较的结果：如果 <code>line</code> 字符串小于 <code>&quot;v &quot;</code>，返回一个负数；如果 <code>line</code> 字符串大于 <code>&quot;v &quot;</code>，返回一个正数）。</li>
+</ol>
+<h3 id="平面和场景"><a href="#平面和场景" class="headerlink" title="平面和场景"></a>平面和场景</h3><p>场景：管理世界空间下所有的形状（Shape）</p>
+<p>平面的数学定义：</p>
+<p><img src="/../images/image-20241105220133619.png" alt="image-20241105220133619"></p>
+<p><img src="/../images/image-20241105220823204.png" alt="image-20241105220823204"></p>
+<p>修改是为了改进多线程环境中的 <strong>线程安全性</strong> 和 <strong>竞态条件</strong> 的问题。我们来详细分析一下原始代码和修改后的代码之间的差异，以及为什么要这样修改。</p>
+<h3 id="原始代码："><a href="#原始代码：" class="headerlink" title="原始代码："></a>原始代码：</h3><pre><code class="cpp">count++; 
+if (count % film.getWidth() == 0) &#123;
+    std::cout &lt;&lt; static_cast&lt;float&gt;(count) / (film.getWidth() * film.getHeight()) &lt;&lt; std::endl;
+&#125;
+</code></pre>
+<h3 id="修改后的代码："><a href="#修改后的代码：" class="headerlink" title="修改后的代码："></a>修改后的代码：</h3><pre><code class="cpp">int n = ++count;
+if (n % film.getWidth() == 0) &#123;
+    std::cout &lt;&lt; static_cast&lt;float&gt;(n) / (film.getWidth() * film.getHeight()) &lt;&lt; std::endl;
+&#125;
+</code></pre>
+<h3 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h3><h4 id="1-count-是非原子操作"><a href="#1-count-是非原子操作" class="headerlink" title="1. count++ 是非原子操作"></a>1. <strong><code>count++</code> 是非原子操作</strong></h4><ul>
+<li><code>count++</code> 实际上是由 <strong>两个操作</strong> 组成的：<strong>读取 <code>count</code> 的值</strong>，然后 **增加 <code>count</code>**。在多线程环境中，如果多个线程同时执行 <code>count++</code>，就会发生 <strong>竞态条件</strong>（race condition），可能导致 <code>count</code> 的值增加不正确或者丢失。</li>
+<li>例如，如果线程 A 和线程 B 同时读取到相同的 <code>count</code> 值，然后都加 1 写回，这样就会丢失一个递增的结果，导致 <code>count</code> 的值不准确。</li>
+</ul>
+<h4 id="2-count-是原子操作"><a href="#2-count-是原子操作" class="headerlink" title="2. ++count 是原子操作"></a>2. <strong><code>++count</code> 是原子操作</strong></h4><ul>
+<li><code>++count</code> 是 <strong>自增并返回自增后的值</strong>，它在执行过程中是原子的，不会有并发冲突（前提是 <code>count</code> 本身是原子变量或操作）。这是因为它在自增的时候直接对 <code>count</code> 的值进行更新并返回，而不需要先读取再写入，避免了多个线程同时读取和写入的情况。</li>
+</ul>
+<h4 id="3-存储递增结果到-n"><a href="#3-存储递增结果到-n" class="headerlink" title="3. 存储递增结果到 n"></a>3. <strong>存储递增结果到 <code>n</code></strong></h4><ul>
+<li>修改后的代码 <code>int n = ++count;</code> 将自增后的结果保存在 <code>n</code> 中。这样做的好处是：<ol>
+<li><strong>保证了 <code>count</code> 更新后的值在后续代码中是确定的</strong>。如果我们直接在 <code>if (count % film.getWidth() == 0)</code> 中访问 <code>count</code>，其他线程可能会在我们检查 <code>count</code> 时修改它，导致判断条件不稳定。而 <code>n</code> 是在更新后的值保存时就固定了，因此后续的判断和输出使用 <code>n</code> 可以确保一致性。</li>
+<li><strong>避免了 <code>count</code> 被其他线程修改时的影响</strong>。虽然 <code>count</code> 本身是全局共享的，但通过把递增结果保存在 <code>n</code> 中，我们保证了 <code>n</code> 的值不会在后续代码执行时被其他线程改动，确保了输出的正确性。</li>
+</ol>
+</li>
+</ul>
+<h3 id="线程安全与性能考虑："><a href="#线程安全与性能考虑：" class="headerlink" title="线程安全与性能考虑："></a>线程安全与性能考虑：</h3><ul>
+<li>使用 <code>int n = ++count;</code> 的修改，确保了 <strong>每个线程对 <code>count</code> 的更新是安全的</strong>。同时，虽然 <code>++count</code> 在某些情况下可能是原子操作，但若 <code>count</code> 是一个普通变量，并且没有显式的线程同步机制，那么可能仍然存在隐性的问题。将更新后的 <code>count</code> 值保存到 <code>n</code> 可以减少这种不确定性。</li>
+<li>在多线程环境下，避免直接在条件判断中使用共享变量（如 <code>count</code>）是一个常见的做法，尤其是当这个变量在多个线程中共享且没有其他同步机制时。通过中间变量 <code>n</code> 来持有更新后的值，避免了在 <code>count</code> 被其他线程修改时产生的竞态条件。</li>
+</ul>
+<pre><code class="cpp">        glm::translate(glm::mat4(1.f), pos) *
+        glm::rotate(glm::mat4(1.f), glm::radians(rotate.z), &#123; 0, 0, 1 &#125;) *
+        glm::rotate(glm::mat4(1.f), glm::radians(rotate.y), &#123; 0, 1, 0 &#125;) *
+        glm::rotate(glm::mat4(1.f), glm::radians(rotate.x), &#123; 1, 0, 0 &#125;) *
+        glm::scale(glm::mat4(1.f), scale)
+</code></pre>
+<ul>
+<li><code>glm::mat4(1.f)</code>：创建一个单位矩阵，表示没有任何变换。</li>
+<li><code>glm::translate(..., pos)</code>：将矩阵平移到 <code>pos</code> 指定的位置，<code>pos</code> 是一个 <code>glm::vec3</code> 向量,表示物体在3D空间中的平移偏移量（<code>x</code>, <code>y</code>, <code>z</code>）。</li>
+<li><code>glm::radians(rotate.z)</code>：将角度 <code>rotate.z</code> 转换为弧度，因为GLM的 <code>rotate</code> 函数期望的旋转角度单位是弧度。</li>
+<li><code>&#123; 0, 0, 1 &#125;</code>：指定旋转轴为Z轴。</li>
+<li><code>glm::scale(glm::mat4(1.f), scale)</code>：执行一个缩放变换，其中 <code>scale</code> 是一个 <code>glm::vec3</code> 向量，表示沿着X、Y和Z轴的缩放比例。例如，<code>scale = &#123; 2.f, 3.f, 1.f &#125;</code> 表示在X轴上放大2倍，在Y轴上放大3倍，而Z轴保持不变。</li>
+</ul>
+<p>在GLM中，矩阵的乘法是从 <strong>右到左</strong> 进行的</p>
+<p><img src="/../images/image-20241109162036809.png" alt="image-20241109162036809"></p>
+<p><img src="/../images/image-20241109213953208.png" alt="image-20241109213953208"></p>
+<p><img src="/../images/image-20241110094231486.png" alt="image-20241110094231486"></p>
+<p><img src="/../images/image-20241110095142061.png" alt="image-20241110095142061"></p>
+<p><img src="/../images/image-20241110095414276.png" alt="image-20241110095414276"></p>
+<p><img src="/../images/image-20241110095522416.png" alt="image-20241110095522416"></p>
+<p><img src="/../images/image-20241110144226840.png" alt="image-20241110144226840"></p>
+<p>frame坐标系不用储存坐标系的原点，只用存储坐标轴的方向</p>
+<p><img src="/../images/image-20241112092245780.png" alt="image-20241112092245780"></p>
+<p>镜面反射：x,z取反</p>
+<p>漫反射：采样</p>
+<p><img src="/../images/image-20241112092430966.png" alt="image-20241112092430966"></p>
+<pre><code class="cpp">for (size_t i = 0; i &lt; shapeInstances.size(); i++) &#123;
+    auto shapeInstance = shapeInstances[i];
+    auto ray_object = ray.rayObjectFromWorld(shapeInstance.object_from_world);
+    hitInfo = shapeInstance.shape.intersect(ray_object, t_min, t_max); // 需要把世界空间下的光线转换成对象空间里相交测试
+    if (hitInfo.has_value()) &#123;
+        t_max = hitInfo-&gt;distance;
+        closest_hitInfo = hitInfo;
+        closest_instance = &amp;shapeInstance;
+    &#125;
+&#125;
+</code></pre>
+<p>与：</p>
+<pre><code class="cpp">    for (size_t i = 0; i &lt; shapeInstances.size(); i++) &#123;
+        auto ray_object = ray.rayObjectFromWorld(shapeInstances[i].object_from_world);
+        hitInfo = shapeInstances[i].shape.intersect(ray_object, t_min, t_max); //需要把世界空间下的光线转换成对象空间里相交测试
+        if (hitInfo.has_value()) &#123;
+            t_max = hitInfo-&gt;distance;
+            closest_hitInfo = hitInfo;
+            closest_instance = &amp;shapeInstances[i];
+        &#125;
+    &#125;
+</code></pre>
+<p>看似一样，实则不一样</p>
+<p>第一个是拷贝，</p>
+<p><code>shapeInstance</code> 就是一个独立的对象，它与原始 <code>shapeInstances[i]</code> 没有直接关系</p>
+<p>减小光追的噪点：</p>
+<p><img src="/../images/image-20241112200209893.png" alt="image-20241112200209893"></p>
+
       
     </div>
     <footer class="article-footer">
@@ -101,11 +276,22 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
+  
+    <a href="/post/%E5%9B%9B%E8%B6%B3.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          四足
+        
+      </div>
+    </a>
   
   
     <a href="/post/motion-planning.html" id="article-nav-older" class="article-nav-link-wrap">
@@ -130,7 +316,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li></ul>
     </div>
   </div>
 
@@ -140,7 +326,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/PNC/" style="font-size: 10px;">PNC</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/PNC/" style="font-size: 10px;">PNC</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">计算机图形学</a>
     </div>
   </div>
 
@@ -162,6 +348,10 @@
       <ul>
         
           <li>
+            <a href="/post/%E5%9B%9B%E8%B6%B3.html">四足</a>
+          </li>
+        
+          <li>
             <a href="/post/%E5%9B%BE%E5%BD%A2%E5%AD%A6.html">图形学</a>
           </li>
         
@@ -175,10 +365,6 @@
         
           <li>
             <a href="/post/C-STL.html">C++STL</a>
-          </li>
-        
-          <li>
-            <a href="/post/kinematics.html">kinematics</a>
           </li>
         
       </ul>

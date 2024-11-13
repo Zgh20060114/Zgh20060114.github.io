@@ -71,6 +71,44 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-四足" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/%E5%9B%9B%E8%B6%B3.html" class="article-date">
+  <time class="dt-published" datetime="2024-11-13T00:30:10.000Z" itemprop="datePublished">2024-11-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/post/%E5%9B%9B%E8%B6%B3.html">四足</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/%E5%9B%9B%E8%B6%B3.html" data-id="cm3f5a1ib0000czcx489zdgnv" data-title="四足" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-图形学" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/post/%E5%9B%BE%E5%BD%A2%E5%AD%A6.html" class="article-date">
@@ -93,7 +131,162 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <p><img src="/../images/image-20241102163615219.png" alt="image-20241102163615219"></p>
+<p><img src="/../images/image-20241102170537184.png" alt="image-20241102170537184"></p>
+<p><img src="/../images/image-20241102170633713.png" alt="image-20241102170633713"></p>
+<p>光线与球体的相交测试：</p>
+<p><img src="/../images/image-20241102170834824.png" alt="image-20241102170834824"></p>
+<p>可以通过判断这个一元二次方程的delta判别式判断光线是否击中了球体</p>
+<p><strong>结构体</strong>：默认的成员访问权限是 <code>public</code>。</p>
+<p><strong>类</strong>：默认的成员访问权限是 <code>private</code>。</p>
+<h3 id="视口裁剪（Viewport-Clipping）"><a href="#视口裁剪（Viewport-Clipping）" class="headerlink" title="视口裁剪（Viewport Clipping）"></a>视口裁剪（Viewport Clipping）</h3><p>视口裁剪是指在渲染过程中，图形系统根据当前的视口（viewport）大小和位置，裁剪出只在视口内的部分。这通常发生在将三维场景转换为二维图像时。</p>
+<ul>
+<li><strong>视口定义</strong>：视口是指在窗口或屏幕上的一个矩形区域，图形渲染的结果只显示在这个区域内。</li>
+<li><strong>用途</strong>：视口裁剪确保只绘制视口范围内的图形，避免无效的计算和渲染，提高效率。</li>
+</ul>
+<h3 id="透视裁剪（Perspective-Clipping）"><a href="#透视裁剪（Perspective-Clipping）" class="headerlink" title="透视裁剪（Perspective Clipping）"></a>透视裁剪（Perspective Clipping）</h3><p>透视裁剪是指在透视投影过程中，决定哪些对象在视锥体内并且可见，从而只渲染可见部分。透视投影会产生一个视锥体，位于观察者与场景之间。</p>
+<ul>
+<li><strong>视锥体</strong>：在透视投影中，视锥体是一个从观察点（摄像机位置）向外扩展的锥形区域。只有位于这个区域内的对象才会被渲染。</li>
+<li><strong>裁剪</strong>：透视裁剪会去除视锥体外的对象，避免不必要的计算和渲染，并处理对象的深度关系。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>视口裁剪</strong>：关注的是最终图像在屏幕上的显示区域，只显示视口内的内容。</li>
+<li><strong>透视裁剪</strong>：关注的是三维场景中哪些对象在视锥体内，以决定哪些对象是可见的。</li>
+</ul>
+<p>屏幕空间和 NDC（Normalized Device Coordinates）空间之间的关系:</p>
+<h3 id="坐标变换流程"><a href="#坐标变换流程" class="headerlink" title="坐标变换流程"></a>坐标变换流程</h3><p>在图形渲染过程中，顶点坐标经历多个变换，从世界空间到最终的屏幕空间，这个过程大致包括：</p>
+<ol>
+<li><strong>模型变换</strong>：将顶点从局部模型坐标转换到世界坐标。</li>
+<li><strong>视图变换</strong>：将世界坐标转换到相机坐标（视图空间）。</li>
+<li><strong>投影变换</strong>：将相机坐标转换到裁剪空间。</li>
+<li><strong>裁剪</strong>：将不在视野范围内的顶点剔除。</li>
+<li><strong>透视除法</strong>：将裁剪空间的坐标转换到 NDC 空间。这个步骤涉及将每个坐标的 x、y 和 z 分别除以 w（齐次坐标），使得坐标范围归一化到 [-1, 1]。</li>
+</ol>
+<h3 id="NDC-到屏幕空间的转换"><a href="#NDC-到屏幕空间的转换" class="headerlink" title="NDC 到屏幕空间的转换"></a>NDC 到屏幕空间的转换</h3><p>一旦顶点处于 NDC 空间，它们需要被转换到屏幕空间：</p>
+<ol>
+<li><strong>视口变换</strong>：将 NDC 坐标映射到实际的屏幕像素坐标。视口变换使用屏幕的分辨率来进行坐标的线性变换。具体步骤是：<ul>
+<li>将 NDC 的 x 和 y 坐标从 [-1, 1] 范围映射到屏幕像素的范围。例如，对于一个宽度为 W，高度为 H 的屏幕：<ul>
+<li><code>screenX = (ndcX + 1) * 0.5 * (W - 1)</code></li>
+<li><code>screenY = (1 - (ndcY + 1) * 0.5) * (H - 1)</code>（Y 轴可能需要翻转，具体取决于坐标系统的定义）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><strong>NDC 空间</strong> 是一个归一化的坐标系统，主要用于在渲染管线中的处理，使得顶点坐标能够统一处理，不论目标显示设备的分辨率如何。</li>
+<li><strong>屏幕空间</strong> 是实际显示的坐标系统，与屏幕的物理尺寸和分辨率相关。</li>
+<li><strong>转换</strong>：通过视口变换，NDC 空间的坐标被转换为屏幕空间的像素坐标，从而最终呈现在用户的屏幕上。</li>
+</ul>
+<p>NDC 空间可以看作是从三维世界到二维屏幕的中间步骤，而屏幕空间则是最终的输出结果。</p>
+<p><img src="/../images/image-20241103175728042.png" alt="image-20241103175728042"></p>
+<p><img src="/../images/image-20241103181614993.png" alt="image-20241103181614993"></p>
+<h3 id="虚函数（Virtual-Function）"><a href="#虚函数（Virtual-Function）" class="headerlink" title="虚函数（Virtual Function）"></a>虚函数（Virtual Function）</h3><ol>
+<li><strong>定义</strong>：虚函数是在基类中声明为<code>virtual</code>的成员函数，可以在派生类中重写（override）。</li>
+<li><strong>实现</strong>：虚函数可以有具体的实现。基类中的虚函数可以提供默认的实现，派生类可以选择重写它。</li>
+<li><strong>对象创建</strong>：可以创建基类的对象，也可以创建派生类的对象。</li>
+</ol>
+<h3 id="纯虚函数（Pure-Virtual-Function）"><a href="#纯虚函数（Pure-Virtual-Function）" class="headerlink" title="纯虚函数（Pure Virtual Function）"></a>纯虚函数（Pure Virtual Function）</h3><ol>
+<li><strong>定义</strong>：纯虚函数是在基类中声明为<code>virtual</code>并且等于0的函数。语法是<code>virtual void functionName() = 0;</code>。</li>
+<li><strong>实现</strong>：纯虚函数没有实现，基类通常不可以实例化。</li>
+<li><strong>对象创建</strong>：不能直接创建类的对象（即抽象类），只能创建派生类的对象。</li>
+<li><strong>用途</strong>：用于定义接口，强制派生类实现特定的函数</li>
+</ol>
+<p>输入流操作符 (<code>&gt;&gt;</code>) 在处理流时，会自动跳过空格和其他空白字符（如换行符和制表符），直到遇到下一个有意义的值为止。因此，空格在这一过程中并不会被显式处理。</p>
+<h3 id="line-compare-0-2-v-的含义："><a href="#line-compare-0-2-v-的含义：" class="headerlink" title="line.compare(0, 2, &quot;v &quot;) 的含义："></a><code>line.compare(0, 2, &quot;v &quot;)</code> 的含义：</h3><ol>
+<li>**<code>0</code>**：表示从 <code>line</code> 字符串的第一个字符开始进行比较。</li>
+<li>**<code>2</code>**：表示比较的长度为 2，也就是说，只比较 <code>line</code> 字符串的前两个字符。</li>
+<li>**<code>&quot;v &quot;</code>**：表示要将 <code>line</code> 字符串的前两个字符与字符串 <code>&quot;v &quot;</code> 进行比较。</li>
+<li>如果 <code>line</code> 的前两个字符与 <code>&quot;v &quot;</code> 完全匹配，<code>compare</code> 方法返回 0。</li>
+<li>如果不匹配，返回一个非 0 的值（具体的值取决于比较的结果：如果 <code>line</code> 字符串小于 <code>&quot;v &quot;</code>，返回一个负数；如果 <code>line</code> 字符串大于 <code>&quot;v &quot;</code>，返回一个正数）。</li>
+</ol>
+<h3 id="平面和场景"><a href="#平面和场景" class="headerlink" title="平面和场景"></a>平面和场景</h3><p>场景：管理世界空间下所有的形状（Shape）</p>
+<p>平面的数学定义：</p>
+<p><img src="/../images/image-20241105220133619.png" alt="image-20241105220133619"></p>
+<p><img src="/../images/image-20241105220823204.png" alt="image-20241105220823204"></p>
+<p>修改是为了改进多线程环境中的 <strong>线程安全性</strong> 和 <strong>竞态条件</strong> 的问题。我们来详细分析一下原始代码和修改后的代码之间的差异，以及为什么要这样修改。</p>
+<h3 id="原始代码："><a href="#原始代码：" class="headerlink" title="原始代码："></a>原始代码：</h3><pre><code class="cpp">count++; 
+if (count % film.getWidth() == 0) &#123;
+    std::cout &lt;&lt; static_cast&lt;float&gt;(count) / (film.getWidth() * film.getHeight()) &lt;&lt; std::endl;
+&#125;
+</code></pre>
+<h3 id="修改后的代码："><a href="#修改后的代码：" class="headerlink" title="修改后的代码："></a>修改后的代码：</h3><pre><code class="cpp">int n = ++count;
+if (n % film.getWidth() == 0) &#123;
+    std::cout &lt;&lt; static_cast&lt;float&gt;(n) / (film.getWidth() * film.getHeight()) &lt;&lt; std::endl;
+&#125;
+</code></pre>
+<h3 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h3><h4 id="1-count-是非原子操作"><a href="#1-count-是非原子操作" class="headerlink" title="1. count++ 是非原子操作"></a>1. <strong><code>count++</code> 是非原子操作</strong></h4><ul>
+<li><code>count++</code> 实际上是由 <strong>两个操作</strong> 组成的：<strong>读取 <code>count</code> 的值</strong>，然后 **增加 <code>count</code>**。在多线程环境中，如果多个线程同时执行 <code>count++</code>，就会发生 <strong>竞态条件</strong>（race condition），可能导致 <code>count</code> 的值增加不正确或者丢失。</li>
+<li>例如，如果线程 A 和线程 B 同时读取到相同的 <code>count</code> 值，然后都加 1 写回，这样就会丢失一个递增的结果，导致 <code>count</code> 的值不准确。</li>
+</ul>
+<h4 id="2-count-是原子操作"><a href="#2-count-是原子操作" class="headerlink" title="2. ++count 是原子操作"></a>2. <strong><code>++count</code> 是原子操作</strong></h4><ul>
+<li><code>++count</code> 是 <strong>自增并返回自增后的值</strong>，它在执行过程中是原子的，不会有并发冲突（前提是 <code>count</code> 本身是原子变量或操作）。这是因为它在自增的时候直接对 <code>count</code> 的值进行更新并返回，而不需要先读取再写入，避免了多个线程同时读取和写入的情况。</li>
+</ul>
+<h4 id="3-存储递增结果到-n"><a href="#3-存储递增结果到-n" class="headerlink" title="3. 存储递增结果到 n"></a>3. <strong>存储递增结果到 <code>n</code></strong></h4><ul>
+<li>修改后的代码 <code>int n = ++count;</code> 将自增后的结果保存在 <code>n</code> 中。这样做的好处是：<ol>
+<li><strong>保证了 <code>count</code> 更新后的值在后续代码中是确定的</strong>。如果我们直接在 <code>if (count % film.getWidth() == 0)</code> 中访问 <code>count</code>，其他线程可能会在我们检查 <code>count</code> 时修改它，导致判断条件不稳定。而 <code>n</code> 是在更新后的值保存时就固定了，因此后续的判断和输出使用 <code>n</code> 可以确保一致性。</li>
+<li><strong>避免了 <code>count</code> 被其他线程修改时的影响</strong>。虽然 <code>count</code> 本身是全局共享的，但通过把递增结果保存在 <code>n</code> 中，我们保证了 <code>n</code> 的值不会在后续代码执行时被其他线程改动，确保了输出的正确性。</li>
+</ol>
+</li>
+</ul>
+<h3 id="线程安全与性能考虑："><a href="#线程安全与性能考虑：" class="headerlink" title="线程安全与性能考虑："></a>线程安全与性能考虑：</h3><ul>
+<li>使用 <code>int n = ++count;</code> 的修改，确保了 <strong>每个线程对 <code>count</code> 的更新是安全的</strong>。同时，虽然 <code>++count</code> 在某些情况下可能是原子操作，但若 <code>count</code> 是一个普通变量，并且没有显式的线程同步机制，那么可能仍然存在隐性的问题。将更新后的 <code>count</code> 值保存到 <code>n</code> 可以减少这种不确定性。</li>
+<li>在多线程环境下，避免直接在条件判断中使用共享变量（如 <code>count</code>）是一个常见的做法，尤其是当这个变量在多个线程中共享且没有其他同步机制时。通过中间变量 <code>n</code> 来持有更新后的值，避免了在 <code>count</code> 被其他线程修改时产生的竞态条件。</li>
+</ul>
+<pre><code class="cpp">        glm::translate(glm::mat4(1.f), pos) *
+        glm::rotate(glm::mat4(1.f), glm::radians(rotate.z), &#123; 0, 0, 1 &#125;) *
+        glm::rotate(glm::mat4(1.f), glm::radians(rotate.y), &#123; 0, 1, 0 &#125;) *
+        glm::rotate(glm::mat4(1.f), glm::radians(rotate.x), &#123; 1, 0, 0 &#125;) *
+        glm::scale(glm::mat4(1.f), scale)
+</code></pre>
+<ul>
+<li><code>glm::mat4(1.f)</code>：创建一个单位矩阵，表示没有任何变换。</li>
+<li><code>glm::translate(..., pos)</code>：将矩阵平移到 <code>pos</code> 指定的位置，<code>pos</code> 是一个 <code>glm::vec3</code> 向量,表示物体在3D空间中的平移偏移量（<code>x</code>, <code>y</code>, <code>z</code>）。</li>
+<li><code>glm::radians(rotate.z)</code>：将角度 <code>rotate.z</code> 转换为弧度，因为GLM的 <code>rotate</code> 函数期望的旋转角度单位是弧度。</li>
+<li><code>&#123; 0, 0, 1 &#125;</code>：指定旋转轴为Z轴。</li>
+<li><code>glm::scale(glm::mat4(1.f), scale)</code>：执行一个缩放变换，其中 <code>scale</code> 是一个 <code>glm::vec3</code> 向量，表示沿着X、Y和Z轴的缩放比例。例如，<code>scale = &#123; 2.f, 3.f, 1.f &#125;</code> 表示在X轴上放大2倍，在Y轴上放大3倍，而Z轴保持不变。</li>
+</ul>
+<p>在GLM中，矩阵的乘法是从 <strong>右到左</strong> 进行的</p>
+<p><img src="/../images/image-20241109162036809.png" alt="image-20241109162036809"></p>
+<p><img src="/../images/image-20241109213953208.png" alt="image-20241109213953208"></p>
+<p><img src="/../images/image-20241110094231486.png" alt="image-20241110094231486"></p>
+<p><img src="/../images/image-20241110095142061.png" alt="image-20241110095142061"></p>
+<p><img src="/../images/image-20241110095414276.png" alt="image-20241110095414276"></p>
+<p><img src="/../images/image-20241110095522416.png" alt="image-20241110095522416"></p>
+<p><img src="/../images/image-20241110144226840.png" alt="image-20241110144226840"></p>
+<p>frame坐标系不用储存坐标系的原点，只用存储坐标轴的方向</p>
+<p><img src="/../images/image-20241112092245780.png" alt="image-20241112092245780"></p>
+<p>镜面反射：x,z取反</p>
+<p>漫反射：采样</p>
+<p><img src="/../images/image-20241112092430966.png" alt="image-20241112092430966"></p>
+<pre><code class="cpp">for (size_t i = 0; i &lt; shapeInstances.size(); i++) &#123;
+    auto shapeInstance = shapeInstances[i];
+    auto ray_object = ray.rayObjectFromWorld(shapeInstance.object_from_world);
+    hitInfo = shapeInstance.shape.intersect(ray_object, t_min, t_max); // 需要把世界空间下的光线转换成对象空间里相交测试
+    if (hitInfo.has_value()) &#123;
+        t_max = hitInfo-&gt;distance;
+        closest_hitInfo = hitInfo;
+        closest_instance = &amp;shapeInstance;
+    &#125;
+&#125;
+</code></pre>
+<p>与：</p>
+<pre><code class="cpp">    for (size_t i = 0; i &lt; shapeInstances.size(); i++) &#123;
+        auto ray_object = ray.rayObjectFromWorld(shapeInstances[i].object_from_world);
+        hitInfo = shapeInstances[i].shape.intersect(ray_object, t_min, t_max); //需要把世界空间下的光线转换成对象空间里相交测试
+        if (hitInfo.has_value()) &#123;
+            t_max = hitInfo-&gt;distance;
+            closest_hitInfo = hitInfo;
+            closest_instance = &amp;shapeInstances[i];
+        &#125;
+    &#125;
+</code></pre>
+<p>看似一样，实则不一样</p>
+<p>第一个是拷贝，</p>
+<p><code>shapeInstance</code> 就是一个独立的对象，它与原始 <code>shapeInstances[i]</code> 没有直接关系</p>
+<p>减小光追的噪点：</p>
+<p><img src="/../images/image-20241112200209893.png" alt="image-20241112200209893"></p>
+
       
     </div>
     <footer class="article-footer">
@@ -101,6 +294,8 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li></ul>
+
     </footer>
   </div>
   
@@ -395,9 +590,26 @@ int main() &#123;
 <p><img src="/../images/image-20241101211444648.png" alt="image-20241101211444648"></p>
 <p><img src="/../images/image-20241101211549670.png" alt="image-20241101211549670"></p>
 <p><img src="/../images/image-20241101223410617.png" alt="image-20241101223410617"></p>
-<h4 id="planner-server参数配置"><a href="#planner-server参数配置" class="headerlink" title="planner_server参数配置"></a>planner_server参数配置</h4><p><img src="/../images/image-20241101224154321.png" alt="image-20241101224154321"></p>
+<h3 id="planner-server参数配置"><a href="#planner-server参数配置" class="headerlink" title="planner_server参数配置"></a>planner_server参数配置</h3><p><img src="/../images/image-20241101224154321.png" alt="image-20241101224154321"></p>
 <p> <img src="/../images/image-20241101225936142.png" alt="image-20241101225936142"></p>
-<p>参数配置 </p>
+<h2 id="Controller-Server"><a href="#Controller-Server" class="headerlink" title="Controller_Server"></a>Controller_Server</h2><p><img src="/../images/image-20241103224438065.png" alt="image-20241103224438065"></p>
+<p>1.接口回调函数（给行为树调用）</p>
+<p><img src="/../images/image-20241103225206814.png" alt="image-20241103225206814"></p>
+<p><img src="/../images/image-20241103225751593.png" alt="image-20241103225751593"></p>
+<p><img src="/../images/image-20241103230254653.png" alt="image-20241103230254653"></p>
+<p>2.控制器插件</p>
+<p><img src="/../images/image-20241103230812738.png" alt="image-20241103230812738"></p>
+<p>重要插件–进度检查器</p>
+<p><img src="/../images/image-20241103231323752.png" alt="image-20241103231323752"></p>
+<p>重要插件–目标检查器</p>
+<p><img src="/../images/image-20241103231740311.png" alt="image-20241103231740311"></p>
+<p>控制流程：</p>
+<p><img src="/../images/image-20241104000032308.png" alt="image-20241104000032308"></p>
+<p>3.开启局部代价地图</p>
+<p>和Planner_Server类似</p>
+<h3 id="DWB算法详解"><a href="#DWB算法详解" class="headerlink" title="DWB算法详解"></a>DWB算法详解</h3><p><img src="/../images/image-20241104000312567.png" alt="image-20241104000312567"></p>
+<p><img src="/../images/image-20241104001209166.png" alt="image-20241104001209166"></p>
+<p><img src="/../images/image-20241104001344505.png" alt="image-20241104001344505">  </p>
 
       
     </div>
@@ -1231,6 +1443,21 @@ Python 3.8.10
 <p><img src="/../images/image-20241025162708189.png" alt="image-20241025162708189"></p>
 <p><img src="/../images/image-20241026083208134.png" alt="image-20241026083208134"></p>
 <p><img src="/../images/image-20241027155220611.png" alt="image-20241027155220611"></p>
+<p><img src="/../images/image-20241106085645596.png" alt="image-20241106085645596"></p>
+<p><img src="/../images/image-20241106093458515.png" alt="image-20241106093458515"></p>
+<p>下次淘宝下单不要付款，先放弃付款，然后再付款的时候有几率跳出“付款再减XX元”，应该是后台店铺给的，香！！！</p>
+<p><img src="/../images/image-20241106161656760.png" alt="image-20241106161656760"></p>
+<p><img src="/../images/image-20241106162318720.png" alt="image-20241106162318720"></p>
+<p><img src="/../images/image-20241106164939969.png" alt="image-20241106164939969"></p>
+<p><img src="/../images/image-20241107093349782.png" alt="image-20241107093349782"></p>
+<p><img src="/../images/image-20241107155026702.png" alt="image-20241107155026702"></p>
+<p><img src="/../images/image-20241107162050814.png" alt="image-20241107162050814"></p>
+<p><img src="/../images/image-20241108140359784.png" alt="image-20241108140359784"></p>
+<p><img src="/../images/image-20241110121251925.png" alt="image-20241110121251925"></p>
+<p><img src="/../images/image-20241110205130168.png" alt="image-20241110205130168"></p>
+<p><img src="/../images/image-20241110210042338.png" alt="image-20241110210042338"></p>
+<p><img src="/../images/image-20241111095941858.png" alt="image-20241111095941858"></p>
+<p><img src="/../images/image-20241111102055992.png" alt="image-20241111102055992"></p>
 
       
     </div>
@@ -1325,1035 +1552,6 @@ Python 3.8.10
 
 
   
-    <article id="post-Cplusplus" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/post/Cplusplus.html" class="article-date">
-  <time class="dt-published" datetime="2024-08-21T15:35:17.000Z" itemprop="datePublished">2024-08-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/post/Cplusplus.html">Cplusplus</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="模版元编程与函数式"><a href="#模版元编程与函数式" class="headerlink" title="模版元编程与函数式"></a>模版元编程与函数式</h3><p><img src="/../images/image-20240808230648900.png" alt="image-20240808230648900"></p>
-<p><img src="/../images/image-20240820160811024.png" alt="image-20240820160811024"></p>
-<p>template <typename T></p>
-<p><img src="/../images/image-20240820162244999.png" alt="image-20240820162244999"></p>
-<p><img src="/../images/image-20240820162358151.png" alt="image-20240820162358151"></p>
-<p><code>std::enable_if</code> 是 C++ 标准库中的一个模板工具，通常用于实现 SFINAE（Substitution Failure Is Not An Error）技术。它位于 <code>&lt;type_traits&gt;</code> 头文件中，用于在模板编程中根据条件启用或禁用模板的实例化。</p>
-<ul>
-<li><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>std::enable_if</code> 的基本结构如下：</p>
-<pre><code class="cpp">template &lt;bool B, typename T = void&gt;
-struct enable_if &#123;
-  using type = T;
-&#125;;
-
-template &lt;typename T&gt;
-struct enable_if&lt;false, T&gt; &#123;
-  // 这个结构体是未定义的
-&#125;;
-</code></pre>
-</li>
-<li><h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3></li>
-<li><p><strong><code>std::enable_if</code> 主要有两个模板参数</strong>：</p>
-<ul>
-<li><code>B</code>：一个布尔值（通常是编译时常量表达式），用于决定 <code>type</code> 成员是否有效。</li>
-<li><code>T</code>：一个默认类型（默认为 <code>void</code>），当 <code>B</code> 为真时，<code>type</code> 成员将定义为 <code>T</code>。</li>
-</ul>
-</li>
-<li><p><strong>当 <code>B</code> 为真时</strong>，<code>std::enable_if</code> 的 <code>type</code> 成员被定义为 <code>T</code>。这意味着我们可以使用 <code>std::enable_if</code> 的 <code>type</code> 来在模板中进行条件判断。</p>
-</li>
-<li><p><strong>当 <code>B</code> 为假时</strong>，<code>std::enable_if</code> 的 <code>type</code> 成员没有定义。尝试使用这种情况下的 <code>type</code> 成员会导致编译错误，从而使得该模板实例化失败。这样可以用来控制模板的选择和重载。</p>
-</li>
-<li><h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>以下是一个使用 <code>std::enable_if</code> 的示例，演示如何根据类型的特性来启用或禁用函数模板：</p>
-<pre><code class="cpp">#include &lt;iostream&gt;
-#include &lt;type_traits&gt;
-
-// 用于启用整数类型的模板函数
-template&lt;typename T&gt;
-typename std::enable_if&lt;std::is_integral&lt;T&gt;::value, void&gt;::type
-printType() &#123;
-  std::cout &lt;&lt; &quot;Integral type\n&quot;;
-&#125;
-
-// 用于启用非整数类型的模板函数
-template&lt;typename T&gt;
-typename std::enable_if&lt;!std::is_integral&lt;T&gt;::value, void&gt;::type
-printType() &#123;
-  std::cout &lt;&lt; &quot;Non-integral type\n&quot;;
-&#125;
-
-int main() &#123;
-  printType&lt;int&gt;();    // 输出: Integral type
-  printType&lt;double&gt;(); // 输出: Non-integral type
-  return 0;
-&#125;
-</code></pre>
-<p>在这个示例中：</p>
-</li>
-<li><p><code>printType&lt;int&gt;()</code> 会选择第一个模板版本，因为 <code>int</code> 是整数类型。</p>
-</li>
-<li><p><code>printType&lt;double&gt;()</code> 会选择第二个模板版本，因为 <code>double</code> 不是整数类型。</p>
-</li>
-<li><h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3></li>
-<li><p><strong>编译时替换</strong>：<code>std::enable_if</code> 根据布尔表达式 <code>B</code> 的值来决定是否定义 <code>type</code> 成员。</p>
-</li>
-<li><p><strong>条件启用</strong>：在模板参数中使用 <code>std::enable_if</code> 可以有效地启用或禁用某些模板实例化。</p>
-</li>
-<li><p><strong>SFINAE</strong>：如果 <code>B</code> 为假，<code>type</code> 成员未定义，尝试实例化使用 <code>type</code> 的模板将导致编译错误，从而引发 SFINAE 机制。</p>
-<p>通过这种方式，<code>std::enable_if</code> 可以帮助实现条件模板选择，使得模板编程更加灵活和强大。</p>
-<p><img src="/../images/image-20240820163258259.png" alt="image-20240820163258259"></p>
-<p>模板的参数可以作为编译器常量，可以自动优化</p>
-<p><img src="/../images/image-20240820163542636.png" alt="image-20240820163542636"></p>
-<p><img src="/../images/image-20240820163702315.png" alt="image-20240820163702315"></p>
-<p><img src="/../images/image-20240820163833807.png" alt="image-20240820163833807"></p>
-<p>N变一次，编译器就会重新实例化一遍模版函数，编译就变慢</p>
-<p>模版函数必须定义在同一个文件里才能使用（必须是内联的或者在头文件里的），所以模板函数的定义和实现无法分离，因此除非特殊手段，模板函数的定义和实现必须放到头文件里。</p>
-<p>模板函数太多会导致头文件非常大。</p>
-<p>模板函数内联要加static</p>
-<p><img src="/../images/image-20240821074758660.png" alt="image-20240821074758660">{:height 34, :width 232}</p>
-<p><img src="/../images/image-20240821075058309.png" alt="image-20240821075058309"></p>
-<p><img src="/../images/image-20240821080547610.png" alt="image-20240821080547610"></p>
-<p><img src="/../images/image-20240821080851591.png" alt="image-20240821080851591"></p>
-<p><code>if constexpr</code> 是 C++17 中引入的一种编译时条件语句。它允许在编译时根据条件选择代码路径，从而避免在运行时进行条件判断。与传统的 <code>if</code> 语句不同，<code>if constexpr</code> 在编译时会根据条件是否为 <code>true</code> 来决定是否编译相应的代码块。</p>
-<p>举个例子：</p>
-<pre><code class="cpp">#include &lt;iostream&gt;
-#include &lt;type_traits&gt;
-
-template &lt;typename T&gt;
-void print_type() &#123;
-  if constexpr (std::is_integral&lt;T&gt;::value) &#123;
-      std::cout &lt;&lt; &quot;Integral type&quot; &lt;&lt; std::endl;
-  &#125; else &#123;
-      std::cout &lt;&lt; &quot;Non-integral type&quot; &lt;&lt; std::endl;
-  &#125;
-&#125;
-
-int main() &#123;
-  print_type&lt;int&gt;();    // 输出 &quot;Integral type&quot;
-  print_type&lt;double&gt;(); // 输出 &quot;Non-integral type&quot;
-&#125;
-</code></pre>
-<p>在这个例子中，<code>if constexpr</code> 会在编译时检查 <code>std::is_integral&lt;T&gt;::value</code> 是否为 <code>true</code>，然后编译对应的代码块。这使得 <code>print_type</code> 函数的行为在编译时就被确定下来，从而避免了在运行时的类型检查。</p>
-<p><img src="/../images/image-20240821081339456.png" alt="image-20240821081339456"></p>
-<p><img src="/../images/image-20240821082517892.png" alt="image-20240821082517892"></p>
-<p><img src="/../images/image-20240821082721689.png" alt="image-20240821082721689"></p>
-<p><img src="/../images/image-20240821090104734.png" alt="image-20240821090104734"></p>
-<p><img src="/../images/image-20240821090237051.png" alt="image-20240821090237051"></p>
-<p><img src="/../images/image-20240821090714458.png" alt="image-20240821090714458">但是这样要把模板实例化的，每一种	情况都声明</p>
-<p>所以，尽量不要把模板分离</p>
-<p><img src="/../images/image-20240821091734245.png" alt="image-20240821091734245">延迟编译：当一个函数定义在头文件里，可能用不到，可以在前面加 template  <class T = void>这个假模板，只有被调用的时候才会被编译</p>
-<p><img src="/../images/image-20240821093416355.png" alt="image-20240821093416355"></p>
-<p>可以把函数的信息打印出来</p>
-<p><img src="/../images/image-20240821094441153.png" alt="image-20240821094441153"></p>
-<p><img src="/../images/image-20240821094522021.png" alt="image-20240821094522021"></p>
-<p><img src="/../images/image-20240821094700080.png" alt="image-20240821094700080"></p>
-<p><img src="/../images/image-20240821095549768.png" alt="image-20240821095549768"></p>
-<p>c++里的引用（int &amp;）相当于C里面的指针（int*）</p>
-<p><img src="/../images/image-20240821145117646.png" alt="image-20240821145117646">引用没有空，指针可以空</p>
-<p>auto &amp;  auto const &amp; 也可</p>
-<p><img src="/../images/image-20240821150609535.png" alt="image-20240821150609535"></p>
-<p>懒汉单例模式（Lazy Singleton）是一种设计模式，用于确保一个类只有一个实例，并提供一个全局访问点。与饿汉单例模式不同，懒汉单例模式会在需要实例时才进行初始化，因此被称为“懒汉”模式。</p>
-</li>
-<li><h3 id="懒汉单例模式的特点"><a href="#懒汉单例模式的特点" class="headerlink" title="懒汉单例模式的特点"></a>懒汉单例模式的特点</h3><ol>
-<li><strong>延迟初始化</strong>：单例对象只有在第一次被使用时才会创建。</li>
-<li><strong>线程安全问题</strong>：在多线程环境下，需要处理线程安全问题，以确保只有一个实例被创建。</li>
-</ol>
-</li>
-<li><h3 id="懒汉单例模式的实现方式"><a href="#懒汉单例模式的实现方式" class="headerlink" title="懒汉单例模式的实现方式"></a>懒汉单例模式的实现方式</h3><p>下面是一个基本的懒汉单例模式的实现示例（不考虑线程安全）：</p>
-<pre><code class="cpp">class Singleton &#123;
-public:
-  // 获取单例实例的静态方法
-  static Singleton* getInstance() &#123;
-      if (instance == nullptr) &#123;
-          instance = new Singleton();
-      &#125;
-      return instance;
-  &#125;
-
-  // 禁止拷贝构造函数和赋值操作符
-  Singleton(const Singleton&amp;) = delete;
-  Singleton&amp; operator=(const Singleton&amp;) = delete;
-
-private:
-  // 私有构造函数
-  Singleton() &#123;&#125;
-
-  // 静态成员变量，用于存储唯一的实例
-  static Singleton* instance;
-&#125;;
-
-// 静态成员变量的初始化
-Singleton* Singleton::instance = nullptr;
-</code></pre>
-</li>
-<li><h3 id="线程安全的实现"><a href="#线程安全的实现" class="headerlink" title="线程安全的实现"></a>线程安全的实现</h3><p>在多线程环境下，上述实现可能会导致线程安全问题，因此需要对其进行改进。可以使用互斥锁（<code>mutex</code>）来确保线程安全：</p>
-<pre><code class="cpp">#include &lt;mutex&gt;
-
-class Singleton &#123;
-public:
-  // 获取单例实例的静态方法
-  static Singleton* getInstance() &#123;
-      if (instance == nullptr) &#123;
-          std::lock_guard&lt;std::mutex&gt; lock(mutex);
-          if (instance == nullptr) &#123;
-              instance = new Singleton();
-          &#125;
-      &#125;
-      return instance;
-  &#125;
-
-  // 禁止拷贝构造函数和赋值操作符
-  Singleton(const Singleton&amp;) = delete;
-  Singleton&amp; operator=(const Singleton&amp;) = delete;
-
-private:
-  // 私有构造函数
-  Singleton() &#123;&#125;
-
-  // 静态成员变量，用于存储唯一的实例
-  static Singleton* instance;
-  // 互斥锁，用于保证线程安全
-  static std::mutex mutex;
-&#125;;
-
-// 静态成员变量的初始化
-Singleton* Singleton::instance = nullptr;
-std::mutex Singleton::mutex;
-</code></pre>
-</li>
-<li><h3 id="C-11-及以后的标准"><a href="#C-11-及以后的标准" class="headerlink" title="C++11 及以后的标准"></a>C++11 及以后的标准</h3><p>在C++11及以后的标准中，可以使用<code>std::call_once</code>来确保实例的唯一性，并提高线程安全性：</p>
-<pre><code class="cpp">#include &lt;mutex&gt;
-
-class Singleton &#123;
-public:
-  // 获取单例实例的静态方法
-  static Singleton* getInstance() &#123;
-      std::call_once(flag, []() &#123;
-          instance.reset(new Singleton());
-      &#125;);
-      return instance.get();
-  &#125;
-
-  // 禁止拷贝构造函数和赋值操作符
-  Singleton(const Singleton&amp;) = delete;
-  Singleton&amp; operator=(const Singleton&amp;) = delete;
-
-private:
-  // 私有构造函数
-  Singleton() &#123;&#125;
-
-  // 静态成员变量，用于存储唯一的实例
-  static std::unique_ptr&lt;Singleton&gt; instance;
-  // 静态变量，用于确保单例实例只创建一次
-  static std::once_flag flag;
-&#125;;
-
-// 静态成员变量的初始化
-std::unique_ptr&lt;Singleton&gt; Singleton::instance;
-std::once_flag Singleton::flag;
-</code></pre>
-<p>在这个实现中，<code>std::call_once</code> 和 <code>std::once_flag</code> 确保了即使在多线程环境中，单例对象也只会被创建一次。<code>std::unique_ptr</code> 自动管理内存，避免了手动释放内存的麻烦。</p>
-<p>使用互斥锁（mutex）来确保线程安全时为什么只有锁：std::lock_guard<a href="std::mutex">std::mutex</a> lock(mutex); 没有解锁?</p>
-<p>在使用 <code>std::lock_guard&lt;std::mutex&gt;</code> 时，解锁是由 <code>std::lock_guard</code> 自动处理的，而不需要显式地调用解锁操作。这是因为 <code>std::lock_guard</code> 是一个RAII（Resource Acquisition Is Initialization）风格的类，它的设计目的是简化互斥锁的管理并自动释放资源。</p>
-</li>
-<li><h3 id="RAII-和-std-lock-guard"><a href="#RAII-和-std-lock-guard" class="headerlink" title="RAII 和 std::lock_guard"></a>RAII 和 <code>std::lock_guard</code></h3><p>RAII 是一种编程习惯，确保资源（如内存、文件句柄、互斥锁等）的生命周期由对象的生命周期来管理。<code>std::lock_guard</code> 利用 RAII 原则来管理互斥锁的锁定和解锁：</p>
-<ol>
-<li><strong>构造函数</strong>：当 <code>std::lock_guard</code> 对象被创建时，它会在构造函数中自动锁定传递给它的 <code>std::mutex</code> 对象。</li>
-<li><strong>析构函数</strong>：当 <code>std::lock_guard</code> 对象被销毁（即其作用域结束时），它的析构函数会自动释放（解锁）互斥锁。</li>
-</ol>
-<p>这种设计使得你不需要显式地编写解锁代码，降低了因为遗漏解锁操作而导致的潜在错误。</p>
-</li>
-<li><h3 id="解释-1"><a href="#解释-1" class="headerlink" title="解释"></a>解释</h3></li>
-<li><p><code>std::lock_guard&lt;std::mutex&gt; lock(mutex);</code></p>
-<p>：</p>
-<ul>
-<li>当执行到这行代码时，<code>lock</code> 对象会在构造函数中自动锁定 <code>mutex</code>。</li>
-<li>当 <code>lock</code> 对象超出作用域（例如，<code>getInstance</code> 方法的执行结束时），<code>lock</code> 的析构函数会被调用，从而自动解锁 <code>mutex</code>。</li>
-</ul>
-</li>
-<li><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3></li>
-<li><p><strong>自动解锁</strong>：减少了因为忘记解锁导致的死锁问题。</p>
-</li>
-<li><p><strong>简化代码</strong>：不需要显式地管理锁的释放，使代码更加简洁和易于维护。</p>
-</li>
-<li><p><strong>异常安全</strong>：即使在 <code>getInstance</code> 方法中发生异常，<code>std::lock_guard</code> 也会确保互斥锁在 <code>lock</code> 对象被销毁时正确解锁，从而避免死锁。</p>
-<p>通过 <code>std::lock_guard</code> 或其他类似的 RAII 风格的工具，C++ 提供了一种简洁而安全的方式来管理互斥锁，帮助程序员编写更健壮的多线程代码。</p>
-<p><img src="/../images/image-20240821154750452.png" alt="image-20240821154750452"></p>
-<p><img src="/../images/image-20240821155047037.png" alt="image-20240821155047037"></p>
-</li>
-</ul>
-<p><img src="/../images/image-20240822093944038.png" alt="image-20240822093944038"></p>
-<p>decltype(auto)和auto的区别</p>
-<p><code>decltype(auto)</code> 和 <code>auto</code> 都用于类型推导，但它们有不同的行为：</p>
-<ol>
-<li><p><strong><code>auto</code></strong>:</p>
-<ul>
-<li>用于自动推导变量的类型。<code>auto</code> 根据表达式的值推导类型，不会保留表达式的引用性（即 <code>auto</code> 不会推导出引用类型，除非显式指定）。</li>
-<li>例如，<code>auto x = 5;</code> 中，<code>x</code> 的类型是 <code>int</code>。</li>
-</ul>
-</li>
-<li><p><strong><code>decltype(auto)</code></strong>:</p>
-<ul>
-<li>结合 <code>decltype</code> 和 <code>auto</code> 的特性。它推导出表达式的类型，包括引用（<code>decltype</code> 会保留表达式的原始类型）。</li>
-<li>例如，<code>decltype(auto) y = (5);</code> 中，<code>y</code> 的类型是 <code>int&amp;</code>，因为 <code>(5)</code> 是一个左值引用。</li>
-</ul>
-</li>
-</ol>
-<p><strong>总结</strong>:</p>
-<ul>
-<li>使用 <code>auto</code> 时，结果类型是值类型。</li>
-<li>使用 <code>decltype(auto)</code> 时，结果类型保持原表达式的类型，包括引用。</li>
-</ul>
-<p><img src="/../images/image-20240822094955233.png" alt="image-20240822094955233"></p>
-<p><img src="/../images/image-20240822095110135.png" alt="image-20240822095110135"></p>
-<p><img src="/../images/image-20240822095353349.png" alt="image-20240822095353349">T1{}创建一个T1的对象</p>
-<h3 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h3><p><img src="/../images/image-20240822100310129.png" alt="image-20240822100310129"></p>
-<p>函数作为参数传入另一个函数，实际传的是这个函数的起始地址</p>
-<p><img src="/../images/image-20240822100649562.png" alt="image-20240822100649562"></p>
-<p>确实相当于函数指针</p>
-<p><img src="/../images/image-20240822100903926.png" alt="image-20240822100903926"></p>
-<p><img src="/../images/image-20240822102642020.png" alt="image-20240822102642020"></p>
-<p><img src="/../images/image-20240822102841702.png" alt="image-20240822102841702"></p>
-<p><img src="/../images/image-20240822103024352.png" alt="image-20240822103024352"></p>
-<p><img src="/../images/image-20240822103222797.png" alt="image-20240822103222797"></p>
-<p><img src="/../images/image-20240822103620126.png" alt="image-20240822103620126"></p>
-<p><img src="/../images/image-20240822103849124.png" alt="image-20240822103849124"></p>
-<p><img src="/../images/image-20240822104300564.png" alt="image-20240822104300564"></p>
-<p><img src="/../images/image-20240822142510370.png" alt="image-20240822142510370"></p>
-<p><img src="/../images/image-20240822142730386.png" alt="image-20240822142730386"></p>
-<p>###避免使用模板参数</p>
-<p><img src="/../images/image-20240822143331265.png" alt="image-20240822143331265"></p>
-<p>类型擦除技术：std::function容器</p>
-<p><img src="/../images/image-20240822143825237.png" alt="image-20240822143825237"></p>
-<p><img src="/../images/image-20240822145011740.png" alt="image-20240822145011740">但是没办法做部分特例化</p>
-<p><img src="/../images/image-20240822145901194.png" alt="image-20240822145901194"></p>
-<p><strong>立即调用 Lambda</strong>：在 lambda 表达式的定义后面加上 <code>()</code>，立即调用这个匿名函数。 lambda 表达式的返回值可以用于初始化变量或进行其他操作。</p>
-<p><img src="/../images/image-20240822150515258.png" alt="image-20240822150515258"></p>
-<p>可以利用return自带的break效果既实现break又赋值的效果</p>
-<p><img src="/../images/image-20240822151844264.png" alt="image-20240822151844264"></p>
-<p><img src="/../images/image-20240822152541777.png" alt="image-20240822152541777"></p>
-<p><img src="/../images/image-20240822152759758.png" alt="image-20240822152759758"></p>
-<p><img src="/../images/image-20240822153156878.png" alt="image-20240822153156878"></p>
-<p><img src="/../images/image-20240822161836536.png" alt="image-20240822161836536"></p>
-<p><img src="/../images/image-20240822162204007.png" alt="image-20240822162204007"></p>
-<p>左值持久，右值短暂，左值有持久的状态，而右值要么是字面常量，要么是在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC&spm=1001.2101.3001.7020">表达式求值</a>过程中创建的临时对象(将要被销毁的对象)。</p>
-<p>右值引用的好处是减少右值作为参数传递时的复制开销</p>
-<p>使用std::move可以获得绑定到一个左值的右值引用</p>
-<pre><code class="cpp">int intValue = 10;
-int &amp;&amp;intValue3 = std::move(intValue);
-</code></pre>
-<p><code>decltype(auto)</code> 是 C++11 引入的一种类型推断工具，它结合了 <code>decltype</code> 和 <code>auto</code> 的特性，用于在声明变量时推断其类型。与 <code>auto</code> 不同，<code>decltype(auto)</code> 更精确地推断变量的类型，包括引用性。</p>
-<ul>
-<li><p><strong>用法</strong>：<code>decltype(auto)</code> 在声明变量时，会推断出表达式的确切类型，包括是否是引用类型。</p>
-<pre><code class="cpp">int x = 10;
-int&amp; ref = x;
-decltype(auto) y = ref; // y 是 int&amp;，与 ref 类型相同
-</code></pre>
-</li>
-<li><p><strong>区别</strong>：<code>auto</code> 只推断值类型，而 <code>decltype(auto)</code> 会保持原有的引用类型或常量性。</p>
-<pre><code class="cpp">auto a = x;          // a 是 int
-decltype(auto) b = x; // b 是 int，b 不是引用
-decltype(auto) c = ref; // c 是 int&amp;，与 ref 类型相同
-</code></pre>
-</li>
-</ul>
-<p><strong>总结</strong>：<code>decltype(auto)</code> 在需要精确类型推断，包括引用时非常有用。</p>
-<p>但是tuple容器的万能推导由于历史原因，不是decltype(auto),而是auto &amp;&amp;</p>
-<p><img src="/../images/image-20240825111507625.png" alt="image-20240825111507625"></p>
-<p><img src="/../images/image-20240825111624413.png" alt="image-20240825111624413"></p>
-<p>结构化绑定的基本语法如下：</p>
-<p>auto [var1, var2, var3] &#x3D; expression;</p>
-<p><img src="/../images/image-20240825112136528.png" alt="image-20240825112136528"></p>
-<p><img src="/../images/image-20240825154641671.png" alt="image-20240825154641671"></p>
-<p><img src="/../images/image-20240825155359129.png" alt="image-20240825155359129"></p>
-<p><img src="/../images/image-20240825155541735.png" alt="image-20240825155541735"></p>
-<p><img src="/../images/image-20240826130922114.png" alt="image-20240826130922114">optional就像一个更安全的指针</p>
-<p>在 C++ 中，<code>union</code> 是一种数据结构，它允许在同一内存位置存储不同的数据类型。<code>union</code> 的所有成员共享同一块内存区域，这意味着在任何给定时刻，<code>union</code> 只能存储一个成员的数据。使用 <code>union</code> 可以节省内存，特别是在需要存储多种不同类型但从不同时存储这些类型时。</p>
-<h3 id="union-的基本语法"><a href="#union-的基本语法" class="headerlink" title="union 的基本语法"></a><code>union</code> 的基本语法</h3><pre><code class="cpp">union UnionName &#123;
-    type1 member1;
-    type2 member2;
-    type3 member3;
-    // more members
-&#125;;
-</code></pre>
-<h3 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h3><ol>
-<li><p><strong>内存共享</strong>：</p>
-<ul>
-<li><code>union</code> 中的所有成员共享同一块内存。因此，<code>union</code> 的大小由其最大成员的大小决定。</li>
-</ul>
-</li>
-<li><p><strong>只能存储一个成员</strong>：</p>
-<ul>
-<li>虽然 <code>union</code> 可以定义多个成员，但在任何时刻只能存储一个成员的数据。写入一个成员会覆盖掉之前写入的成员的数据。</li>
-</ul>
-</li>
-<li><p><strong>节省内存</strong>：</p>
-<ul>
-<li>因为所有成员共用一块内存，所以 <code>union</code> 可以节省内存，尤其是在只需要存储其中一个成员的数据时。</li>
-</ul>
-</li>
-</ol>
-<h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3><pre><code class="cpp">#include &lt;iostream&gt;
-
-union Data &#123;
-    int intValue;
-    float floatValue;
-    char charValue;
-&#125;;
-
-int main() &#123;
-    Data data;
-
-    data.intValue = 5;
-    std::cout &lt;&lt; &quot;intValue: &quot; &lt;&lt; data.intValue &lt;&lt; std::endl;
-
-    data.floatValue = 3.14;
-    std::cout &lt;&lt; &quot;floatValue: &quot; &lt;&lt; data.floatValue &lt;&lt; std::endl;
-
-    data.charValue = &#39;A&#39;;
-    std::cout &lt;&lt; &quot;charValue: &quot; &lt;&lt; data.charValue &lt;&lt; std::endl;
-
-    // 访问数据会输出不确定的结果，因为各个成员共享同一内存
-    std::cout &lt;&lt; &quot;intValue (after modifying to charValue): &quot; &lt;&lt; data.intValue &lt;&lt; std::endl;
-
-    return 0;
-&#125;
-</code></pre>
-<p>在上面的示例中，<code>union</code> <code>Data</code> 可以存储 <code>int</code>, <code>float</code>, 和 <code>char</code> 三种数据类型，但它们共享同一块内存。当写入 <code>floatValue</code> 后，之前存储的 <code>intValue</code> 的数据会被覆盖，读取 <code>intValue</code> 会得到不可预测的结果。</p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
-<li><p><strong>类型安全</strong>：</p>
-<ul>
-<li>使用 <code>union</code> 时要注意类型安全。读取当前未写入的成员数据可能会导致未定义的行为。</li>
-</ul>
-</li>
-<li><p><strong>构造和析构</strong>：</p>
-<ul>
-<li><code>union</code> 允许只有一个成员的构造和析构。C++11 之后，<code>union</code> 可以包含具有非平凡构造函数、析构函数或拷贝&#x2F;移动操作符的成员，但这些操作必须在使用 <code>union</code> 的情况下正确处理。</li>
-</ul>
-</li>
-<li><p><strong><code>std::variant</code> 替代</strong>：</p>
-<ul>
-<li>C++17 引入了 <code>std::variant</code>，这是一个更安全的替代 <code>union</code>，提供了类型安全的联合体和更丰富的功能。</li>
-</ul>
-</li>
-</ul>
-<p>总的来说，<code>union</code> 是一个低级数据结构，用于内存优化和处理不同类型的数据，但在实际编程中需谨慎使用。</p>
-<p><img src="/../images/image-20240826131405785.png" alt="image-20240826131405785"></p>
-<p><img src="/../images/image-20240826133023527.png" alt="image-20240826133023527"></p>
-<p><img src="/../images/image-20240826133352602.png" alt="image-20240826133352602"></p>
-<p><img src="/../images/image-20240826134549406.png" alt="image-20240826134549406"></p>
-<p><img src="/../images/image-20240826135522792.png" alt="image-20240826135522792"></p>
-<ul>
-<li>使用 <code>auto</code> 作为参数类型实际上利用了 C++ 的模板机制，因为 <code>auto</code> 类型推断相当于模板类型参数的自动推导。虽然 lambda 本身不是一个模板，但它的参数使用 <code>auto</code> 实际上是利用了模板的类型推断机制。</li>
-<li><code>[&amp;] (auto const &amp;t)&#123;&#125;</code> 使用了模板特性中的类型推断机制，通过 <code>auto</code> 使得 lambda 表达式能够处理多种不同类型的参数。这个功能在 C++11 及其后续版本中成为了更灵活、强大的工具，使得代码更加简洁和通用。</li>
-</ul>
-<p><img src="/../images/image-20240826140520404.png" alt="image-20240826140520404"></p>
-<p><img src="/../images/image-20240826140928719.png" alt="image-20240826140928719"></p>
-<h1 id="从汇编角度看编译器优化"><a href="#从汇编角度看编译器优化" class="headerlink" title="从汇编角度看编译器优化"></a>从汇编角度看编译器优化</h1><p>编译器是从源代码生成汇编语言</p>
-<p><img src="/../images/image-20240826142543763.png" alt="image-20240826142543763"></p>
-<p>RIP是当前执行的代码的地址</p>
-<p>MMX，XMM，YMM都是用于储存浮点数的寄存器</p>
-<p>把局部变量放入寄存器，读写就更快了</p>
-<p>rsp代表堆栈：      -4（%rsp）其中-代表是堆栈上的某一个地址</p>
-<p><img src="/../images/image-20240826143356174.png" alt="image-20240826143356174"></p>
-<p><img src="/../images/image-20240826145632245.png" alt="image-20240826145632245"></p>
-<p><img src="/../images/image-20240826145948278.png" alt="image-20240826145948278"></p>
-<p>eax与rax的低32位是共用的</p>
-<p>ax与eax的低16位是通用的</p>
-<p><img src="/../images/image-20240826162116558.png" alt="image-20240826162116558"></p>
-<p><img src="/../images/image-20240826162507877.png" alt="image-20240826162507877">%eax ：返回值</p>
-<p><img src="/../images/image-20240826163129510.png" alt="image-20240826163129510"></p>
-<p><img src="/../images/image-20240826163353133.png" alt="image-20240826163353133"></p>
-<p><img src="/../images/image-20240826163854896.png" alt="image-20240826163854896"></p>
-<p>l代表32位，q代表64位</p>
-<p><img src="/../images/image-20240826164111288.png" alt="image-20240826164111288"></p>
-<p><img src="/../images/image-20240826165156571.png" alt="image-20240826165156571"></p>
-<p><img src="/../images/image-20240826165630808.png" alt="image-20240826165630808"></p>
-<p>在 C++ 中，<code>ThreadPool threadPool &#123;&#125;;</code> 和 <code>ThreadPool threadPool ;</code> 是两种不同的初始化方式，它们对 <code>ThreadPool</code> 对象的初始化有所不同。</p>
-<h3 id="1-ThreadPool-threadPool"><a href="#1-ThreadPool-threadPool" class="headerlink" title="1. ThreadPool threadPool {};"></a>1. <code>ThreadPool threadPool &#123;&#125;;</code></h3><p>这是 <strong>直接初始化（Direct Initialization）</strong> 的一种方式，使用了 <strong>统一初始化语法</strong>（Uniform Initialization Syntax）。具体来说，这种写法会调用 <code>ThreadPool</code> 的默认构造函数，并且初始化所有成员变量为默认值：</p>
-<ul>
-<li><strong>如果 <code>ThreadPool</code> 有默认构造函数</strong>，它将被调用来创建对象。</li>
-<li><strong>如果 <code>ThreadPool</code> 的构造函数</strong>没有显式初始化某些成员变量，它们会被自动初始化为其类型的默认值。对于基本数据类型（如 <code>int</code>），这意味着它们会被初始化为 <code>0</code>。对于指针类型，它们会被初始化为 <code>nullptr</code>。</li>
-</ul>
-<h3 id="2-ThreadPool-threadPool"><a href="#2-ThreadPool-threadPool" class="headerlink" title="2. ThreadPool threadPool ;"></a>2. <code>ThreadPool threadPool ;</code></h3><p>这是 <strong>默认初始化（Default Initialization）</strong> 的一种方式。在这种情况下，<code>ThreadPool</code> 对象的初始化行为依赖于以下几种情况：</p>
-<ul>
-<li><strong>如果 <code>ThreadPool</code> 有默认构造函数</strong>，它将被调用来创建对象。</li>
-<li><strong>如果 <code>ThreadPool</code> 的构造函数没有显式初始化某些成员变量</strong>，那么这些成员变量的初始化方式依赖于它们的类型和是否有默认构造函数。基本数据类型（如 <code>int</code>）不会被初始化到任何特定值（它们会是未定义的），指针类型也不会自动初始化（它们的值是不确定的）。</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
-<li>**<code>ThreadPool threadPool &#123;&#125;;</code>**：使用统一初始化语法，所有成员变量被初始化为其类型的默认值，较为安全。</li>
-<li><strong><code>ThreadPool threadPool ;</code><strong>：默认初始化，成员变量的初始值依赖于其类型和构造函数，</strong>可能会导致未定义行为（对于基本数据类型）</strong>。</li>
-</ul>
-<p>在实践中，推荐使用 <code>ThreadPool threadPool &#123;&#125;;</code> 以确保对象的成员变量被正确地初始化，避免潜在的未定义行为。</p>
-<p>在对象构造时，<code>std::lock_guard</code> 会自动锁定传入的互斥锁，而在对象析构时，它会自动释放锁</p>
-<p><strong><code>std::lock_guard&lt;std::mutex&gt; guard(lock);</code></strong></p>
-<p>当执行 <code>std::lock_guard&lt;std::mutex&gt; guard(lock);</code> 时：</p>
-<ul>
-<li><strong>锁定</strong>: <code>guard</code> 对象在创建时会自动调用 <code>lock()</code> 方法来锁定传入的互斥锁（<code>lock</code>）。</li>
-<li><strong>作用域结束</strong>: 当 <code>guard</code> 对象的作用域结束（例如，离开当前的代码块或函数）时，它的析构函数会自动调用 <code>unlock()</code> 方法来解锁互斥锁</li>
-</ul>
-<p>要理解 <code>subset</code> 中的这行数据，我们可以将其拆解成几部分来分析：</p>
-<pre><code class="plaintext">[[ 0.          1.          2.          3.          4.          5.
-   6.          7.          8.         -1.         -1.          9.
-  -1.         -1.         10.         11.         12.         -1.
-  21.50975911 13.        ]]
-</code></pre>
-<h3 id="1-关键点索引"><a href="#1-关键点索引" class="headerlink" title="1. 关键点索引"></a>1. 关键点索引</h3><ul>
-<li>前 18 个值 <code>[0, 1, 2, 3, 4, 5, 6, 7, 8, -1, -1, 9, -1, -1, 10, 11, 12, -1]</code> 代表了关键点的索引。<ul>
-<li>正整数表示该位置有一个有效的关键点索引。</li>
-<li><code>-1</code> 表示该位置没有对应的关键点。</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-总评分"><a href="#2-总评分" class="headerlink" title="2. 总评分"></a>2. 总评分</h3><ul>
-<li><code>21.50975911</code> 是这个组合的总评分。这个评分是所有有效关键点的评分之和或某种加权评分的结果。</li>
-</ul>
-<h3 id="3-关键点数量"><a href="#3-关键点数量" class="headerlink" title="3. 关键点数量"></a>3. 关键点数量</h3><ul>
-<li><code>13</code> 是这个组合中的有效关键点数量。这里 <code>13</code> 表示在该组合中共有 13 个有效的关键点索引。</li>
-</ul>
-<h3 id="结合信息"><a href="#结合信息" class="headerlink" title="结合信息"></a>结合信息</h3><p>这个 <code>subset</code> 行数据表示一个关键点组合，其中包含 13 个有效的关键点，所有这些关键点的索引被列出。组合的总评分为 <code>21.50975911</code>。通过这些信息，你可以了解该组合的结构以及它在某种评分机制下的表现。</p>
-<h4 id="详细解读："><a href="#详细解读：" class="headerlink" title="详细解读："></a>详细解读：</h4><ul>
-<li>有效关键点索引为 <code>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]</code>，总共 13 个。</li>
-<li>索引为 <code>-1</code> 的位置表示这些位置没有有效的关键点。</li>
-<li>总评分 <code>21.50975911</code> 可能是根据这些有效关键点的某些特性（如评分、置信度等）计算出来的。</li>
-</ul>
-<p>这样的 <code>subset</code> 数据通常用于在处理关键点检测任务中，选择或评估最佳的关键点组合。</p>
-<p>这个是candidate： [[2.19000000e+02 1.18000000e+02 9.45192695e-01 0.00000000e+00] [1.96000000e+02 2.63000000e+02 9.28416848e-01 1.00000000e+00] [8.70000000e+01 2.89000000e+02 8.54923248e-01 2.00000000e+00] [6.60000000e+01 4.49000000e+02 8.24636817e-01 3.00000000e+00] [1.20000000e+02 5.07000000e+02 7.98071980e-01 4.00000000e+00] [3.07000000e+02 2.38000000e+02 8.55016530e-01 5.00000000e+00] [3.64000000e+02 3.76000000e+02 7.69826353e-01 6.00000000e+00] [2.81000000e+02 4.45000000e+02 8.87847126e-01 7.00000000e+00] [1.68000000e+02 5.42000000e+02 4.70188409e-01 8.00000000e+00] [2.98000000e+02 5.27000000e+02 4.78751719e-01 9.00000000e+00] [1.94000000e+02 1.03000000e+02 9.33498561e-01 1.00000000e+01] [2.30000000e+02 1.02000000e+02 9.27351594e-01 1.10000000e+01] [1.35000000e+02 1.22000000e+02 8.83832693e-01 1.20000000e+01]] 这个是subset: [[ 0.          1.          2.          3.          4.          5.   6.          7.          8.         -1.         -1.          9.  -1.         -1.         10.         11.         12.         -1.  21.50975911 13.        ]]</p>
-<p>“Stack underflow”和“stack overflow”都是与栈（stack）数据结构相关的错误，但它们的含义和发生的情况不同：</p>
-<h3 id="Stack-Overflow（栈溢出）"><a href="#Stack-Overflow（栈溢出）" class="headerlink" title="Stack Overflow（栈溢出）"></a>Stack Overflow（栈溢出）</h3><ul>
-<li><strong>定义</strong>：栈溢出发生在栈的大小超过其最大容量时。通常是由于过深的递归调用或在栈上分配了过多的局部变量导致的。</li>
-<li><strong>后果</strong>：栈溢出通常会导致程序崩溃或异常终止，因为系统无法继续在栈上分配内存。</li>
-</ul>
-<h3 id="Stack-Underflow（栈下溢出）"><a href="#Stack-Underflow（栈下溢出）" class="headerlink" title="Stack Underflow（栈下溢出）"></a>Stack Underflow（栈下溢出）</h3><ul>
-<li><strong>定义</strong>：栈下溢出发生在试图从空栈中弹出元素时。例如，尝试执行“pop”操作但栈为空。</li>
-<li><strong>后果</strong>：栈下溢出可能导致访问未定义的内存，程序可能会抛出异常或返回错误。</li>
-</ul>
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><ul>
-<li><strong>溢出（overflow）</strong>：栈容量超出限制。</li>
-<li><strong>下溢（underflow）</strong>：试图从空栈中移除元素。</li>
-</ul>
-<p><code>NULL</code> 是一个预处理宏，通常被定义为 <code>0</code> 或 <code>((void*)0)</code>。它在类型上是一个整数，因此可能导致类型不安全的情况。</p>
-<ul>
-<li><p><code>nullptr</code> 是 C++11 引入的一个关键字，表示空指针。它是一个特定的类型 <code>std::nullptr_t</code>，能更好地支持类型安全。</p>
-</li>
-<li><p><strong>OpenGL 上下文</strong>：OpenGL 上下文是一个包含了所有 OpenGL 状态的信息的环境。每个窗口通常会有一个自己的上下文。</p>
-</li>
-</ul>
-<p>gcc -E main.cpp | tail -n 15 是什么意思</p>
-<p><code>gcc -E main.cpp | tail -n 15</code> 是一个命令行指令，具体含义如下：</p>
-<ul>
-<li><code>gcc</code>：GNU 编译器集合，用于编译 C 和 C++ 程序。</li>
-<li><code>-E</code>：该选项告诉 <code>gcc</code> 只进行预处理，即处理源代码中的宏和包含文件，但不进行编译。</li>
-<li><code>main.cpp</code>：要处理的源文件。</li>
-<li><code>|</code>：管道符，用于将前一个命令的输出传递给后一个命令。</li>
-<li><code>tail -n 15</code>：该命令输出前一个命令的最后 15 行。</li>
-</ul>
-<p>因此，整个命令的作用是预处理 <code>main.cpp</code> 文件，并显示预处理后的结果的最后 15 行。这通常用于调试宏和包含的头文件。</p>
-<p>constexpr</p>
-<p>编译时常量</p>
-<p><em>在编译时计算</em></p>
-<p>结合 <code>if constexpr</code> 根据条件选择性编译代码</p>
-<p><code>__attribute__((inline))</code> 是 GCC 和 Clang 编译器中的一个扩展，用于建议编译器将某个函数内联。内联函数的目的是减少函数调用的开销，通过将函数代码直接插入到调用处来提高性能。</p>
-<ol>
-<li><strong>性能优化</strong>：可以减少函数调用的开销，尤其是在小型函数中。</li>
-<li><strong>不强制</strong>：即使使用了 <code>inline</code> 属性，编译器仍然可以选择不内联，具体取决于优化策略和函数的复杂性。</li>
-<li><strong>适用场景</strong>：通常用于小的、频繁调用的函数。</li>
-</ol>
-<p>把std::string opengl_errno_name(int err)改成static const char *opengl_errno_name(int err)的好处</p>
-<p>将 <code>std::string opengl_errno_name(int err)</code> 改为 <code>static const char *opengl_errno_name(int err)</code> 的好处包括：</p>
-<ol>
-<li><strong>性能提升</strong>：使用 <code>const char*</code> 可以减少内存分配和拷贝操作，提高性能，尤其在频繁调用的情况下。</li>
-<li><strong>内存管理</strong>：<code>const char*</code> 不需要动态分配内存，避免了内存泄漏的风险，使用起来更加安全。</li>
-<li><strong>简单性</strong>：直接返回字符串字面量或静态数组，使代码更简洁，减少不必要的复杂性。</li>
-<li><strong>更好地适应 C 风格 API</strong>：在与 C 语言库交互时，使用 <code>const char*</code> 更加兼容。</li>
-</ol>
-<p><code>#include &lt;GL/gl.h&gt;</code> 和 <code>#include &lt;GL/glu.h&gt;</code> 是 OpenGL 的头文件，它们用于图形编程。具体来说：</p>
-<ol>
-<li>**<code>&lt;GL/gl.h&gt;</code>**：<ul>
-<li>包含了 OpenGL 的核心函数和常量，提供了绘制图形所需的基本接口，比如渲染点、线、三角形等几何图形，以及设置视图、光照、纹理等功能。</li>
-</ul>
-</li>
-<li>**<code>&lt;GL/glu.h&gt;</code>**：<ul>
-<li>提供了一些辅助功能和工具，简化了 OpenGL 的使用。例如，它包含了用于生成和操作网格、处理矩阵变换、创建透视和正交投影等的函数。</li>
-</ul>
-</li>
-</ol>
-<p><code>#include &lt;GLFW/glfw3.h&gt;</code> 是用于包含 GLFW 库的头文件，GLFW 是一个开源的跨平台库，主要用于创建窗口、处理用户输入以及管理 OpenGL 上下文。具体功能包括：</p>
-<ol>
-<li><strong>创建和管理窗口</strong>：可以创建多种类型的窗口，并设置其属性。</li>
-<li><strong>处理输入</strong>：支持键盘、鼠标和游戏手柄输入，方便处理用户交互。</li>
-<li><strong>上下文管理</strong>：简化 OpenGL 上下文的创建和管理，使得在窗口中进行图形渲染更为高效。、</li>
-</ol>
-<p><code>#include &lt;glm/glm.hpp&gt;</code> 和 <code>#include &lt;glm/ext.hpp&gt;</code> 是用于包含 GLM（OpenGL Mathematics）库的头文件。具体功能如下：</p>
-<ol>
-<li>**<code>&lt;glm/glm.hpp&gt;</code>**：<ul>
-<li>提供基础数学类型和操作，例如向量、矩阵、四元数等，支持高效的数学运算，适用于图形编程和物理计算。</li>
-</ul>
-</li>
-<li>**<code>&lt;glm/ext.hpp&gt;</code>**：<ul>
-<li>包含一些扩展功能，比如矩阵变换、投影、视图等常用数学函数，方便进行更复杂的数学运算。</li>
-</ul>
-</li>
-</ol>
-<p>GLM 常用于 OpenGL 应用程序中，以简化数学计算和数据管理。</p>
-<p>❥ 基本<br>jk &#x2F; kj &#x2F; <Esc> 回到普通模式<br>q &#x2F; :wq &#x2F; ZZ 保存并退出<br>Q 记录宏<br>gl &#x2F; $ 移动到行末尾<br>gh &#x2F; ^ 移动到行开头（不包括空格）<br>3gl &#x2F; $2l 移动到行末尾倒数第 3 个字符<br>3gh &#x2F; ^2h 移动到行开头倒数第 3 个字符<br>❥ 跳转<br>gd 跳转到定义<br>gD 跳转到声明<br>gy 跳转到变量类型的定义<br>gY 跳转到虚函数实现<br>go 头文件和源文件来回跳转<br>gr 寻找符号引用<br>gz 罗列所有相关信息（定义、引用等）<br>gf 打开光标下的文件名<br>gF 打开光标下的文件名并跳到右侧指定的行号<br>gx 打开光标下的网页链接<br><C-o> 跳转回来<br>❥ 重构<br>gcc 注释&#x2F;取消注释当前选中的代码&#x2F;行<br>gn 重命名变量<br>gw 尝试自动修复问题<br>g&#x3D; 自动格式化当前代码<br>❥ 预览<br>K 悬浮窗查看文档<br>gsf 预览函数定义<br>gsc 预览类定义<br>gsd 预览语法错误<br>❥ 开关<br>gso 打开大纲<br>gsg 打开 Git 面板<br>gsp 打开项目文件树<br>gss 查看所有静态语法错误<br>gsl 查看所有编译器报错<br>gsi 开关 Inlay Hint<br><F8> 或 <C-t> 打开&#x2F;关闭终端<br>❥ 标签页<br><F4> 一键保存所有打开的文件<br><F3> 切换到下一个标签页<br><F2> 切换到上一个标签页<br><F1> 将当前标签页固定在最前<br><S-F3> 将当前标签页右移一位<br><S-F2> 将当前标签页左移一位<br><S-F1> 关闭当前标签页<br><C-S-F3> 关闭右侧所有标签页<br><C-S-F2>关闭左侧所有标签页<br><C-S-F1> 关闭除当前标签页外所有<br>g<Space> 选择跳转到一个标签页<br>❥ 文本查找<br>,, 当前文件中模糊查找<br>,k 当前项目中正则表达式查找<br>,l 当前项目中的所有文件<br>,b 当前 Vim 已打开文件<br>,o 最近打开过的历史文件<br>,i 当前所有加入 Git 仓库的文件<br>,p 当前 Git 有未提交修改的文件<br>,c 所有 Git 提交历史<br>,v 所有 Git 分支<br>❥ 选择<br>vac 选中当前类<br>vic 选中当前类体内<br>vaf 选中当前函数<br>vif 选中当前函数体<br>vab 选中当前块<br>vib 选中当前块中内容<br>vai 选中当前函数调用语句<br>vii 选中当前函数调用语句的参数列表<br>vap 选中当前参数（包括逗号）<br>vip 选中当前参数（不包括逗号）<br>vin 选中当前数字<br>vat 选中当前注释块</p>
-<ul>
-<li>扩大选择</li>
-</ul>
-<ul>
-<li>缩小选择<br>举一反三：dat 删除当前注释块，cip 修改当前参数<br>❥ 移动<br>]c 下一个类开头<br>[c 上一个类开头<br>]C 下一个类结尾<br>[C 上一个类结尾<br>]f 下一个函数开头<br>[f 上一个函数开头<br>]F 下一个函数结尾<br>[F 上一个函数结尾<br>…以此类推，所有英文字母同上“选择”所述…<br><Space> 全屏任意移动<br>❥ 换位<br>mh 左移参数<br>ml 右移参数<br>mj 下移当前语句<br>mk 上移当前语句<br>maf 下移当前函数<br>mif 上移当前函数<br>mac 下移当前类<br>mic 上移当前类<br>❥ 括号<br>可视模式中：<br>s) 给当前选中内容包上 () 括号<br>s} 给当前选中内容包上 {} 括号<br>s] 给当前选中内容包上 [] 括号<br>s&gt; 给当前选中内容包上 &lt;&gt; 尖括号<br>s’ 给当前选中内容包上 ‘’ 单引号<br>s” 给当前选中内容包上 “” 双引号<br>stspan 给当前选中内容包上<span>标签<br>sta href&#x3D;”b.html” 给当前选中内容包上<a href="b.html">标签<br>普通（NORMAL）模式中：<br>ysi<range><brace> 添加括号<br>cs<oldbrace><newbrace> 改变括号<br>ds<brace> 删除括号<br>❥ CMake<br>cmc 或 :CMakeGenerate 配置当前项目<br>cmb 或 :CMakeBuild 构建当前项目<br>cmr 或 :CMakeRun 运行当前项目<br>cms 或 :CMakeStopRunner 杀死当前终端中的正在运行的程序<br>❥ 文件树<br>y 拷贝<br>x 剪切<br>d 删除<br>p 粘贴<br>a 创建</li>
-</ul>
-<p>ALT+shift+左右箭头   跳转</p>
-<pre><code class="yaml">pendulum:
-    joint_state_controller:
-        publish_rate: 100
-        type: joint_state_controller/JointStateController
-    x_controller:
-        joint: base_to_plat
-        type: effort_controllers/JointEffortController
-</code></pre>
-<p>其中joint_state_controller和x_controller是什么意思 这个文件的作用是什么</p>
-<h3 id="1-joint-state-controller"><a href="#1-joint-state-controller" class="headerlink" title="1. joint_state_controller"></a>1. <strong>joint_state_controller</strong></h3><ul>
-<li><strong>用途</strong>：这个控制器用于发布机器人的关节状态（例如位置、速度和加速度）到 ROS 主题。它通常是机器人系统中的基础控制器，负责获取各个关节的状态信息并将其传递给其他组件。</li>
-<li><strong>类型</strong>：<code>joint_state_controller/JointStateController</code> 是一个标准的控制器类型，用于处理关节状态的更新。</li>
-<li><code>joint_state_controller</code> 是用于发布所有关节状态信息的控制器。它会收集机器人的所有关节（如位置、速度和加速度）的状态，并将这些信息发布到 ROS 主题上，通常是 <code>/joint_states</code> 主题。</li>
-<li><strong>publish_rate</strong>：表示发布关节状态的频率，这里设置为 100 Hz。</li>
-</ul>
-<h3 id="2-x-controller"><a href="#2-x-controller" class="headerlink" title="2. x_controller"></a>2. <strong>x_controller</strong></h3><ul>
-<li><strong>用途</strong>：这个控制器用于控制名为 <code>base_to_plat</code> 的关节的努力（力或扭矩）。通常用于执行某种运动控制任务，比如驱动一个关节以实现预期的动态行为。</li>
-<li><strong>类型</strong>：<code>effort_controllers/JointEffortController</code> 是一个控制器类型，专注于控制关节施加的力或扭矩。</li>
-</ul>
-<h3 id="文件的作用"><a href="#文件的作用" class="headerlink" title="文件的作用"></a>文件的作用</h3><p>这个文件主要是用于配置 ROS 控制器管理器，定义机器人各个关节的控制方式及其参数。通过这个配置，您可以在启动时自动加载和初始化这些控制器，使得机器人能够实时进行关节状态的监测和控制。</p>
-<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><ul>
-<li><strong><code>joint_state_controller</code></strong> 负责关节状态的信息发布。</li>
-<li><strong><code>x_controller</code></strong> 则用于具体关节的力量控制。</li>
-<li>整个 YAML 文件用于配置和管理这些控制器，使机器人能够有效地执行控制任务。</li>
-</ul>
-<p>##并发</p>
-<p><img src="/../images/image-20240928131042017.png" alt="image-20240928131042017"></p>
-<p>###0.时间 time</p>
-<p><img src="/../images/image-20241005183555504.png" alt="image-20241005183555504"></p>
-<p>###1.线程  thread</p>
-<p><img src="/../images/image-20241005183759412.png" alt="image-20241005183759412"></p>
-<p>join汇合加入，把子线程加到主线程里，这样主线程只有在子线程结束后才会退出</p>
-<p><img src="/../images/image-20241005185354229.png" alt="image-20241005185354229"></p>
-<p>当想要对线程进行封装时，会发现线程会随着封装函数执行过去而被销毁（因为thread的析构函数）：</p>
-<p><img src="/../images/image-20241005190729501.png" alt="image-20241005190729501"></p>
-<p>使用detach（）,还是不行（因为没用join，主线程不会等子线程）：</p>
-<p><img src="/../images/image-20241005190842874.png" alt="image-20241005190842874"></p>
-<p>全局变量，生命周期会大于封装函数，join，等待子线程：<br><img src="/../images/image-20241005191516568.png" alt="image-20241005191516568"></p>
-<p>利用析构函数简化：<br><img src="/../images/image-20241005191923023.png" alt="image-20241005191923023"></p>
-<p>再简化，标准函数帮你把析构函数写了：</p>
-<p><img src="/../images/image-20241005183933864.png" alt="image-20241005183933864"></p>
-<h3 id="2-异步async"><a href="#2-异步async" class="headerlink" title="2.异步async"></a>2.异步async</h3><p>异步相当于thread的帮手函数,专注于任务本身而不是底层的线程管理,不用那么底层了，使用简单了，但是能力也就下降了。</p>
-<p><code>std::async</code> 和 <code>std::thread</code> 都是 C++11 引入的用于处理并发和多线程编程的工具，但它们在设计目的、使用方式和抽象级别上存在一些关键的关系与区别。以下是它们之间的详细比较：</p>
-<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><ul>
-<li><strong>都属于 C++ 标准库</strong>：两者都是 C++11 提供的并发支持的一部分，旨在简化多线程编程。</li>
-<li><strong>功能互补</strong>：尽管各自的设计有不同侧重点，但它们可以一起使用。例如，可以在 <code>std::async</code> 中使用 <code>std::thread</code>，或者在创建线程时使用 <code>std::async</code> 来管理结果。</li>
-</ul>
-<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><table>
-<thead>
-<tr>
-<th>特性</th>
-<th><code>std::thread</code></th>
-<th><code>std::async</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>抽象级别</strong></td>
-<td>更低级别的线程管理</td>
-<td>更高层次的异步任务管理</td>
-</tr>
-<tr>
-<td><strong>线程控制</strong></td>
-<td>开发者需要手动管理线程的生命周期（启动、加入、分离）</td>
-<td>自动管理线程的生命周期，返回 <code>std::future</code></td>
-</tr>
-<tr>
-<td><strong>执行策略</strong></td>
-<td>一般立即启动新线程</td>
-<td>可选择立即执行或延迟执行（<code>std::launch::async</code> 或 <code>std::launch::deferred</code>）</td>
-</tr>
-<tr>
-<td><strong>结果处理</strong></td>
-<td>返回值需要通过共享数据或其他同步机制来获取</td>
-<td>通过 <code>std::future</code> 对象直接获取结果</td>
-</tr>
-<tr>
-<td><strong>异常处理</strong></td>
-<td>异常不会传播到主线程，需要手动管理</td>
-<td>异常会被捕获并在调用 <code>future.get()</code> 时重新抛出</td>
-</tr>
-<tr>
-<td><strong>适用场景</strong></td>
-<td>需要细致控制线程行为的场景，如实时系统、服务器等</td>
-<td>简单的异步任务、并行计算、提高程序响应性</td>
-</tr>
-</tbody></table>
-<h3 id="使用示例-1"><a href="#使用示例-1" class="headerlink" title="使用示例"></a>使用示例</h3><h4 id="使用-std-thread-的示例："><a href="#使用-std-thread-的示例：" class="headerlink" title="使用 std::thread 的示例："></a>使用 <code>std::thread</code> 的示例：</h4><pre><code class="cpp">#include &lt;iostream&gt;
-#include &lt;thread&gt;
-
-void task() &#123;
-    std::cout &lt;&lt; &quot;Task is running in a separate thread.\n&quot;;
-&#125;
-
-int main() &#123;
-    std::thread t(task);
-    t.join();  // 等待线程完成
-    return 0;
-&#125;
-</code></pre>
-<h4 id="使用-std-async-的示例："><a href="#使用-std-async-的示例：" class="headerlink" title="使用 std::async 的示例："></a>使用 <code>std::async</code> 的示例：</h4><pre><code class="cpp">#include &lt;iostream&gt;
-#include &lt;future&gt;
-
-int task() &#123;
-    return 42;  // 返回结果
-&#125;
-
-int main() &#123;
-    std::future&lt;int&gt; result = std::async(task);
-    std::cout &lt;&lt; &quot;Result from async task: &quot; &lt;&lt; result.get() &lt;&lt; &#39;\n&#39;;  // 获取结果
-    return 0;
-&#125;
-</code></pre>
-<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><ul>
-<li>**选择使用 <code>std::thread</code>**：当你需要更细粒度的线程控制，或者需要实现复杂的线程交互时。</li>
-<li>**选择使用 <code>std::async</code>**：当你希望简化异步任务的管理，并专注于任务本身而不是底层的线程管理时。</li>
-</ul>
-<p>根据具体的需求和场景，开发者可以灵活选择这两者中的一种或结合使用。</p>
-<p><img src="/../images/image-20241005185145651.png" alt="image-20241005185145651"></p>
-<p><img src="/../images/image-20241005202136786.png" alt="image-20241005202136786"></p>
-<p><img src="/../images/image-20241005202235380.png" alt="image-20241005202235380"></p>
-<p>std::async相当于在后台开一个线程偷偷执行,如果不想用线程的话，可以用假线程：</p>
-<p><img src="/../images/image-20241005203007249.png" alt="image-20241005203007249"></p>
-<p>std::async的底层实现：（应该用不到吧）</p>
-<p><img src="/../images/image-20241005204852974.png" alt="image-20241005204852974"></p>
-<h3 id="3-互斥量"><a href="#3-互斥量" class="headerlink" title="3.互斥量"></a>3.互斥量</h3><p><img src="/../images/image-20241005211544279.png" alt="image-20241005211544279"></p>
-<p>std::lock_guard grd(mtx); <em>&#x2F;&#x2F; 创建 lock_guard 对象 grd，锁定 mtx</em></p>
-<p>这个有个弊端：不能提前unlock，可以用std::unique_lock:</p>
-<p><img src="/../images/image-20241005213525208.png" alt="image-20241005213525208"></p>
-<p>如果你即想使用unique_lock的自动解锁，又想手动lock：</p>
-<p><img src="/../images/image-20241006100018130.png" alt="image-20241006100018130"></p>
-<p>这个是已经上锁了，又想使用自动解锁：<br><img src="/../images/image-20241006100334056.png" alt="image-20241006100334056"></p>
-<h3 id="4-死锁"><a href="#4-死锁" class="headerlink" title="4.死锁"></a>4.死锁</h3><p>问题一：</p>
-<p><img src="/../images/image-20241005182028304.png" alt="image-20241005182028304"></p>
-<p>不要同时锁两个</p>
-<p><img src="/../images/image-20241005182958030.png" alt="image-20241005182958030"></p>
-<p>保证线程里上锁的顺序一样</p>
-<p><img src="/../images/image-20241005183050653.png" alt="image-20241005183050653"></p>
-<p>使用标准库里的std::lock</p>
-<p><img src="/../images/image-20241005183311794.png" alt="image-20241005183311794"></p>
-<p>同样，为了避免忘记解锁，有了一个RALL版本的std::lock<br><img src="/../images/image-20241006100806745.png" alt="image-20241006100806745"></p>
-<p>问题二：</p>
-<p><img src="/../images/image-20241006101009888.png" alt="image-20241006101009888"></p>
-<p>std::recursive_mutex</p>
-<p><img src="/../images/image-20241006101432670.png" alt="image-20241006101432670"></p>
-<h3 id="5-数据结构"><a href="#5-数据结构" class="headerlink" title="5.数据结构"></a>5.数据结构</h3><p><img src="/../images/image-20241006101750387.png" alt="image-20241006101750387"></p>
-<p>封装一下：</p>
-<p><img src="/../images/image-20241006102058522.png" alt="image-20241006102058522"></p>
-<p>因为mutex::lock()不是const的 ,那么使用mutable修饰一下：</p>
-<p><img src="/../images/image-20241006102636082.png" alt="image-20241006102636082"></p>
-<p>####读写锁：</p>
-<p><img src="/../images/image-20241006102823718.png" alt="image-20241006102823718"></p>
-<p>std::shared_mutex<br><img src="/../images/image-20241006103549484.png" alt="image-20241006103549484"></p>
-<p>lock()的RAII是std::unique_lock</p>
-<p>lock_shared()的RAII是std::shared_lock</p>
-<p><img src="/../images/image-20241006104139107.png" alt="image-20241006104139107"></p>
-<p><img src="/../images/image-20241006105913707.png" alt="image-20241006105913707"></p>
-<h3 id="6-条件变量"><a href="#6-条件变量" class="headerlink" title="6.条件变量"></a>6.条件变量</h3><p><img src="/../images/image-20241006110451776.png" alt="image-20241006110451776"></p>
-<p><img src="/../images/image-20241006110619094.png" alt="image-20241006110619094"></p>
-<p><img src="/../images/image-20241006111315559.png" alt="image-20241006111315559"></p>
-<p><img src="/../images/image-20241006115747920.png" alt="image-20241006115747920"></p>
-<p><img src="/../images/image-20241006120359417.png" alt="image-20241006120359417"></p>
-<p><img src="/../images/image-20241006120454654.png" alt="image-20241006120454654"></p>
-<p>###7.原子操作（硬件层面）</p>
-<p>前面的都是操作系统层面的</p>
-<p>硬件解释：</p>
-<p><img src="/../images/image-20241006123756588.png" alt="image-20241006123756588"></p>
-<p><img src="/../images/image-20241006123820764.png" alt="image-20241006123820764"></p>
-<p><img src="/../images/image-20241006124016522.png" alt="image-20241006124016522"></p>
-<p>原子变量：</p>
-<p><img src="/../images/image-20241006125728044.png" alt="image-20241006125728044"></p>
-<p><img src="/../images/image-20241006125817277.png" alt="image-20241006125817277"> </p>
-<p><img src="/../images/image-20241006130153788.png" alt="image-20241006130153788"></p>
-<p><img src="/../images/image-20241006144356518.png" alt="image-20241006144356518"></p>
-<p><img src="/../images/image-20241006144621864.png" alt="image-20241006144621864"></p>
-<p><img src="/../images/image-20241006145302292.png" alt="image-20241006145302292"></p>
-<h2 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h2><p>###——TBB开启的并行编程之旅（Intel TBB并行编程框架）</p>
-<p>###0.从并发到并行</p>
-<p><img src="/../images/image-20241006150631389.png" alt="image-20241006150631389"></p>
-<p><img src="/../images/image-20241006150757093.png" alt="image-20241006150757093"></p>
-<p><img src="/../images/image-20241006151002766.png" alt="image-20241006151002766"></p>
-<p> 不需要手动创建线程池：</p>
-<p><img src="/../images/image-20241006180452099.png" alt="image-20241006180452099"></p>
-<p>  std::thread是操作系统意义上的线程，TBB的一个任务不一定代表一个线程，把任务分配到线程上去， TBB可视为一个高效调度器</p>
-<p>ubuntu20.04蓝牙耳机连上了，但是声音还是输出在内置扬声器上，使用 <code>pactl load-module module-bluetooth-discover</code> 时遇到“模块初始化失败”的错误.</p>
-<ol>
-<li><p><strong>检查 Bluetooth 服务</strong>：<br>确保 Bluetooth 服务正在运行。可以使用以下命令启动服务：</p>
-<pre><code class="bash">sudo systemctl start bluetooth
-</code></pre>
-</li>
-<li><p><strong>安装必要的包</strong>：<br>确保已安装 PulseAudio 和 Bluetooth 支持。运行以下命令安装相关组件：</p>
-<pre><code class="bash">sudo apt install pulseaudio pulseaudio-module-bluetooth pavucontrol
-</code></pre>
-</li>
-<li><p><strong>重启 PulseAudio</strong>：<br>有时重启 PulseAudio 可以解决问题。可以使用以下命令：</p>
-<pre><code class="bash">pulseaudio -k
-pulseaudio --start
-</code></pre>
-</li>
-</ol>
-<p>当然可以。根据你提供的代码，系统的状态空间方程可以表示为以下形式：<br>状态方程：<br>$$[<br>\begin{align*}<br>\dot{x}_1 &amp;&#x3D; x_2 \<br>\dot{x}_2 &amp;&#x3D; \frac{-b \cdot (I + m \cdot l^2)}{P} \cdot x_2 + \frac{m \cdot m \cdot g \cdot l^2}{P} \cdot x_3 \<br>\dot{x}_3 &amp;&#x3D; x_4 \<br>\dot{x}_4 &amp;&#x3D; \frac{-b \cdot m \cdot l}{P} \cdot x_2 + \frac{m \cdot g \cdot l \cdot (M + m)}{P} \cdot x_3 + \frac{1}{P} \cdot u<br>\end{align*}<br>]$$<br>其中，( x_1 ) 和 ( x_2 ) 可能表示倒立摆的位移和速度，而 ( x_3 ) 和 ( x_4 ) 可能表示摆角和角速度。控制输入 ( u ) 是作用在倒立摆上的力。<br>输入方程：<br>$$[<br>u &#x3D; 0 \cdot x_1 + \frac{(I + m \cdot l^2)}{P} \cdot x_2 + 0 \cdot x_3 + \frac{m \cdot l}{P} \cdot x_4<br>]$$<br>但实际上，控制输入 ( u ) 是由控制器决定的，所以输入方程应该表示控制律，而不是状态变量直接映射到控制输入。<br>根据你的代码，状态空间方程的矩阵形式是：<br>$$[<br>\begin{align*}<br>\dot{\mathbf{x}} &amp;&#x3D; \mathbf{A} \mathbf{x} + \mathbf{B} u \<br>y &amp;&#x3D; \mathbf{C} \mathbf{x} + \mathbf{D} u<br>\end{align*}<br>]$$<br>其中，(\mathbf{x}) 是状态向量，(u) 是控制输入，(y) 是系统输出。在你的代码中，并没有明确给出输出矩阵 (\mathbf{C}) 和直接馈通矩阵 (\mathbf{D})，所以我们假设它们是：<br>$$[<br>\mathbf{C} &#x3D; \begin{bmatrix}<br>1 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 1 &amp; 0 &amp; 0<br>\end{bmatrix}, \quad<br>\mathbf{D} &#x3D; \begin{bmatrix}<br>0 \<br>0<br>\end{bmatrix}<br>]$$<br>这意味着系统的输出是状态向量 (\mathbf{x}) 的前两个元素。<br>因此，状态空间方程的矩阵形式为：<br>$[<br>\mathbf{A} &#x3D; \begin{bmatrix}<br>0 &amp; 1 &amp; 0 &amp; 0 \<br>0 &amp; -\frac{b \cdot (I + m \cdot l^2)}{P} &amp; \frac{m \cdot m \cdot g \cdot l^2}{P} &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 \<br>0 &amp; -\frac{b \cdot m \cdot l}{P} &amp; \frac{m \cdot g \cdot l \cdot (M + m)}{P} &amp; 0<br>\end{bmatrix}<br>]$<br>$$[<br>\mathbf{B} &#x3D; \begin{bmatrix}<br>0 \<br>\frac{(I + m \cdot l^2)}{P} \<br>0 \<br>\frac{m \cdot l}{P}<br>\end{bmatrix}<br>]$$<br>请注意，这里的 $(\mathbf{A})$ 和 $(\mathbf{B})$ 矩阵与你代码中定义的矩阵相匹配，但是根据你的系统定义，你可能需要调整 $(\mathbf{C})$ 和 $(\mathbf{D}) $矩阵以反映实际的系统输出。</p>
-<p><img src="/../images/image-20241006163519590.png" alt="image-20241006163519590"></p>
-<p> <img src="/../images/image-20241006171703693.png" alt="image-20241006171703693"></p>
-<p><img src="/../images/image-20241006171811928.png" alt="image-20241006171811928"></p>
-<p><img src="/../images/image-20241006181422178.png" alt="image-20241006181422178"></p>
-<p><img src="/../images/image-20241006181816664.png" alt="image-20241006181816664"></p>
-<h3 id="1-并行循环"><a href="#1-并行循环" class="headerlink" title="1.并行循环"></a>1.并行循环</h3><p>并行的for循环  <img src="/../images/image-20241006194116633.png" alt="image-20241006194116633"></p>
-<p><img src="/../images/image-20241006195247291.png" alt="image-20241006195247291"></p>
-<p>简单，但是有代价，无法被编译器优化了<img src="/../images/image-20241006195533798.png" alt="image-20241006195533798"></p>
-<p>这个是不需要索引的时候可以用</p>
-<p><img src="/../images/image-20241006195955333.png" alt="image-20241006195955333"></p>
-<p>二维</p>
-<p><img src="/../images/image-20241006200235271.png" alt="image-20241006200235271"></p>
-<p>三维</p>
-<h3 id="2-缩并与扫描"><a href="#2-缩并与扫描" class="headerlink" title="2,缩并与扫描"></a>2,缩并与扫描</h3><p>并行缩并</p>
-<p><img src="/../images/image-20241006201321218.png" alt="image-20241006201321218"></p>
-<p> <img src="/../images/image-20241006201514955.png" alt="image-20241006201514955"></p>
-<p> <img src="/../images/image-20241006202300112.png" alt="image-20241006202300112"></p>
-<p>但是，任务是动态分配到线程上，也就是range会变化，精度就会变，为了性能结果会有不同。所以：</p>
-<p><img src="/../images/image-20241006202538659.png" alt="image-20241006202538659"></p>
-<p>并行缩并的好处，相比于普通的串行缩并：</p>
-<p><img src="/../images/image-20241006205437392.png" alt="image-20241006205437392"></p>
-<p>串行相加，很大的e指数加上一个很小的float数，误差很大（浮点数不能大加小(等于没加)）</p>
-<h3 id="3-并行扫描"><a href="#3-并行扫描" class="headerlink" title="3.并行扫描"></a>3.并行扫描</h3><p><img src="/../images/image-20241006210256789.png" alt="image-20241006210256789"></p>
-<p>通常用于生成直方图</p>
-<p><img src="/../images/image-20241006211843354.png" alt="image-20241006211843354"></p>
-<p><img src="/../images/image-20241006212155394.png" alt="image-20241006212155394"></p>
-<p><img src="/../images/image-20241006212546708.png" alt="image-20241006212546708"></p>
-<p><img src="/../images/image-20241006214913619.png" alt="image-20241006214913619"></p>
-<p>考试比较喜欢的考法是将这三种校正与“<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=4356198&content_type=Article&match_order=1&q=PID%E6%A0%A1%E6%AD%A3&zhida_source=entity">PID校正</a>”校正结合起来，他们喜欢说PID校正，毕竟PD、PI、PID校正分别是超前、滞后、和滞后-超前校正的特殊情况。</p>
-<p>$\text{最大超前角}\\varphi_m&#x3D;\gamma^{\prime\prime}-\gamma+5°&#x3D;45°-0°+5°&#x3D;50°\a&#x3D;\frac{1+\mathrm{sin}\varphi_m}{1-\mathrm{sin}\varphi_m}\approx8:,\quad10\mathrm{lg}a\approx9\mathrm{dB}$ </p>
-<p><img src="/../images/v2-62e4aec82258978849246f82c939a7fe_720w.webp" alt="img"></p>
-<p><img src="/../images/v2-a80d3c8cc88df0c0f3fe1ae310ba5edc_720w.webp" alt="img"></p>
-<p>文件扩展名 <code>.tpp</code> 通常表示 <strong>C++ 模板实现文件</strong>。它与 C++ 模板相关，主要用于存放模板类或函数的实现。</p>
-<h3 id="具体用途"><a href="#具体用途" class="headerlink" title="具体用途"></a>具体用途</h3><ol>
-<li><p><strong>模板定义分离</strong>：在 C++ 中，通常将模板的声明和实现分开。在头文件（<code>.hpp</code> 或 <code>.h</code>）中，你可以声明一个模板，而在 <code>.tpp</code> 文件中实现该模板。这种做法有助于保持代码的组织性和可读性。</p>
-</li>
-<li><p><strong>包含在头文件中</strong>：为了使用 <code>.tpp</code> 文件中的实现，通常会在相应的头文件中通过 <code>#include</code> 指令将其包含进来。</p>
-</li>
-</ol>
-<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>假设你有一个简单的模板类 <code>MyClass</code>，可以这样组织文件：</p>
-<p><strong>MyClass.hpp</strong></p>
-<pre><code class="cpp">#ifndef MYCLASS_HPP
-#define MYCLASS_HPP
-
-template &lt;typename T&gt;
-class MyClass &#123;
-public:
-    MyClass(T value);
-    void display();
-
-private:
-    T data;
-&#125;;
-
-#include &quot;MyClass.tpp&quot; // 包含实现文件
-
-#endif // MYCLASS_HPP
-</code></pre>
-<p><strong>MyClass.tpp</strong></p>
-<pre><code class="cpp">#include &quot;MyClass.hpp&quot;
-#include &lt;iostream&gt;
-
-template &lt;typename T&gt;
-MyClass&lt;T&gt;::MyClass(T value) : data(value) &#123;&#125;
-
-template &lt;typename T&gt;
-void MyClass&lt;T&gt;::display() &#123;
-    std::cout &lt;&lt; data &lt;&lt; std::endl;
-&#125;
-</code></pre>
-<p>debug生成的代码没有经过优化</p>
-<h3 id="4-TBB的任务域与for循环的嵌套"><a href="#4-TBB的任务域与for循环的嵌套" class="headerlink" title="4.TBB的任务域与for循环的嵌套"></a>4.TBB的任务域与for循环的嵌套</h3><p><img src="/../images/image-20241011101745036.png" alt="image-20241011101745036"></p>
-<p>指定任务域里使用的线程</p>
-<p>并行嵌套for循环</p>
-<p><img src="/../images/image-20241011102146940.png" alt="image-20241011102146940"></p>
-<p>但是嵌套for循环会出现死锁问题:</p>
-<p><img src="/../images/image-20241011102321351.png" alt="image-20241011102321351"></p>
-<p>为啥：(性能优化：线程里的任务做完了，会去其他线程里取任务帮忙)</p>
-<p><img src="/../images/image-20241011102603422.png" alt="image-20241011102603422"></p>
-<p>解决办法：</p>
-<p><img src="/../images/image-20241011103110746.png" alt="image-20241011103110746"></p>
-<p><img src="/../images/image-20241011103358416.png" alt="image-20241011103358416"></p>
-<p><img src="/../images/image-20241011110039932.png" alt="image-20241011110039932"></p>
-<h3 id="5-任务分配"><a href="#5-任务分配" class="headerlink" title="5.任务分配"></a>5.任务分配</h3><p>并行的时候怎样把一个任务均匀的分配到每个线程&#x2F;核心（因为通常几个核心就开几个线程)呢：（线程和任务都不动）</p>
-<p><img src="/../images/image-20241011111101669.png" alt="image-20241011111101669"></p>
-<p>效果不太好，不能让核心闲着，让核心上一直有线程在运行</p>
-<p>解决：让线程数大于核心数（让线程动起来）</p>
-<p><img src="/../images/image-20241011112225107.png" alt="image-20241011112225107"></p>
-<p>但是操作系统轮换是有开销（overhead）的，而且有可能破坏缓存一致性</p>
-<p>解决：线程池（让任务动起来）</p>
-<p><img src="/../images/image-20241011114443951.png" alt="image-20241011114443951"></p>
-<p>TBB的工作窃取法：</p>
-<p><img src="/../images/image-20241011115732981.png" alt="image-20241011115732981"></p>
-<p><img src="/../images/image-20241011120205530.png" alt="image-20241011120205530"></p>
-<p>tbb::static_partitioner的线程与任务数量一致</p>
-<p><img src="/../images/image-20241011120455377.png" alt="image-20241011120455377"></p>
-<p><img src="/../images/image-20241011120545985.png" alt="image-20241011120545985"></p>
-<p>默认粒度（一个任务里的元素）是1</p>
-<p><img src="/../images/image-20241011120835292.png" alt="image-20241011120835292"></p>
-<p><img src="/../images/image-20241011135601948.png" alt="image-20241011135601948"><img src="/../images/image-20241011135646042.png" alt="image-20241011135646042"></p>
-<h3 id="tbb-static-partitioner"><a href="#tbb-static-partitioner" class="headerlink" title="tbb::static_partitioner"></a><code>tbb::static_partitioner</code></h3><ul>
-<li><p><strong>描述</strong>：将任务静态地分配给线程。</p>
-</li>
-<li><p>特性</p>
-<p>：</p>
-<ul>
-<li>在任务开始时就确定每个线程将处理哪些任务。</li>
-<li>适合于任务量相对均匀且已知的情况。</li>
-<li>不会在运行时重新平衡负载，因此可能导致某些线程空闲而其他线程忙碌。</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-tbb-simple-partitioner"><a href="#2-tbb-simple-partitioner" class="headerlink" title="2. tbb::simple_partitioner"></a>2. <code>tbb::simple_partitioner</code></h3><ul>
-<li><p><strong>描述</strong>：提供一个简单的分区策略。</p>
-</li>
-<li><p>特性</p>
-<p>：</p>
-<ul>
-<li>任务被划分为较小的块，并且每个线程可以从待处理任务中获取一个块。</li>
-<li>相对于 <code>static_partitioner</code>，<code>simple_partitioner</code> 允许更好的负载平衡。</li>
-<li>适用于任务量不均或动态变化的情况。</li>
-</ul>
-</li>
-</ul>
-<h3 id="3-tbb-auto-partitioner"><a href="#3-tbb-auto-partitioner" class="headerlink" title="3. tbb::auto_partitioner"></a>3. <code>tbb::auto_partitioner</code></h3><ul>
-<li><p><strong>描述</strong>：动态调整任务分配以优化性能。</p>
-</li>
-<li><p>特性</p>
-<p>：</p>
-<ul>
-<li>在运行时监控线程的工作负载，并根据需要进行任务重新分配。</li>
-<li>可以实现更好的负载均衡，特别是在任务执行时间不均匀的情况下。</li>
-<li>适用于复杂的并行任务，能自动适应系统负载。</li>
-</ul>
-</li>
-</ul>
-<h3 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h3><ul>
-<li><strong>静态分配</strong>（<code>static_partitioner</code>）适用于可预测且均匀的任务；不适合动态负载。</li>
-<li><strong>简单分配</strong>（<code>simple_partitioner</code>）在一定程度上改进了负载平衡，但仍然保持简单的结构。</li>
-<li><strong>自动分配</strong>（<code>auto_partitioner</code>）最灵活，适合于动态和不均匀的工作负载，通过实时监测和调整提高整体性能。</li>
-</ul>
-<p>tbb::static_partitioner对循环体不均匀的情况效果不如tbb::simple_partitioner(操作系统调度)</p>
-<p>越来越快</p>
-<p><img src="/../images/image-20241011140440217.png" alt="image-20241011140440217"></p>
-<p><img src="/../images/image-20241011140721127.png" alt="image-20241011140721127"></p>
-<p>但是auto_partitioner一定比simple_partitioner快吗</p>
-<p><img src="/../images/image-20241011144432532.png" alt="image-20241011144432532"></p>
-<p><img src="/../images/image-20241011154029009.png" alt="image-20241011154029009"></p>
-<h3 id="6-并发容器"><a href="#6-并发容器" class="headerlink" title="6.并发容器"></a>6.并发容器</h3><p>问题：</p>
-<p><img src="/../images/image-20241011155237153.png" alt="image-20241011155237153"></p>
-<p>解决：</p>
-<p><img src="/../images/image-20241011155440540.png" alt="image-20241011155440540"></p>
-<p><img src="/../images/image-20241011160119354.png" alt="image-20241011160119354"></p>
-<p>push_back()返回的是一个迭代器</p>
-<p>用*获取迭代器指向的元素的引用，再用and（&amp;）获取这个元素的指针</p>
-<p><img src="/../images/image-20241011160927535.png" alt="image-20241011160927535"></p>
-<p>tbb::concurrent_vector还是一个多线程安全的容器</p>
-<p><img src="/../images/image-20241011161401578.png" alt="image-20241011161401578"></p>
-<p>访问：随机访问效率不高</p>
-<p><img src="/../images/image-20241011162020029.png" alt="image-20241011162020029"></p>
-<p>推荐顺序访问：</p>
-<p><img src="/../images/image-20241011162546845.png" alt="image-20241011162546845"></p>
-<p><img src="/../images/image-20241011164325073.png" alt="image-20241011164325073"></p>
-<p><img src="/../images/image-20241011164827207.png" alt="image-20241011164827207"></p>
-<p>这些STL容器前加上concurrent就变成了多线程安全版</p>
-<p>vector&#x2F;concurrent_vector有一个常见的用法：用于并行筛选数据：</p>
-<h3 id="7-并行筛选"><a href="#7-并行筛选" class="headerlink" title="7.并行筛选"></a>7.并行筛选</h3><p><img src="/../images/image-20241021101434094.png" alt="image-20241021101434094"></p>
-<p><img src="/../images/image-20241021101859492.png" alt="image-20241021101859492"></p>
-<p><img src="/../images/image-20241021102554406.png" alt="image-20241021102554406"></p>
-<p> <img src="/../images/image-20241021103037177.png" alt="image-20241021103037177"></p>
-<p>但需要连续数据时，还是需要std::vetor</p>
-<p><img src="/../images/image-20241021103348500.png" alt="image-20241021103348500"></p>
-<p><img src="/../images/image-20241021104040889.png" alt="image-20241021104040889"></p>
-<p><img src="/../images/image-20241021105118738.png" alt="image-20241021105118738"></p>
-<h5 id="8-分治与排序"><a href="#8-分治与排序" class="headerlink" title="8.分治与排序"></a>8.分治与排序</h5><p><img src="/../images/image-20241021111447378.png" alt="image-20241021111447378"></p>
-<p>反而变慢了：</p>
-<p><img src="/../images/image-20241021111303257.png" alt="image-20241021111303257"></p>
-<p><img src="/../images/image-20241021111344357.png" alt="image-20241021111344357"></p>
-<p>分治</p>
-<p><img src="/../images/image-20241021111634419.png" alt="image-20241021111634419"></p>
-<p><img src="/../images/image-20241021111951889.png" alt="image-20241021111951889"></p>
-<p><img src="/../images/image-20241021112626978.png" alt="image-20241021112626978"></p>
-<h5 id="9-流水线并行"><a href="#9-流水线并行" class="headerlink" title="9.流水线并行"></a>9.流水线并行</h5><h3 id="CUDA开启的GPU编程"><a href="#CUDA开启的GPU编程" class="headerlink" title="CUDA开启的GPU编程"></a>CUDA开启的GPU编程</h3><p><img src="/../images/image-20241021114316913.png" alt="image-20241021114316913"></p>
-<p><img src="/../images/image-20241021114756000.png" alt="image-20241021114756000"></p>
-<p>类对象的声明</p>
-<p><code>ThreadPool threadPool &#123;&#125;;</code> 和 <code>ThreadPool threadPool;</code> 的主要区别在于初始化方式：</p>
-<h3 id="1-ThreadPool-threadPool-1"><a href="#1-ThreadPool-threadPool-1" class="headerlink" title="1. ThreadPool threadPool {};"></a>1. <code>ThreadPool threadPool &#123;&#125;;</code></h3><ul>
-<li><strong>列表初始化</strong>：使用了列表初始化（uniform initialization），这是 C++11 引入的一种语法。</li>
-<li><strong>安全性</strong>：这种方式可以防止窄化转换（例如，浮点数到整数的转换），因此更安全。</li>
-<li><strong>调用构造函数</strong>：会调用 <code>ThreadPool</code> 类的默认构造函数。</li>
-</ul>
-<h3 id="2-ThreadPool-threadPool-1"><a href="#2-ThreadPool-threadPool-1" class="headerlink" title="2. ThreadPool threadPool;"></a>2. <code>ThreadPool threadPool;</code></h3><ul>
-<li><strong>默认构造</strong>：这是经典的对象定义语法，直接调用默认构造函数。</li>
-<li><strong>行为</strong>：如果 <code>ThreadPool</code> 类没有定义任何构造函数，编译器会自动生成一个默认构造函数。</li>
-<li><strong>窄化问题</strong>：没有列表初始化的安全性，如果初始化涉及类型转换，可能会导致窄化。</li>
-</ul>
-<h3 id="总结-5"><a href="#总结-5" class="headerlink" title="总结"></a>总结</h3><ul>
-<li><strong>功能上</strong>：两者都用于创建 <code>ThreadPool</code> 对象并调用默认构造函数。</li>
-<li><strong>安全性</strong>：<code>ThreadPool threadPool &#123;&#125;;</code> 更安全，适用于需要避免潜在类型转换问题的场景。</li>
-</ul>
-<p>不存在这样的写法：<code>ThreadPool threadPool ();</code></p>
-<h3 id="加括号是错的，加花括号是安全的，推荐花括号"><a href="#加括号是错的，加花括号是安全的，推荐花括号" class="headerlink" title="加括号是错的，加花括号是安全的，推荐花括号"></a>加括号是错的，加花括号是安全的，推荐花括号</h3><p>变量的声明</p>
-<p><code>std::atomic_flag flag;</code> 和 <code>std::atomic_flag flag &#123;&#125;;</code> 的效果是相同的，都会将 <code>flag</code> 初始化为未设置状态。不过，使用 <code>&#123;&#125;</code> 的形式更加显式，可能更符合现代C++的最佳实践。</p>
-<p><code>new SimpleTask()</code> 和 <code>new SimpleTask</code> 在功能上是等价的，都是创建一个 <code>SimpleTask</code> 对象并返回指向该对象的指针。</p>
-<p>非常量左值引用问题</p>
-<h3 id="常量引用（const-T-）可以绑定到临时对象，而非常量左值引用（T-）则不能。"><a href="#常量引用（const-T-）可以绑定到临时对象，而非常量左值引用（T-）则不能。" class="headerlink" title="常量引用（const T&amp;）可以绑定到临时对象，而非常量左值引用（T&amp;）则不能。"></a>常量引用（<code>const T&amp;</code>）可以绑定到临时对象，而非常量左值引用（<code>T&amp;</code>）则不能。</h3><pre><code class="cpp">glm::vec3 setPixel(size_t x,size_t y,glm::vec3 &amp;pixel)&#123;
-        return pixels[width*y+x]=pixel;
-    &#125;
-</code></pre>
-<pre><code>film.setPixel(y,x,glm::vec3(0.5,0.4,0.3));
-</code></pre>
-<p><code>Non-const lvalue reference to type &#39;vec&lt;...&gt;&#39; cannot bind to a temporary of type &#39;vec&lt;...&gt;&#39;</code></p>
-<p>或者</p>
-<pre><code>film.setPixel(y,x,&#123;0.5,0.4,0.3&#125;);
-</code></pre>
-<p><code>Non-const lvalue reference to type &#39;glm::vec3&#39; (aka &#39;vec&lt;3, float, defaultp&gt;&#39;) cannot bind to an initializer list temporary</code></p>
-<p>改为：</p>
-<pre><code>    glm::vec3 setPixel(size_t x,size_t y,const glm::vec3 &amp;pixel)&#123;
-        return pixels[width*y+x]=pixel;
-    &#125;
-</code></pre>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zgh20060114.github.io/post/Cplusplus.html" data-id="cm040oe8600005rcxhs4q231b" data-title="Cplusplus" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -2372,7 +1570,7 @@ void MyClass&lt;T&gt;::display() &#123;
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li></ul>
     </div>
   </div>
 
@@ -2382,7 +1580,7 @@ void MyClass&lt;T&gt;::display() &#123;
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/PNC/" style="font-size: 10px;">PNC</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/PNC/" style="font-size: 10px;">PNC</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">计算机图形学</a>
     </div>
   </div>
 
@@ -2404,6 +1602,10 @@ void MyClass&lt;T&gt;::display() &#123;
       <ul>
         
           <li>
+            <a href="/post/%E5%9B%9B%E8%B6%B3.html">四足</a>
+          </li>
+        
+          <li>
             <a href="/post/%E5%9B%BE%E5%BD%A2%E5%AD%A6.html">图形学</a>
           </li>
         
@@ -2417,10 +1619,6 @@ void MyClass&lt;T&gt;::display() &#123;
         
           <li>
             <a href="/post/C-STL.html">C++STL</a>
-          </li>
-        
-          <li>
-            <a href="/post/kinematics.html">kinematics</a>
           </li>
         
       </ul>

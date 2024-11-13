@@ -71,6 +71,1036 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Cplusplus" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/Cplusplus.html" class="article-date">
+  <time class="dt-published" datetime="2024-08-21T15:35:17.000Z" itemprop="datePublished">2024-08-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/post/Cplusplus.html">Cplusplus</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="模版元编程与函数式"><a href="#模版元编程与函数式" class="headerlink" title="模版元编程与函数式"></a>模版元编程与函数式</h3><p><img src="/../images/image-20240808230648900.png" alt="image-20240808230648900"></p>
+<p><img src="/../images/image-20240820160811024.png" alt="image-20240820160811024"></p>
+<p>template <typename T></p>
+<p><img src="/../images/image-20240820162244999.png" alt="image-20240820162244999"></p>
+<p><img src="/../images/image-20240820162358151.png" alt="image-20240820162358151"></p>
+<p><code>std::enable_if</code> 是 C++ 标准库中的一个模板工具，通常用于实现 SFINAE（Substitution Failure Is Not An Error）技术。它位于 <code>&lt;type_traits&gt;</code> 头文件中，用于在模板编程中根据条件启用或禁用模板的实例化。</p>
+<ul>
+<li><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>std::enable_if</code> 的基本结构如下：</p>
+<pre><code class="cpp">template &lt;bool B, typename T = void&gt;
+struct enable_if &#123;
+  using type = T;
+&#125;;
+
+template &lt;typename T&gt;
+struct enable_if&lt;false, T&gt; &#123;
+  // 这个结构体是未定义的
+&#125;;
+</code></pre>
+</li>
+<li><h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3></li>
+<li><p><strong><code>std::enable_if</code> 主要有两个模板参数</strong>：</p>
+<ul>
+<li><code>B</code>：一个布尔值（通常是编译时常量表达式），用于决定 <code>type</code> 成员是否有效。</li>
+<li><code>T</code>：一个默认类型（默认为 <code>void</code>），当 <code>B</code> 为真时，<code>type</code> 成员将定义为 <code>T</code>。</li>
+</ul>
+</li>
+<li><p><strong>当 <code>B</code> 为真时</strong>，<code>std::enable_if</code> 的 <code>type</code> 成员被定义为 <code>T</code>。这意味着我们可以使用 <code>std::enable_if</code> 的 <code>type</code> 来在模板中进行条件判断。</p>
+</li>
+<li><p><strong>当 <code>B</code> 为假时</strong>，<code>std::enable_if</code> 的 <code>type</code> 成员没有定义。尝试使用这种情况下的 <code>type</code> 成员会导致编译错误，从而使得该模板实例化失败。这样可以用来控制模板的选择和重载。</p>
+</li>
+<li><h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>以下是一个使用 <code>std::enable_if</code> 的示例，演示如何根据类型的特性来启用或禁用函数模板：</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;type_traits&gt;
+
+// 用于启用整数类型的模板函数
+template&lt;typename T&gt;
+typename std::enable_if&lt;std::is_integral&lt;T&gt;::value, void&gt;::type
+printType() &#123;
+  std::cout &lt;&lt; &quot;Integral type\n&quot;;
+&#125;
+
+// 用于启用非整数类型的模板函数
+template&lt;typename T&gt;
+typename std::enable_if&lt;!std::is_integral&lt;T&gt;::value, void&gt;::type
+printType() &#123;
+  std::cout &lt;&lt; &quot;Non-integral type\n&quot;;
+&#125;
+
+int main() &#123;
+  printType&lt;int&gt;();    // 输出: Integral type
+  printType&lt;double&gt;(); // 输出: Non-integral type
+  return 0;
+&#125;
+</code></pre>
+<p>在这个示例中：</p>
+</li>
+<li><p><code>printType&lt;int&gt;()</code> 会选择第一个模板版本，因为 <code>int</code> 是整数类型。</p>
+</li>
+<li><p><code>printType&lt;double&gt;()</code> 会选择第二个模板版本，因为 <code>double</code> 不是整数类型。</p>
+</li>
+<li><h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3></li>
+<li><p><strong>编译时替换</strong>：<code>std::enable_if</code> 根据布尔表达式 <code>B</code> 的值来决定是否定义 <code>type</code> 成员。</p>
+</li>
+<li><p><strong>条件启用</strong>：在模板参数中使用 <code>std::enable_if</code> 可以有效地启用或禁用某些模板实例化。</p>
+</li>
+<li><p><strong>SFINAE</strong>：如果 <code>B</code> 为假，<code>type</code> 成员未定义，尝试实例化使用 <code>type</code> 的模板将导致编译错误，从而引发 SFINAE 机制。</p>
+<p>通过这种方式，<code>std::enable_if</code> 可以帮助实现条件模板选择，使得模板编程更加灵活和强大。</p>
+<p><img src="/../images/image-20240820163258259.png" alt="image-20240820163258259"></p>
+<p>模板的参数可以作为编译器常量，可以自动优化</p>
+<p><img src="/../images/image-20240820163542636.png" alt="image-20240820163542636"></p>
+<p><img src="/../images/image-20240820163702315.png" alt="image-20240820163702315"></p>
+<p><img src="/../images/image-20240820163833807.png" alt="image-20240820163833807"></p>
+<p>N变一次，编译器就会重新实例化一遍模版函数，编译就变慢</p>
+<p>模版函数必须定义在同一个文件里才能使用（必须是内联的或者在头文件里的），所以模板函数的定义和实现无法分离，因此除非特殊手段，模板函数的定义和实现必须放到头文件里。</p>
+<p>模板函数太多会导致头文件非常大。</p>
+<p>模板函数内联要加static</p>
+<p><img src="/../images/image-20240821074758660.png" alt="image-20240821074758660">{:height 34, :width 232}</p>
+<p><img src="/../images/image-20240821075058309.png" alt="image-20240821075058309"></p>
+<p><img src="/../images/image-20240821080547610.png" alt="image-20240821080547610"></p>
+<p><img src="/../images/image-20240821080851591.png" alt="image-20240821080851591"></p>
+<p><code>if constexpr</code> 是 C++17 中引入的一种编译时条件语句。它允许在编译时根据条件选择代码路径，从而避免在运行时进行条件判断。与传统的 <code>if</code> 语句不同，<code>if constexpr</code> 在编译时会根据条件是否为 <code>true</code> 来决定是否编译相应的代码块。</p>
+<p>举个例子：</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;type_traits&gt;
+
+template &lt;typename T&gt;
+void print_type() &#123;
+  if constexpr (std::is_integral&lt;T&gt;::value) &#123;
+      std::cout &lt;&lt; &quot;Integral type&quot; &lt;&lt; std::endl;
+  &#125; else &#123;
+      std::cout &lt;&lt; &quot;Non-integral type&quot; &lt;&lt; std::endl;
+  &#125;
+&#125;
+
+int main() &#123;
+  print_type&lt;int&gt;();    // 输出 &quot;Integral type&quot;
+  print_type&lt;double&gt;(); // 输出 &quot;Non-integral type&quot;
+&#125;
+</code></pre>
+<p>在这个例子中，<code>if constexpr</code> 会在编译时检查 <code>std::is_integral&lt;T&gt;::value</code> 是否为 <code>true</code>，然后编译对应的代码块。这使得 <code>print_type</code> 函数的行为在编译时就被确定下来，从而避免了在运行时的类型检查。</p>
+<p><img src="/../images/image-20240821081339456.png" alt="image-20240821081339456"></p>
+<p><img src="/../images/image-20240821082517892.png" alt="image-20240821082517892"></p>
+<p><img src="/../images/image-20240821082721689.png" alt="image-20240821082721689"></p>
+<p><img src="/../images/image-20240821090104734.png" alt="image-20240821090104734"></p>
+<p><img src="/../images/image-20240821090237051.png" alt="image-20240821090237051"></p>
+<p><img src="/../images/image-20240821090714458.png" alt="image-20240821090714458">但是这样要把模板实例化的，每一种	情况都声明</p>
+<p>所以，尽量不要把模板分离</p>
+<p><img src="/../images/image-20240821091734245.png" alt="image-20240821091734245">延迟编译：当一个函数定义在头文件里，可能用不到，可以在前面加 template  <class T = void>这个假模板，只有被调用的时候才会被编译</p>
+<p><img src="/../images/image-20240821093416355.png" alt="image-20240821093416355"></p>
+<p>可以把函数的信息打印出来</p>
+<p><img src="/../images/image-20240821094441153.png" alt="image-20240821094441153"></p>
+<p><img src="/../images/image-20240821094522021.png" alt="image-20240821094522021"></p>
+<p><img src="/../images/image-20240821094700080.png" alt="image-20240821094700080"></p>
+<p><img src="/../images/image-20240821095549768.png" alt="image-20240821095549768"></p>
+<p>c++里的引用（int &amp;）相当于C里面的指针（int*）</p>
+<p><img src="/../images/image-20240821145117646.png" alt="image-20240821145117646">引用没有空，指针可以空</p>
+<p>auto &amp;  auto const &amp; 也可</p>
+<p><img src="/../images/image-20240821150609535.png" alt="image-20240821150609535"></p>
+<p>懒汉单例模式（Lazy Singleton）是一种设计模式，用于确保一个类只有一个实例，并提供一个全局访问点。与饿汉单例模式不同，懒汉单例模式会在需要实例时才进行初始化，因此被称为“懒汉”模式。</p>
+</li>
+<li><h3 id="懒汉单例模式的特点"><a href="#懒汉单例模式的特点" class="headerlink" title="懒汉单例模式的特点"></a>懒汉单例模式的特点</h3><ol>
+<li><strong>延迟初始化</strong>：单例对象只有在第一次被使用时才会创建。</li>
+<li><strong>线程安全问题</strong>：在多线程环境下，需要处理线程安全问题，以确保只有一个实例被创建。</li>
+</ol>
+</li>
+<li><h3 id="懒汉单例模式的实现方式"><a href="#懒汉单例模式的实现方式" class="headerlink" title="懒汉单例模式的实现方式"></a>懒汉单例模式的实现方式</h3><p>下面是一个基本的懒汉单例模式的实现示例（不考虑线程安全）：</p>
+<pre><code class="cpp">class Singleton &#123;
+public:
+  // 获取单例实例的静态方法
+  static Singleton* getInstance() &#123;
+      if (instance == nullptr) &#123;
+          instance = new Singleton();
+      &#125;
+      return instance;
+  &#125;
+
+  // 禁止拷贝构造函数和赋值操作符
+  Singleton(const Singleton&amp;) = delete;
+  Singleton&amp; operator=(const Singleton&amp;) = delete;
+
+private:
+  // 私有构造函数
+  Singleton() &#123;&#125;
+
+  // 静态成员变量，用于存储唯一的实例
+  static Singleton* instance;
+&#125;;
+
+// 静态成员变量的初始化
+Singleton* Singleton::instance = nullptr;
+</code></pre>
+</li>
+<li><h3 id="线程安全的实现"><a href="#线程安全的实现" class="headerlink" title="线程安全的实现"></a>线程安全的实现</h3><p>在多线程环境下，上述实现可能会导致线程安全问题，因此需要对其进行改进。可以使用互斥锁（<code>mutex</code>）来确保线程安全：</p>
+<pre><code class="cpp">#include &lt;mutex&gt;
+
+class Singleton &#123;
+public:
+  // 获取单例实例的静态方法
+  static Singleton* getInstance() &#123;
+      if (instance == nullptr) &#123;
+          std::lock_guard&lt;std::mutex&gt; lock(mutex);
+          if (instance == nullptr) &#123;
+              instance = new Singleton();
+          &#125;
+      &#125;
+      return instance;
+  &#125;
+
+  // 禁止拷贝构造函数和赋值操作符
+  Singleton(const Singleton&amp;) = delete;
+  Singleton&amp; operator=(const Singleton&amp;) = delete;
+
+private:
+  // 私有构造函数
+  Singleton() &#123;&#125;
+
+  // 静态成员变量，用于存储唯一的实例
+  static Singleton* instance;
+  // 互斥锁，用于保证线程安全
+  static std::mutex mutex;
+&#125;;
+
+// 静态成员变量的初始化
+Singleton* Singleton::instance = nullptr;
+std::mutex Singleton::mutex;
+</code></pre>
+</li>
+<li><h3 id="C-11-及以后的标准"><a href="#C-11-及以后的标准" class="headerlink" title="C++11 及以后的标准"></a>C++11 及以后的标准</h3><p>在C++11及以后的标准中，可以使用<code>std::call_once</code>来确保实例的唯一性，并提高线程安全性：</p>
+<pre><code class="cpp">#include &lt;mutex&gt;
+
+class Singleton &#123;
+public:
+  // 获取单例实例的静态方法
+  static Singleton* getInstance() &#123;
+      std::call_once(flag, []() &#123;
+          instance.reset(new Singleton());
+      &#125;);
+      return instance.get();
+  &#125;
+
+  // 禁止拷贝构造函数和赋值操作符
+  Singleton(const Singleton&amp;) = delete;
+  Singleton&amp; operator=(const Singleton&amp;) = delete;
+
+private:
+  // 私有构造函数
+  Singleton() &#123;&#125;
+
+  // 静态成员变量，用于存储唯一的实例
+  static std::unique_ptr&lt;Singleton&gt; instance;
+  // 静态变量，用于确保单例实例只创建一次
+  static std::once_flag flag;
+&#125;;
+
+// 静态成员变量的初始化
+std::unique_ptr&lt;Singleton&gt; Singleton::instance;
+std::once_flag Singleton::flag;
+</code></pre>
+<p>在这个实现中，<code>std::call_once</code> 和 <code>std::once_flag</code> 确保了即使在多线程环境中，单例对象也只会被创建一次。<code>std::unique_ptr</code> 自动管理内存，避免了手动释放内存的麻烦。</p>
+<p>使用互斥锁（mutex）来确保线程安全时为什么只有锁：std::lock_guard<a href="std::mutex">std::mutex</a> lock(mutex); 没有解锁?</p>
+<p>在使用 <code>std::lock_guard&lt;std::mutex&gt;</code> 时，解锁是由 <code>std::lock_guard</code> 自动处理的，而不需要显式地调用解锁操作。这是因为 <code>std::lock_guard</code> 是一个RAII（Resource Acquisition Is Initialization）风格的类，它的设计目的是简化互斥锁的管理并自动释放资源。</p>
+</li>
+<li><h3 id="RAII-和-std-lock-guard"><a href="#RAII-和-std-lock-guard" class="headerlink" title="RAII 和 std::lock_guard"></a>RAII 和 <code>std::lock_guard</code></h3><p>RAII 是一种编程习惯，确保资源（如内存、文件句柄、互斥锁等）的生命周期由对象的生命周期来管理。<code>std::lock_guard</code> 利用 RAII 原则来管理互斥锁的锁定和解锁：</p>
+<ol>
+<li><strong>构造函数</strong>：当 <code>std::lock_guard</code> 对象被创建时，它会在构造函数中自动锁定传递给它的 <code>std::mutex</code> 对象。</li>
+<li><strong>析构函数</strong>：当 <code>std::lock_guard</code> 对象被销毁（即其作用域结束时），它的析构函数会自动释放（解锁）互斥锁。</li>
+</ol>
+<p>这种设计使得你不需要显式地编写解锁代码，降低了因为遗漏解锁操作而导致的潜在错误。</p>
+</li>
+<li><h3 id="解释-1"><a href="#解释-1" class="headerlink" title="解释"></a>解释</h3></li>
+<li><p><code>std::lock_guard&lt;std::mutex&gt; lock(mutex);</code></p>
+<p>：</p>
+<ul>
+<li>当执行到这行代码时，<code>lock</code> 对象会在构造函数中自动锁定 <code>mutex</code>。</li>
+<li>当 <code>lock</code> 对象超出作用域（例如，<code>getInstance</code> 方法的执行结束时），<code>lock</code> 的析构函数会被调用，从而自动解锁 <code>mutex</code>。</li>
+</ul>
+</li>
+<li><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3></li>
+<li><p><strong>自动解锁</strong>：减少了因为忘记解锁导致的死锁问题。</p>
+</li>
+<li><p><strong>简化代码</strong>：不需要显式地管理锁的释放，使代码更加简洁和易于维护。</p>
+</li>
+<li><p><strong>异常安全</strong>：即使在 <code>getInstance</code> 方法中发生异常，<code>std::lock_guard</code> 也会确保互斥锁在 <code>lock</code> 对象被销毁时正确解锁，从而避免死锁。</p>
+<p>通过 <code>std::lock_guard</code> 或其他类似的 RAII 风格的工具，C++ 提供了一种简洁而安全的方式来管理互斥锁，帮助程序员编写更健壮的多线程代码。</p>
+<p><img src="/../images/image-20240821154750452.png" alt="image-20240821154750452"></p>
+<p><img src="/../images/image-20240821155047037.png" alt="image-20240821155047037"></p>
+</li>
+</ul>
+<p><img src="/../images/image-20240822093944038.png" alt="image-20240822093944038"></p>
+<p>decltype(auto)和auto的区别</p>
+<p><code>decltype(auto)</code> 和 <code>auto</code> 都用于类型推导，但它们有不同的行为：</p>
+<ol>
+<li><p><strong><code>auto</code></strong>:</p>
+<ul>
+<li>用于自动推导变量的类型。<code>auto</code> 根据表达式的值推导类型，不会保留表达式的引用性（即 <code>auto</code> 不会推导出引用类型，除非显式指定）。</li>
+<li>例如，<code>auto x = 5;</code> 中，<code>x</code> 的类型是 <code>int</code>。</li>
+</ul>
+</li>
+<li><p><strong><code>decltype(auto)</code></strong>:</p>
+<ul>
+<li>结合 <code>decltype</code> 和 <code>auto</code> 的特性。它推导出表达式的类型，包括引用（<code>decltype</code> 会保留表达式的原始类型）。</li>
+<li>例如，<code>decltype(auto) y = (5);</code> 中，<code>y</code> 的类型是 <code>int&amp;</code>，因为 <code>(5)</code> 是一个左值引用。</li>
+</ul>
+</li>
+</ol>
+<p><strong>总结</strong>:</p>
+<ul>
+<li>使用 <code>auto</code> 时，结果类型是值类型。</li>
+<li>使用 <code>decltype(auto)</code> 时，结果类型保持原表达式的类型，包括引用。</li>
+</ul>
+<p><img src="/../images/image-20240822094955233.png" alt="image-20240822094955233"></p>
+<p><img src="/../images/image-20240822095110135.png" alt="image-20240822095110135"></p>
+<p><img src="/../images/image-20240822095353349.png" alt="image-20240822095353349">T1{}创建一个T1的对象</p>
+<h3 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h3><p><img src="/../images/image-20240822100310129.png" alt="image-20240822100310129"></p>
+<p>函数作为参数传入另一个函数，实际传的是这个函数的起始地址</p>
+<p><img src="/../images/image-20240822100649562.png" alt="image-20240822100649562"></p>
+<p>确实相当于函数指针</p>
+<p><img src="/../images/image-20240822100903926.png" alt="image-20240822100903926"></p>
+<p><img src="/../images/image-20240822102642020.png" alt="image-20240822102642020"></p>
+<p><img src="/../images/image-20240822102841702.png" alt="image-20240822102841702"></p>
+<p><img src="/../images/image-20240822103024352.png" alt="image-20240822103024352"></p>
+<p><img src="/../images/image-20240822103222797.png" alt="image-20240822103222797"></p>
+<p><img src="/../images/image-20240822103620126.png" alt="image-20240822103620126"></p>
+<p><img src="/../images/image-20240822103849124.png" alt="image-20240822103849124"></p>
+<p><img src="/../images/image-20240822104300564.png" alt="image-20240822104300564"></p>
+<p><img src="/../images/image-20240822142510370.png" alt="image-20240822142510370"></p>
+<p><img src="/../images/image-20240822142730386.png" alt="image-20240822142730386"></p>
+<p>###避免使用模板参数</p>
+<p><img src="/../images/image-20240822143331265.png" alt="image-20240822143331265"></p>
+<p>类型擦除技术：std::function容器</p>
+<p><img src="/../images/image-20240822143825237.png" alt="image-20240822143825237"></p>
+<p><img src="/../images/image-20240822145011740.png" alt="image-20240822145011740">但是没办法做部分特例化</p>
+<p><img src="/../images/image-20240822145901194.png" alt="image-20240822145901194"></p>
+<p><strong>立即调用 Lambda</strong>：在 lambda 表达式的定义后面加上 <code>()</code>，立即调用这个匿名函数。 lambda 表达式的返回值可以用于初始化变量或进行其他操作。</p>
+<p><img src="/../images/image-20240822150515258.png" alt="image-20240822150515258"></p>
+<p>可以利用return自带的break效果既实现break又赋值的效果</p>
+<p><img src="/../images/image-20240822151844264.png" alt="image-20240822151844264"></p>
+<p><img src="/../images/image-20240822152541777.png" alt="image-20240822152541777"></p>
+<p><img src="/../images/image-20240822152759758.png" alt="image-20240822152759758"></p>
+<p><img src="/../images/image-20240822153156878.png" alt="image-20240822153156878"></p>
+<p><img src="/../images/image-20240822161836536.png" alt="image-20240822161836536"></p>
+<p><img src="/../images/image-20240822162204007.png" alt="image-20240822162204007"></p>
+<p>左值持久，右值短暂，左值有持久的状态，而右值要么是字面常量，要么是在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC&spm=1001.2101.3001.7020">表达式求值</a>过程中创建的临时对象(将要被销毁的对象)。</p>
+<p>右值引用的好处是减少右值作为参数传递时的复制开销</p>
+<p>使用std::move可以获得绑定到一个左值的右值引用</p>
+<pre><code class="cpp">int intValue = 10;
+int &amp;&amp;intValue3 = std::move(intValue);
+</code></pre>
+<p><code>decltype(auto)</code> 是 C++11 引入的一种类型推断工具，它结合了 <code>decltype</code> 和 <code>auto</code> 的特性，用于在声明变量时推断其类型。与 <code>auto</code> 不同，<code>decltype(auto)</code> 更精确地推断变量的类型，包括引用性。</p>
+<ul>
+<li><p><strong>用法</strong>：<code>decltype(auto)</code> 在声明变量时，会推断出表达式的确切类型，包括是否是引用类型。</p>
+<pre><code class="cpp">int x = 10;
+int&amp; ref = x;
+decltype(auto) y = ref; // y 是 int&amp;，与 ref 类型相同
+</code></pre>
+</li>
+<li><p><strong>区别</strong>：<code>auto</code> 只推断值类型，而 <code>decltype(auto)</code> 会保持原有的引用类型或常量性。</p>
+<pre><code class="cpp">auto a = x;          // a 是 int
+decltype(auto) b = x; // b 是 int，b 不是引用
+decltype(auto) c = ref; // c 是 int&amp;，与 ref 类型相同
+</code></pre>
+</li>
+</ul>
+<p><strong>总结</strong>：<code>decltype(auto)</code> 在需要精确类型推断，包括引用时非常有用。</p>
+<p>但是tuple容器的万能推导由于历史原因，不是decltype(auto),而是auto &amp;&amp;</p>
+<p><img src="/../images/image-20240825111507625.png" alt="image-20240825111507625"></p>
+<p><img src="/../images/image-20240825111624413.png" alt="image-20240825111624413"></p>
+<p>结构化绑定的基本语法如下：</p>
+<p>auto [var1, var2, var3] &#x3D; expression;</p>
+<p><img src="/../images/image-20240825112136528.png" alt="image-20240825112136528"></p>
+<p><img src="/../images/image-20240825154641671.png" alt="image-20240825154641671"></p>
+<p><img src="/../images/image-20240825155359129.png" alt="image-20240825155359129"></p>
+<p><img src="/../images/image-20240825155541735.png" alt="image-20240825155541735"></p>
+<p><img src="/../images/image-20240826130922114.png" alt="image-20240826130922114">optional就像一个更安全的指针</p>
+<p>在 C++ 中，<code>union</code> 是一种数据结构，它允许在同一内存位置存储不同的数据类型。<code>union</code> 的所有成员共享同一块内存区域，这意味着在任何给定时刻，<code>union</code> 只能存储一个成员的数据。使用 <code>union</code> 可以节省内存，特别是在需要存储多种不同类型但从不同时存储这些类型时。</p>
+<h3 id="union-的基本语法"><a href="#union-的基本语法" class="headerlink" title="union 的基本语法"></a><code>union</code> 的基本语法</h3><pre><code class="cpp">union UnionName &#123;
+    type1 member1;
+    type2 member2;
+    type3 member3;
+    // more members
+&#125;;
+</code></pre>
+<h3 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h3><ol>
+<li><p><strong>内存共享</strong>：</p>
+<ul>
+<li><code>union</code> 中的所有成员共享同一块内存。因此，<code>union</code> 的大小由其最大成员的大小决定。</li>
+</ul>
+</li>
+<li><p><strong>只能存储一个成员</strong>：</p>
+<ul>
+<li>虽然 <code>union</code> 可以定义多个成员，但在任何时刻只能存储一个成员的数据。写入一个成员会覆盖掉之前写入的成员的数据。</li>
+</ul>
+</li>
+<li><p><strong>节省内存</strong>：</p>
+<ul>
+<li>因为所有成员共用一块内存，所以 <code>union</code> 可以节省内存，尤其是在只需要存储其中一个成员的数据时。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3><pre><code class="cpp">#include &lt;iostream&gt;
+
+union Data &#123;
+    int intValue;
+    float floatValue;
+    char charValue;
+&#125;;
+
+int main() &#123;
+    Data data;
+
+    data.intValue = 5;
+    std::cout &lt;&lt; &quot;intValue: &quot; &lt;&lt; data.intValue &lt;&lt; std::endl;
+
+    data.floatValue = 3.14;
+    std::cout &lt;&lt; &quot;floatValue: &quot; &lt;&lt; data.floatValue &lt;&lt; std::endl;
+
+    data.charValue = &#39;A&#39;;
+    std::cout &lt;&lt; &quot;charValue: &quot; &lt;&lt; data.charValue &lt;&lt; std::endl;
+
+    // 访问数据会输出不确定的结果，因为各个成员共享同一内存
+    std::cout &lt;&lt; &quot;intValue (after modifying to charValue): &quot; &lt;&lt; data.intValue &lt;&lt; std::endl;
+
+    return 0;
+&#125;
+</code></pre>
+<p>在上面的示例中，<code>union</code> <code>Data</code> 可以存储 <code>int</code>, <code>float</code>, 和 <code>char</code> 三种数据类型，但它们共享同一块内存。当写入 <code>floatValue</code> 后，之前存储的 <code>intValue</code> 的数据会被覆盖，读取 <code>intValue</code> 会得到不可预测的结果。</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><p><strong>类型安全</strong>：</p>
+<ul>
+<li>使用 <code>union</code> 时要注意类型安全。读取当前未写入的成员数据可能会导致未定义的行为。</li>
+</ul>
+</li>
+<li><p><strong>构造和析构</strong>：</p>
+<ul>
+<li><code>union</code> 允许只有一个成员的构造和析构。C++11 之后，<code>union</code> 可以包含具有非平凡构造函数、析构函数或拷贝&#x2F;移动操作符的成员，但这些操作必须在使用 <code>union</code> 的情况下正确处理。</li>
+</ul>
+</li>
+<li><p><strong><code>std::variant</code> 替代</strong>：</p>
+<ul>
+<li>C++17 引入了 <code>std::variant</code>，这是一个更安全的替代 <code>union</code>，提供了类型安全的联合体和更丰富的功能。</li>
+</ul>
+</li>
+</ul>
+<p>总的来说，<code>union</code> 是一个低级数据结构，用于内存优化和处理不同类型的数据，但在实际编程中需谨慎使用。</p>
+<p><img src="/../images/image-20240826131405785.png" alt="image-20240826131405785"></p>
+<p><img src="/../images/image-20240826133023527.png" alt="image-20240826133023527"></p>
+<p><img src="/../images/image-20240826133352602.png" alt="image-20240826133352602"></p>
+<p><img src="/../images/image-20240826134549406.png" alt="image-20240826134549406"></p>
+<p><img src="/../images/image-20240826135522792.png" alt="image-20240826135522792"></p>
+<ul>
+<li>使用 <code>auto</code> 作为参数类型实际上利用了 C++ 的模板机制，因为 <code>auto</code> 类型推断相当于模板类型参数的自动推导。虽然 lambda 本身不是一个模板，但它的参数使用 <code>auto</code> 实际上是利用了模板的类型推断机制。</li>
+<li><code>[&amp;] (auto const &amp;t)&#123;&#125;</code> 使用了模板特性中的类型推断机制，通过 <code>auto</code> 使得 lambda 表达式能够处理多种不同类型的参数。这个功能在 C++11 及其后续版本中成为了更灵活、强大的工具，使得代码更加简洁和通用。</li>
+</ul>
+<p><img src="/../images/image-20240826140520404.png" alt="image-20240826140520404"></p>
+<p><img src="/../images/image-20240826140928719.png" alt="image-20240826140928719"></p>
+<h1 id="从汇编角度看编译器优化"><a href="#从汇编角度看编译器优化" class="headerlink" title="从汇编角度看编译器优化"></a>从汇编角度看编译器优化</h1><p>编译器是从源代码生成汇编语言</p>
+<p><img src="/../images/image-20240826142543763.png" alt="image-20240826142543763"></p>
+<p>RIP是当前执行的代码的地址</p>
+<p>MMX，XMM，YMM都是用于储存浮点数的寄存器</p>
+<p>把局部变量放入寄存器，读写就更快了</p>
+<p>rsp代表堆栈：      -4（%rsp）其中-代表是堆栈上的某一个地址</p>
+<p><img src="/../images/image-20240826143356174.png" alt="image-20240826143356174"></p>
+<p><img src="/../images/image-20240826145632245.png" alt="image-20240826145632245"></p>
+<p><img src="/../images/image-20240826145948278.png" alt="image-20240826145948278"></p>
+<p>eax与rax的低32位是共用的</p>
+<p>ax与eax的低16位是通用的</p>
+<p><img src="/../images/image-20240826162116558.png" alt="image-20240826162116558"></p>
+<p><img src="/../images/image-20240826162507877.png" alt="image-20240826162507877">%eax ：返回值</p>
+<p><img src="/../images/image-20240826163129510.png" alt="image-20240826163129510"></p>
+<p><img src="/../images/image-20240826163353133.png" alt="image-20240826163353133"></p>
+<p><img src="/../images/image-20240826163854896.png" alt="image-20240826163854896"></p>
+<p>l代表32位，q代表64位</p>
+<p><img src="/../images/image-20240826164111288.png" alt="image-20240826164111288"></p>
+<p><img src="/../images/image-20240826165156571.png" alt="image-20240826165156571"></p>
+<p><img src="/../images/image-20240826165630808.png" alt="image-20240826165630808"></p>
+<p>在 C++ 中，<code>ThreadPool threadPool &#123;&#125;;</code> 和 <code>ThreadPool threadPool ;</code> 是两种不同的初始化方式，它们对 <code>ThreadPool</code> 对象的初始化有所不同。</p>
+<h3 id="1-ThreadPool-threadPool"><a href="#1-ThreadPool-threadPool" class="headerlink" title="1. ThreadPool threadPool {};"></a>1. <code>ThreadPool threadPool &#123;&#125;;</code></h3><p>这是 <strong>直接初始化（Direct Initialization）</strong> 的一种方式，使用了 <strong>统一初始化语法</strong>（Uniform Initialization Syntax）。具体来说，这种写法会调用 <code>ThreadPool</code> 的默认构造函数，并且初始化所有成员变量为默认值：</p>
+<ul>
+<li><strong>如果 <code>ThreadPool</code> 有默认构造函数</strong>，它将被调用来创建对象。</li>
+<li><strong>如果 <code>ThreadPool</code> 的构造函数</strong>没有显式初始化某些成员变量，它们会被自动初始化为其类型的默认值。对于基本数据类型（如 <code>int</code>），这意味着它们会被初始化为 <code>0</code>。对于指针类型，它们会被初始化为 <code>nullptr</code>。</li>
+</ul>
+<h3 id="2-ThreadPool-threadPool"><a href="#2-ThreadPool-threadPool" class="headerlink" title="2. ThreadPool threadPool ;"></a>2. <code>ThreadPool threadPool ;</code></h3><p>这是 <strong>默认初始化（Default Initialization）</strong> 的一种方式。在这种情况下，<code>ThreadPool</code> 对象的初始化行为依赖于以下几种情况：</p>
+<ul>
+<li><strong>如果 <code>ThreadPool</code> 有默认构造函数</strong>，它将被调用来创建对象。</li>
+<li><strong>如果 <code>ThreadPool</code> 的构造函数没有显式初始化某些成员变量</strong>，那么这些成员变量的初始化方式依赖于它们的类型和是否有默认构造函数。基本数据类型（如 <code>int</code>）不会被初始化到任何特定值（它们会是未定义的），指针类型也不会自动初始化（它们的值是不确定的）。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>**<code>ThreadPool threadPool &#123;&#125;;</code>**：使用统一初始化语法，所有成员变量被初始化为其类型的默认值，较为安全。</li>
+<li><strong><code>ThreadPool threadPool ;</code><strong>：默认初始化，成员变量的初始值依赖于其类型和构造函数，</strong>可能会导致未定义行为（对于基本数据类型）</strong>。</li>
+</ul>
+<p>在实践中，推荐使用 <code>ThreadPool threadPool &#123;&#125;;</code> 以确保对象的成员变量被正确地初始化，避免潜在的未定义行为。</p>
+<p>在对象构造时，<code>std::lock_guard</code> 会自动锁定传入的互斥锁，而在对象析构时，它会自动释放锁</p>
+<p><strong><code>std::lock_guard&lt;std::mutex&gt; guard(lock);</code></strong></p>
+<p>当执行 <code>std::lock_guard&lt;std::mutex&gt; guard(lock);</code> 时：</p>
+<ul>
+<li><strong>锁定</strong>: <code>guard</code> 对象在创建时会自动调用 <code>lock()</code> 方法来锁定传入的互斥锁（<code>lock</code>）。</li>
+<li><strong>作用域结束</strong>: 当 <code>guard</code> 对象的作用域结束（例如，离开当前的代码块或函数）时，它的析构函数会自动调用 <code>unlock()</code> 方法来解锁互斥锁</li>
+</ul>
+<p>要理解 <code>subset</code> 中的这行数据，我们可以将其拆解成几部分来分析：</p>
+<pre><code class="plaintext">[[ 0.          1.          2.          3.          4.          5.
+   6.          7.          8.         -1.         -1.          9.
+  -1.         -1.         10.         11.         12.         -1.
+  21.50975911 13.        ]]
+</code></pre>
+<h3 id="1-关键点索引"><a href="#1-关键点索引" class="headerlink" title="1. 关键点索引"></a>1. 关键点索引</h3><ul>
+<li>前 18 个值 <code>[0, 1, 2, 3, 4, 5, 6, 7, 8, -1, -1, 9, -1, -1, 10, 11, 12, -1]</code> 代表了关键点的索引。<ul>
+<li>正整数表示该位置有一个有效的关键点索引。</li>
+<li><code>-1</code> 表示该位置没有对应的关键点。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-总评分"><a href="#2-总评分" class="headerlink" title="2. 总评分"></a>2. 总评分</h3><ul>
+<li><code>21.50975911</code> 是这个组合的总评分。这个评分是所有有效关键点的评分之和或某种加权评分的结果。</li>
+</ul>
+<h3 id="3-关键点数量"><a href="#3-关键点数量" class="headerlink" title="3. 关键点数量"></a>3. 关键点数量</h3><ul>
+<li><code>13</code> 是这个组合中的有效关键点数量。这里 <code>13</code> 表示在该组合中共有 13 个有效的关键点索引。</li>
+</ul>
+<h3 id="结合信息"><a href="#结合信息" class="headerlink" title="结合信息"></a>结合信息</h3><p>这个 <code>subset</code> 行数据表示一个关键点组合，其中包含 13 个有效的关键点，所有这些关键点的索引被列出。组合的总评分为 <code>21.50975911</code>。通过这些信息，你可以了解该组合的结构以及它在某种评分机制下的表现。</p>
+<h4 id="详细解读："><a href="#详细解读：" class="headerlink" title="详细解读："></a>详细解读：</h4><ul>
+<li>有效关键点索引为 <code>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]</code>，总共 13 个。</li>
+<li>索引为 <code>-1</code> 的位置表示这些位置没有有效的关键点。</li>
+<li>总评分 <code>21.50975911</code> 可能是根据这些有效关键点的某些特性（如评分、置信度等）计算出来的。</li>
+</ul>
+<p>这样的 <code>subset</code> 数据通常用于在处理关键点检测任务中，选择或评估最佳的关键点组合。</p>
+<p>这个是candidate： [[2.19000000e+02 1.18000000e+02 9.45192695e-01 0.00000000e+00] [1.96000000e+02 2.63000000e+02 9.28416848e-01 1.00000000e+00] [8.70000000e+01 2.89000000e+02 8.54923248e-01 2.00000000e+00] [6.60000000e+01 4.49000000e+02 8.24636817e-01 3.00000000e+00] [1.20000000e+02 5.07000000e+02 7.98071980e-01 4.00000000e+00] [3.07000000e+02 2.38000000e+02 8.55016530e-01 5.00000000e+00] [3.64000000e+02 3.76000000e+02 7.69826353e-01 6.00000000e+00] [2.81000000e+02 4.45000000e+02 8.87847126e-01 7.00000000e+00] [1.68000000e+02 5.42000000e+02 4.70188409e-01 8.00000000e+00] [2.98000000e+02 5.27000000e+02 4.78751719e-01 9.00000000e+00] [1.94000000e+02 1.03000000e+02 9.33498561e-01 1.00000000e+01] [2.30000000e+02 1.02000000e+02 9.27351594e-01 1.10000000e+01] [1.35000000e+02 1.22000000e+02 8.83832693e-01 1.20000000e+01]] 这个是subset: [[ 0.          1.          2.          3.          4.          5.   6.          7.          8.         -1.         -1.          9.  -1.         -1.         10.         11.         12.         -1.  21.50975911 13.        ]]</p>
+<p>“Stack underflow”和“stack overflow”都是与栈（stack）数据结构相关的错误，但它们的含义和发生的情况不同：</p>
+<h3 id="Stack-Overflow（栈溢出）"><a href="#Stack-Overflow（栈溢出）" class="headerlink" title="Stack Overflow（栈溢出）"></a>Stack Overflow（栈溢出）</h3><ul>
+<li><strong>定义</strong>：栈溢出发生在栈的大小超过其最大容量时。通常是由于过深的递归调用或在栈上分配了过多的局部变量导致的。</li>
+<li><strong>后果</strong>：栈溢出通常会导致程序崩溃或异常终止，因为系统无法继续在栈上分配内存。</li>
+</ul>
+<h3 id="Stack-Underflow（栈下溢出）"><a href="#Stack-Underflow（栈下溢出）" class="headerlink" title="Stack Underflow（栈下溢出）"></a>Stack Underflow（栈下溢出）</h3><ul>
+<li><strong>定义</strong>：栈下溢出发生在试图从空栈中弹出元素时。例如，尝试执行“pop”操作但栈为空。</li>
+<li><strong>后果</strong>：栈下溢出可能导致访问未定义的内存，程序可能会抛出异常或返回错误。</li>
+</ul>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>溢出（overflow）</strong>：栈容量超出限制。</li>
+<li><strong>下溢（underflow）</strong>：试图从空栈中移除元素。</li>
+</ul>
+<p><code>NULL</code> 是一个预处理宏，通常被定义为 <code>0</code> 或 <code>((void*)0)</code>。它在类型上是一个整数，因此可能导致类型不安全的情况。</p>
+<ul>
+<li><p><code>nullptr</code> 是 C++11 引入的一个关键字，表示空指针。它是一个特定的类型 <code>std::nullptr_t</code>，能更好地支持类型安全。</p>
+</li>
+<li><p><strong>OpenGL 上下文</strong>：OpenGL 上下文是一个包含了所有 OpenGL 状态的信息的环境。每个窗口通常会有一个自己的上下文。</p>
+</li>
+</ul>
+<p>gcc -E main.cpp | tail -n 15 是什么意思</p>
+<p><code>gcc -E main.cpp | tail -n 15</code> 是一个命令行指令，具体含义如下：</p>
+<ul>
+<li><code>gcc</code>：GNU 编译器集合，用于编译 C 和 C++ 程序。</li>
+<li><code>-E</code>：该选项告诉 <code>gcc</code> 只进行预处理，即处理源代码中的宏和包含文件，但不进行编译。</li>
+<li><code>main.cpp</code>：要处理的源文件。</li>
+<li><code>|</code>：管道符，用于将前一个命令的输出传递给后一个命令。</li>
+<li><code>tail -n 15</code>：该命令输出前一个命令的最后 15 行。</li>
+</ul>
+<p>因此，整个命令的作用是预处理 <code>main.cpp</code> 文件，并显示预处理后的结果的最后 15 行。这通常用于调试宏和包含的头文件。</p>
+<p>constexpr</p>
+<p>编译时常量</p>
+<p><em>在编译时计算</em></p>
+<p>结合 <code>if constexpr</code> 根据条件选择性编译代码</p>
+<p><code>__attribute__((inline))</code> 是 GCC 和 Clang 编译器中的一个扩展，用于建议编译器将某个函数内联。内联函数的目的是减少函数调用的开销，通过将函数代码直接插入到调用处来提高性能。</p>
+<ol>
+<li><strong>性能优化</strong>：可以减少函数调用的开销，尤其是在小型函数中。</li>
+<li><strong>不强制</strong>：即使使用了 <code>inline</code> 属性，编译器仍然可以选择不内联，具体取决于优化策略和函数的复杂性。</li>
+<li><strong>适用场景</strong>：通常用于小的、频繁调用的函数。</li>
+</ol>
+<p>把std::string opengl_errno_name(int err)改成static const char *opengl_errno_name(int err)的好处</p>
+<p>将 <code>std::string opengl_errno_name(int err)</code> 改为 <code>static const char *opengl_errno_name(int err)</code> 的好处包括：</p>
+<ol>
+<li><strong>性能提升</strong>：使用 <code>const char*</code> 可以减少内存分配和拷贝操作，提高性能，尤其在频繁调用的情况下。</li>
+<li><strong>内存管理</strong>：<code>const char*</code> 不需要动态分配内存，避免了内存泄漏的风险，使用起来更加安全。</li>
+<li><strong>简单性</strong>：直接返回字符串字面量或静态数组，使代码更简洁，减少不必要的复杂性。</li>
+<li><strong>更好地适应 C 风格 API</strong>：在与 C 语言库交互时，使用 <code>const char*</code> 更加兼容。</li>
+</ol>
+<p><code>#include &lt;GL/gl.h&gt;</code> 和 <code>#include &lt;GL/glu.h&gt;</code> 是 OpenGL 的头文件，它们用于图形编程。具体来说：</p>
+<ol>
+<li>**<code>&lt;GL/gl.h&gt;</code>**：<ul>
+<li>包含了 OpenGL 的核心函数和常量，提供了绘制图形所需的基本接口，比如渲染点、线、三角形等几何图形，以及设置视图、光照、纹理等功能。</li>
+</ul>
+</li>
+<li>**<code>&lt;GL/glu.h&gt;</code>**：<ul>
+<li>提供了一些辅助功能和工具，简化了 OpenGL 的使用。例如，它包含了用于生成和操作网格、处理矩阵变换、创建透视和正交投影等的函数。</li>
+</ul>
+</li>
+</ol>
+<p><code>#include &lt;GLFW/glfw3.h&gt;</code> 是用于包含 GLFW 库的头文件，GLFW 是一个开源的跨平台库，主要用于创建窗口、处理用户输入以及管理 OpenGL 上下文。具体功能包括：</p>
+<ol>
+<li><strong>创建和管理窗口</strong>：可以创建多种类型的窗口，并设置其属性。</li>
+<li><strong>处理输入</strong>：支持键盘、鼠标和游戏手柄输入，方便处理用户交互。</li>
+<li><strong>上下文管理</strong>：简化 OpenGL 上下文的创建和管理，使得在窗口中进行图形渲染更为高效。、</li>
+</ol>
+<p><code>#include &lt;glm/glm.hpp&gt;</code> 和 <code>#include &lt;glm/ext.hpp&gt;</code> 是用于包含 GLM（OpenGL Mathematics）库的头文件。具体功能如下：</p>
+<ol>
+<li>**<code>&lt;glm/glm.hpp&gt;</code>**：<ul>
+<li>提供基础数学类型和操作，例如向量、矩阵、四元数等，支持高效的数学运算，适用于图形编程和物理计算。</li>
+</ul>
+</li>
+<li>**<code>&lt;glm/ext.hpp&gt;</code>**：<ul>
+<li>包含一些扩展功能，比如矩阵变换、投影、视图等常用数学函数，方便进行更复杂的数学运算。</li>
+</ul>
+</li>
+</ol>
+<p>GLM 常用于 OpenGL 应用程序中，以简化数学计算和数据管理。</p>
+<p>❥ 基本<br>jk &#x2F; kj &#x2F; <Esc> 回到普通模式<br>q &#x2F; :wq &#x2F; ZZ 保存并退出<br>Q 记录宏<br>gl &#x2F; $ 移动到行末尾<br>gh &#x2F; ^ 移动到行开头（不包括空格）<br>3gl &#x2F; $2l 移动到行末尾倒数第 3 个字符<br>3gh &#x2F; ^2h 移动到行开头倒数第 3 个字符<br>❥ 跳转<br>gd 跳转到定义<br>gD 跳转到声明<br>gy 跳转到变量类型的定义<br>gY 跳转到虚函数实现<br>go 头文件和源文件来回跳转<br>gr 寻找符号引用<br>gz 罗列所有相关信息（定义、引用等）<br>gf 打开光标下的文件名<br>gF 打开光标下的文件名并跳到右侧指定的行号<br>gx 打开光标下的网页链接<br><C-o> 跳转回来<br>❥ 重构<br>gcc 注释&#x2F;取消注释当前选中的代码&#x2F;行<br>gn 重命名变量<br>gw 尝试自动修复问题<br>g&#x3D; 自动格式化当前代码<br>❥ 预览<br>K 悬浮窗查看文档<br>gsf 预览函数定义<br>gsc 预览类定义<br>gsd 预览语法错误<br>❥ 开关<br>gso 打开大纲<br>gsg 打开 Git 面板<br>gsp 打开项目文件树<br>gss 查看所有静态语法错误<br>gsl 查看所有编译器报错<br>gsi 开关 Inlay Hint<br><F8> 或 <C-t> 打开&#x2F;关闭终端<br>❥ 标签页<br><F4> 一键保存所有打开的文件<br><F3> 切换到下一个标签页<br><F2> 切换到上一个标签页<br><F1> 将当前标签页固定在最前<br><S-F3> 将当前标签页右移一位<br><S-F2> 将当前标签页左移一位<br><S-F1> 关闭当前标签页<br><C-S-F3> 关闭右侧所有标签页<br><C-S-F2>关闭左侧所有标签页<br><C-S-F1> 关闭除当前标签页外所有<br>g<Space> 选择跳转到一个标签页<br>❥ 文本查找<br>,, 当前文件中模糊查找<br>,k 当前项目中正则表达式查找<br>,l 当前项目中的所有文件<br>,b 当前 Vim 已打开文件<br>,o 最近打开过的历史文件<br>,i 当前所有加入 Git 仓库的文件<br>,p 当前 Git 有未提交修改的文件<br>,c 所有 Git 提交历史<br>,v 所有 Git 分支<br>❥ 选择<br>vac 选中当前类<br>vic 选中当前类体内<br>vaf 选中当前函数<br>vif 选中当前函数体<br>vab 选中当前块<br>vib 选中当前块中内容<br>vai 选中当前函数调用语句<br>vii 选中当前函数调用语句的参数列表<br>vap 选中当前参数（包括逗号）<br>vip 选中当前参数（不包括逗号）<br>vin 选中当前数字<br>vat 选中当前注释块</p>
+<ul>
+<li>扩大选择</li>
+</ul>
+<ul>
+<li>缩小选择<br>举一反三：dat 删除当前注释块，cip 修改当前参数<br>❥ 移动<br>]c 下一个类开头<br>[c 上一个类开头<br>]C 下一个类结尾<br>[C 上一个类结尾<br>]f 下一个函数开头<br>[f 上一个函数开头<br>]F 下一个函数结尾<br>[F 上一个函数结尾<br>…以此类推，所有英文字母同上“选择”所述…<br><Space> 全屏任意移动<br>❥ 换位<br>mh 左移参数<br>ml 右移参数<br>mj 下移当前语句<br>mk 上移当前语句<br>maf 下移当前函数<br>mif 上移当前函数<br>mac 下移当前类<br>mic 上移当前类<br>❥ 括号<br>可视模式中：<br>s) 给当前选中内容包上 () 括号<br>s} 给当前选中内容包上 {} 括号<br>s] 给当前选中内容包上 [] 括号<br>s&gt; 给当前选中内容包上 &lt;&gt; 尖括号<br>s’ 给当前选中内容包上 ‘’ 单引号<br>s” 给当前选中内容包上 “” 双引号<br>stspan 给当前选中内容包上<span>标签<br>sta href&#x3D;”b.html” 给当前选中内容包上<a href="b.html">标签<br>普通（NORMAL）模式中：<br>ysi<range><brace> 添加括号<br>cs<oldbrace><newbrace> 改变括号<br>ds<brace> 删除括号<br>❥ CMake<br>cmc 或 :CMakeGenerate 配置当前项目<br>cmb 或 :CMakeBuild 构建当前项目<br>cmr 或 :CMakeRun 运行当前项目<br>cms 或 :CMakeStopRunner 杀死当前终端中的正在运行的程序<br>❥ 文件树<br>y 拷贝<br>x 剪切<br>d 删除<br>p 粘贴<br>a 创建</li>
+</ul>
+<p>ALT+shift+左右箭头   跳转</p>
+<pre><code class="yaml">pendulum:
+    joint_state_controller:
+        publish_rate: 100
+        type: joint_state_controller/JointStateController
+    x_controller:
+        joint: base_to_plat
+        type: effort_controllers/JointEffortController
+</code></pre>
+<p>其中joint_state_controller和x_controller是什么意思 这个文件的作用是什么</p>
+<h3 id="1-joint-state-controller"><a href="#1-joint-state-controller" class="headerlink" title="1. joint_state_controller"></a>1. <strong>joint_state_controller</strong></h3><ul>
+<li><strong>用途</strong>：这个控制器用于发布机器人的关节状态（例如位置、速度和加速度）到 ROS 主题。它通常是机器人系统中的基础控制器，负责获取各个关节的状态信息并将其传递给其他组件。</li>
+<li><strong>类型</strong>：<code>joint_state_controller/JointStateController</code> 是一个标准的控制器类型，用于处理关节状态的更新。</li>
+<li><code>joint_state_controller</code> 是用于发布所有关节状态信息的控制器。它会收集机器人的所有关节（如位置、速度和加速度）的状态，并将这些信息发布到 ROS 主题上，通常是 <code>/joint_states</code> 主题。</li>
+<li><strong>publish_rate</strong>：表示发布关节状态的频率，这里设置为 100 Hz。</li>
+</ul>
+<h3 id="2-x-controller"><a href="#2-x-controller" class="headerlink" title="2. x_controller"></a>2. <strong>x_controller</strong></h3><ul>
+<li><strong>用途</strong>：这个控制器用于控制名为 <code>base_to_plat</code> 的关节的努力（力或扭矩）。通常用于执行某种运动控制任务，比如驱动一个关节以实现预期的动态行为。</li>
+<li><strong>类型</strong>：<code>effort_controllers/JointEffortController</code> 是一个控制器类型，专注于控制关节施加的力或扭矩。</li>
+</ul>
+<h3 id="文件的作用"><a href="#文件的作用" class="headerlink" title="文件的作用"></a>文件的作用</h3><p>这个文件主要是用于配置 ROS 控制器管理器，定义机器人各个关节的控制方式及其参数。通过这个配置，您可以在启动时自动加载和初始化这些控制器，使得机器人能够实时进行关节状态的监测和控制。</p>
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong><code>joint_state_controller</code></strong> 负责关节状态的信息发布。</li>
+<li><strong><code>x_controller</code></strong> 则用于具体关节的力量控制。</li>
+<li>整个 YAML 文件用于配置和管理这些控制器，使机器人能够有效地执行控制任务。</li>
+</ul>
+<p>##并发</p>
+<p><img src="/../images/image-20240928131042017.png" alt="image-20240928131042017"></p>
+<p>###0.时间 time</p>
+<p><img src="/../images/image-20241005183555504.png" alt="image-20241005183555504"></p>
+<p>###1.线程  thread</p>
+<p><img src="/../images/image-20241005183759412.png" alt="image-20241005183759412"></p>
+<p>join汇合加入，把子线程加到主线程里，这样主线程只有在子线程结束后才会退出</p>
+<p><img src="/../images/image-20241005185354229.png" alt="image-20241005185354229"></p>
+<p>当想要对线程进行封装时，会发现线程会随着封装函数执行过去而被销毁（因为thread的析构函数）：</p>
+<p><img src="/../images/image-20241005190729501.png" alt="image-20241005190729501"></p>
+<p>使用detach（）,还是不行（因为没用join，主线程不会等子线程）：</p>
+<p><img src="/../images/image-20241005190842874.png" alt="image-20241005190842874"></p>
+<p>全局变量，生命周期会大于封装函数，join，等待子线程：<br><img src="/../images/image-20241005191516568.png" alt="image-20241005191516568"></p>
+<p>利用析构函数简化：<br><img src="/../images/image-20241005191923023.png" alt="image-20241005191923023"></p>
+<p>再简化，标准函数帮你把析构函数写了：</p>
+<p><img src="/../images/image-20241005183933864.png" alt="image-20241005183933864"></p>
+<h3 id="2-异步async"><a href="#2-异步async" class="headerlink" title="2.异步async"></a>2.异步async</h3><p>异步相当于thread的帮手函数,专注于任务本身而不是底层的线程管理,不用那么底层了，使用简单了，但是能力也就下降了。</p>
+<p><code>std::async</code> 和 <code>std::thread</code> 都是 C++11 引入的用于处理并发和多线程编程的工具，但它们在设计目的、使用方式和抽象级别上存在一些关键的关系与区别。以下是它们之间的详细比较：</p>
+<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><ul>
+<li><strong>都属于 C++ 标准库</strong>：两者都是 C++11 提供的并发支持的一部分，旨在简化多线程编程。</li>
+<li><strong>功能互补</strong>：尽管各自的设计有不同侧重点，但它们可以一起使用。例如，可以在 <code>std::async</code> 中使用 <code>std::thread</code>，或者在创建线程时使用 <code>std::async</code> 来管理结果。</li>
+</ul>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th><code>std::thread</code></th>
+<th><code>std::async</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>抽象级别</strong></td>
+<td>更低级别的线程管理</td>
+<td>更高层次的异步任务管理</td>
+</tr>
+<tr>
+<td><strong>线程控制</strong></td>
+<td>开发者需要手动管理线程的生命周期（启动、加入、分离）</td>
+<td>自动管理线程的生命周期，返回 <code>std::future</code></td>
+</tr>
+<tr>
+<td><strong>执行策略</strong></td>
+<td>一般立即启动新线程</td>
+<td>可选择立即执行或延迟执行（<code>std::launch::async</code> 或 <code>std::launch::deferred</code>）</td>
+</tr>
+<tr>
+<td><strong>结果处理</strong></td>
+<td>返回值需要通过共享数据或其他同步机制来获取</td>
+<td>通过 <code>std::future</code> 对象直接获取结果</td>
+</tr>
+<tr>
+<td><strong>异常处理</strong></td>
+<td>异常不会传播到主线程，需要手动管理</td>
+<td>异常会被捕获并在调用 <code>future.get()</code> 时重新抛出</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>需要细致控制线程行为的场景，如实时系统、服务器等</td>
+<td>简单的异步任务、并行计算、提高程序响应性</td>
+</tr>
+</tbody></table>
+<h3 id="使用示例-1"><a href="#使用示例-1" class="headerlink" title="使用示例"></a>使用示例</h3><h4 id="使用-std-thread-的示例："><a href="#使用-std-thread-的示例：" class="headerlink" title="使用 std::thread 的示例："></a>使用 <code>std::thread</code> 的示例：</h4><pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;thread&gt;
+
+void task() &#123;
+    std::cout &lt;&lt; &quot;Task is running in a separate thread.\n&quot;;
+&#125;
+
+int main() &#123;
+    std::thread t(task);
+    t.join();  // 等待线程完成
+    return 0;
+&#125;
+</code></pre>
+<h4 id="使用-std-async-的示例："><a href="#使用-std-async-的示例：" class="headerlink" title="使用 std::async 的示例："></a>使用 <code>std::async</code> 的示例：</h4><pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;future&gt;
+
+int task() &#123;
+    return 42;  // 返回结果
+&#125;
+
+int main() &#123;
+    std::future&lt;int&gt; result = std::async(task);
+    std::cout &lt;&lt; &quot;Result from async task: &quot; &lt;&lt; result.get() &lt;&lt; &#39;\n&#39;;  // 获取结果
+    return 0;
+&#125;
+</code></pre>
+<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>**选择使用 <code>std::thread</code>**：当你需要更细粒度的线程控制，或者需要实现复杂的线程交互时。</li>
+<li>**选择使用 <code>std::async</code>**：当你希望简化异步任务的管理，并专注于任务本身而不是底层的线程管理时。</li>
+</ul>
+<p>根据具体的需求和场景，开发者可以灵活选择这两者中的一种或结合使用。</p>
+<p><img src="/../images/image-20241005185145651.png" alt="image-20241005185145651"></p>
+<p><img src="/../images/image-20241005202136786.png" alt="image-20241005202136786"></p>
+<p><img src="/../images/image-20241005202235380.png" alt="image-20241005202235380"></p>
+<p>std::async相当于在后台开一个线程偷偷执行,如果不想用线程的话，可以用假线程：</p>
+<p><img src="/../images/image-20241005203007249.png" alt="image-20241005203007249"></p>
+<p>std::async的底层实现：（应该用不到吧）</p>
+<p><img src="/../images/image-20241005204852974.png" alt="image-20241005204852974"></p>
+<h3 id="3-互斥量"><a href="#3-互斥量" class="headerlink" title="3.互斥量"></a>3.互斥量</h3><p><img src="/../images/image-20241005211544279.png" alt="image-20241005211544279"></p>
+<p>std::lock_guard grd(mtx); <em>&#x2F;&#x2F; 创建 lock_guard 对象 grd，锁定 mtx</em></p>
+<p>这个有个弊端：不能提前unlock，可以用std::unique_lock:</p>
+<p><img src="/../images/image-20241005213525208.png" alt="image-20241005213525208"></p>
+<p>如果你即想使用unique_lock的自动解锁，又想手动lock：</p>
+<p><img src="/../images/image-20241006100018130.png" alt="image-20241006100018130"></p>
+<p>这个是已经上锁了，又想使用自动解锁：<br><img src="/../images/image-20241006100334056.png" alt="image-20241006100334056"></p>
+<h3 id="4-死锁"><a href="#4-死锁" class="headerlink" title="4.死锁"></a>4.死锁</h3><p>问题一：</p>
+<p><img src="/../images/image-20241005182028304.png" alt="image-20241005182028304"></p>
+<p>不要同时锁两个</p>
+<p><img src="/../images/image-20241005182958030.png" alt="image-20241005182958030"></p>
+<p>保证线程里上锁的顺序一样</p>
+<p><img src="/../images/image-20241005183050653.png" alt="image-20241005183050653"></p>
+<p>使用标准库里的std::lock</p>
+<p><img src="/../images/image-20241005183311794.png" alt="image-20241005183311794"></p>
+<p>同样，为了避免忘记解锁，有了一个RALL版本的std::lock<br><img src="/../images/image-20241006100806745.png" alt="image-20241006100806745"></p>
+<p>问题二：</p>
+<p><img src="/../images/image-20241006101009888.png" alt="image-20241006101009888"></p>
+<p>std::recursive_mutex</p>
+<p><img src="/../images/image-20241006101432670.png" alt="image-20241006101432670"></p>
+<h3 id="5-数据结构"><a href="#5-数据结构" class="headerlink" title="5.数据结构"></a>5.数据结构</h3><p><img src="/../images/image-20241006101750387.png" alt="image-20241006101750387"></p>
+<p>封装一下：</p>
+<p><img src="/../images/image-20241006102058522.png" alt="image-20241006102058522"></p>
+<p>因为mutex::lock()不是const的 ,那么使用mutable修饰一下：</p>
+<p><img src="/../images/image-20241006102636082.png" alt="image-20241006102636082"></p>
+<p>####读写锁：</p>
+<p><img src="/../images/image-20241006102823718.png" alt="image-20241006102823718"></p>
+<p>std::shared_mutex<br><img src="/../images/image-20241006103549484.png" alt="image-20241006103549484"></p>
+<p>lock()的RAII是std::unique_lock</p>
+<p>lock_shared()的RAII是std::shared_lock</p>
+<p><img src="/../images/image-20241006104139107.png" alt="image-20241006104139107"></p>
+<p><img src="/../images/image-20241006105913707.png" alt="image-20241006105913707"></p>
+<h3 id="6-条件变量"><a href="#6-条件变量" class="headerlink" title="6.条件变量"></a>6.条件变量</h3><p><img src="/../images/image-20241006110451776.png" alt="image-20241006110451776"></p>
+<p><img src="/../images/image-20241006110619094.png" alt="image-20241006110619094"></p>
+<p><img src="/../images/image-20241006111315559.png" alt="image-20241006111315559"></p>
+<p><img src="/../images/image-20241006115747920.png" alt="image-20241006115747920"></p>
+<p><img src="/../images/image-20241006120359417.png" alt="image-20241006120359417"></p>
+<p><img src="/../images/image-20241006120454654.png" alt="image-20241006120454654"></p>
+<p>###7.原子操作（硬件层面）</p>
+<p>前面的都是操作系统层面的</p>
+<p>硬件解释：</p>
+<p><img src="/../images/image-20241006123756588.png" alt="image-20241006123756588"></p>
+<p><img src="/../images/image-20241006123820764.png" alt="image-20241006123820764"></p>
+<p><img src="/../images/image-20241006124016522.png" alt="image-20241006124016522"></p>
+<p>原子变量：</p>
+<p><img src="/../images/image-20241006125728044.png" alt="image-20241006125728044"></p>
+<p><img src="/../images/image-20241006125817277.png" alt="image-20241006125817277"> </p>
+<p><img src="/../images/image-20241006130153788.png" alt="image-20241006130153788"></p>
+<p><img src="/../images/image-20241006144356518.png" alt="image-20241006144356518"></p>
+<p><img src="/../images/image-20241006144621864.png" alt="image-20241006144621864"></p>
+<p><img src="/../images/image-20241006145302292.png" alt="image-20241006145302292"></p>
+<h2 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h2><p>###——TBB开启的并行编程之旅（Intel TBB并行编程框架）</p>
+<p>###0.从并发到并行</p>
+<p><img src="/../images/image-20241006150631389.png" alt="image-20241006150631389"></p>
+<p><img src="/../images/image-20241006150757093.png" alt="image-20241006150757093"></p>
+<p><img src="/../images/image-20241006151002766.png" alt="image-20241006151002766"></p>
+<p> 不需要手动创建线程池：</p>
+<p><img src="/../images/image-20241006180452099.png" alt="image-20241006180452099"></p>
+<p>  std::thread是操作系统意义上的线程，TBB的一个任务不一定代表一个线程，把任务分配到线程上去， TBB可视为一个高效调度器</p>
+<p>ubuntu20.04蓝牙耳机连上了，但是声音还是输出在内置扬声器上，使用 <code>pactl load-module module-bluetooth-discover</code> 时遇到“模块初始化失败”的错误.</p>
+<ol>
+<li><p><strong>检查 Bluetooth 服务</strong>：<br>确保 Bluetooth 服务正在运行。可以使用以下命令启动服务：</p>
+<pre><code class="bash">sudo systemctl start bluetooth
+</code></pre>
+</li>
+<li><p><strong>安装必要的包</strong>：<br>确保已安装 PulseAudio 和 Bluetooth 支持。运行以下命令安装相关组件：</p>
+<pre><code class="bash">sudo apt install pulseaudio pulseaudio-module-bluetooth pavucontrol
+</code></pre>
+</li>
+<li><p><strong>重启 PulseAudio</strong>：<br>有时重启 PulseAudio 可以解决问题。可以使用以下命令：</p>
+<pre><code class="bash">pulseaudio -k
+pulseaudio --start
+</code></pre>
+</li>
+</ol>
+<p>当然可以。根据你提供的代码，系统的状态空间方程可以表示为以下形式：<br>状态方程：<br>$$[<br>\begin{align*}<br>\dot{x}_1 &amp;&#x3D; x_2 \<br>\dot{x}_2 &amp;&#x3D; \frac{-b \cdot (I + m \cdot l^2)}{P} \cdot x_2 + \frac{m \cdot m \cdot g \cdot l^2}{P} \cdot x_3 \<br>\dot{x}_3 &amp;&#x3D; x_4 \<br>\dot{x}_4 &amp;&#x3D; \frac{-b \cdot m \cdot l}{P} \cdot x_2 + \frac{m \cdot g \cdot l \cdot (M + m)}{P} \cdot x_3 + \frac{1}{P} \cdot u<br>\end{align*}<br>]$$<br>其中，( x_1 ) 和 ( x_2 ) 可能表示倒立摆的位移和速度，而 ( x_3 ) 和 ( x_4 ) 可能表示摆角和角速度。控制输入 ( u ) 是作用在倒立摆上的力。<br>输入方程：<br>$$[<br>u &#x3D; 0 \cdot x_1 + \frac{(I + m \cdot l^2)}{P} \cdot x_2 + 0 \cdot x_3 + \frac{m \cdot l}{P} \cdot x_4<br>]$$<br>但实际上，控制输入 ( u ) 是由控制器决定的，所以输入方程应该表示控制律，而不是状态变量直接映射到控制输入。<br>根据你的代码，状态空间方程的矩阵形式是：<br>$$[<br>\begin{align*}<br>\dot{\mathbf{x}} &amp;&#x3D; \mathbf{A} \mathbf{x} + \mathbf{B} u \<br>y &amp;&#x3D; \mathbf{C} \mathbf{x} + \mathbf{D} u<br>\end{align*}<br>]$$<br>其中，(\mathbf{x}) 是状态向量，(u) 是控制输入，(y) 是系统输出。在你的代码中，并没有明确给出输出矩阵 (\mathbf{C}) 和直接馈通矩阵 (\mathbf{D})，所以我们假设它们是：<br>$$[<br>\mathbf{C} &#x3D; \begin{bmatrix}<br>1 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 1 &amp; 0 &amp; 0<br>\end{bmatrix}, \quad<br>\mathbf{D} &#x3D; \begin{bmatrix}<br>0 \<br>0<br>\end{bmatrix}<br>]$$<br>这意味着系统的输出是状态向量 (\mathbf{x}) 的前两个元素。<br>因此，状态空间方程的矩阵形式为：<br>$[<br>\mathbf{A} &#x3D; \begin{bmatrix}<br>0 &amp; 1 &amp; 0 &amp; 0 \<br>0 &amp; -\frac{b \cdot (I + m \cdot l^2)}{P} &amp; \frac{m \cdot m \cdot g \cdot l^2}{P} &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 \<br>0 &amp; -\frac{b \cdot m \cdot l}{P} &amp; \frac{m \cdot g \cdot l \cdot (M + m)}{P} &amp; 0<br>\end{bmatrix}<br>]$<br>$$[<br>\mathbf{B} &#x3D; \begin{bmatrix}<br>0 \<br>\frac{(I + m \cdot l^2)}{P} \<br>0 \<br>\frac{m \cdot l}{P}<br>\end{bmatrix}<br>]$$<br>请注意，这里的 $(\mathbf{A})$ 和 $(\mathbf{B})$ 矩阵与你代码中定义的矩阵相匹配，但是根据你的系统定义，你可能需要调整 $(\mathbf{C})$ 和 $(\mathbf{D}) $矩阵以反映实际的系统输出。</p>
+<p><img src="/../images/image-20241006163519590.png" alt="image-20241006163519590"></p>
+<p> <img src="/../images/image-20241006171703693.png" alt="image-20241006171703693"></p>
+<p><img src="/../images/image-20241006171811928.png" alt="image-20241006171811928"></p>
+<p><img src="/../images/image-20241006181422178.png" alt="image-20241006181422178"></p>
+<p><img src="/../images/image-20241006181816664.png" alt="image-20241006181816664"></p>
+<h3 id="1-并行循环"><a href="#1-并行循环" class="headerlink" title="1.并行循环"></a>1.并行循环</h3><p>并行的for循环  <img src="/../images/image-20241006194116633.png" alt="image-20241006194116633"></p>
+<p><img src="/../images/image-20241006195247291.png" alt="image-20241006195247291"></p>
+<p>简单，但是有代价，无法被编译器优化了<img src="/../images/image-20241006195533798.png" alt="image-20241006195533798"></p>
+<p>这个是不需要索引的时候可以用</p>
+<p><img src="/../images/image-20241006195955333.png" alt="image-20241006195955333"></p>
+<p>二维</p>
+<p><img src="/../images/image-20241006200235271.png" alt="image-20241006200235271"></p>
+<p>三维</p>
+<h3 id="2-缩并与扫描"><a href="#2-缩并与扫描" class="headerlink" title="2,缩并与扫描"></a>2,缩并与扫描</h3><p>并行缩并</p>
+<p><img src="/../images/image-20241006201321218.png" alt="image-20241006201321218"></p>
+<p> <img src="/../images/image-20241006201514955.png" alt="image-20241006201514955"></p>
+<p> <img src="/../images/image-20241006202300112.png" alt="image-20241006202300112"></p>
+<p>但是，任务是动态分配到线程上，也就是range会变化，精度就会变，为了性能结果会有不同。所以：</p>
+<p><img src="/../images/image-20241006202538659.png" alt="image-20241006202538659"></p>
+<p>并行缩并的好处，相比于普通的串行缩并：</p>
+<p><img src="/../images/image-20241006205437392.png" alt="image-20241006205437392"></p>
+<p>串行相加，很大的e指数加上一个很小的float数，误差很大（浮点数不能大加小(等于没加)）</p>
+<h3 id="3-并行扫描"><a href="#3-并行扫描" class="headerlink" title="3.并行扫描"></a>3.并行扫描</h3><p><img src="/../images/image-20241006210256789.png" alt="image-20241006210256789"></p>
+<p>通常用于生成直方图</p>
+<p><img src="/../images/image-20241006211843354.png" alt="image-20241006211843354"></p>
+<p><img src="/../images/image-20241006212155394.png" alt="image-20241006212155394"></p>
+<p><img src="/../images/image-20241006212546708.png" alt="image-20241006212546708"></p>
+<p><img src="/../images/image-20241006214913619.png" alt="image-20241006214913619"></p>
+<p>考试比较喜欢的考法是将这三种校正与“<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=4356198&content_type=Article&match_order=1&q=PID%E6%A0%A1%E6%AD%A3&zhida_source=entity">PID校正</a>”校正结合起来，他们喜欢说PID校正，毕竟PD、PI、PID校正分别是超前、滞后、和滞后-超前校正的特殊情况。</p>
+<p>$\text{最大超前角}\\varphi_m&#x3D;\gamma^{\prime\prime}-\gamma+5°&#x3D;45°-0°+5°&#x3D;50°\a&#x3D;\frac{1+\mathrm{sin}\varphi_m}{1-\mathrm{sin}\varphi_m}\approx8:,\quad10\mathrm{lg}a\approx9\mathrm{dB}$ </p>
+<p><img src="/../images/v2-62e4aec82258978849246f82c939a7fe_720w.webp" alt="img"></p>
+<p><img src="/../images/v2-a80d3c8cc88df0c0f3fe1ae310ba5edc_720w.webp" alt="img"></p>
+<p>文件扩展名 <code>.tpp</code> 通常表示 <strong>C++ 模板实现文件</strong>。它与 C++ 模板相关，主要用于存放模板类或函数的实现。</p>
+<h3 id="具体用途"><a href="#具体用途" class="headerlink" title="具体用途"></a>具体用途</h3><ol>
+<li><p><strong>模板定义分离</strong>：在 C++ 中，通常将模板的声明和实现分开。在头文件（<code>.hpp</code> 或 <code>.h</code>）中，你可以声明一个模板，而在 <code>.tpp</code> 文件中实现该模板。这种做法有助于保持代码的组织性和可读性。</p>
+</li>
+<li><p><strong>包含在头文件中</strong>：为了使用 <code>.tpp</code> 文件中的实现，通常会在相应的头文件中通过 <code>#include</code> 指令将其包含进来。</p>
+</li>
+</ol>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>假设你有一个简单的模板类 <code>MyClass</code>，可以这样组织文件：</p>
+<p><strong>MyClass.hpp</strong></p>
+<pre><code class="cpp">#ifndef MYCLASS_HPP
+#define MYCLASS_HPP
+
+template &lt;typename T&gt;
+class MyClass &#123;
+public:
+    MyClass(T value);
+    void display();
+
+private:
+    T data;
+&#125;;
+
+#include &quot;MyClass.tpp&quot; // 包含实现文件
+
+#endif // MYCLASS_HPP
+</code></pre>
+<p><strong>MyClass.tpp</strong></p>
+<pre><code class="cpp">#include &quot;MyClass.hpp&quot;
+#include &lt;iostream&gt;
+
+template &lt;typename T&gt;
+MyClass&lt;T&gt;::MyClass(T value) : data(value) &#123;&#125;
+
+template &lt;typename T&gt;
+void MyClass&lt;T&gt;::display() &#123;
+    std::cout &lt;&lt; data &lt;&lt; std::endl;
+&#125;
+</code></pre>
+<p>debug生成的代码没有经过优化</p>
+<h3 id="4-TBB的任务域与for循环的嵌套"><a href="#4-TBB的任务域与for循环的嵌套" class="headerlink" title="4.TBB的任务域与for循环的嵌套"></a>4.TBB的任务域与for循环的嵌套</h3><p><img src="/../images/image-20241011101745036.png" alt="image-20241011101745036"></p>
+<p>指定任务域里使用的线程</p>
+<p>并行嵌套for循环</p>
+<p><img src="/../images/image-20241011102146940.png" alt="image-20241011102146940"></p>
+<p>但是嵌套for循环会出现死锁问题:</p>
+<p><img src="/../images/image-20241011102321351.png" alt="image-20241011102321351"></p>
+<p>为啥：(性能优化：线程里的任务做完了，会去其他线程里取任务帮忙)</p>
+<p><img src="/../images/image-20241011102603422.png" alt="image-20241011102603422"></p>
+<p>解决办法：</p>
+<p><img src="/../images/image-20241011103110746.png" alt="image-20241011103110746"></p>
+<p><img src="/../images/image-20241011103358416.png" alt="image-20241011103358416"></p>
+<p><img src="/../images/image-20241011110039932.png" alt="image-20241011110039932"></p>
+<h3 id="5-任务分配"><a href="#5-任务分配" class="headerlink" title="5.任务分配"></a>5.任务分配</h3><p>并行的时候怎样把一个任务均匀的分配到每个线程&#x2F;核心（因为通常几个核心就开几个线程)呢：（线程和任务都不动）</p>
+<p><img src="/../images/image-20241011111101669.png" alt="image-20241011111101669"></p>
+<p>效果不太好，不能让核心闲着，让核心上一直有线程在运行</p>
+<p>解决：让线程数大于核心数（让线程动起来）</p>
+<p><img src="/../images/image-20241011112225107.png" alt="image-20241011112225107"></p>
+<p>但是操作系统轮换是有开销（overhead）的，而且有可能破坏缓存一致性</p>
+<p>解决：线程池（让任务动起来）</p>
+<p><img src="/../images/image-20241011114443951.png" alt="image-20241011114443951"></p>
+<p>TBB的工作窃取法：</p>
+<p><img src="/../images/image-20241011115732981.png" alt="image-20241011115732981"></p>
+<p><img src="/../images/image-20241011120205530.png" alt="image-20241011120205530"></p>
+<p>tbb::static_partitioner的线程与任务数量一致</p>
+<p><img src="/../images/image-20241011120455377.png" alt="image-20241011120455377"></p>
+<p><img src="/../images/image-20241011120545985.png" alt="image-20241011120545985"></p>
+<p>默认粒度（一个任务里的元素）是1</p>
+<p><img src="/../images/image-20241011120835292.png" alt="image-20241011120835292"></p>
+<p><img src="/../images/image-20241011135601948.png" alt="image-20241011135601948"><img src="/../images/image-20241011135646042.png" alt="image-20241011135646042"></p>
+<h3 id="tbb-static-partitioner"><a href="#tbb-static-partitioner" class="headerlink" title="tbb::static_partitioner"></a><code>tbb::static_partitioner</code></h3><ul>
+<li><p><strong>描述</strong>：将任务静态地分配给线程。</p>
+</li>
+<li><p>特性</p>
+<p>：</p>
+<ul>
+<li>在任务开始时就确定每个线程将处理哪些任务。</li>
+<li>适合于任务量相对均匀且已知的情况。</li>
+<li>不会在运行时重新平衡负载，因此可能导致某些线程空闲而其他线程忙碌。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-tbb-simple-partitioner"><a href="#2-tbb-simple-partitioner" class="headerlink" title="2. tbb::simple_partitioner"></a>2. <code>tbb::simple_partitioner</code></h3><ul>
+<li><p><strong>描述</strong>：提供一个简单的分区策略。</p>
+</li>
+<li><p>特性</p>
+<p>：</p>
+<ul>
+<li>任务被划分为较小的块，并且每个线程可以从待处理任务中获取一个块。</li>
+<li>相对于 <code>static_partitioner</code>，<code>simple_partitioner</code> 允许更好的负载平衡。</li>
+<li>适用于任务量不均或动态变化的情况。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-tbb-auto-partitioner"><a href="#3-tbb-auto-partitioner" class="headerlink" title="3. tbb::auto_partitioner"></a>3. <code>tbb::auto_partitioner</code></h3><ul>
+<li><p><strong>描述</strong>：动态调整任务分配以优化性能。</p>
+</li>
+<li><p>特性</p>
+<p>：</p>
+<ul>
+<li>在运行时监控线程的工作负载，并根据需要进行任务重新分配。</li>
+<li>可以实现更好的负载均衡，特别是在任务执行时间不均匀的情况下。</li>
+<li>适用于复杂的并行任务，能自动适应系统负载。</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>静态分配</strong>（<code>static_partitioner</code>）适用于可预测且均匀的任务；不适合动态负载。</li>
+<li><strong>简单分配</strong>（<code>simple_partitioner</code>）在一定程度上改进了负载平衡，但仍然保持简单的结构。</li>
+<li><strong>自动分配</strong>（<code>auto_partitioner</code>）最灵活，适合于动态和不均匀的工作负载，通过实时监测和调整提高整体性能。</li>
+</ul>
+<p>tbb::static_partitioner对循环体不均匀的情况效果不如tbb::simple_partitioner(操作系统调度)</p>
+<p>越来越快</p>
+<p><img src="/../images/image-20241011140440217.png" alt="image-20241011140440217"></p>
+<p><img src="/../images/image-20241011140721127.png" alt="image-20241011140721127"></p>
+<p>但是auto_partitioner一定比simple_partitioner快吗</p>
+<p><img src="/../images/image-20241011144432532.png" alt="image-20241011144432532"></p>
+<p><img src="/../images/image-20241011154029009.png" alt="image-20241011154029009"></p>
+<h3 id="6-并发容器"><a href="#6-并发容器" class="headerlink" title="6.并发容器"></a>6.并发容器</h3><p>问题：</p>
+<p><img src="/../images/image-20241011155237153.png" alt="image-20241011155237153"></p>
+<p>解决：</p>
+<p><img src="/../images/image-20241011155440540.png" alt="image-20241011155440540"></p>
+<p><img src="/../images/image-20241011160119354.png" alt="image-20241011160119354"></p>
+<p>push_back()返回的是一个迭代器</p>
+<p>用*获取迭代器指向的元素的引用，再用and（&amp;）获取这个元素的指针</p>
+<p><img src="/../images/image-20241011160927535.png" alt="image-20241011160927535"></p>
+<p>tbb::concurrent_vector还是一个多线程安全的容器</p>
+<p><img src="/../images/image-20241011161401578.png" alt="image-20241011161401578"></p>
+<p>访问：随机访问效率不高</p>
+<p><img src="/../images/image-20241011162020029.png" alt="image-20241011162020029"></p>
+<p>推荐顺序访问：</p>
+<p><img src="/../images/image-20241011162546845.png" alt="image-20241011162546845"></p>
+<p><img src="/../images/image-20241011164325073.png" alt="image-20241011164325073"></p>
+<p><img src="/../images/image-20241011164827207.png" alt="image-20241011164827207"></p>
+<p>这些STL容器前加上concurrent就变成了多线程安全版</p>
+<p>vector&#x2F;concurrent_vector有一个常见的用法：用于并行筛选数据：</p>
+<h3 id="7-并行筛选"><a href="#7-并行筛选" class="headerlink" title="7.并行筛选"></a>7.并行筛选</h3><p><img src="/../images/image-20241021101434094.png" alt="image-20241021101434094"></p>
+<p><img src="/../images/image-20241021101859492.png" alt="image-20241021101859492"></p>
+<p><img src="/../images/image-20241021102554406.png" alt="image-20241021102554406"></p>
+<p> <img src="/../images/image-20241021103037177.png" alt="image-20241021103037177"></p>
+<p>但需要连续数据时，还是需要std::vetor</p>
+<p><img src="/../images/image-20241021103348500.png" alt="image-20241021103348500"></p>
+<p><img src="/../images/image-20241021104040889.png" alt="image-20241021104040889"></p>
+<p><img src="/../images/image-20241021105118738.png" alt="image-20241021105118738"></p>
+<h5 id="8-分治与排序"><a href="#8-分治与排序" class="headerlink" title="8.分治与排序"></a>8.分治与排序</h5><p><img src="/../images/image-20241021111447378.png" alt="image-20241021111447378"></p>
+<p>反而变慢了：</p>
+<p><img src="/../images/image-20241021111303257.png" alt="image-20241021111303257"></p>
+<p><img src="/../images/image-20241021111344357.png" alt="image-20241021111344357"></p>
+<p>分治</p>
+<p><img src="/../images/image-20241021111634419.png" alt="image-20241021111634419"></p>
+<p><img src="/../images/image-20241021111951889.png" alt="image-20241021111951889"></p>
+<p><img src="/../images/image-20241021112626978.png" alt="image-20241021112626978"></p>
+<h5 id="9-流水线并行"><a href="#9-流水线并行" class="headerlink" title="9.流水线并行"></a>9.流水线并行</h5><h3 id="CUDA开启的GPU编程"><a href="#CUDA开启的GPU编程" class="headerlink" title="CUDA开启的GPU编程"></a>CUDA开启的GPU编程</h3><p><img src="/../images/image-20241021114316913.png" alt="image-20241021114316913"></p>
+<p><img src="/../images/image-20241021114756000.png" alt="image-20241021114756000"></p>
+<p>类对象的声明</p>
+<p><code>ThreadPool threadPool &#123;&#125;;</code> 和 <code>ThreadPool threadPool;</code> 的主要区别在于初始化方式：</p>
+<h3 id="1-ThreadPool-threadPool-1"><a href="#1-ThreadPool-threadPool-1" class="headerlink" title="1. ThreadPool threadPool {};"></a>1. <code>ThreadPool threadPool &#123;&#125;;</code></h3><ul>
+<li><strong>列表初始化</strong>：使用了列表初始化（uniform initialization），这是 C++11 引入的一种语法。</li>
+<li><strong>安全性</strong>：这种方式可以防止窄化转换（例如，浮点数到整数的转换），因此更安全。</li>
+<li><strong>调用构造函数</strong>：会调用 <code>ThreadPool</code> 类的默认构造函数。</li>
+</ul>
+<h3 id="2-ThreadPool-threadPool-1"><a href="#2-ThreadPool-threadPool-1" class="headerlink" title="2. ThreadPool threadPool;"></a>2. <code>ThreadPool threadPool;</code></h3><ul>
+<li><strong>默认构造</strong>：这是经典的对象定义语法，直接调用默认构造函数。</li>
+<li><strong>行为</strong>：如果 <code>ThreadPool</code> 类没有定义任何构造函数，编译器会自动生成一个默认构造函数。</li>
+<li><strong>窄化问题</strong>：没有列表初始化的安全性，如果初始化涉及类型转换，可能会导致窄化。</li>
+</ul>
+<h3 id="总结-5"><a href="#总结-5" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>功能上</strong>：两者都用于创建 <code>ThreadPool</code> 对象并调用默认构造函数。</li>
+<li><strong>安全性</strong>：<code>ThreadPool threadPool &#123;&#125;;</code> 更安全，适用于需要避免潜在类型转换问题的场景。</li>
+</ul>
+<p>不存在这样的写法：<code>ThreadPool threadPool ();</code></p>
+<h3 id="加括号是错的，加花括号是安全的，推荐花括号"><a href="#加括号是错的，加花括号是安全的，推荐花括号" class="headerlink" title="加括号是错的，加花括号是安全的，推荐花括号"></a>加括号是错的，加花括号是安全的，推荐花括号</h3><p>变量的声明</p>
+<p><code>std::atomic_flag flag;</code> 和 <code>std::atomic_flag flag &#123;&#125;;</code> 的效果是相同的，都会将 <code>flag</code> 初始化为未设置状态。不过，使用 <code>&#123;&#125;</code> 的形式更加显式，可能更符合现代C++的最佳实践。</p>
+<p><code>new SimpleTask()</code> 和 <code>new SimpleTask</code> 在功能上是等价的，都是创建一个 <code>SimpleTask</code> 对象并返回指向该对象的指针。</p>
+<p>非常量左值引用问题</p>
+<h3 id="常量引用（const-T-）可以绑定到临时对象，而非常量左值引用（T-）则不能。"><a href="#常量引用（const-T-）可以绑定到临时对象，而非常量左值引用（T-）则不能。" class="headerlink" title="常量引用（const T&amp;）可以绑定到临时对象，而非常量左值引用（T&amp;）则不能。"></a>常量引用（<code>const T&amp;</code>）可以绑定到临时对象，而非常量左值引用（<code>T&amp;</code>）则不能。</h3><pre><code class="cpp">glm::vec3 setPixel(size_t x,size_t y,glm::vec3 &amp;pixel)&#123;
+        return pixels[width*y+x]=pixel;
+    &#125;
+</code></pre>
+<pre><code>film.setPixel(y,x,glm::vec3(0.5,0.4,0.3));
+</code></pre>
+<p><code>Non-const lvalue reference to type &#39;vec&lt;...&gt;&#39; cannot bind to a temporary of type &#39;vec&lt;...&gt;&#39;</code></p>
+<p>或者</p>
+<pre><code>film.setPixel(y,x,&#123;0.5,0.4,0.3&#125;);
+</code></pre>
+<p><code>Non-const lvalue reference to type &#39;glm::vec3&#39; (aka &#39;vec&lt;3, float, defaultp&gt;&#39;) cannot bind to an initializer list temporary</code></p>
+<p>改为：</p>
+<pre><code>    glm::vec3 setPixel(size_t x,size_t y,const glm::vec3 &amp;pixel)&#123;
+        return pixels[width*y+x]=pixel;
+    &#125;
+</code></pre>
+<p>&#96;&#96;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/Cplusplus.html" data-id="cm040oe8600005rcxhs4q231b" data-title="Cplusplus" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Qt" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/post/Qt.html" class="article-date">
@@ -1886,340 +2916,6 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
 
 
   
-    <article id="post-Android-Kotlin" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/post/Android-Kotlin.html" class="article-date">
-  <time class="dt-published" datetime="2024-04-21T12:52:23.000Z" itemprop="datePublished">2024-04-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/post/Android-Kotlin.html">Android_Kotlin</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">`class FirstActivity : AppCompatActivity() &#123;`</span></span>
-<span class="line"><span style="color: #babed8">`override fun onCreate(savedInstanceState: Bundle?) &#123;`</span></span>
-<span class="line"><span style="color: #babed8">`super.onCreate(savedInstanceState)`</span></span>
-<span class="line"><span style="color: #babed8">`&#125;`</span></span>
-<span class="line"><span style="color: #babed8">`&#125;`</span></span></code></pre></div><p>这段代码是使用 Kotlin 语言编写的 Android 应用程序中的一个活动（Activity）类。让我逐步解释其中的内容：</p>
-<ol>
-<li><code>class FirstActivity : AppCompatActivity()</code>：这是一个类的声明，类名为 <code>FirstActivity</code>，并且继承自 <code>AppCompatActivity</code> 类。<code>AppCompatActivity</code> 是 Android 开发中常用的一个基类，用于支持应用程序在较旧的 Android 版本上提供向后兼容性。</li>
-<li><code>override fun onCreate(savedInstanceState: Bundle?)</code>：这是 <code>FirstActivity</code> 类中的一个方法 <code>onCreate()</code> 的重写。在 Android 中，<code>onCreate()</code> 方法是活动生命周期的一部分，在活动第一次创建时被调用。<code>savedInstanceState</code> 参数是一个 <code>Bundle</code> 对象，其中包含了之前保存的活动状态信息，可以用于在活动重新创建时恢复状态。</li>
-<li><code>super.onCreate(savedInstanceState)</code>：这是调用父类 <code>AppCompatActivity</code> 中的 <code>onCreate()</code> 方法，确保父类中的初始化工作得以执行。</li>
-</ol>
-<p>因此，这段代码定义了一个名为 <code>FirstActivity</code> 的活动类，当该活动第一次创建时，会调用父类的 <code>onCreate()</code> 方法进行初始化。</p>
-<p>在声明 <code>savedInstanceState</code> 参数时，如果在类型后面添加了 <code>?</code>，则表示该参数可以接受 <code>null</code> 值。</p>
-<p>这样做的目的是为了允许 <code>savedInstanceState</code> 参数在某些情况下为 null，例如当活动或片段首次创建时，<code>savedInstanceState</code> 可能为 null，因为此时还没有保存任何状态信息。</p>
-<p>在 Kotlin 中，如果没有使用 <code>?</code>，则表示该参数不接受 null 值，如果在实际使用中传递了 null 值，编译器将会报错。而使用了 <code>?</code> 后，表示该参数可以接受 null 值，编译器将不会报错。</p>
-<p>因此，在 <code>override fun onCreate(savedInstanceState: Bundle?)</code> 中，<code>Bundle?</code> 表示 <code>savedInstanceState</code> 参数可以接受 null 值，即在某些情况下，<code>savedInstanceState</code> 可能为 null。</p>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span></span>
-<span class="line"><span style="color: #babed8">android:orientation=&quot;vertical&quot;</span></span>
-<span class="line"><span style="color: #babed8">android:layout_width=&quot;match_parent&quot;</span></span>
-<span class="line"><span style="color: #babed8">android:layout_height=&quot;match_parent&quot;&gt;</span></span>
-<span class="line"><span style="color: #babed8">&lt;Button</span></span>
-<span class="line"><span style="color: #babed8">android:id=&quot;@+id/button1&quot;</span></span>
-<span class="line"><span style="color: #babed8">android:layout_width=&quot;match_parent&quot;</span></span>
-<span class="line"><span style="color: #babed8">android:layout_height=&quot;wrap_content&quot;</span></span>
-<span class="line"><span style="color: #babed8">android:text=&quot;Button 1&quot;</span></span>
-<span class="line"><span style="color: #babed8">/&gt;</span></span>
-<span class="line"><span style="color: #babed8">&lt;/LinearLayout&gt;</span></span></code></pre></div><p>这段代码是一个简单的 Android 布局文件，使用 XML 格式描述了一个线性布局（LinearLayout）以及一个按钮（Button）的布局和属性。</p>
-<p>让我解释其中的一些关键部分：</p>
-<ul>
-<li><code>&lt;LinearLayout&gt;</code>：这是一个布局容器，用于在垂直方向排列其子视图（例如按钮）。<code>xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</code> 是 XML 命名空间声明，它使得可以在 XML 文件中使用 Android 提供的属性和元素。</li>
-<li><code>android:orientation=&quot;vertical&quot;</code>：这个属性指定了线性布局的方向，即垂直方向。这意味着其中的子视图（此处为按钮）将会按照垂直方向排列。</li>
-<li><code>android:layout_width=&quot;match_parent&quot;</code> 和 <code>android:layout_height=&quot;match_parent&quot;</code>：这两个属性指定了布局的宽度和高度。<code>match_parent</code> 表示该布局将会填充其父容器的宽度或高度，以占据尽可能多的空间。</li>
-<li><code>&lt;Button&gt;</code>：这是一个按钮视图，在布局中用于响应用户的点击事件。</li>
-<li><code>android:id=&quot;@+id/button1&quot;</code>：这个属性为按钮指定了一个唯一的标识符，可以在 Java 代码中使用这个标识符来查找和操作这个按钮。</li>
-<li><code>wrap_content</code> 属性可以使得布局更加灵活，可以根据内容的大小动态调整视图的尺寸，而不是固定为特定的尺寸。</li>
-<li><code>android:text=&quot;Button 1&quot;</code>：这个属性为按钮设置了显示的文本内容为 “Button 1”。</li>
-</ul>
-<p>因此，这段代码描述了一个垂直排列的线性布局，其中包含一个按钮，按钮显示文本为 “Button 1”。按钮的宽度会填充父容器的宽度，而高度则根据按钮文本的大小动态调整。</p>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">class FirstActivity : AppCompatActivity() &#123;</span></span>
-<span class="line"><span style="color: #babed8">override fun onCreate(savedInstanceState: Bundle?) &#123;</span></span>
-<span class="line"><span style="color: #babed8">super.onCreate(savedInstanceState)</span></span>
-<span class="line"><span style="color: #babed8">setContentView(R.layout.first_layout)</span></span>
-<span class="line"><span style="color: #babed8">&#125;</span></span>
-<span class="line"><span style="color: #babed8">&#125;</span></span></code></pre></div><p>首先调用了 <code>super.onCreate(savedInstanceState)</code>，以确保调用了父类的 <code>onCreate()</code> 方法，以便执行必要的初始化操作。</p>
-<p>接着调用了 <code>setContentView(R.layout.first_layout)</code> 方法，这个方法用于设置该活动所使用的布局文件。在这里，<code>first_layout</code> 是指定的布局资源文件的名称，这个布局文件定义了活动的界面布局结构。</p>
-<p>因此，这段代码的作用是在 <code>FirstActivity</code> 中设置了一个布局文件 <code>first_layout</code> 作为活动的界面布局，并在活动创建时加载该布局。</p>
-<p><code>R.layout</code> 是一个自动生成的资源标识符类，它包含了项目中所有布局文件的引用。在 Android 开发中，资源文件（如布局文件、字符串、图像等）都需要通过资源标识符来访问和引用。</p>
-<p>当你在项目中创建布局文件时，每个布局文件都会被编译成一个资源标识符，以便在代码中进行引用。这些资源标识符都会被统一放置在 <code>R</code> 类的内部静态类中，而 <code>R.layout</code> 则是其中用于引用布局文件的子类之一。</p>
-<p>Intent—&gt;用于通信的消息对象</p>
-<p>在 Android 中，Intent 是一种用于在不同组件之间进行通信的对象。它可以用于启动活动（Activity）、启动服务（Service）、发送广播（Broadcast）以及执行其他各种操作。Intent 提供了一种在不同组件之间传递数据和执行操作的机制。</p>
-<p>Intent 本质上是一个消息对象，用于指示想要执行的操作。它可以包含以下信息：</p>
-<ol>
-<li><strong>操作（Action）</strong>：指示要执行的操作，如启动活动、启动服务、发送广播等。常见的操作包括 <code>android.intent.action.VIEW</code>（查看操作）、<code>android.intent.action.SEND</code>（发送操作）、<code>android.intent.action.MAIN</code>（主操作）等。</li>
-<li><strong>数据（Data）</strong>：用于指定操作的数据，可以是 URI、文件路径、文本等。例如，如果要查看网页，可以将网页的 URL 作为数据传递给 Intent。</li>
-<li><strong>类别（Category）</strong>：用于指定操作的类别，如 <code>android.intent.category.LAUNCHER</code>（启动器类别）、<code>android.intent.category.BROWSABLE</code>（可浏览类别）等。</li>
-<li><strong>附加信息（Extras）</strong>：用于传递额外的数据给目标组件。Extras 是键值对的形式，可以包含各种数据类型，如字符串、整数、布尔值等。</li>
-</ol>
-<p>Intent 可以分为两种类型：</p>
-<ul>
-<li><strong>显式 Intent</strong>：明确定义了目标组件的类名，用于启动特定的组件。</li>
-<li><strong>隐式 Intent</strong>：没有明确指定目标组件，而是根据 Intent 的操作、数据等信息由系统来匹配合适的组件。</li>
-</ul>
-<p>通过使用 Intent，Android 应用程序可以实现各种功能，例如启动新的活动、执行后台任务、发送广播等，从而实现各种复杂的交互和功能。</p>
-<p>Kotlin直接可以：</p>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">override fun onCreate(savedInstanceState: Bundle?) &#123;</span></span>
-<span class="line"><span style="color: #babed8">super.onCreate(savedInstanceState)</span></span>
-<span class="line"><span style="color: #babed8">setContentView(R.layout.first_layout)</span></span>
-<span class="line"><span style="color: #babed8">button1.setOnClickListener &#123;</span></span>
-<span class="line"><span style="color: #babed8">Toast.makeText(this, &quot;You clicked Button 1&quot;, Toast.LENGTH_SHORT).show()</span></span>
-<span class="line"><span style="color: #babed8">&#125;</span></span>
-<span class="line"><span style="color: #babed8">&#125;</span></span></code></pre></div><p>在 Kotlin 中，函数声明的语法是：</p>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">fun 函数名(参数列表): 返回值类型 &#123;</span></span>
-<span class="line"><span style="color: #babed8">    // 函数体</span></span>
-<span class="line"><span style="color: #babed8">&#125;</span></span></code></pre></div><p>其中，返回值类型在函数名和参数列表之后，使用冒号 <code>:</code> 来标识。在这个语法中，返回值类型是必须的，但在某些情况下，如果函数没有返回值，可以将返回值类型指定为 <code>Unit</code>，或者省略返回值类型（在这种情况下，编译器会自动推断返回值类型为 <code>Unit</code>）。例如：</p>
-<div class="language-kotlin"><button title="Copy code" class="copy"></button><span class="lang">kotlin</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #BABED8">kotlin</span></span>
-<span class="line"><span style="color: #C792EA">fun</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">greet</span><span style="color: #BABED8">(name: </span><span style="color: #FFCB6B">String</span><span style="color: #BABED8">): </span><span style="color: #FFCB6B">Unit</span><span style="color: #BABED8"> &#123;</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #82AAFF">println</span><span style="color: #BABED8">(</span><span style="color: #C3E88D">&quot;Hello, </span><span style="color: #BABED8">$name</span><span style="color: #C3E88D">!&quot;</span><span style="color: #BABED8">)</span></span>
-<span class="line"><span style="color: #BABED8">&#125;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #676E95; font-style: italic">// 或者省略返回值类型，编译器会自动推断为 Unit</span></span>
-<span class="line"><span style="color: #C792EA">fun</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">greet</span><span style="color: #BABED8">(name: </span><span style="color: #FFCB6B">String</span><span style="color: #BABED8">) &#123;</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #82AAFF">println</span><span style="color: #BABED8">(</span><span style="color: #C3E88D">&quot;Hello, </span><span style="color: #BABED8">$name</span><span style="color: #C3E88D">!&quot;</span><span style="color: #BABED8">)</span></span>
-<span class="line"><span style="color: #BABED8">&#125;</span></span></code></pre></div><div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">override fun onCreateOptionsMenu(menu: Menu?): Boolean &#123;</span></span>
-<span class="line"><span style="color: #babed8">menuInflater.inflate(R.menu.main, menu)</span></span>
-<span class="line"><span style="color: #babed8">return true</span></span>
-<span class="line"><span style="color: #babed8">&#125;</span></span></code></pre></div><p><code>menuInflater</code> 是 Android 开发中的一个类，用于从 XML 文件中创建菜单对象。在 Android 中，通常使用 XML 文件定义应用程序中的菜单，然后通过 <code>MenuInflater</code> 类将这些 XML 文件中定义的菜单加载到应用程序中的菜单对象中，以供在用户界面中显示和操作。</p>
-<p>具体来说，<code>menuInflater.inflate()</code> 方法用于将一个 XML 文件中定义的菜单资源加载到一个 <code>Menu</code> 对象中，这样就可以在应用程序的用户界面中显示这个菜单。</p>
-<p>在 Android 应用程序中，Activity 和 Fragment 是两种重要的组件，用于构建用户界面和处理用户交互。它们都可以包含用户界面的布局，并且可以响应用户的输入事件（如点击、滑动等）。</p>
-<p>下面是关于 Activity 和 Fragment 的简要介绍：</p>
-<h3 id="Activity（活动）"><a href="#Activity（活动）" class="headerlink" title="Activity（活动）"></a>Activity（活动）</h3><ol>
-<li><strong>定义</strong>：Activity 是 Android 应用中的一个基本组件，代表一个单独的用户界面屏幕，通常是一个窗口、一个对话框或全屏显示的窗口。</li>
-<li><strong>作用</strong>：Activity 主要负责管理用户与应用程序之间的交互，包括接收用户输入、处理用户操作，并在屏幕上显示相应的界面。</li>
-<li><strong>生命周期</strong>：Activity 具有丰富的生命周期方法，如 <code>onCreate()</code>、<code>onStart()</code>、<code>onResume()</code>、<code>onPause()</code>、<code>onStop()</code> 和 <code>onDestroy()</code> 等，开发者可以根据需要重写这些方法来执行相应的操作。</li>
-<li><strong>布局</strong>：Activity 可以通过设置布局文件（XML 文件）来定义用户界面的外观和行为，也可以通过代码动态地创建和管理用户界面。</li>
-</ol>
-<h3 id="Fragment（片段）"><a href="#Fragment（片段）" class="headerlink" title="Fragment（片段）"></a>Fragment（片段）</h3><ol>
-<li><strong>定义</strong>：Fragment 是 Android 应用中的另一个基本组件，代表了一个可复用的用户界面模块，可以在一个 Activity 中嵌套多个 Fragment。</li>
-<li><strong>作用</strong>：Fragment 主要用于构建灵活的用户界面，允许开发者将应用程序的功能拆分成可重用的模块，并在不同的屏幕尺寸和设备方向下进行适配。</li>
-<li><strong>生命周期</strong>：Fragment 也有自己的生命周期方法，与 Activity 的生命周期方法类似，包括 <code>onCreate()</code>、<code>onStart()</code>、<code>onResume()</code>、<code>onPause()</code>、<code>onStop()</code> 和 <code>onDestroy()</code> 等。</li>
-<li><strong>布局</strong>：Fragment 可以拥有自己的布局文件（XML 文件），也可以在宿主 Activity 中动态添加到布局中，允许开发者在运行时动态地添加、替换和移除 Fragment。</li>
-</ol>
-<p>总的来说，Activity 通常代表一个完整的屏幕，而 Fragment 则是 Activity 中一个可重用的组成部分，可以在一个 Activity 中组合多个 Fragment 来构建复杂的用户界面。在实际开发中，Activity 和 Fragment 经常一起使用，以实现灵活和高效的用户界面设计。</p>
-<p>在 Kotlin 中，<code>?.</code> 是安全调用运算符，用于在对象为非空时调用其方法或访问其属性。如果对象为 null，则安全调用运算符会短路并返回 null，而不会抛出空指针异常。</p>
-<p>在你提供的代码中，<code>data?.getStringExtra(&quot;data_return&quot;)</code> 的意思是，如果 <code>data</code> 不为 null，则调用 <code>getStringExtra(&quot;data_return&quot;)</code> 方法来获取名为 “data_return” 的额外数据，否则返回 null。这种写法可以避免在 <code>data</code> 为 null 时引发空指针异常。</p>
-<p><code>registerForActivityResult(...)</code>：这是一个用于注册 Activity Result 的函数。它接受一个 <code>ActivityResultContract</code> 对象作为参数，并返回一个 <code>ActivityResultLauncher</code> 对象。<code>ActivityResultContract</code> 是一个接口，用于定义活动启动和结果处理之间的合同。</p>
-<p>Activity类中定义了7个回调方法，覆盖了Activity生命周期的每一个环节:</p>
-<ul>
-<li><p>onCreate() 在Activity第一次被创建时调用</p>
-</li>
-<li><p>onStart() 由不可见到可见时调用</p>
-</li>
-<li><p>onResume()。这个方法在Activity准备好和用户进行交互的时候调用。此时的Activity一</p>
-<p>定位于返回栈的栈顶，并且处于运行状态。</p>
-</li>
-<li><p>onPause()。这个方法在系统准备去启动或者恢复另一个Activity的时候调用。我们通常</p>
-<p>会在这个方法中将一些消耗CPU的资源释放掉，以及保存一些关键数据，但这个方法的执</p>
-<p>行速度一定要快，不然会影响到新的栈顶Activity的使用。</p>
-</li>
-<li><p>onStop()。这个方法在Activity完全不可见的时候调用。它和onPause()方法的主要区</p>
-<p>别在于，如果启动的新Activity是一个对话框式的Activity，那么onPause()方法会得到执行，而onStop()方法并不会执行。</p>
-</li>
-<li><p>onDestroy()。这个方法在Activity被销毁之前调用，之后Activity的状态将变为销毁状态。</p>
-</li>
-<li><p>onRestart()。这个方法在Activity由停止状态变为运行状态之前调用，也就是Activity被重新启动了。</p>
-</li>
-</ul>
-<p><code>onPause()</code> 方法是 Android Activity 生命周期中的一个回调方法，用于指示当前 Activity 正在失去焦点并即将暂停其可见性。当某些事件发生时，系统会调用 <code>onPause()</code> 方法，这些事件包括：</p>
-<ol>
-<li>启动另一个 Activity：当用户启动另一个 Activity 并且当前 Activity 失去焦点时，系统会调用 <code>onPause()</code> 方法。例如，当用户点击应用中的按钮，打开新的 Activity 时，当前 Activity 将暂停。</li>
-<li>打开对话框或弹出窗口：如果当前 Activity 打开了对话框、弹出了一个窗口或者其他部分覆盖了当前 Activity 但不完全遮挡，系统也会调用 <code>onPause()</code> 方法。</li>
-<li>接收到来电或其他中断：当用户接收到来电、收到短信或者其他中断事件时，当前 Activity 也会暂停，系统会调用 <code>onPause()</code> 方法。</li>
-<li>用户按下 Home 键或切换到最近任务列表：当用户按下 Home 键返回桌面或切换到最近任务列表时，当前 Activity 也会暂停，系统会调用 <code>onPause()</code> 方法。</li>
-</ol>
-<p>总之，<code>onPause()</code> 方法的调用情况涵盖了当前 Activity 失去焦点并即将暂停可见性的各种情况。</p>
-<p><code>onStart()</code> 是 Android 活动生命周期中的一个方法，用于指示活动即将变为可见状态。当活动首次启动或从停止状态恢复到活动栈时，系统会调用 <code>onStart()</code> 方法。</p>
-<p>具体情况下，<code>onStart()</code> 方法会在以下几种情况下被调用：</p>
-<ol>
-<li><strong>当活动首次启动</strong>：当用户启动应用程序并打开了包含该活动的界面时，系统会调用活动的 <code>onStart()</code> 方法。此时，活动将从不可见状态转变为可见状态。</li>
-<li><strong>当活动从暂停状态恢复</strong>：如果一个活动从 <code>onPause()</code> 状态恢复到前台状态，系统会先调用 <code>onStart()</code> 方法，然后调用 <code>onResume()</code> 方法。这种情况通常发生在用户按下返回按钮、活动恢复到前台、或者其他活动被移除而当前活动重新进入前台的情况下。</li>
-</ol>
-<p>在 <code>onStart()</code> 方法中，通常执行一些与界面相关的初始化操作，比如恢复 UI 状态、注册广播接收器或者启动一些后台任务。需要注意的是，尽管活动已经变为可见状态，但此时活动并未处于用户的焦点下，用户可能无法与其进行交互。</p>
-<p><code>onResume()</code> 是 Android 活动生命周期中的一个方法，用于指示活动即将成为用户焦点并开始与用户进行交互。当活动从不可见状态变为可见状态，并且用户可以开始与其进行交互时，系统会调用 <code>onResume()</code> 方法。</p>
-<p>具体情况下，<code>onResume()</code> 方法会在以下几种情况下被调用：</p>
-<ol>
-<li><strong>当活动首次启动</strong>：当用户首次启动应用程序并打开了包含该活动的界面时，系统会先调用 <code>onStart()</code> 方法，然后调用 <code>onResume()</code> 方法。此时，活动将从不可见状态转变为可见状态，并且用户可以开始与其进行交互。</li>
-<li><strong>当活动从暂停状态恢复</strong>：如果一个活动从 <code>onPause()</code> 状态恢复到前台状态，系统会先调用 <code>onStart()</code> 方法，然后调用 <code>onResume()</code> 方法。这种情况通常发生在用户按下返回按钮、活动恢复到前台、或者其他活动被移除而当前活动重新进入前台的情况下。</li>
-<li><strong>当活动从停止状态恢复</strong>：如果一个活动从 <code>onStop()</code> 状态恢复到前台状态，系统会依次调用 <code>onRestart()</code>、<code>onStart()</code> 和 <code>onResume()</code> 方法。这种情况通常发生在用户按下 Home 键后再次打开应用程序的情况下。</li>
-</ol>
-<p>在 <code>onResume()</code> 方法中，通常执行一些与活动生命周期相关的操作，比如恢复用户的输入状态、启动动画效果或者连接到一些外部服务。需要注意的是，当活动处于 <code>onResume()</code> 状态时，它已经成为了用户焦点下的活动，并且用户可以直接与其进行交互。</p>
-<p><img src="/../images/image-20240422135757284.png" alt="image-20240422135757284"></p>
-<p>当将视图或布局的尺寸设置为 “wrap_content” 时，系统会根据其内容自动调整视图或布局的尺寸，以便刚好容纳其内</p>
-<p>在 Android 的清单文件（AndroidManifest.xml）中声明活动（Activity）时，可以使用两种方式：</p>
-<ol>
-<li><code>&lt;activity&gt;...&lt;/activity&gt;</code>：这是一种传统的 XML 标签方式，用于定义活动的属性和行为。在 <code>&lt;activity&gt;</code> 标签中，可以指定活动的各种属性，例如名称、图标、主题等，并且可以包含其他标签和属性以提供更详细的配置。通常情况下，你可以在 <code>&lt;activity&gt;</code> 标签内部设置更多的属性，包括活动的名称、图标、主题等，以及与活动相关的其他设置。</li>
-<li><code>&lt;activity/&gt;</code>：这是一种自闭合的 XML 标签方式，用于简单地声明一个活动而不指定任何属性或配置。这种方式适用于简单的活动声明，当你不需要指定任何属性或配置时，可以使用这种方式。例如，如果你的活动只需要基本的声明，而不需要指定任何其他属性或配置，你可以使用 <code>&lt;activity/&gt;</code> 标签。</li>
-</ol>
-<p>因此，你应该根据活动的具体需求和配置选择适当的方式。如果需要指定活动的各种属性和配置，可以使用 <code>&lt;activity&gt;...&lt;/activity&gt;</code> 标签；如果活动只需要基本的声明而不需要指定任何其他属性或配置，可以使用 <code>&lt;activity/&gt;</code> 标签。</p>
-<p><code>@style/Theme.AppCompat.Dialog</code> 是指在 Android 应用程序中使用的一个预定义的对话框主题样式。这个样式通常用于创建对话框，即弹出式窗口，以在应用程序中显示临时信息、接受用户输入或执行其他操作。</p>
-<p>这个主题样式基于 AppCompat 库提供的默认对话框主题进行定义，并且与 AppCompat 库中其他主题一样，它提供了跨不同 Android 版本的一致外观和行为。这样，你的应用程序就可以在不同版本的 Android 上保持一致的外观和用户体验。</p>
-<p><code>android:exported=&quot;false&quot;</code> 是 Android 清单文件中 <code>&lt;activity&gt;</code> 元素的一个属性，用于指定该活动是否能够被其他应用程序组件或者系统组件访问。具体含义如下：</p>
-<ul>
-<li>如果 <code>android:exported=&quot;false&quot;</code>，则表示该活动不会被其他应用程序或系统组件调用。这意味着该活动只能被声明它的应用程序内部的组件所访问，其他应用程序或系统组件无法直接启动或与其交互。</li>
-<li>如果 <code>android:exported=&quot;true&quot;</code>，则表示该活动可以被其他应用程序或系统组件调用。这意味着其他应用程序可以使用显式或隐式意图启动该活动，并且与其进行交互。</li>
-</ul>
-<p>在你的示例中，<code>android:exported=&quot;false&quot;</code> 意味着 <code>DialogActivity</code> 这个活动不会被其他应用程序或系统组件访问。它只能被声明它的应用程序内部的组件所访问，其他应用程序无法直接启动或与其交互。这通常用于内部使用的活动，例如只在应用程序内部使用的对话框或者配置界面。</p>
-<p>在 Android 开发中，<code>Intent</code>（意图）是用于在不同组件之间传递数据或执行操作的对象。它是一种在 Android 应用程序中实现组件之间通信的重要机制。</p>
-<p><code>Intent</code> 主要有两种类型：显式 Intent 和隐式 Intent。</p>
-<ol>
-<li><p><strong>显式 Intent</strong>：用于启动应用程序内部的组件，例如启动另一个活动（Activity）、启动服务（Service）等。显式 Intent 通过指定目标组件的类名来明确指示要执行的操作。</p>
-<p>示例：</p>
-</li>
-</ol>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">Intent intent = new Intent(this, AnotherActivity.class);</span></span>
-<span class="line"><span style="color: #babed8">startActivity(intent);</span></span></code></pre></div><p><strong>隐式 Intent</strong>：用于启动应用程序内或其他应用程序中具有特定功能的组件，而不需要指定目标组件的类名。隐式 Intent 根据指定的动作（Action）、数据（Data）等信息来寻找合适的组件执行操作。</p>
-<p>示例：</p>
-<ol>
-<li><div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(&quot;https://www.example.com&quot;));</span></span>
-<span class="line"><span style="color: #babed8">startActivity(intent);</span></span></code></pre></div></li>
-</ol>
-<p><code>Intent</code> 的主要作用包括但不限于：</p>
-<ul>
-<li>启动活动、服务或广播接收器等组件。</li>
-<li>在组件之间传递数据，例如在不同活动之间传递参数。</li>
-<li>执行一些系统级别的操作，例如拨打电话、发送短信、打开网页等。</li>
-</ul>
-<p>总之，<code>Intent</code> 是 Android 应用程序中用于实现组件之间通信和执行操作的重要机制。</p>
-<p>在 Android 中，<code>Bundle</code> 是一个用来存储键值对数据的容器类。它通常被用于在不同的组件（如活动、片段）之间传递数据，或者在组件销毁和重新创建时保存和恢复数据的状态。</p>
-<p>在 <code>onCreate()</code> 方法中，<code>Bundle</code> 参数 <code>savedInstanceState</code> 表示上一个实例状态的数据。当活动被销毁并重新创建时（例如，由于设备旋转或内存紧张），Android 系统会调用 <code>onSaveInstanceState()</code> 方法来保存当前的状态数据，并将其存储在 <code>Bundle</code> 中。然后，在活动重新创建时，系统会将之前保存的状态数据传递给 <code>onCreate()</code> 方法的 <code>savedInstanceState</code> 参数。</p>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">Log.d(&quot;FirstActivity&quot;, this.toString())</span></span></code></pre></div><p><code>this.toString()</code> 是调用当前对象的 <code>toString()</code> 方法。在 Java 中，几乎所有的对象都继承自 <code>Object</code> 类，而 <code>Object</code> 类中有一个 <code>toString()</code> 方法，用于返回对象的字符串表示形式</p>
-<p>当你调用 <code>this.toString()</code> 时，它会返回当前对象的字符串表示形式</p>
-<p>Activity的启动模式:</p>
-<ul>
-<li>standard</li>
-<li>singleTop  单栈顶</li>
-<li>singleTask   单任务</li>
-<li>singleInstance  单实例</li>
-</ul>
-<p>在 Kotlin 中，<code>object</code> 关键字用于定义单例对象。单例对象是指在程序运行期间只有一个实例存在的对象。在给定的作用域内，单例对象只能有一个实例，因此它们非常适合用于管理全局状态或提供全局访问点。</p>
-<p>关闭所有活动并不等同于关闭应用程序的进程。在 Android 应用程序中，当你调用 <code>finish()</code> 方法结束一个活动时，这个活动会被销毁，但应用程序的进程仍然在运行。即使所有活动都被销毁，应用程序的进程仍然存在于系统中。</p>
-<p>为了完全退出应用程序，有时需要调用 <code>System.exit(0)</code> 或者 <code>Process.killProcess(Process.myPid())</code> 这样的方法来结束应用程序的进程。这样做可以确保应用程序的所有组件都被终止，包括活动、服务、广播接收器等，从而实现应用程序的完全退出。</p>
-<p>然而，这种做法通常被视为不推荐的，因为它可能会导致用户体验上的问题，以及系统资源的浪费。通常情况下，Android 系统会自动管理应用程序的进程，并在必要时终止它们，而不需要手动干预。因此，大多数情况下，关闭所有活动即可满足应用程序退出的需求，而无需手动杀死进程。</p>
-<p>在 Kotlin 中，<code>companion object</code>（伴生对象）具有以下作用：</p>
-<ol>
-<li><strong>静态成员访问</strong>：伴生对象中的成员可以直接通过类名访问，就像 Java 中的静态成员一样。这使得可以在不创建类的实例的情况下访问这些成员。</li>
-<li><strong>工厂方法</strong>：可以在伴生对象中定义工厂方法，用于创建类的实例。这种方法通常用于隐藏类的构造函数，提供一种更灵活的方式来创建实例。</li>
-<li><strong>共享代码</strong>：伴生对象可以包含在类的所有实例之间共享的代码或常量。这些代码或常量对于类的所有实例都是相同的，可以方便地通过伴生对象访问。</li>
-<li><strong>扩展方法</strong>：在伴生对象中还可以定义扩展方法，这些方法可以为类添加额外的功能，而无需继承或修改类的源代码。</li>
-</ol>
-<p>总的来说，伴生对象提供了一种在 Kotlin 中实现类级别功能的方式，它可以用于静态成员访问、工厂方法、共享代码和扩展方法等场景。</p>
-<p>StringBuilder是Java中的一个类，用于处理字符串。它允许你在不创建新的String对象的情况下进行字符串的修改和操作，这样可以提高性能并节省内存。</p>
-<p>当你需要对字符串进行频繁的修改时，使用StringBuilder通常比直接使用String更高效。这是因为String是不可变的，每次对String进行修改都会创建一个新的String对象，而StringBuilder允许你在同一个对象上执行多次修改操作。</p>
-<p>你可以使用StringBuilder的append()方法来添加字符串，使用delete()方法来删除字符串，使用insert()方法来在指定位置插入字符串，使用replace()方法来替换字符串等等。最后，你可以使用toString()方法将StringBuilder对象转换为String对象，以便进行进一步的操作或输出。</p>
-<p><code>val list = listOf(&quot;Apple&quot;, &quot;Banana&quot;, &quot;Orange&quot;, &quot;Pear&quot;, &quot;Grape&quot;) val builder = StringBuilder() builder.append(&quot;Start eating fruits.\n&quot;) for (fruit in list) &#123; builder.append(fruit).append(&quot;\n&quot;) &#125; builder.append(&quot;Ate all fruits.&quot;) val result = builder.toString() println(result) 为什么最后要调用builder.toString()</code>，不能直接打印吗</p>
-<p>在上面的代码中，builder是一个StringBuilder对象，而println函数通常接受String类型的参数来进行输出。而builder对象是一个StringBuilder类型的对象，不是String类型的对象，因此无法直接传递给println函数。</p>
-<p>调用builder.toString()方法将StringBuilder对象转换为String类型的对象，这样就可以将其作为参数传递给println函数，从而实现输出。toString()方法会返回StringBuilder对象中包含的所有字符序列作为一个字符串。</p>
-<p>因此，为了能够正确地输出builder对象中的内容，需要先调用toString()方法将其转换为String类型的对象，然后再传递给println函数进行打印。</p>
-<p><code>with</code> 是 Kotlin 的一个标准库函数，它提供了一种简洁的方式来执行针对特定对象的一系列操作，并返回最后一个表达式的结果。</p>
-<p><code>AlertDialog.Builder(this).apply &#123; setTitle(&quot;This is Dialog&quot;) setMessage(&quot;Something important.&quot;) setCancelable(false) setPositiveButton(&quot;OK&quot;) &#123; dialog, which -&gt; &#125; setNegativeButton(&quot;Cancel&quot;) &#123; dialog, which -&gt; &#125; show()</code> 是什么意思</p>
-<p>这段代码是使用 Kotlin 的标准库函数 <code>apply</code> 来构建一个 <code>AlertDialog</code> 对话框，并设置其标题、消息、按钮等属性。下面是代码的解释：</p>
-<ol>
-<li><code>AlertDialog.Builder(this)</code>：创建了一个 <code>AlertDialog.Builder</code> 的实例，这个实例用于构建一个对话框。</li>
-<li><code>apply &#123; ... &#125;</code>：<code>apply</code> 是一个 Kotlin 标准库函数，它接收一个 lambda 表达式作为参数，并在 lambda 表达式的作用域内执行一系列操作。在这个例子中，<code>apply</code> 函数被调用后，会将调用者对象（即 <code>AlertDialog.Builder</code> 的实例）作为参数传递给 lambda 表达式，并在 lambda 表达式内部执行一系列设置操作。</li>
-<li><code>setTitle(&quot;This is Dialog&quot;)</code>：在 lambda 表达式中调用 <code>setTitle</code> 方法，设置对话框的标题为 “This is Dialog”。</li>
-<li><code>setMessage(&quot;Something important.&quot;)</code>：在 lambda 表达式中调用 <code>setMessage</code> 方法，设置对话框的消息内容为 “Something important.”。</li>
-<li><code>setCancelable(false)</code>：在 lambda 表达式中调用 <code>setCancelable</code> 方法，设置对话框为不可取消状态，即用户点击对话框外部或返回键时不会关闭对话框。</li>
-<li><code>setPositiveButton(&quot;OK&quot;) &#123; dialog, which -&gt; ... &#125;</code>：在 lambda 表达式中调用 <code>setPositiveButton</code> 方法，设置对话框的确定按钮文本为 “OK”，并设置点击事件处理器。在这里，<code>&#123; dialog, which -&gt; ... &#125;</code> 是一个 lambda 表达式，表示当用户点击确定按钮时执行的操作。在本例中，lambda 表达式为空，即不执行任何操作。</li>
-<li><code>setNegativeButton(&quot;Cancel&quot;) &#123; dialog, which -&gt; ... &#125;</code>：在 lambda 表达式中调用 <code>setNegativeButton</code> 方法，设置对话框的取消按钮文本为 “Cancel”，并设置点击事件处理器。同样，<code>&#123; dialog, which -&gt; ... &#125;</code> 是一个 lambda 表达式，表示当用户点击取消按钮时执行的操作。在本例中，lambda 表达式为空，即不执行任何操作。</li>
-<li><code>show()</code>：在所有设置完成后，调用 <code>show</code> 方法显示对话框。</li>
-</ol>
-<p>因此，这段代码的作用是创建一个带有标题、消息、确定按钮和取消按钮的对话框，并将其显示在界面上。</p>
-<p>三种基本布局：</p>
-<ul>
-<li>LinearLayout垂直排布</li>
-<li>RelativeLayout相对布局</li>
-<li>FrameLayout帧布局</li>
-</ul>
-<p><img src="/../images/image-20240423231325479.png" alt="image-20240423231325479"></p>
-<p><code>override fun getView(position: Int, convertView: View?, parent: ViewGroup): View &#123; val view = LayoutInflater.from(context).inflate(resourceId, parent, false) val fruitImage: ImageView = view.findViewById(R.id.fruitImage) val fruitName: TextView = view.findViewById(R.id.fruitName) val fruit = getItem(position) // 获取当前项的Fruit实例 if (fruit != null) &#123; fruitImage.setImageResource(fruit.imageId) fruitName.text = fruit.name &#125; return view &#125;</code></p>
-<p>其中：val view &#x3D; LayoutInflater.from(context).inflate(resourceId, parent, false)</p>
-<p>作用是从 XML 布局文件中创建一个视图对象，并将其添加到指定的父视图中。</p>
-<p>解释每个参数的含义：</p>
-<ul>
-<li><code>context</code>: 表示当前的上下文环境，通常是一个 Activity 或 Fragment 的实例。</li>
-<li><code>resourceId</code>: 表示要加载的布局文件的资源 ID，即 XML 文件的唯一标识符。</li>
-<li><code>parent</code>: 表示要将创建的视图添加到的父视图，通常是一个 ViewGroup，比如一个 LinearLayout 或者一个 RecyclerView。</li>
-<li><code>false</code>: 表示在加载布局文件时，不将其添加到父视图中。这个参数设置为 <code>false</code> 表示我们会手动将视图添加到父视图中，而不是在加载时自动添加。</li>
-</ul>
-<p>接口在编程中有多种作用，包括但不限于以下几个方面：</p>
-<ol>
-<li><strong>定义约束和契约</strong>：接口定义了一组方法或属性的规范，实现该接口的类必须提供这些方法或属性的具体实现。这种约束和契约使得代码更加清晰，使得不同的类可以共享相同的行为规范。</li>
-<li><strong>实现多态</strong>：通过接口，可以实现多态，即在不同的类中使用相同的方法名，但实际调用的是各自类的具体实现。这样可以提高代码的灵活性和可扩展性。</li>
-<li><strong>代码重用</strong>：接口可以用于定义通用的行为规范，使得多个类可以共享相同的接口定义，从而实现代码的重用。当多个类具有相似的行为或功能时，可以通过接口来统一定义这些行为或功能，避免重复编写代码。</li>
-<li><strong>降低耦合性</strong>：通过接口，类与类之间的耦合度可以降低，因为类之间通过接口进行交互，而不是直接依赖于具体的实现。这样，当一个类的实现发生变化时，只需要修改实现该接口的类，而不需要修改其他使用该类的代码。</li>
-<li><strong>接口委托</strong>：接口支持委托，一个接口可以通过另一个对象来实现其方法，这种方式称为接口委托。这种机制可以进一步提高代码的灵活性和可复用性。</li>
-</ol>
-<p>总的来说，接口是一种重要的编程工具，可以帮助程序员设计出更加灵活、可扩展和易于维护的代码结构。</p>
-<p>interface接口</p>
-<p>sealed class密封类</p>
-<p><img src="/../images/image-20240429211327595.png" alt="image-20240429211327595"></p>
-<p><code>companion object</code> 是 Kotlin 中的一个关键字，它用于创建一个伴随对象。伴随对象是类中的一个单例对象，可以通过类名直接访问其中的属性和方法</p>
-<p>news_content_frag.xml——–&gt;NewsContentFragment类———–&gt;NewsContentActivity</p>
-<p>news_item.xml——–&gt;news_title_frag.xml———&gt;NewsTitleFragment类———-&gt;</p>
-<p>layout&#x2F;activity_main.xml——-&gt;单页模式;</p>
-<p>NewsTitleFragment类————&gt;</p>
-<p>​														layout-sw600dp&#x2F;activity_main.xml——–&gt;双页模式;</p>
-<p>NewsContentFragment类——-&gt;</p>
-<p>在NewsTitleFragment类中通过RecyclerView将新闻列表展示出来</p>
-<p>在 Kotlin 中，<code>open</code> 关键字用于声明一个类、方法或属性是可以被继承或覆盖的。具体来说：</p>
-<ul>
-<li><strong>类（Class）</strong>：在类声明前加上 <code>open</code> 关键字，表示这个类是可以被其他类继承的。如果不加 <code>open</code> 关键字，则默认情况下类是 <code>final</code> 的，不能被继承。</li>
-</ul>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">kotlin</span></span>
-<span class="line"><span style="color: #babed8">open class BaseActivity : AppCompatActivity() &#123;</span></span>
-<span class="line"><span style="color: #babed8">    // 可以被继承的类</span></span>
-<span class="line"><span style="color: #babed8">&#125;</span></span></code></pre></div><ul>
-<li><strong>方法（Method）</strong>：在方法声明前加上 <code>open</code> 关键字，表示这个方法是可以被子类覆盖（重写）的。如果不加 <code>open</code> 关键字，则默认情况下方法是 <code>final</code> 的，不能被子类覆盖。</li>
-</ul>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">kotlin</span></span>
-<span class="line"><span style="color: #babed8">open fun someMethod() &#123;</span></span>
-<span class="line"><span style="color: #babed8">    // 可以被子类重写的方法</span></span>
-<span class="line"><span style="color: #babed8">&#125;</span></span></code></pre></div><ul>
-<li><strong>属性（Property）</strong>：在属性声明前加上 <code>open</code> 关键字，表示这个属性是可以被子类覆盖的。如果不加 <code>open</code> 关键字，则默认情况下属性是 <code>final</code> 的，不能被子类覆盖。</li>
-</ul>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">kotlin</span></span>
-<span class="line"><span style="color: #babed8">open val someProperty: Int = 0</span></span></code></pre></div><p>使用 <code>open</code> 关键字可以让类的设计更加灵活，允许其他类继承并重写其中的方法，或者覆盖属性的行为。</p>
-<p><code>val square: (Int) -&gt; Int = &#123; x: Int -&gt; x * x &#125;</code></p>
-<p>square是(Int) -&gt; Int函数类型的变量，表示接受一个 <code>Int</code> 类型的参数，并返回一个 <code>Int</code> 类型的结果。</p>
-<p>Lambda 表达式 <code>&#123; x: Int -&gt; x * x &#125;</code> 被赋给了这个变量</p>
-<p><code>fun save(inputText: String) &#123;</code><br><code>try &#123;</code><br><code>val output = openFileOutput(&quot;data&quot;, Context.MODE_PRIVATE)</code><br><code>val writer = BufferedWriter(OutputStreamWriter(output))</code><br><code>writer.use &#123;</code><br><code>it.write(inputText)</code><br><code>&#125;</code><br><code>&#125; catch (e: IOException) &#123;</code><br><code>e.printStackTrace()</code><br><code>&#125;</code><br><code>&#125;</code></p>
-<p>这段代码定义了一个名为 <code>save</code> 的函数，它接受一个 <code>inputText</code> 参数，类型为 <code>String</code>。函数的作用是将输入的文本内容保存到文件中。让我解释一下代码的逻辑：</p>
-<ol>
-<li><code>openFileOutput(&quot;data&quot;, Context.MODE_PRIVATE)</code>: 这行代码打开一个名为 “data” 的文件，并返回一个 <code>FileOutputStream</code> 对象。这个文件将会存储在应用的内部存储空间中，因为使用了 <code>Context.MODE_PRIVATE</code> 参数，表示只有当前应用可以访问这个文件，并且会覆盖掉同名的文件（如果存在）。</li>
-<li><code>val writer = BufferedWriter(OutputStreamWriter(output))</code>: 这行代码创建了一个 <code>BufferedWriter</code> 对象，并将其包装在一个 <code>OutputStreamWriter</code> 中，以便将文本写入到 <code>output</code> 中。</li>
-<li><code>writer.use &#123; it.write(inputText) &#125;</code>: 这行代码使用 Kotlin 的 <code>use</code> 函数，确保在使用结束后正确关闭 <code>writer</code>，以释放资源。在 <code>use</code> 函数的 lambda 表达式中，调用了 <code>write</code> 方法，将 <code>inputText</code> 写入到文件中。</li>
-<li><code>catch (e: IOException) &#123; e.printStackTrace() &#125;</code>: 这是一个异常处理块，如果在保存文件时发生了 <code>IOException</code> 异常，程序将会打印异常的堆栈信息。</li>
-</ol>
-<p>将委托功能分为了两种：类委托和委托属性</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zgh20060114.github.io/post/Android-Kotlin.html" data-id="clxbjvuxm000261cx1h1s1bu0" data-title="Android_Kotlin" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -2238,7 +2934,7 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li></ul>
     </div>
   </div>
 
@@ -2248,7 +2944,7 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/PNC/" style="font-size: 10px;">PNC</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a>
+      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/PNC/" style="font-size: 10px;">PNC</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">计算机图形学</a>
     </div>
   </div>
 
@@ -2270,6 +2966,10 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
       <ul>
         
           <li>
+            <a href="/post/%E5%9B%9B%E8%B6%B3.html">四足</a>
+          </li>
+        
+          <li>
             <a href="/post/%E5%9B%BE%E5%BD%A2%E5%AD%A6.html">图形学</a>
           </li>
         
@@ -2283,10 +2983,6 @@ glm::vec3 result = lightColor * toyColor; // = (1.0f, 0.5f, 0.31f);
         
           <li>
             <a href="/post/C-STL.html">C++STL</a>
-          </li>
-        
-          <li>
-            <a href="/post/kinematics.html">kinematics</a>
           </li>
         
       </ul>
