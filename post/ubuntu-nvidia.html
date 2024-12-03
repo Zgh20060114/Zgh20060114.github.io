@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://zgh20060114.github.io/images/image-20241003145229468.png">
 <meta property="og:image" content="http://zgh20060114.github.io/images/image-20241003144809104.png">
 <meta property="article:published_time" content="2024-10-02T16:44:34.000Z">
-<meta property="article:modified_time" content="2024-10-04T02:34:52.723Z">
+<meta property="article:modified_time" content="2024-11-17T06:48:02.160Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://zgh20060114.github.io/images/image-20241003145229468.png">
@@ -230,6 +230,15 @@ zgh@zgh-Legion-Y7000P-IAH7:~$ __NV_PRIME_RENDER_OFFLOAD=1 zed
 <p>对于on-demand模式无法正常切换的，可以通过命令手动切换，上面的zed就是例子，zed需要用nvidia gpu的vulkan，</p>
 <p>这里面有vulkan.opengl等等</p>
 <p>###这个文档真的很有用</p>
+<p>Conky闪烁：</p>
+<pre><code class="bash">conky -b -q -c /home/zgh/.config/conky/TC-100/TC-100/tc100-green
+//conky --double-buffer
+</code></pre>
+<pre><code>-b | --double-buffer Use  double  buffering  (eliminates  &quot;flicker&quot;).  Only available with build flag BUILD_X11 enabled.
+</code></pre>
+<p>启用双缓冲后，Conky 的更新会显得更加平滑，尤其是在你频繁更新数据或显示动态内容时，减少闪烁或图形重绘带来的不适感。</p>
+<pre><code>zgh@zgh-Legion-Y7000P-IAH7:~/.config/conky/Shelyak-Dark$ killall conky
+</code></pre>
 
       
     </div>
@@ -276,7 +285,7 @@ zgh@zgh-Legion-Y7000P-IAH7:~$ __NV_PRIME_RENDER_OFFLOAD=1 zed
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%89%E8%B6%B3/" rel="tag">玉足</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li></ul>
     </div>
   </div>
 
@@ -286,7 +295,7 @@ zgh@zgh-Legion-Y7000P-IAH7:~$ __NV_PRIME_RENDER_OFFLOAD=1 zed
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/PNC/" style="font-size: 10px;">PNC</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">计算机图形学</a>
+      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/PNC/" style="font-size: 10px;">PNC</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a> <a href="/tags/%E7%8E%89%E8%B6%B3/" style="font-size: 10px;">玉足</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">计算机图形学</a>
     </div>
   </div>
 
@@ -295,7 +304,7 @@ zgh@zgh-Legion-Y7000P-IAH7:~$ __NV_PRIME_RENDER_OFFLOAD=1 zed
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
     </div>
   </div>
 
@@ -306,6 +315,10 @@ zgh@zgh-Legion-Y7000P-IAH7:~$ __NV_PRIME_RENDER_OFFLOAD=1 zed
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/post/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6.html">流体力学</a>
+          </li>
         
           <li>
             <a href="/post/%E5%9B%9B%E8%B6%B3.html">四足</a>
@@ -321,10 +334,6 @@ zgh@zgh-Legion-Y7000P-IAH7:~$ __NV_PRIME_RENDER_OFFLOAD=1 zed
         
           <li>
             <a href="/post/Realsense.html">Realsense</a>
-          </li>
-        
-          <li>
-            <a href="/post/C-STL.html">C++STL</a>
           </li>
         
       </ul>

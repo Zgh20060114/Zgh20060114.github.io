@@ -71,6 +71,44 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-流体力学" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6.html" class="article-date">
+  <time class="dt-published" datetime="2024-12-03T07:57:28.000Z" itemprop="datePublished">2024-12-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/post/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6.html">流体力学</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6.html" data-id="cm4862po20002lbcxhkdm881c" data-title="流体力学" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-四足" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/post/%E5%9B%9B%E8%B6%B3.html" class="article-date">
@@ -93,7 +131,92 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="基于模型预测控制与全身控制的控制器"><a href="#基于模型预测控制与全身控制的控制器" class="headerlink" title="基于模型预测控制与全身控制的控制器"></a>基于模型预测控制与全身控制的控制器</h2><ul>
+<li><h4 id="虚拟模型控制（VMC-Virtual-Model-Control）"><a href="#虚拟模型控制（VMC-Virtual-Model-Control）" class="headerlink" title="虚拟模型控制（VMC: Virtual Model Control）"></a>虚拟模型控制（VMC: Virtual Model Control）</h4></li>
+</ul>
+<p>通过模拟虚拟组件来产生所需的关节力矩,这些关节力矩产生的效果与虚拟组件产生的效果相同，因此实现了模拟组件与真实机器 人连接的控制效果</p>
+<ul>
+<li><h4 id="全身控制（WBC）"><a href="#全身控制（WBC）" class="headerlink" title="全身控制（WBC）"></a>全身控制（WBC）</h4></li>
+</ul>
+<p>为实现一组任务，所有驱动关节 都能得到控制信号的控制系统都可以称作全身控制</p>
+<ul>
+<li><h4 id="WBC-使用了浮动基逆动力学"><a href="#WBC-使用了浮动基逆动力学" class="headerlink" title="WBC 使用了浮动基逆动力学"></a>WBC 使用了浮动基逆动力学</h4></li>
+</ul>
+<p>模型预测控制（MPC）试图在未来的一个滚动时域内，使用优化算法来跟踪给定的期望 轨迹</p>
+<p>设计一个基于模型预测控制与全身控制的控制器。在 模型预测控制中，将整个机器人简化为一个单刚体模型并分析其动力学，建立状态方程、 预测方程，将控制问题转化为一个优化问题，最终求出足底反力。在全身控制中，采用了多刚体动力学。四足机器人全身控制将整体的任务按照重要程度分为四个子任务，利 用雅可比矩阵的零空间特性，保证低优先级的任务无法影响高优先级任务的控制。</p>
+<p>legged_controller是入口</p>
+<h3 id="激光雷达"><a href="#激光雷达" class="headerlink" title="激光雷达"></a>激光雷达</h3><p><a target="_blank" rel="noopener" href="https://www.researching.cn/ArticlePdf/m00002/2022/59/18/1815006.pdf">https://www.researching.cn/ArticlePdf/m00002/2022/59/18/1815006.pdf</a></p>
+<p><strong>武汉理工大学的初秀民、柳晨光等</strong>科研人员在<strong>《机械工程学报》2022年第4期</strong>发表了<strong>《无人水面艇三维激光雷达目标实时识别系统》</strong></p>
+<h3 id="Virtual-RobotX-VRX"><a href="#Virtual-RobotX-VRX" class="headerlink" title="Virtual RobotX (VRX)"></a>Virtual RobotX (VRX)</h3><p>Virtual RobotX (VRX) 是一个开源的模拟环境，专门设计用于模拟<strong>无人水面车辆</strong>（USVs）在海洋环境中的操作</p>
+<p>多功能 VRX 仿真环境作为一个可扩展的框架，致力于促进无人水面舰艇 （USV） 自主性的设计、开发和评估。VRX 仿真环境已被海事机器人研发社区所接受，不断发展以适应感知、学习和控制的进步，同时探索 USV 功能的新应用。</p>
+<p><img src="/../images/image-20241113101048510.png" alt="image-20241113101048510"></p>
+<p><img src="/../images/image-20241113101258443.png" alt="image-20241113101258443"></p>
+<p><img src="/../images/image-20241113102818405.png" alt="image-20241113102818405"></p>
+<p><img src="/../images/44672eed82d6e40e19cb84927e3bfdd4.png#pic_center" alt="在这里插入图片描述"></p>
+<p>可以在世界中添加障碍等元素</p>
+<p>可以创建自定义WAM-V推进器和传感器</p>
+<p>不知道水下能不能仿真</p>
+<h3 id="Webots水下机器人仿真"><a href="#Webots水下机器人仿真" class="headerlink" title="Webots水下机器人仿真"></a>Webots水下机器人仿真</h3><h3 id="uuv-simulator水下机器人仿真"><a href="#uuv-simulator水下机器人仿真" class="headerlink" title="uuv_simulator水下机器人仿真"></a>uuv_simulator水下机器人仿真</h3><p><a target="_blank" rel="noopener" href="https://github.com/uuvsimulator/uuv_simulator">https://github.com/uuvsimulator/uuv_simulator</a></p>
+<p>矩阵就是坐标变换</p>
+<p>矩阵的行列式就是是三维空间中立方体的体积的缩放比例</p>
+<p>旋转矩阵式正交矩阵（三个列向量是一组标准正交基（单位向量+正交））</p>
+<p>旋转矩阵的行列式恒为1（旋转矩阵不会缩放）</p>
+<p>旋转矩阵逆等于转置</p>
+<h3 id="旋转矩阵，欧拉角，四元数，旋转向量和齐次变换矩阵"><a href="#旋转矩阵，欧拉角，四元数，旋转向量和齐次变换矩阵" class="headerlink" title="[旋转矩阵，欧拉角，四元数，旋转向量和齐次变换矩阵]"></a>[旋转矩阵，欧拉角，四元数，旋转向量和齐次变换矩阵]</h3><p><strong>这几个名词都是用来描述一个物体的位置和姿态的</strong></p>
+<p>。<strong>旋转矩阵的初衷</strong>就是人们希望给定一个向量x，然后我对它旋转，能直接通过矩阵乘法的形式得到旋转后的向量坐标。也就是说y&#x3D;Ax。<strong>这个方便计算机计算，因此旋转矩阵常用于编程</strong>。旋转矩阵是一个正交矩阵(AT&#x3D;A−1AT&#x3D;A−1)而且行列式是1。既然<strong>有了旋转矩阵那么为何还要欧拉角呢</strong>？这是因为我给你一个旋转矩阵，人看不懂它到底转了多少角度啊。计算机很容易算出来，但是对人来说非常困难。比如飞机驾驶员你让他以旋转矩阵的形式给飞机下指令，那人家不得疯了。而欧拉角那就非常直观，欧拉角就是我飞机头抬头多少(俯仰角pitch)，向左拐还是向右拐(偏航角yaw)，以及滚筒动作的角度(滚转角roll)。<strong>因此欧拉角一般是方便用户操作，或者程序员检查运算结果是否正确</strong>。然后<strong>有了欧拉角为何还要四元数呢</strong>？因为欧拉角有问题，即万向锁问题。欧拉角的意思是说旋转可以分解为绕机身，机翼，垂直机身三个轴旋转。注意了是依次旋转，每次旋转后的旋转轴姿态已经变化。看下图，比如你先绕机翼那个轴转90度，然后你会发现原先(第一幅图)的滚转角(即绕原先的机身转)与现在的偏航角(绕垂直机身的那个轴)重合了。也<strong>就是说滚转这个方向等与偏航了，两个自由度合并成一个了</strong>。这样一个麻烦就是如果一个给定旋转矩阵可能会计算出多个欧拉角。于是乎，数学家就用四元数来代替欧拉角。</p>
+<p><strong>旋转向量其实和欧拉角类似也会存在万向锁的，任何只用三个变量来描述姿态的方法都会产生万向锁</strong>。旋转向量就是方向与旋转轴相同，模为旋转角度的一个向量。<strong>之所以会用旋转向量是因为旋转矩阵用9个元素来描述三维的旋转，太浪费了</strong>。所以想用三个元素的向量来描述三维运动，这个向量就是旋转向量。<strong>齐次变换矩阵就是既包含旋转又包含平移的变换矩阵（它是4x4），旋转矩阵只包含旋转（它是3x3），齐次变换矩阵的左上角是旋转矩阵，右侧那列是平移量</strong>。</p>
+<pre><code class="c++">printf(&quot;%d\n&quot;,2.0);
+输出：
+2123684520
+</code></pre>
+<pre><code class="c++">printf(&quot;%0.1f\n&quot;,2);
+输出:
+0.0
+</code></pre>
+<pre><code class="C++">int n,m=0；
+可以这样
+</code></pre>
+<p>不需要鼠标选取</p>
+<p>直接光标所在行</p>
+<p>Ctrl + &#x2F; 　　　　　　　　　 注释(取消注释)选择的行</p>
+<p>Shift + Enter 　　　　　　 开始新行</p>
+<p>Ctrl + Y 　　　　　　　　  删除当前插入符所在的行</p>
+<p>Ctrl + D 　　　　　　　　  复制当前行、或者选择的块</p>
+<p>Ctrl + Delete 　　　　　　  删除到字符结尾</p>
+<p>Ctrl + Backspace 　　　　  删除到字符的开始</p>
+<p>Ctrl + Shift + NumPad+ 　　展开所有的代码块</p>
+<p> Ctrl + Shift + NumPad- 　　 收缩所有的代码块</p>
+<p>ALT+ ←&#x2F;→                              切换文件</p>
+<p>SHIFT + ALT ←&#x2F;→ 				  返回上次编辑的位置</p>
+<p>CTRL+ALT+:                           emjo</p>
+<pre><code class="bash">/opt/glibc-2.34/lib/ld-linux-x86-64.so.2 --library-path /opt/glibc-2.34/lib:/lib/x86_64-linux-gnu ./yazi
+q退出
+</code></pre>
+<pre><code>char *rev
+和
+char review[]是一样的
+
+char *rev[]
+是数组里还是数组
+</code></pre>
+<pre><code class="C++">    while (number &gt; 0) &#123;
+        int digit = number % 10;  // 获取最低位
+        printf(&quot;%d &quot;, digit);      // 打印每一位
+        number /= 10;              // 去掉最低位
+    &#125;
+</code></pre>
+<ul>
+<li><strong>空格问题</strong>：<code>scanf</code> 使用 <code>%s</code> 读取字符串时，遇到空格、制表符或者换行符就会停止读取。因此，如果输入的字符串中有空格，<code>scanf</code> 只能获取到第一个单词。例如，输入 <code>Hello World</code> 时，<code>scanf</code> 只会读取 <code>Hello</code>，而 <code>World</code> 会被留在输入缓冲区。</li>
+</ul>
+<pre><code>int a = 10;
+int &amp;ref = a;  // 通过引用初始化 a
+</code></pre>
+<p>在编译时，编译器可能会将其转化为：</p>
+<pre><code>int a = 10;
+int *ref = &amp;a;  // ref 是指向 a 的指针，类似引用
+</code></pre>
+<p>&amp;是赋值还是被赋值，等号左边还是右边</p>
+
       
     </div>
     <footer class="article-footer">
@@ -101,6 +224,8 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%8E%89%E8%B6%B3/" rel="tag">玉足</a></li></ul>
+
     </footer>
   </div>
   
@@ -1020,6 +1145,15 @@ zgh@zgh-Legion-Y7000P-IAH7:~$ __NV_PRIME_RENDER_OFFLOAD=1 zed
 <p>对于on-demand模式无法正常切换的，可以通过命令手动切换，上面的zed就是例子，zed需要用nvidia gpu的vulkan，</p>
 <p>这里面有vulkan.opengl等等</p>
 <p>###这个文档真的很有用</p>
+<p>Conky闪烁：</p>
+<pre><code class="bash">conky -b -q -c /home/zgh/.config/conky/TC-100/TC-100/tc100-green
+//conky --double-buffer
+</code></pre>
+<pre><code>-b | --double-buffer Use  double  buffering  (eliminates  &quot;flicker&quot;).  Only available with build flag BUILD_X11 enabled.
+</code></pre>
+<p>启用双缓冲后，Conky 的更新会显得更加平滑，尤其是在你频繁更新数据或显示动态内容时，减少闪烁或图形重绘带来的不适感。</p>
+<pre><code>zgh@zgh-Legion-Y7000P-IAH7:~/.config/conky/Shelyak-Dark$ killall conky
+</code></pre>
 
       
     </div>
@@ -1458,6 +1592,11 @@ Python 3.8.10
 <p><img src="/../images/image-20241110210042338.png" alt="image-20241110210042338"></p>
 <p><img src="/../images/image-20241111095941858.png" alt="image-20241111095941858"></p>
 <p><img src="/../images/image-20241111102055992.png" alt="image-20241111102055992"></p>
+<p><img src="/../images/image-20241114111359106.png" alt="image-20241114111359106"></p>
+<p><img src="/../images/image-20241114155901919.png" alt="image-20241114155901919"></p>
+<p>pid校正可以看成迟后超前的特例</p>
+<p><img src="/../images/image-20241115070328025.png" alt="image-20241115070328025"></p>
+<p><img src="/../images/image-20241115200232871.png" alt="image-20241115200232871"></p>
 
       
     </div>
@@ -1474,89 +1613,11 @@ Python 3.8.10
 
 
   
-    <article id="post-ODriver" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/post/ODriver.html" class="article-date">
-  <time class="dt-published" datetime="2024-09-06T02:16:53.000Z" itemprop="datePublished">2024-09-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/post/ODriver.html">ODriver</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>共有PWM模块、ADC电流采集、定时器编码器配置、SVPWM模块、FOC核心、PID模块、电压限幅模块，其实有了PWM与SVPWM以及一些必要的数学变换，我们就可以开环使电机转起来了，加入电角度与电流采集作为反馈后，我们就能做到电流闭环，再加入速度PID就可以做到速度闭环，其他的模块只是这些目的的辅助手段罢了</p>
-<p> 一、编码器的分类</p>
-<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">按工作原理的不同可分为增量型和绝对值型。</span></span>
-<span class="line"><span style="color: #babed8"></span></span>
-<span class="line"><span style="color: #babed8">(1) 增量型 （增量式可以理解为信号即位移的增加，需要参考量）</span></span>
-<span class="line"><span style="color: #babed8"></span></span>
-<span class="line"><span style="color: #babed8"> 增量式编码器的原理是将位移转换成周期性的电信号，再把这个电信号转变成计数脉冲，用脉冲的个数表示位移的大小。增量式编码器转轴旋转时，有相应的脉冲输出，其旋转方向的判别和脉冲数量的增减借助后部的判向电路和计数器来实现。其计数起点任意设定，可实现多圈无限累加和测量。还可以把每转发出一个脉冲的Z信号，作为参考机械零位。编码器轴转一圈会输出固定的脉冲，脉冲数由编码器光栅的线数决定。需要提高分辨率时，可利用 90 度相位差的 A、B两路信号对原脉冲数进行倍频，或者更换高分辨率编码器。</span></span>
-<span class="line"><span style="color: #babed8"></span></span>
-<span class="line"><span style="color: #babed8"> 简单来说，增量型编码器总共有三种相线输出，A相、B相、Z相。其中电机每转过一定的角度，A相和B相就输出一个脉冲，且A相和B相相互延迟1/4周期，电机的正反转就是根据A相和B相的延迟关系判断的。Z相为单圈脉冲，即每转一圈输出一个脉冲，可以作为参考机械零位。</span></span>
-<span class="line"><span style="color: #babed8"></span></span>
-<span class="line"><span style="color: #babed8">(2) 绝对型（直接输出数字量的传感器，不需要参考量）</span></span>
-<span class="line"><span style="color: #babed8"></span></span>
-<span class="line"><span style="color: #babed8">绝对编码器光码盘上有许多道光通道刻线，每道刻线依次以2线、4线、8线、16线编排，这样，在编码器的每一个位置，通过读取每道刻线的通、暗，获得一组从2的零次方到2的n-1次方的唯一的2进制编码（格雷码），这就称为n位绝对编码器。这样的编码器是由光电码盘进行记忆的。</span></span>
-<span class="line"><span style="color: #babed8"></span></span>
-<span class="line"><span style="color: #babed8">简单来说，就是对应一圈，电机的每个角度都有一个与该角度对应二进制的数值，且这个数值不会改变，所以称为绝对型编码器。</span></span></code></pre></div><p>二、不同编码器的优缺点及其对应应用范围</p>
-<p>   增量型：</p>
-<p>增量式编码器十分合适测速度，可无限累加丈量<br>是存在零点累计差错，抗干扰较差，接纳设备的停机需断电回忆<br>增量式编码器的一般应用测速，测转动方向，测移动角度、距离(相对)。</p>
-<p>   绝对型：</p>
-<p>发生电源故障也不丢失轴位置<br>绝对式编码器十分适合测量位置，可直接输出<br>绝对编码器一般能够以 8 到 12位输出 360 °更精确，但也更昂贵</p>
-<h2 id="0、系统配置"><a href="#0、系统配置" class="headerlink" title="0、系统配置"></a>0、系统配置</h2><h2 id="1、电机有力了！（PWM模块）"><a href="#1、电机有力了！（PWM模块）" class="headerlink" title="1、电机有力了！（PWM模块）"></a>1、电机有力了！（PWM模块）</h2><p>高级定时器主要用于产生6路互补的PWM来驱动MOS管，加入死区防止电源导通，本文未使用刹车引脚。高级定时器1通道1、2、3用于产生PWM，通道4用于触发ADC电流采样，根据扇区的位置，灵活设置PWM占空比，进而选择合理的触发点，避免在噪声点采样。引脚配置与PWM极性请根据自己的硬件合理配置，如IR2101是高电平有效，而IR2103则是低端低有效，高端高有效。</p>
-<p>定时器从0开始向上计数 当0-t1段,定时器计数器TIMx_CNT值小于CCRx值,输出低电平 t1-t2段,定时器计数器TIMx_CNT值大于CCRx值,输出高电平 当TIMx_CNT值达到ARR时,定时器溢出,重新向上计数…循环此过程 至此一个PWM周期完成</p>
-<p>TIMx_ARR寄存器确定PWM频率，<br>TIMx_CCRx寄存器确定占空比</p>
-<p><img src="/../images/image-20240907102129162.png" alt="image-20240907102129162"></p>
-<p>LED等推挽输出</p>
-<p><img src="/../images/image-20240909104907079.png" alt="image-20240909104907079"></p>
-<p><img src="/../images/image-20240909105404369.png" alt="image-20240909105404369"></p>
-<p><img src="/../images/image-20240909105448227.png" alt="image-20240909105448227"></p>
-<p><img src="/../images/image-20240909105833521.png" alt="image-20240909105833521"></p>
-<p><img src="/../images/image-20240910132838967.png" alt="image-20240910132838967"></p>
-<p><img src="/../images/image-20240910132746715.png" alt="image-20240910132746715"></p>
-<p><img src="/../images/image-20240910132952045.png" alt="image-20240910132952045"></p>
-<p><img src="/../images/v2-49051363300bd5ea2f30d5391c784ece_720w.webp" alt="img"></p>
-<p><img src="/../images/image-20240915213051309.png" alt="image-20240915213051309"></p>
-<p><img src="/../images/image-20240915213823875.png" alt="image-20240915213823875"></p>
-<p><img src="/../images/image-20240915214652354.png" alt="image-20240915214652354"></p>
-<p><img src="/../images/image-20240916160612586.png" alt="image-20240916160612586"></p>
-<p><img src="/../images/image-20240916161725535.png" alt="image-20240916161725535"></p>
-<p>使用opencv进行颜色识别时受光照影响很大怎么办?<br>1.白平衡算法</p>
-<p>2.对于图像数据受到光照度不足或者曝光引起的对比度太小的情况，在图像处理中一般是图像直方图均衡化的方法来处理。直方图均衡化是通过拉伸像素强度分布范围来增强图像对比度的一种方法。例如，更亮的图像将所有像素限制在高值。但是一个好的图像会有来自图像所有区域的像素。因此，我们需要将这个直方图扩展到两端，而这就是直方图均衡化所做的事情(用简单的话来说)。这通常会改善图像的对比度。<br><strong>全局直方图均衡化</strong>,<strong>自适应局部直方图均衡化</strong></p>
-<h6 id="自适应阈值"><a href="#自适应阈值" class="headerlink" title="自适应阈值?"></a>自适应阈值?</h6><p>- </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zgh20060114.github.io/post/ODriver.html" data-id="cm1bdrncg0000vzcx2kspdeqb" data-title="ODriver" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1570,7 +1631,7 @@ Python 3.8.10
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-STL/" rel="tag">C++STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedded/" rel="tag">Embedded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PNC/" rel="tag">PNC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/robot-kinematics/" rel="tag">robot_kinematics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yolo/" rel="tag">yolo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%89%E8%B6%B3/" rel="tag">玉足</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li></ul>
     </div>
   </div>
 
@@ -1580,7 +1641,7 @@ Python 3.8.10
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/PNC/" style="font-size: 10px;">PNC</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">计算机图形学</a>
+      <a href="/tags/C-STL/" style="font-size: 10px;">C++STL</a> <a href="/tags/Embedded/" style="font-size: 10px;">Embedded</a> <a href="/tags/PNC/" style="font-size: 10px;">PNC</a> <a href="/tags/esp32/" style="font-size: 10px;">esp32</a> <a href="/tags/robot-kinematics/" style="font-size: 10px;">robot_kinematics</a> <a href="/tags/yolo/" style="font-size: 10px;">yolo</a> <a href="/tags/%E7%8E%89%E8%B6%B3/" style="font-size: 10px;">玉足</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">计算机图形学</a>
     </div>
   </div>
 
@@ -1589,7 +1650,7 @@ Python 3.8.10
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
     </div>
   </div>
 
@@ -1600,6 +1661,10 @@ Python 3.8.10
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/post/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6.html">流体力学</a>
+          </li>
         
           <li>
             <a href="/post/%E5%9B%9B%E8%B6%B3.html">四足</a>
@@ -1615,10 +1680,6 @@ Python 3.8.10
         
           <li>
             <a href="/post/Realsense.html">Realsense</a>
-          </li>
-        
-          <li>
-            <a href="/post/C-STL.html">C++STL</a>
           </li>
         
       </ul>
