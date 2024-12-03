@@ -71,6 +71,44 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-ncnn-yolov8-seg" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/ncnn-yolov8-seg.html" class="article-date">
+  <time class="dt-published" datetime="2024-12-03T11:01:02.000Z" itemprop="datePublished">2024-12-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/post/ncnn-yolov8-seg.html">ncnn-yolov8-seg</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/ncnn-yolov8-seg.html" data-id="cm48cmcbi000082cx1mfy3yf5" data-title="ncnn-yolov8-seg" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-流体力学" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/post/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6.html" class="article-date">
@@ -93,7 +131,12 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <p><img src="/../images/image-20241203155836204.png" alt="image-20241203155836204"></p>
+<p><img src="/../images/image-20241203160152242.png" alt="image-20241203160152242"></p>
+<p><img src="/../images/image-20241203161937539.png" alt="image-20241203161937539"></p>
+<p><img src="/../images/image-20241203165342550.png" alt="image-20241203165342550"></p>
+<p><img src="/../images/image-20241203170039102.png" alt="image-20241203170039102"></p>
+
       
     </div>
     <footer class="article-footer">
@@ -1170,449 +1213,6 @@ zgh@zgh-Legion-Y7000P-IAH7:~$ __NV_PRIME_RENDER_OFFLOAD=1 zed
 
 
   
-    <article id="post-ROS" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/post/ROS.html" class="article-date">
-  <time class="dt-published" datetime="2024-09-20T23:57:14.000Z" itemprop="datePublished">2024-09-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/post/ROS.html">ROS</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><img src="/../images/image-20240921180747237.png" alt="image-20240921180747237"></p>
-<p><img src="/../images/image-20240922084731413.png" alt="image-20240922084731413"></p>
-<p><em><strong>legged_control</strong></em></p>
-<p>基于OCS2和ros-controls的非线性<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=MPC&spm=1001.2101.3001.7020">MPC 1</a>与WBC框架</p>
-<ul>
-<li><strong>docs</strong> - 包含项目文档和说明。</li>
-<li><strong>legged_common</strong> - 共享的数据结构和函数库。</li>
-<li><strong>legged_control</strong> - 主控制堆栈的源码，实现了NMPC和WBC的核心算法。</li>
-<li><strong>legged_controllers</strong> - 控制器的具体实现，如腿部运动模式控制器。</li>
-<li><strong>legged_estimation</strong> - 估计相关的组件，可能涉及状态估计或传感器数据处理。</li>
-<li><strong>legged_examples</strong> - 示例代码，可能含有特定机器人的示例配置或仿真设置。</li>
-<li><strong>legged_gazebo</strong> - Gazebo仿真相关文件，用于虚拟环境中测试机器人。</li>
-<li><strong>legged_hw</strong> - 硬件交互层，用于实际机器人的控制。</li>
-<li><strong>legged_interface</strong> - 提供与机器人交互的API。</li>
-<li><strong>legged_wbc</strong> - Whole Body Control的相关代码。</li>
-<li><strong>qpoases_catkin</strong> - 可能是作为依赖项的QPOASES求解器的ROS集成。</li>
-</ul>
-<p>Ubuntu 20.04    </p>
-<p>ROS noetic </p>
-<p>catkin</p>
-<p><em><strong>OCS2 是一个针对切换系统优化控制的 C++ 工具箱，适用于机器人任务，包括路径约束处理和 URDF 模型支持。它提供了高效算法如 SLQ、iLQR 和 SQP，并具有 ROS 接口。工具箱包含自动微分工具，确保在有限计算能力的机器人应用中实现数值稳定和高效控制。</strong></em></p>
-<p>OCS2是一个大型单库项目；请<strong>不要</strong>尝试编译整个仓库。</p>
-<p>URDF文件和YAML文件通常在 ROS 启动文件中被调用。具体步骤如下：</p>
-<ol>
-<li><p><strong>URDF 文件</strong>：</p>
-<ul>
-<li>在启动文件（<code>.launch</code>）中使用 <code>&lt;param&gt;</code> 标签将 URDF 文件加载到参数服务器：<pre><code class="xml">&lt;param name=&quot;robot_description&quot; command=&quot;$(find xacro)/xacro $(find your_package)/urdf/your_robot.urdf.xacro&quot;/&gt;
-</code></pre>
-</li>
-</ul>
-</li>
-<li><p><strong>YAML 文件</strong>：</p>
-<ul>
-<li>也可以在启动文件中使用 <code>&lt;rosparam&gt;</code> 标签加载 YAML 文件：<pre><code class="xml">&lt;rosparam file=&quot;$(find your_package)/config/your_config.yaml&quot; command=&quot;load&quot;/&gt;
-</code></pre>
-</li>
-</ul>
-</li>
-<li><p><strong>节点中访问</strong>：</p>
-<ul>
-<li>在你的 ROS 节点代码中，可以通过 <code>ros::param::get()</code> 或 <code>ros::NodeHandle</code> 来访问这些参数。</li>
-</ul>
-</li>
-</ol>
-<p>这样，URDF 和 YAML 文件就能在你的 ROS 项目中被有效地调用和使用。</p>
-<pre><code>&lt;geometry&gt;  &lt;!--几何形状--&gt;
-</code></pre>
-<pre><code>&lt;inertial&gt;      &lt;!--惯性属性--&gt;
-</code></pre>
-<pre><code>&lt;joint name=&quot;world_to_slideBar&quot; type=&quot;fixed&quot;&gt;  &lt;!--这个关节用于将 slideBar 固定在世界坐标系中的特定位置，使得它在仿真中保持稳定，提供支撑作用。--&gt;
-    &lt;parent link=&quot;world&quot;/&gt;
-    &lt;child link=&quot;slideBar&quot;/&gt;
-    &lt;origin xyz=&quot;0.0 0.0 2.0&quot;/&gt;
-&lt;/joint&gt;
-</code></pre>
-<pre><code>&lt;gazebo reference=&quot;slideBar&quot;&gt;
-</code></pre>
-<ul>
-<li><strong>Gazebo特定属性</strong>: 用于指定该链接在 Gazebo 中的特性。</li>
-</ul>
-<p>​     <code>&lt;mass value=&quot;0.1&quot;/&gt;</code></p>
-<ul>
-<li><strong>质量</strong>: 指定了链接的质量为 0.1 千克</li>
-</ul>
-<h4 id="位置"><a href="#位置" class="headerlink" title="&lt;origin&gt;  位置"></a><code>&lt;origin&gt;</code>  位置</h4><p><img src="/../images/image-20240924221522926.png" alt="image-20240924221522926"></p>
-<p>自由度通俗的讲就是为了唯一确定一个机构的运动状态所必须的独立变量的个数</p>
-<p><img src="/../images/image-20240925083033316.png" alt="image-20240925083033316"></p>
-<p><img src="/../images/image-20240925085251799.png" alt="image-20240925085251799"></p>
-<p>c12&#x3D;cos(seta1+seta2 )</p>
-<p><img src="/../images/image-20240925085203224.png" alt="image-20240925085203224"></p>
-<p><img src="/../images/image-20240925090201537.png" alt="image-20240925090201537"></p>
-<p><img src="/../images/image-20240925091223929.png" alt="image-20240925091223929"></p>
-<p><img src="/../images/image-20240925123003125.png" alt="image-20240925123003125"></p>
-<pre><code>&lt;joint name=&quot;base_to_plat&quot; type=&quot;prismatic&quot;&gt;
-    &lt;axis xyz=&quot;1 0 0&quot;/&gt;
-    &lt;origin xyz=&quot;0.0 0.0 0.0&quot;/&gt;
-    &lt;parent link=&quot;slideBar&quot;/&gt;
-    &lt;child link=&quot;cart&quot;/&gt;
-    &lt;limit effort=&quot;100000.0&quot; lower=&quot;-15&quot; upper=&quot;15&quot; velocity=&quot;100&quot;/&gt;
-    &lt;dynamics damping=&quot;0.0&quot; friction=&quot;0.0&quot;/&gt;
-&lt;/joint&gt;
-</code></pre>
-<p>是什么意思</p>
-<p>这段代码定义了一个名为 <code>base_to_plat</code> 的滑动关节（prismatic joint），其主要功能是让 <code>cart</code> 在 <code>slideBar</code> 上进行线性滑动。以下是对每个部分的详细解释：</p>
-<h3 id="1"><a href="#1" class="headerlink" title="1. &lt;joint name=&quot;base_to_plat&quot; type=&quot;prismatic&quot;&gt;"></a>1. <code>&lt;joint name=&quot;base_to_plat&quot; type=&quot;prismatic&quot;&gt;</code></h3><ul>
-<li><strong>名称和类型</strong>:<ul>
-<li><code>name=&quot;base_to_plat&quot;</code>: 该关节的名称是 <code>base_to_plat</code>。</li>
-<li><code>type=&quot;prismatic&quot;</code>: 关节类型为滑动关节，允许连接的部分沿一个轴线性移动。</li>
-</ul>
-</li>
-</ul>
-<h3 id="2"><a href="#2" class="headerlink" title="2. &lt;axis xyz=&quot;1 0 0&quot;/&gt;"></a>2. <code>&lt;axis xyz=&quot;1 0 0&quot;/&gt;</code></h3><ul>
-<li><strong>运动轴</strong>:<ul>
-<li><code>xyz=&quot;1 0 0&quot;</code>: 表示滑动关节的运动轴为 X 轴。<code>1</code> 表示在 X 方向上有运动，而 Y 和 Z 方向上没有运动。</li>
-</ul>
-</li>
-</ul>
-<h3 id="3"><a href="#3" class="headerlink" title="3. &lt;origin xyz=&quot;0.0 0.0 0.0&quot;/&gt;"></a>3. <code>&lt;origin xyz=&quot;0.0 0.0 0.0&quot;/&gt;</code></h3><ul>
-<li><strong>原点位置</strong>:<ul>
-<li><code>xyz=&quot;0.0 0.0 0.0&quot;</code>: 该关节的原点位置设置在 (0, 0, 0)，通常是关节的中心点。</li>
-</ul>
-</li>
-</ul>
-<h3 id="4"><a href="#4" class="headerlink" title="4. &lt;parent link=&quot;slideBar&quot;/&gt;"></a>4. <code>&lt;parent link=&quot;slideBar&quot;/&gt;</code></h3><ul>
-<li><strong>父链接</strong>:<ul>
-<li><code>link=&quot;slideBar&quot;</code>: 指定 <code>slideBar</code> 是该关节的父链接。也就是说，<code>cart</code> 相对于 <code>slideBar</code> 移动。</li>
-</ul>
-</li>
-</ul>
-<h3 id="5"><a href="#5" class="headerlink" title="5. &lt;child link=&quot;cart&quot;/&gt;"></a>5. <code>&lt;child link=&quot;cart&quot;/&gt;</code></h3><ul>
-<li><strong>子链接</strong>:<ul>
-<li><code>link=&quot;cart&quot;</code>: 指定 <code>cart</code> 是该关节的子链接。表示 <code>cart</code> 将通过该关节的运动影响到。</li>
-</ul>
-</li>
-</ul>
-<h3 id="6"><a href="#6" class="headerlink" title="6. &lt;limit effort=&quot;100000.0&quot; lower=&quot;-15&quot; upper=&quot;15&quot; velocity=&quot;100&quot;/&gt;"></a>6. <code>&lt;limit effort=&quot;100000.0&quot; lower=&quot;-15&quot; upper=&quot;15&quot; velocity=&quot;100&quot;/&gt;</code></h3><ul>
-<li><strong>运动限制</strong>:<ul>
-<li><code>effort=&quot;100000.0&quot;</code>: 该关节能够承受的最大力为 100,000（单位通常为牛顿）。</li>
-<li><code>lower=&quot;-15&quot;</code>: 关节的最小位置限制为 -15（单位通常为米），表示 <code>cart</code> 可以向后滑动的最大距离。</li>
-<li><code>upper=&quot;15&quot;</code>: 关节的最大位置限制为 15（单位通常为米），表示 <code>cart</code> 可以向前滑动的最大距离。</li>
-<li><code>velocity=&quot;100&quot;</code>: 关节的最大速度为 100（单位通常为米&#x2F;秒），表示 <code>cart</code> 的移动速度限制。</li>
-</ul>
-</li>
-</ul>
-<h3 id="7"><a href="#7" class="headerlink" title="7. &lt;dynamics damping=&quot;0.0&quot; friction=&quot;0.0&quot;/&gt;"></a>7. <code>&lt;dynamics damping=&quot;0.0&quot; friction=&quot;0.0&quot;/&gt;</code></h3><ul>
-<li><strong>动力学属性</strong>:<ul>
-<li><code>damping=&quot;0.0&quot;</code>: 阻尼系数为 0，表示没有额外的阻力影响滑动。</li>
-<li><code>friction=&quot;0.0&quot;</code>: 摩擦系数为 0，表示在滑动过程中没有摩擦力。</li>
-</ul>
-</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这段代码的主要目的是定义一个滑动关节，使得 <code>cart</code> 可以在 X 轴上滑动，受到的限制和动力学特性被明确设定。这在机器人和机械模拟中是非常重要的，可以精确控制其运动行为。</p>
-<pre><code>&lt;transmission name=&quot;tran2&quot;&gt;
-    &lt;type&gt;transmission_interface/SimpleTransmission&lt;/type&gt;
-    &lt;joint name=&quot;base_to_plat&quot;&gt;
-        &lt;hardwareInterface&gt;hardware_interface/EffortJointInterface&lt;/hardwareInterface&gt;
-    &lt;/joint&gt;
-    &lt;actuator name=&quot;planar_motor_2&quot;&gt;
-        &lt;hardwareInterface&gt;hardware_interface/EffortJointInterface&lt;/hardwareInterface&gt;
-        &lt;mechanicalReduction&gt;1&lt;/mechanicalReduction&gt;
-    &lt;/actuator&gt;
-&lt;/transmission&gt;
-</code></pre>
-<p>是什么意思</p>
-<p>这段代码定义了一个名为 <code>tran2</code> 的传动系统，主要用于连接一个滑动关节和一个执行器。以下是各部分的解释：</p>
-<h3 id="1-1"><a href="#1-1" class="headerlink" title="1. &lt;transmission name=&quot;tran2&quot;&gt;"></a>1. <code>&lt;transmission name=&quot;tran2&quot;&gt;</code></h3><ul>
-<li><strong>传动系统名称</strong>: 这个传动系统被命名为 <code>tran2</code>。</li>
-</ul>
-<h3 id="2-transmission-interface-SimpleTransmission"><a href="#2-transmission-interface-SimpleTransmission" class="headerlink" title="2. &lt;type&gt;transmission_interface/SimpleTransmission&lt;/type&gt;"></a>2. <code>&lt;type&gt;transmission_interface/SimpleTransmission&lt;/type&gt;</code></h3><ul>
-<li><strong>传动类型</strong>: 使用简单传动接口，表明传动的实现相对直接。</li>
-</ul>
-<h3 id="3-1"><a href="#3-1" class="headerlink" title="3. &lt;joint name=&quot;base_to_plat&quot;&gt;"></a>3. <code>&lt;joint name=&quot;base_to_plat&quot;&gt;</code></h3><ul>
-<li><strong>关节连接</strong>: 连接到先前定义的滑动关节 <code>base_to_plat</code>。</li>
-</ul>
-<h3 id="4-hardware-interface-EffortJointInterface"><a href="#4-hardware-interface-EffortJointInterface" class="headerlink" title="4. &lt;hardwareInterface&gt;hardware_interface/EffortJointInterface&lt;/hardwareInterface&gt;"></a>4. <code>&lt;hardwareInterface&gt;hardware_interface/EffortJointInterface&lt;/hardwareInterface&gt;</code></h3><ul>
-<li><strong>硬件接口</strong>: 该关节使用的是努力关节接口，意味着通过施加力来控制关节运动。</li>
-</ul>
-<h3 id="5-1"><a href="#5-1" class="headerlink" title="5. &lt;actuator name=&quot;planar_motor_2&quot;&gt;"></a>5. <code>&lt;actuator name=&quot;planar_motor_2&quot;&gt;</code></h3><ul>
-<li><strong>执行器名称</strong>: 该传动系统连接的执行器名为 <code>planar_motor_2</code>。</li>
-</ul>
-<h3 id="6-1"><a href="#6-1" class="headerlink" title="6. &lt;mechanicalReduction&gt;1&lt;/mechanicalReduction&gt;"></a>6. <code>&lt;mechanicalReduction&gt;1&lt;/mechanicalReduction&gt;</code></h3><ul>
-<li><strong>机械减速比</strong>: 设置为 1，表示执行器的输出与输入之间没有减速，直接传递力。</li>
-</ul>
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>整体上，这段代码用于定义一个简单的传动系统，将滑动关节和电机连接起来，以便通过施加力来控制滑动运动。</p>
-<h5 id="JointState-消息内容"><a href="#JointState-消息内容" class="headerlink" title="JointState 消息内容"></a><code>JointState</code> 消息内容</h5><p><code>JointState</code> 消息通常包含以下字段：</p>
-<ul>
-<li><strong><code>name</code></strong>: 存储关节名称的字符串数组。</li>
-<li><strong><code>position</code></strong>: 存储每个关节当前角度或位置的浮点数数组。</li>
-<li><strong><code>velocity</code></strong>: 存储每个关节当前速度的浮点数数组。</li>
-<li><strong><code>effort</code></strong>: 存储每个关节当前力矩或用力程度的浮点数数组。</li>
-</ul>
-<p><img src="/../images/image-20240927144924380.png" alt="image-20240927144924380"></p>
-<p>LQR（线性二次调节器，Linear Quadratic Regulator）是一种用于控制系统的优化方法。它旨在通过最小化某个代价函数来设计控制器，通常用于线性动态系统。</p>
-<h3 id="LQR-的基本公式"><a href="#LQR-的基本公式" class="headerlink" title="LQR 的基本公式"></a>LQR 的基本公式</h3><p>假设有一个线性系统描述为：<br>$ \dot{x} &#x3D; Ax + Bu $<br>其中：</p>
-<ul>
-<li>( x ) 是状态向量</li>
-<li>( u ) 是控制输入</li>
-<li>( A ) 和 ( B ) 是系统矩阵</li>
-</ul>
-<p>LQR 通过最小化以下代价函数来设计控制器：<br>$ J &#x3D; \int_0^{\infty} (x^T Q x + u^T R u) , dt $<br>其中：</p>
-<ul>
-<li>( Q ) 是状态权重矩阵，通常是半正定的$(Q \geq 0 )$</li>
-<li>( R ) 是控制输入权重矩阵，通常是正定的（$ R &gt; 0 $）</li>
-</ul>
-<h3 id="最优控制律"><a href="#最优控制律" class="headerlink" title="最优控制律"></a>最优控制律</h3><p>通过求解代价函数的最小值，可以得到最优控制律：<br>$ u &#x3D; -Kx $<br>其中 $K $是增益矩阵，通过以下公式计算：<br>$K &#x3D; R^{-1} B^T P $<br>而$  P $ 是 Riccati 方程的解：<br>$A^T P + PA - PBR^{-1}B^T P + Q &#x3D; 0 $ </p>
-<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p>LQR 方法通过设计一个控制器，最小化系统状态和控制输入的加权平方和，从而实现对线性系统的有效控制。它广泛应用于工程、自动控制、机器人等领域。</p>
-<h3 id="代码实现过程"><a href="#代码实现过程" class="headerlink" title="代码实现过程"></a>代码实现过程</h3><p>在你提供的代码中，LQR控制器的设计过程主要包含以下几个步骤：</p>
-<ol>
-<li><p><strong>逆矩阵计算</strong>：</p>
-<pre><code class="cpp">Eigen::Matrix&lt;double, 1, 1&gt; R_inv = R_.inverse();
-</code></pre>
-<p>这里计算了控制输入权重矩阵 (R) 的逆。</p>
-</li>
-<li><p><strong>计算 BRB 项</strong>：</p>
-<pre><code class="cpp">Eigen::Matrix&lt;double, 4, 4&gt; BRB = B_ * R_inv(0, 0) * B_.transpose();
-</code></pre>
-<p>这一步计算了 $BR^{-1}B^T$项，用于构建哈密尔顿矩阵。</p>
-</li>
-<li><p><strong>构造哈密尔顿矩阵</strong>：</p>
-<pre><code class="cpp">Eigen::Matrix&lt;do	uble, 8, 8&gt; H;
-H.topLeftCorner(4, 4) = A_;
-H.topRightCorner(4, 4) = -BRB;
-H.bottomLeftCorner(4, 4) = -Q_;
-H.bottomRightCorner(4, 4) = -A_.transpose();
-</code></pre>
-<p>哈密尔顿矩阵 (H) 是 LQR 解的核心部分，它结合了系统的动态矩阵 (A)、控制输入矩阵 (B) 和权重矩阵 (Q) 和 (R)。</p>
-</li>
-<li><p><strong>特征值和特征向量计算</strong>：</p>
-<pre><code class="cpp">Eigen::ComplexEigenSolver&lt;Eigen::Matrix&lt;double, 8, 8&gt;&gt; ces;
-ces.compute(H);
-</code></pre>
-<p>通过计算哈密尔顿矩阵的特征值和特征向量来获取系统的稳定性信息。</p>
-</li>
-<li><p><strong>选择稳定特征向量</strong>：</p>
-<pre><code class="cpp">for (int i = 0; i &lt; 8; ++i)
-&#123;
-    if (eigenvalues(i).real() &lt; 0 &amp;&amp; index &lt; 4)
-    &#123;
-        Vs.col(index) = eigenvectors.col(i);
-        ++index;
-    &#125;
-&#125;
-</code></pre>
-<p>选择具有负实部的特征值对应的特征向量，以确保系统的稳定性。</p>
-</li>
-<li><p><strong>解Ricatti方程</strong>：</p>
-<pre><code class="cpp">Eigen::MatrixXcd P_c = Vs2 * Vs1.inverse();
-Eigen::Matrix4d P = P_c.real(); // Take the real part
-</code></pre>
-<p>通过特征向量计算 Riccati 方程的解 (P)，这是 LQR 控制中的关键步骤。</p>
-</li>
-<li><p><strong>计算 LQR 增益矩阵</strong>：</p>
-<pre><code class="cpp">Eigen::Matrix&lt;double, 1, 4&gt; K_temp = R_inv(0, 0) * B_.transpose() * P;
-return K_temp.transpose();
-</code></pre>
-<p>最后计算控制增益矩阵 (K)，该矩阵用于生成控制输入。</p>
-</li>
-</ol>
-<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><p>LQR 控制器的实现通过构造哈密尔顿矩阵，计算其特征值和特征向量，求解 Riccati 方程，最终得到一个最优控制增益 (K)。通过这种方式，LQR 能够有效地平衡系统的性能和控制输入，以保证系统的稳定性和响应速度。</p>
-<p><code>Eigen::MatrixXd</code> 和 <code>Eigen::Matrix4d</code> 是 Eigen 库中用于表示矩阵的两种不同类型。它们的主要区别如下：</p>
-<h3 id="1-尺寸"><a href="#1-尺寸" class="headerlink" title="1. 尺寸"></a>1. 尺寸</h3><ul>
-<li><strong><code>Eigen::MatrixXd</code></strong>:<ul>
-<li>这是一个动态大小的矩阵，表示一个任意大小的矩阵。</li>
-<li>在运行时可以根据需要动态调整其行数和列数。</li>
-</ul>
-</li>
-<li><strong><code>Eigen::Matrix4d</code></strong>:<ul>
-<li>这是一个固定大小的矩阵，专门表示一个 <strong>4x4</strong> 的矩阵。</li>
-<li>行数和列数在编译时就已经确定，不能被更改。</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-内存管理"><a href="#2-内存管理" class="headerlink" title="2. 内存管理"></a>2. 内存管理</h3><ul>
-<li><strong><code>Eigen::MatrixXd</code></strong>:<ul>
-<li>由于是动态大小，内存分配通常是在堆上进行管理，可能会有额外的开销。</li>
-</ul>
-</li>
-<li><strong><code>Eigen::Matrix4d</code></strong>:<ul>
-<li>由于大小固定，内存分配是静态的，通常在栈上分配，性能更高，尤其在小矩阵操作时。</li>
-</ul>
-</li>
-</ul>
-<h3 id="3-使用场景"><a href="#3-使用场景" class="headerlink" title="3. 使用场景"></a>3. 使用场景</h3><ul>
-<li><strong><code>Eigen::MatrixXd</code></strong>:<ul>
-<li>适合处理不确定大小的矩阵，特别是在算法中需要处理各种尺寸的情况时。</li>
-</ul>
-</li>
-<li><strong><code>Eigen::Matrix4d</code></strong>:<ul>
-<li>适合处理明确为 <strong>4x4</strong> 矩阵的场景，如图形变换、旋转矩阵等。</li>
-</ul>
-</li>
-</ul>
-<p>###ubuntu上ros与anaconda冲突的最好解决办法：</p>
-<pre><code>catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
-</code></pre>
-<p>下次再安装ros时，在anaconda环境里安装，要不然python混乱太搞了</p>
-<p>现在有更好的方法：</p>
-<pre><code class="bash">export PATH=&quot;/usr/bin:$PATH&quot;
-</code></pre>
-<pre><code class="bash">zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ which python
-/usr/local/anaconda3/bin/python
-zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ which python3
-/usr/local/anaconda3/bin/python3
-zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ sudo vim ~/.bashrc
-zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ source ~/.bashrc
-zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ which python3
-/usr/bin/python3
-zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ which python
-/usr/bin/python
-zgh@zgh-Legion-Y7000P-IAH7:~/ROS_Projects/dog_gazebo$ python -V
-Python 3.8.10
-</code></pre>
-<p>完美解決</p>
-<p>[ERROR] [1728964010.917743989]: [registerPublisher] Failed to contact master at [localhost:11311].  Retrying…</p>
-<p>只是roscore没开</p>
-<p>在 MoveIt! 的 <code>moveit_setup_assistant</code> 中，配置规划组时的 <strong>Base Link</strong> 和 <strong>Tip Link</strong> 是指机器人模型中关节链的起始和结束部分。具体来说：</p>
-<h3 id="Base-Link"><a href="#Base-Link" class="headerlink" title="Base Link"></a>Base Link</h3><ul>
-<li><strong>定义</strong>: Base Link 是指关节链的起始位置，通常是机器人的“基础”或“根”部分。这通常是固定的、与机器人底座相连的链接。</li>
-<li><strong>作用</strong>: 它作为整个机器人运动的参考点，所有的运动都是相对于这个基准链接进行的。在机器人操作时，Base Link 通常是地面上的固定部分，负责提供稳定性。</li>
-</ul>
-<h3 id="Tip-Link"><a href="#Tip-Link" class="headerlink" title="Tip Link"></a>Tip Link</h3><ul>
-<li><strong>定义</strong>: Tip Link 是指关节链的结束位置，它是规划组的最后一个链接。通常，这个链接表示执行器的末端，如机械手爪、工具或传感器等。</li>
-<li><strong>作用</strong>: Tip Link 是你希望 MoveIt! 进行运动规划的目标位置。通过指定 Tip Link，MoveIt! 可以计算从 Base Link 到 Tip Link 的运动轨迹。</li>
-</ul>
-<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p>以一个机械臂为例：</p>
-<ul>
-<li><strong>Base Link</strong>: 机械臂的底座部分，可能是与地面固定的框架。</li>
-<li><strong>Tip Link</strong>: 如果机械臂的末端是一个夹具，那么这个夹具的位置就是 Tip Link。</li>
-</ul>
-<p>在 MoveIt! 的设置中，您提到的参数具有特定的含义和功能。以下是每个参数的解释：</p>
-<h3 id="1-Group-Name-arm"><a href="#1-Group-Name-arm" class="headerlink" title="1. Group Name: arm"></a>1. Group Name: <strong>arm</strong></h3><ul>
-<li><strong>定义</strong>: 这是规划组指定的名称。在这个例子中，<code>arm</code> 表示该规划组控制的是机器人的手臂。</li>
-<li><strong>作用</strong>: 通过命名规划组，可以在后续的运动规划和控制中方便地引用这一组链接和关节。</li>
-</ul>
-<h3 id="2-Kinematic-Solver-kdl-kinematics-plugin-KDLKinematicsPlugin"><a href="#2-Kinematic-Solver-kdl-kinematics-plugin-KDLKinematicsPlugin" class="headerlink" title="2. Kinematic Solver: kdl_kinematics_plugin&#x2F;KDLKinematicsPlugin"></a>2. Kinematic Solver: <strong>kdl_kinematics_plugin&#x2F;KDLKinematicsPlugin</strong></h3><ul>
-<li><strong>定义</strong>: 这是所使用的运动学求解器。<code>KDLKinematicsPlugin</code> 是基于 Kinematics and Dynamics Library (KDL) 的运动学求解插件。</li>
-<li><strong>作用</strong>: 它负责计算机器人的正向运动学和逆向运动学。正向运动学用于从关节角度计算末端执行器的位置，而逆向运动学则用于根据目标位置计算所需的关节角度。</li>
-</ul>
-<h3 id="3-Kin-Search-Resolution-0-005"><a href="#3-Kin-Search-Resolution-0-005" class="headerlink" title="3. Kin. Search Resolution: 0.005"></a>3. Kin. Search Resolution: <strong>0.005</strong></h3><ul>
-<li><strong>定义</strong>: 这个参数表示在进行运动规划时的搜索分辨率，单位是米（m）。</li>
-<li><strong>作用</strong>: 它定义了在搜索空间中步进的大小。较小的值会导致更精细的搜索，这可能增加计算时间，但能提供更高精度的路径。</li>
-</ul>
-<h3 id="4-Kin-Search-Timeout-sec-0-05"><a href="#4-Kin-Search-Timeout-sec-0-05" class="headerlink" title="4. Kin. Search Timeout (sec): 0.05"></a>4. Kin. Search Timeout (sec): <strong>0.05</strong></h3><ul>
-<li><strong>定义</strong>: 这是运动规划过程中允许的最大搜索时间，单位是秒。</li>
-<li><strong>作用</strong>: 如果在 0.05 秒内未找到有效的运动规划，求解器将停止搜索。这可以帮助避免长时间的计算延迟，尤其是在实时应用中，但也可能导致未找到可行的解决方案。</li>
-</ul>
-<p>在配置机械臂的末端执行器（End Effector）时，需要填写一些参数</p>
-<ol>
-<li><strong>End Effector Name（末端执行器名称）</strong>：<ul>
-<li>这是给末端执行器（例如夹爪、工具等）起的名称。</li>
-</ul>
-</li>
-<li><strong>End Effector Group（末端执行器组）</strong>：<ul>
-<li>这是将末端执行器归类到特定组中的选项。此组通常用于定义哪些关节或链接与该末端执行器相关。在您的例子中，组名是 <code>gripper</code>。</li>
-</ul>
-</li>
-<li><strong>Parent Link（父链接）</strong>：<ul>
-<li>这是末端执行器连接到的父链接。通常，这是机械臂的一部分，负责控制末端执行器的位置和姿态。在例子中，父链接为 <code>grasping_frame</code>，这可能是机械臂的一个特定链接，用于抓取物体。</li>
-</ul>
-</li>
-<li><strong>Parent Group（父组， 可选项）</strong>：<ul>
-<li>这是一个可选字段，如果希望将末端执行器与某个特定的组关联，可以在这里填写。若不需要特别设置，此项可以留空</li>
-</ul>
-</li>
-</ol>
-<p>roslaunch moveit_setup_assistant setup_assistant.launch</p>
-<p>要在source .&#x2F;devel&#x2F;setup.bash的终端使用</p>
-<p>学长您好，我看您的【ROS-Moveit!】机械臂控制探索学机械臂联合仿真，但是您开源的代码为啥在运行：<br>roslaunch pigot_moveit_config moveit_planning_execution.launch<br>后，rviz显示出错呀，</p>
-<h2 id="woc-noetic版本的压根就不用改，新建其他功能包，直接用demo-gazebo-launch，要不然你猜为什么moveit的配置助手会生成关于gazebo的文件，为什么生成gazebo的urdf，就是让你用的，怪不得显示不了xacro模型"><a href="#woc-noetic版本的压根就不用改，新建其他功能包，直接用demo-gazebo-launch，要不然你猜为什么moveit的配置助手会生成关于gazebo的文件，为什么生成gazebo的urdf，就是让你用的，怪不得显示不了xacro模型" class="headerlink" title="woc,noetic版本的压根就不用改，新建其他功能包，直接用demo_gazebo.launch，要不然你猜为什么moveit的配置助手会生成关于gazebo的文件，为什么生成gazebo的urdf，就是让你用的，怪不得显示不了xacro模型"></a>woc,noetic版本的压根就不用改，新建其他功能包，直接用demo_gazebo.launch，要不然你猜为什么moveit的配置助手会生成关于gazebo的文件，为什么生成gazebo的urdf，就是让你用的，怪不得显示不了xacro模型</h2><p><img src="/../images/image-20241017230010555.png" alt="image-20241017230010555"></p>
-<p><img src="/../images/image-20241017230248766.png" alt="image-20241017230248766"></p>
-<p> <img src="/../images/image-20241017230611243.png" alt="image-20241017230611243"></p>
-<img src="../images/image-20241017230728048.png" alt="image-20241017230728048" style="zoom:50%;" />
-
-
-
-<p><img src="/../images/image-20241017231440886.png" alt="image-20241017231440886">1. <code>&lt;visual&gt;</code></p>
-<p>定义机器人的可视化外观，主要包括几何形状和材质。</p>
-<ul>
-<li><p><strong><code>&lt;geometry&gt;</code></strong>: 指定连接的几何形状。在这个示例中，使用了一个网格文件（STL格式）来定义 <code>link_1</code> 的形状。该文件的路径是：</p>
-<pre><code>Copy Codepackage://lebai_lm3_support/meshesc/lm3/visual/link1.stl
-</code></pre>
-</li>
-<li><p><strong><code>&lt;material&gt;</code></strong>: 定义连接的材质和颜色。在此示例中，材质名为 <code>white</code>，并且设置了RGBA颜色值（红、绿、蓝、透明度）为 <code>(0.86, 0.85, 0.81, 1.0)</code>。这意味着连接的颜色为一种淡灰色，完全不透明。</p>
-</li>
-</ul>
-<h3 id="2-1"><a href="#2-1" class="headerlink" title="2. &lt;collision&gt;"></a>2. <code>&lt;collision&gt;</code></h3><p>这一部分描述连接的碰撞模型，它与可视化模型通常是不同的。碰撞模型用于物理仿真，确保机器人在模拟环境中与其他物体进行碰撞检测。</p>
-<ul>
-<li><p><code>&lt;geometry&gt;</code></p>
-<p>: 这里也使用了一个网格文件，但它的路径是：</p>
-<pre><code>Copy Codepackage://lebai_lm3_support/meshes/lm3/collision/link1.stl
-</code></pre>
-<p>通常，碰撞模型会比可视化模型简单，以提高仿真性能。</p>
-</li>
-</ul>
-<h3 id="3-2"><a href="#3-2" class="headerlink" title="3. &lt;inertial&gt;"></a>3. <code>&lt;inertial&gt;</code></h3><p>这一部分定义了连接的惯性属性，包括质量和转动惯量。惯性属性在机器人运动学和动力学计算中至关重要。</p>
-<ul>
-<li><strong><code>&lt;origin&gt;</code></strong>: 定义了惯性参考点的位置和方向。<code>rpy</code> 指的是绕X、Y、Z轴的滚转（roll）、俯仰（pitch）、偏航（yaw）角度，这里均为 <code>0.0</code>，表示没有旋转。<code>xyz</code> 指的是惯性参考点相对于链接坐标系的位置，这里是 <code>(0.0, -0.011, -0.015)</code>。</li>
-<li><strong><code>&lt;mass&gt;</code></strong>: 定义连接的质量，这里为 <code>2.147 kg</code>。</li>
-<li><strong><code>&lt;inertia&gt;</code></strong>: 定义连接的转动惯量矩阵。<code>ixx</code>、<code>iyy</code> 和 <code>izz</code> 分别表示绕X、Y、Z轴的转动惯量，而 <code>ixy</code>、<code>ixz</code> 和 <code>iyz</code> 是关于这些轴的耦合项</li>
-</ul>
-<p><img src="/../images/image-20241025155947665.png" alt="image-20241025155947665"></p>
-<p><img src="/../images/image-20241025162239093.png" alt="image-20241025162239093"></p>
-<p><img src="/../images/image-20241025162708189.png" alt="image-20241025162708189"></p>
-<p><img src="/../images/image-20241026083208134.png" alt="image-20241026083208134"></p>
-<p><img src="/../images/image-20241027155220611.png" alt="image-20241027155220611"></p>
-<p><img src="/../images/image-20241106085645596.png" alt="image-20241106085645596"></p>
-<p><img src="/../images/image-20241106093458515.png" alt="image-20241106093458515"></p>
-<p>下次淘宝下单不要付款，先放弃付款，然后再付款的时候有几率跳出“付款再减XX元”，应该是后台店铺给的，香！！！</p>
-<p><img src="/../images/image-20241106161656760.png" alt="image-20241106161656760"></p>
-<p><img src="/../images/image-20241106162318720.png" alt="image-20241106162318720"></p>
-<p><img src="/../images/image-20241106164939969.png" alt="image-20241106164939969"></p>
-<p><img src="/../images/image-20241107093349782.png" alt="image-20241107093349782"></p>
-<p><img src="/../images/image-20241107155026702.png" alt="image-20241107155026702"></p>
-<p><img src="/../images/image-20241107162050814.png" alt="image-20241107162050814"></p>
-<p><img src="/../images/image-20241108140359784.png" alt="image-20241108140359784"></p>
-<p><img src="/../images/image-20241110121251925.png" alt="image-20241110121251925"></p>
-<p><img src="/../images/image-20241110205130168.png" alt="image-20241110205130168"></p>
-<p><img src="/../images/image-20241110210042338.png" alt="image-20241110210042338"></p>
-<p><img src="/../images/image-20241111095941858.png" alt="image-20241111095941858"></p>
-<p><img src="/../images/image-20241111102055992.png" alt="image-20241111102055992"></p>
-<p><img src="/../images/image-20241114111359106.png" alt="image-20241114111359106"></p>
-<p><img src="/../images/image-20241114155901919.png" alt="image-20241114155901919"></p>
-<p>pid校正可以看成迟后超前的特例</p>
-<p><img src="/../images/image-20241115070328025.png" alt="image-20241115070328025"></p>
-<p><img src="/../images/image-20241115200232871.png" alt="image-20241115200232871"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zgh20060114.github.io/post/ROS.html" data-id="cm1bdrnch0001vzcxgetpe45n" data-title="ROS" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1663,6 +1263,10 @@ Python 3.8.10
       <ul>
         
           <li>
+            <a href="/post/ncnn-yolov8-seg.html">ncnn-yolov8-seg</a>
+          </li>
+        
+          <li>
             <a href="/post/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6.html">流体力学</a>
           </li>
         
@@ -1676,10 +1280,6 @@ Python 3.8.10
         
           <li>
             <a href="/post/motion-planning.html">motion_planning</a>
-          </li>
-        
-          <li>
-            <a href="/post/Realsense.html">Realsense</a>
           </li>
         
       </ul>
