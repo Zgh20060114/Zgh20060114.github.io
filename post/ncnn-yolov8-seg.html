@@ -6,17 +6,29 @@
   
   <title>ncnn-yolov8-seg | Zgh&#39;s</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Zgh的个人站">
+  <meta name="description" content="yoloV8-segment模型安卓端部署注：开发环境为ubuntu20.04; ncnn为2022.11.28版本;    opencv-mobile为4.6.0版本; 使用yoloV8n,m,l-seg; 介绍：ncnn是一款非常高效易用的深度学习推理框架，支持各种神经网络模型，如pytorch、tensorflow、onnx等，以及多种硬件后端，如x86、arm、riscv、mips、vul">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ncnn-yolov8-seg">
 <meta property="og:url" content="http://zgh20060114.github.io/post/ncnn-yolov8-seg.html">
 <meta property="og:site_name" content="Zgh&#39;s">
-<meta property="og:description" content="Zgh的个人站">
+<meta property="og:description" content="yoloV8-segment模型安卓端部署注：开发环境为ubuntu20.04; ncnn为2022.11.28版本;    opencv-mobile为4.6.0版本; 使用yoloV8n,m,l-seg; 介绍：ncnn是一款非常高效易用的深度学习推理框架，支持各种神经网络模型，如pytorch、tensorflow、onnx等，以及多种硬件后端，如x86、arm、riscv、mips、vul">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="file:////tmp/wps-zgh/ksohtml/wpshuz3eL.jpg">
+<meta property="og:image" content="file:////tmp/wps-zgh/ksohtml/wps5D3BtL.jpg">
+<meta property="og:image" content="file:////tmp/wps-zgh/ksohtml/wpsOhuvnK.jpg">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241203194942398.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/image-20241203195136554.png">
+<meta property="og:image" content="http://zgh20060114.github.io/images/1733227046742-173322733477910.jpg">
+<meta property="og:image" content="http://zgh20060114.github.io/images/1733227046737-17332272923528.jpg">
+<meta property="og:image" content="http://zgh20060114.github.io/images/1733227046740-17332272316817.jpg">
+<meta property="og:image" content="http://zgh20060114.github.io/images/1733229812376.jpg">
+<meta property="og:image" content="http://zgh20060114.github.io/images/1733229812378.jpg">
+<meta property="og:image" content="http://zgh20060114.github.io/images/1733229812381.jpg">
 <meta property="article:published_time" content="2024-12-03T11:01:02.000Z">
-<meta property="article:modified_time" content="2024-12-03T11:01:02.834Z">
+<meta property="article:modified_time" content="2024-12-03T12:55:38.603Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="file:////tmp/wps-zgh/ksohtml/wpshuz3eL.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Zgh's" type="application/atom+xml">
   
@@ -93,7 +105,188 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="yoloV8-segment模型安卓端部署"><a href="#yoloV8-segment模型安卓端部署" class="headerlink" title="yoloV8-segment模型安卓端部署"></a><strong>yoloV8-segment模型安卓端部署</strong></h2><p>注：开发环境为ubuntu20.04;</p>
+<p>ncnn为2022.11.28版本;<br>    opencv-mobile为4.6.0版本;</p>
+<p>使用yoloV8n,m,l-seg;</p>
+<p><strong>介绍</strong>：ncnn是一款非常高效易用的深度学习推理框架，支持各种神经网络模型，如pytorch、tensorflow、onnx等，以及多种硬件后端，如x86、arm、riscv、mips、vulkan等。ncnn 是一个为手机端极致优化的高性能神经网络前向计算框架。 ncnn 从设计之初深刻考虑手机端的部署和使用。 无第三方依赖，跨平台，手机端 cpu 的速度快于目前所有已知的开源框架。 基于 ncnn，开发者能够将深度学习算法轻松移植到手机端高效执行， 开发出人工智能 APP，将 AI 带到你的指尖。 ncnn 目前已在腾讯多款应用中使用，如：QQ，Qzone，微信，天天 P 图等。</p>
+<h2 id="一-模型转换：best-pt——-yolov8n-seg-bin和yolov8n-seg-param"><a href="#一-模型转换：best-pt——-yolov8n-seg-bin和yolov8n-seg-param" class="headerlink" title="一.模型转换：best.pt——&gt;yolov8n-seg.bin和yolov8n-seg.param"></a>一.模型转换：best.pt——&gt;yolov8n-seg.bin和yolov8n-seg.param</h2><p><strong>(以yolov8n为例)</strong></p>
+<p>起初，直接使用ultralytics官方转换，但是转换后的模型导致APP闪退，查看yolov8n-seg.param:<br><img src="file:////tmp/wps-zgh/ksohtml/wpshuz3eL.jpg" alt="img"><br>得知：里面有很多的MemoryData，不够干净。<br>于是模型转换step by step:</p>
+<h3 id="1-build-ncnn"><a href="#1-build-ncnn" class="headerlink" title="1. build ncnn"></a>1. build ncnn</h3><pre><code class="bash">1. sudo apt install cmake protobuf-compiler libprotobuf-dev libopencv-dev
+2, gitclone https://github.com/Tencent/ncnn/releases
+3, 编译 NCNN
+cd ncnn-master
+mkdir build
+cd build
+cmake ..
+make
+make install
+得到了onnx2ncnn转换工具
+</code></pre>
+<h3 id="2-convert-yolov8-pt-ONNX"><a href="#2-convert-yolov8-pt-ONNX" class="headerlink" title="2. convert yolov8 pt -&gt;ONNX"></a>2. convert yolov8 pt -&gt;ONNX</h3><pre><code class="python">from ultralytics import YOLO
+
+# load yolov8 segment model
+model = YOLO(&quot;your_path&quot;)
+# concert the model
+success = model.export(format=&quot;onnx&quot;, opset=12, simplify=True)
+</code></pre>
+<h3 id="3-onnx2ncnn"><a href="#3-onnx2ncnn" class="headerlink" title="3. onnx2ncnn"></a>3. onnx2ncnn</h3><h5 id="ONNX介绍"><a href="#ONNX介绍" class="headerlink" title="ONNX介绍"></a>ONNX介绍</h5><p>ONNX是一种针对机器学习所设计的开放式的文件格式，用于存储训练好的模型。它使得不同的<a target="_blank" rel="noopener" href="https://edu.csdn.net/cloud/sd_summit?utm_source=glcblog&spm=1001.2101.3001.7020">深度学习</a>框架（如<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Pytorch&spm=1001.2101.3001.7020">Pytorch</a>, MXNet）可以采用相同格式存储模型数据。是一种便于在各个主流深度学习框架中迁移模型的中间表达格式。</p>
+<pre><code class="bash">onnx2ncnn xxx.onnx xxx.param xxx.bin
+</code></pre>
+<p>在这里xxx.param 存储了模型的参数信息，它记录了计算图的结构。而xxx.bin 则存放了模型的所有具体参数。就可以使用 ncnn 框架来加载和运行这个模型了。</p>
+<h3 id="4-但是也会闪退！！！"><a href="#4-但是也会闪退！！！" class="headerlink" title="4. 但是也会闪退！！！"></a>4. 但是也会闪退！！！</h3><p>分析一下yolov8n-seg.param文件，问题一样，也是存在<strong>MemoryData问题</strong>和模型缺少<strong>permute层</strong>的问题,都会导致ncnn框架无法正确解析param模型</p>
+<p>坑：需修改ultralytics源码modules文件夹里的block.py和head.py两个文件,修改3个forward函数,改变前向传播的方式：</p>
+<ol>
+<li>class C2f(nn.Module):</li>
+</ol>
+<pre><code class="python">  def forward(self, x):
+
+​    x = self.cv1(x)
+
+​    x = [x, x[:, self.c:, ...]]    
+
+​    x.extend(m(x[-1]) for m in self.m)
+
+​    x.pop(1)
+
+​    return self.cv2(torch.cat(x, 1))
+</code></pre>
+<ol start="2">
+<li>class Detect(nn.Module):</li>
+</ol>
+<pre><code class="python">  def forward(self, x):
+
+​    shape = x[0].shape
+
+​    for i in range(self.nl):
+
+​      x[i] = torch.cat((self.cv2[i](x[i]), self.cv3[i](x[i])), 1)
+
+​    if self.training:
+
+​      return x
+
+​    elif self.dynamic or self.shape != shape:
+
+​      self.anchors, self.strides = (x.transpose(0, 1) for x in make_anchors(x, self.stride, 0.5))
+
+​      self.shape = shape
+
+​    pred = torch.cat([xi.view(shape[0], self.no, -1) for xi in x], 2)
+
+​    return pred
+</code></pre>
+<ol start="3">
+<li>class Segment(Detect):</li>
+</ol>
+<pre><code class="python">  def forward(self, x):
+
+​    p = self.proto(x[0])  # mask protos
+
+​    bs = p.shape[0]  # batch size
+
+ 
+
+​    mc = torch.cat([self.cv4[i](x[i]).view(bs, self.nm, -1) for i in range(self.nl)], 2)  
+
+​    x = self.detect(self, x)
+
+​    if self.training:
+
+​      return x, mc, p
+
+​    return (torch.cat([x, mc], 1).permute(0, 2, 1), p.view(bs, self.nm, -1)) if self.export else (torch.cat([x[0], mc], 1), (x[1], mc, p)) 
+</code></pre>
+<h3 id="5-重新执行3，4步操作"><a href="#5-重新执行3，4步操作" class="headerlink" title="5. 重新执行3，4步操作"></a>5. 重新执行3，4步操作</h3><h2 id="二-模型转换完毕，下面开始使用Android-studio构建安卓工程"><a href="#二-模型转换完毕，下面开始使用Android-studio构建安卓工程" class="headerlink" title="二. 模型转换完毕，下面开始使用Android studio构建安卓工程"></a>二. 模型转换完毕，下面开始使用Android studio构建安卓工程</h2><h3 id="1-Configure-ncnn"><a href="#1-Configure-ncnn" class="headerlink" title="1. Configure ncnn"></a>1. Configure ncnn</h3><p><strong>Download [ncnn-YYYYMMDD-android-vulkan].（预编译库）（来自腾讯优图实验室的nihui大神的开源力作）</strong></p>
+<p><img src="file:////tmp/wps-zgh/ksohtml/wps5D3BtL.jpg" alt="img"> </p>
+<p><strong>Extract ncnn-YYYYMMDD-android-vulkan.zip into app&#x2F;src&#x2F;main&#x2F;jni folder and change the ncnn_DIR path to yours in app&#x2F;src&#x2F;main&#x2F;jni&#x2F;CMakeLists.txt.</strong></p>
+<h3 id="2-Configure-OpenCV"><a href="#2-Configure-OpenCV" class="headerlink" title="2. Configure OpenCV"></a>2. Configure OpenCV</h3><p><strong>Download opencv-mobile-XYZ-android (安卓opencv库)(这个也是nihui大神的又一开源力作,适合在安卓移动端使用的轻量级opencv版本)</strong></p>
+<p><strong>step 1. download opencv-mobile source</strong></p>
+<pre><code class="bash">wget -q https://github.com/nihui/opencv-mobile/releases/latest/download/opencv-mobile-4.10.0.zip
+unzip -q opencv-mobile-4.10.0.zip
+cd opencv-mobile-4.10.0
+</code></pre>
+<p><strong>step 2. apply your opencv option changes to options.txt</strong></p>
+<pre><code class="bash">vim options.txt
+</code></pre>
+<p><strong>step 3. build your opencv package with cmake</strong></p>
+<pre><code class="bash">mkdir -p build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=install \
+  -DCMAKE_BUILD_TYPE=Release \
+  `cat ../options.txt` \
+  -DBUILD_opencv_world=OFF ..
+make -j4
+make install
+</code></pre>
+<p><strong>Extract opencv-mobile-XYZ-android.zip into app&#x2F;src&#x2F;main&#x2F;jni and change the OpenCV_DIR path to yours in app&#x2F;src&#x2F;main&#x2F;jni&#x2F;CMakeLists.txt.</strong></p>
+<h3 id="3-Android-studio构建"><a href="#3-Android-studio构建" class="headerlink" title="3. Android studio构建"></a>3. Android studio构建</h3><p><img src="file:////tmp/wps-zgh/ksohtml/wpsOhuvnK.jpg" alt="img"> </p>
+<p>使用NDK26.1，java</p>
+<p>项目目录构成：<br><img src="../images/image-20241203194942398.png" alt="image-20241203194942398" style="zoom: 80%;" /></p>
+<p><img src="/../images/image-20241203195136554.png" alt="image-20241203195136554"></p>
+<h2 id="三、构建，烧录"><a href="#三、构建，烧录" class="headerlink" title="三、构建，烧录"></a>三、构建，烧录</h2><p>打开安卓设备（本人使用小米,CPU为骁龙8Gen1）开发者选项，USB调试，安装选项，烧录：</p>
+<p>效果：</p>
+<p><strong>n:</strong></p>
+ <img src="../images/1733227046742-173322733477910.jpg" alt="1733227046742" style="zoom:33%;" />
+
+
+
+<p><strong>m:</strong></p>
+<img src="../images/1733227046737-17332272923528.jpg" alt="1733227046737" style="zoom:33%;" />
+
+<p><strong>l:</strong></p>
+<img src="../images/1733227046740-17332272316817.jpg" alt="1733227046740" style="zoom:33%;" />
+
+
+
+<p>可切换前后摄像头，可切换CPU&#x2F;GPU</p>
+<h4 id="结果分析："><a href="#结果分析：" class="headerlink" title="结果分析："></a>结果分析：</h4><p><strong>n:帧率在30帧左右，有时会检测不准确，无法将两个挨得较近的识别目标分开</strong></p>
+<p><strong>m:帧率在12帧左右，准确性进一步提高</strong></p>
+<p><strong>l: 帧率在10帧左右，较为准确，可将挨得较近的识别目标分开</strong></p>
+<h2 id="四、模型量化"><a href="#四、模型量化" class="headerlink" title="四、模型量化"></a>四、模型量化</h2><p>我们常说的模型量化就是将浮点存储（运算）转换为整型存储（运算）的一种模型压缩技术。比如：<strong>原来表示一个权重或偏置需要使用FP32表示，使用了INT8量化后只需要使用一个INT8来表示就可以了</strong>。</p>
+<ol>
+<li>合并bn层</li>
+</ol>
+<pre><code class="bash">./ncnnoptimize xxx.param xxx.bin xxx_opt.param xxx_opt.bin 0
+</code></pre>
+<ol start="2">
+<li>生成量化图像集</li>
+</ol>
+<pre><code class="bash">1.下载校准数据集
+git clone https://github.com/nihui/imagenet-sample-images
+
+2.生成量化图像集
+find images/ -type f &gt; imagelist.txt  
+
+3.生成量化表
+./ncnn2table xxx-opt.param xxx-opt.bin imagelist.txt yolov8-seg.table mean=[104,117,123] norm=[0.017,0.017,0.017] shape=[256,256,3] pixel=BGR thread=8 method=kl
+</code></pre>
+<ol start="3">
+<li>int8 量化</li>
+</ol>
+<pre><code class="bash">./ncnn2int8 xxx.param xxx.bin xxx_int8.param xxx_int8.bin yolov8-seg.table
+</code></pre>
+<p>把生成的量化后的bin和param替换掉之前的模型，</p>
+<p>重新执行第三步即可</p>
+<p>效果：</p>
+<p><strong>n:</strong></p>
+<img src="../images/1733229812376.jpg" alt="1733229812376" style="zoom:33%;" />
+
+
+
+<p><strong>m:</strong></p>
+<img src="../images/1733229812378.jpg" alt="1733229812378" style="zoom:33%;" />
+
+
+
+<p><strong>l:</strong></p>
+<img src="../images/1733229812381.jpg" alt="1733229812381" style="zoom:33%;" />
+
+
+
+<h4 id="结果分析：-1"><a href="#结果分析：-1" class="headerlink" title="结果分析："></a>结果分析：</h4><p><strong>n:帧率提升到34帧左右，检测不太准确，会漏检</strong></p>
+<p><strong>m:帧率提升到14帧左右，准确性有些下降，</strong></p>
+<p><strong>l: 帧率提升到12帧左右，且准确度下降但不多</strong></p>
+<h2 id="完毕！！"><a href="#完毕！！" class="headerlink" title="完毕！！"></a>完毕！！</h2>
       
     </div>
     <footer class="article-footer">
