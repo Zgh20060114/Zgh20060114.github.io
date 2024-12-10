@@ -71,6 +71,72 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-deeplearning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/deeplearning.html" class="article-date">
+  <time class="dt-published" datetime="2023-12-16T02:57:26.000Z" itemprop="datePublished">2023-12-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/post/deeplearning.html">deeplearning</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>在 Pandas 中，<code>.apply()</code> 是用于对 DataFrame 或 Series 中的元素应用指定函数的方法。</p>
+<p>对于 DataFrame，<code>.apply()</code> 可以在行或列方向上应用函数。语法如下：</p>
+<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">DataFrame.apply(func, axis=0)</span></span></code></pre></div><ul>
+<li><code>func</code> 是要应用的函数，可以是一个已定义的函数，也可以是一个匿名函数（如 lambda 函数）。</li>
+<li><code>axis</code> 是指定应用函数的方向，默认为 0，表示按列应用函数；设置为 1 则表示按行应用函数。</li>
+</ul>
+<p>对于 Series，<code>.apply()</code> 仅能在元素级别上应用函数，无需指定应用方向。语法如下：</p>
+<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">Series.apply(func)</span></span></code></pre></div><ul>
+<li><code>func</code> 是要应用的函数，可以是一个已定义的函数，也可以是一个匿名函数（如 lambda 函数）。</li>
+</ul>
+<p>在上述代码中，<code>.apply(lambda x: (x - x.mean()) / (x.std()))</code> 就是将匿名函数 <code>lambda x: (x - x.mean()) / (x.std())</code> 应用到 DataFrame 或 Series 中的每个元素上。结果是对 DataFrame 或 Series 中的每个元素进行标准化计算，并返回处理后的结果</p>
+<p><img src="/../images/image-20231218090813900.png" alt="image-20231218090813900"></p>
+<p>​                                                                                                         右–按照时间线展开图</p>
+<p><img src="/../images/image-20231218141358079.png" alt="image-20231218141358079"></p>
+<h4 id="查询（自主提示）和键（非自主提示）之间的交互形成了注意力汇聚；注意力汇聚有选择地聚合了值（感官输入）以生成最终的输出。"><a href="#查询（自主提示）和键（非自主提示）之间的交互形成了注意力汇聚；注意力汇聚有选择地聚合了值（感官输入）以生成最终的输出。" class="headerlink" title="查询（自主提示）和键（非自主提示）之间的交互形成了注意力汇聚；注意力汇聚有选择地聚合了值（感官输入）以生成最终的输出。"></a>查询（自主提示）和键（非自主提示）之间的交互形成了注意力汇聚；注意力汇聚有选择地聚合了值（感官输入）以生成最终的输出。</h4><p><code>torch.repeat_interleave()</code> 函数是 PyTorch 中的一个张量操作函数，用于生成一个重复值的张量。它的详细解释如下：</p>
+<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8"></span></span>
+<span class="line"><span style="color: #babed8">torch.repeat_interleave(input, repeats, dim=None)</span></span></code></pre></div><p>参数说明：</p>
+<ul>
+<li><code>input</code>：输入张量。</li>
+<li><code>repeats</code>：重复次数，可以是一个整数、一个一维张量或一个与 <code>input</code> 张量形状相匹配的张量。</li>
+<li><code>dim</code>（可选）：指定重复操作的维度。</li>
+</ul>
+<p>函数功能：</p>
+<ul>
+<li><code>torch.repeat_interleave()</code> 函数将输入张量 <code>input</code> 按指定的重复次数 <code>repeats</code> 进行重复，并生成一个新的张量。</li>
+</ul>
+<div class="language-txt"><button title="Copy code" class="copy"></button><span class="lang">txt</span><pre class="shiki material-theme-palenight" style="background-color: #1a1a1a" tabindex="0"><code><span class="line"><span style="color: #babed8">https://zhuanlan.zhihu.com/p/659067322</span></span>
+<span class="line"><span style="color: #babed8"></span></span>
+<span class="line"><span style="color: #babed8">sk-QxaDRZHsiyhtTFpB3JXHMkQ5fiK0AnEQZgM27mbiEIaIkF0G</span></span></code></pre></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/deeplearning.html" data-id="clxbjvuxr000e61cxa8ttcd11" data-title="deeplearning" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Pytorch" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/post/Pytorch.html" class="article-date">
@@ -265,6 +331,10 @@
       <ul>
         
           <li>
+            <a href="/post/%E6%9C%80%E4%BC%98%E6%8E%A7%E5%88%B6%E4%B8%8E%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.html">最优控制与强化学习</a>
+          </li>
+        
+          <li>
             <a href="/post/ncnn-yolov8-seg.html">ncnn-yolov8-seg</a>
           </li>
         
@@ -278,10 +348,6 @@
         
           <li>
             <a href="/post/%E5%9B%BE%E5%BD%A2%E5%AD%A6.html">图形学</a>
-          </li>
-        
-          <li>
-            <a href="/post/motion-planning.html">motion_planning</a>
           </li>
         
       </ul>
