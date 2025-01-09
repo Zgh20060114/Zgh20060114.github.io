@@ -71,6 +71,44 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-guitar" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/post/guitar.html" class="article-date">
+  <time class="dt-published" datetime="2025-01-09T07:28:23.000Z" itemprop="datePublished">2025-01-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/post/guitar.html">guitar</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zgh20060114.github.io/post/guitar.html" data-id="cm5p0bfvd00007ccx3tx6fkmy" data-title="guitar" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-最优控制与强化学习" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/post/%E6%9C%80%E4%BC%98%E6%8E%A7%E5%88%B6%E4%B8%8E%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.html" class="article-date">
@@ -612,6 +650,128 @@ int *ref = &amp;a;  // ref 是指向 a 的指针，类似引用
 <p>&amp;是赋值还是被赋值，等号左边还是右边</p>
 <p>“~”符号的输出：<strong>Shift + Fn + Esc</strong>。 “&#96;”符号的输出：Fn + Esc。</p>
 <p>小脑（运动控制），以及大脑（具身智能）</p>
+<pre><code>Welcome to Rust!
+
+This will download and install the official compiler for the Rust
+programming language, and its package manager, Cargo.
+
+Rustup metadata and toolchains will be installed into the Rustup
+home directory, located at:
+
+  /home/zgh/.rustup
+
+This can be modified with the RUSTUP_HOME environment variable.
+
+The Cargo home directory is located at:
+
+  /home/zgh/.cargo
+
+This can be modified with the CARGO_HOME environment variable.
+
+The cargo, rustc, rustup and other commands will be added to
+Cargo&#39;s bin directory, located at:
+
+  /home/zgh/.cargo/bin
+
+This path will then be added to your PATH environment variable by
+modifying the profile files located at:
+
+  /home/zgh/.profile
+  /home/zgh/.bashrc
+
+You can uninstall at any time with rustup self uninstall and
+these changes will be reverted.
+
+Current installation options:
+
+
+   default host triple: x86_64-unknown-linux-gnu
+     default toolchain: stable (default)
+               profile: default
+  modify PATH variable: yes
+</code></pre>
+<pre><code class="cmake">set(CMAKE_PREFIX_PATH &quot;/opt/Qt/6.7.2/gcc_64&quot;)
+</code></pre>
+<p><img src="/../images/image-20241224212847057.png" alt="image-20241224212847057"></p>
+<h3 id="name-urdf-spawner"><a href="#name-urdf-spawner" class="headerlink" title="name=&quot;urdf_spawner&quot;"></a><code>name=&quot;urdf_spawner&quot;</code></h3><ul>
+<li><p><strong>作用</strong>：指定该节点的名字。</p>
+</li>
+<li><p><strong>意义</strong>：在 ROS 中，节点名称是全局唯一的标识，用于区分不同的节点。</p>
+</li>
+<li><p>例子</p>
+<p>：</p>
+<ul>
+<li><code>urdf_spawner</code> 是该节点的名字，表示它的功能是用来生成（spawn）一个 URDF 模型到 Gazebo 中。</li>
+</ul>
+</li>
+</ul>
+<h3 id="respawn-false"><a href="#respawn-false" class="headerlink" title="respawn=&quot;false&quot;"></a><code>respawn=&quot;false&quot;</code></h3><ul>
+<li><p><strong>作用</strong>：指定节点是否在退出后自动重启。</p>
+</li>
+<li><p>选项</p>
+<p>：</p>
+<ul>
+<li><code>false</code>（默认值）：节点在退出后不会自动重启。</li>
+<li><code>true</code>：如果节点因任何原因退出（例如崩溃），ROS 会自动尝试重新启动该节点。</li>
+</ul>
+</li>
+<li><p>意义</p>
+<p>：</p>
+<ul>
+<li>如果该节点负责关键功能（如控制器或监控器），可以设置为 <code>true</code> 确保系统稳定性。</li>
+<li>在本例中，设置为 <code>false</code>，表明 <code>urdf_spawner</code> 节点在完成模型生成任务后不需要持续运行或重启。</li>
+</ul>
+</li>
+</ul>
+<h3 id="output-screen"><a href="#output-screen" class="headerlink" title="output=&quot;screen&quot;"></a><code>output=&quot;screen&quot;</code></h3><ul>
+<li><p><strong>作用</strong>：定义节点的日志输出方式。</p>
+</li>
+<li><p>选项</p>
+<p>：</p>
+<ul>
+<li><code>screen</code>：节点的日志输出会直接显示在终端中。</li>
+<li><code>log</code>：节点的日志输出会写入 ROS 的日志文件（通常在 <code>~/.ros/log</code> 文件夹中）。</li>
+</ul>
+</li>
+<li><p>意义</p>
+<p>：</p>
+<ul>
+<li>设置为 <code>screen</code> 有助于实时查看节点的运行信息（如错误信息或调试日志），适合在开发和调试阶段使用。</li>
+<li>如果希望保存日志供后续分析，可以设置为 <code>log</code>。</li>
+</ul>
+</li>
+</ul>
+<p><strong><code>controller_manager</code> 是控制器的管理层</strong>：</p>
+<ul>
+<li>负责加载和运行具体的控制器，包括 <code>joint_state_controller</code>。</li>
+</ul>
+<p><strong><code>joint_state_controller</code> 是具体的状态发布控制器</strong>：</p>
+<ul>
+<li>从硬件接口读取关节状态数据，并发布到 <code>/joint_states</code> 话题。</li>
+</ul>
+<p><strong><code>robot_state_publisher</code> 是基于状态的姿态计算工具</strong>：</p>
+<ul>
+<li>读取 <code>/joint_states</code> 中的关节数据，结合机器人模型生成 TF 坐标变换，用于可视化和坐标计算。</li>
+</ul>
+<h3 id="举例说明"><a href="#举例说明" class="headerlink" title="举例说明"></a>举例说明</h3><p>假设我们有一个机械臂机器人，以下是如何使用这些组件：</p>
+<ol>
+<li><strong>控制器管理</strong>：<ul>
+<li>使用 <code>controller_manager</code> 动态加载和启动控制器，例如 <code>joint_state_controller</code> 和关节位置控制器。</li>
+</ul>
+</li>
+<li><strong>状态发布</strong>：<ul>
+<li>启动 <code>joint_state_controller</code>，从硬件中获取关节状态并发布到 <code>/joint_states</code>。</li>
+</ul>
+</li>
+<li><strong>姿态计算</strong>：<ul>
+<li>启动 <code>robot_state_publisher</code>，读取 <code>/joint_states</code>，根据 URDF 生成动态的 TF 坐标变换。</li>
+</ul>
+</li>
+<li><strong>可视化</strong>：<ul>
+<li>在 RViz 中加载机器人模型，使用 TF 数据实时显示机器人在仿真或实际环境中的姿态变化。</li>
+</ul>
+</li>
+</ol>
 
       
     </div>
@@ -1287,6 +1447,30 @@ int main() &#123;
 </ul>
 </li>
 </ol>
+<h3 id="为什么-std-sort-必须在-std-unique-之前使用？"><a href="#为什么-std-sort-必须在-std-unique-之前使用？" class="headerlink" title="为什么 std::sort 必须在 std::unique 之前使用？"></a>为什么 <code>std::sort</code> 必须在 <code>std::unique</code> 之前使用？</h3><p><code>std::unique</code> 只能去除<strong>相邻</strong>的重复元素。它不会去除容器中所有不相邻的重复元素。例如，假设容器中有 <code>1, 2, 3, 1, 4, 5, 1</code>，如果在调用 <code>std::unique</code> 之前没有对容器排序，<code>std::unique</code> 将无法去除所有重复元素，因为它只会处理相邻的元素。因此，为了确保所有重复元素都能被去除，必须先对容器进行排序，使得相同的元素排列在一起，然后才能通过 <code>std::unique</code> 去除它们。</p>
+<p>a[n]</p>
+<p>std::sort(a,a+n);</p>
+<p>m &#x3D; std::unique（a,a+n）-n;</p>
+<p>std::cin 输入流 （空格分割）</p>
+<p>stringstream 字符串流</p>
+<p>begain（），end（）</p>
+<p>vector&lt;&gt;</p>
+<p>clear() , resize() , push_back() , pop_back() , empty() ， 可重复</p>
+<p>set&lt;&gt;</p>
+<p>自动排序：默认升序</p>
+<p>不可重复</p>
+<p>不可修改</p>
+<p>insert（），find（），count（）， erase（），empty（）</p>
+<p>stack&lt;&gt;</p>
+<p>priority_queue&lt;&gt;</p>
+<p>push()  ,pop() ,top()</p>
+<p>queue</p>
+<p>push() ,pop() ,front()</p>
+<p>ctrl + tab + 上下左右 代替鼠标切换文件</p>
+<p>Ctrl + W：一个字符、一个字符串、一行、两行代码逐渐扩选</p>
+<p>Alt + Shift + 左键：针对要编辑的部分快速选中多行</p>
+<p>std::advance(iter, n);</p>
+<p>如果 <code>n</code> 为正数，迭代器会向前移动；如果 <code>n</code> 为负数，迭代器会向后移动。</p>
 
       
     </div>
@@ -1347,64 +1531,6 @@ int main() &#123;
 
 
   
-    <article id="post-Webots" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/post/Webots.html" class="article-date">
-  <time class="dt-published" datetime="2024-10-03T08:34:22.000Z" itemprop="datePublished">2024-10-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/post/Webots.html">Webots</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>WARNING: To drag this element, first rotate the view so that the horizontal plane is clearly visible.</p>
-<p>旋转到水平面上再shift+左键<img src="/../images/image-20241003163738576.png" alt="image-20241003163738576"></p>
-<p>右键平移</p>
-<p>保存：Ctrl shift s</p>
-<p>向导:<br>1.新建项目目录向导（新建场景）</p>
-<p>2.新建机器人控制器向导（新建控制器）</p>
-<p><img src="/../images/image-20241004122441260.png" alt="image-20241004122441260"></p>
-<p>只有机器人节点才能导出urdf文件</p>
-<p>转换完后的文件放到protos目录下<br><img src="/../images/image-20241004122612323.png" alt="image-20241004122612323"></p>
-<p>在 Webots 中，<code>Solid</code> 节点用于定义具有物理属性的物体，主要用于仿真中的动态交互。它包含了物理模拟所需的各种参数，如质量、摩擦力和弹性等。</p>
-<p>在 Webots 中，<code>Shape</code> 节点用于定义物体的外观和几何形状。</p>
-<p><code>Solid</code> 节点通常与 <code>Shape</code> 节点结合使用，以创建既有外观又具物理特性的对象</p>
-<ol>
-<li>**形状 (Geometry)**：指的是物体的几何结构和形式，比如它是一个立方体、球体、圆柱体等。形状决定了物体在空间中的占用区域，以及与其他物体的交互和碰撞。</li>
-<li>**外观 (Appearance)**：指的是物体的视觉特征，如颜色、材质、纹理等。外观影响的是物体的视觉效果，而不是其物理结构。</li>
-</ol>
-<p><img src="/../images/image-20241026190357404.png" alt="image-20241026190357404"></p>
-<p><img src="/../images/image-20241026210538601.png" alt="image-20241026210538601"></p>
-<p><img src="/../images/image-20241026212402481.png" alt="image-20241026212402481"></p>
-<p><img src="/../images/image-20241027094729155.png" alt="image-20241027094729155"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zgh20060114.github.io/post/Webots.html" data-id="cm1t1isj80000qycx3ovfhwj3" data-title="Webots" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1442,7 +1568,7 @@ int main() &#123;
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li></ul>
     </div>
   </div>
 
@@ -1453,6 +1579,10 @@ int main() &#123;
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/post/guitar.html">guitar</a>
+          </li>
         
           <li>
             <a href="/post/%E6%9C%80%E4%BC%98%E6%8E%A7%E5%88%B6%E4%B8%8E%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.html">最优控制与强化学习</a>
@@ -1470,10 +1600,6 @@ int main() &#123;
             <a href="/post/%E5%9B%9B%E8%B6%B3.html">四足</a>
           </li>
         
-          <li>
-            <a href="/post/%E5%9B%BE%E5%BD%A2%E5%AD%A6.html">图形学</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -1487,7 +1613,7 @@ int main() &#123;
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2024 John Doe<br>
+      &copy; 2025 John Doe<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
